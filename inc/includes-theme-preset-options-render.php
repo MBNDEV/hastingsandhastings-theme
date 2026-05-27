@@ -101,6 +101,22 @@ function custom_theme_get_font_presets(): array {
 			  'axis' => 'wght@400;600;700',
 		  ),
 	  ),
+	  'heebo'            => array(
+		  'label'  => __( 'Heebo', 'mbn-theme' ),
+		  'stack'  => 'Heebo, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif',
+		  'google' => array(
+			  'name' => 'Heebo',
+			  'axis' => 'wght@300;400;500;600;700',
+		  ),
+	  ),
+	  'noto_serif'       => array(
+		  'label'  => __( 'Noto Serif', 'mbn-theme' ),
+		  'stack'  => '"Noto Serif", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
+		  'google' => array(
+			  'name' => 'Noto Serif',
+			  'axis' => 'wght@400;600;700',
+		  ),
+	  ),
   );
 }
 

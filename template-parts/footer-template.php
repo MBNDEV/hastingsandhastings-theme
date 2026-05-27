@@ -1,10 +1,9 @@
 <?php
 /**
- * Default Footer Template content.
+ * Footer Template Block Template.
  *
- * This file syncs to the "Footer Template" Block Template post on theme activation.
- * Edit the Block Template post in WordPress admin, then export back to this file
- * using the export button in the admin.
+ * Syncs with "Footer Template" Block Template post.
+ * Edit in WordPress admin, then export using Block Templates → Sync Tools.
  *
  * @package CustomTheme
  */

@@ -1,10 +1,9 @@
 <?php
 /**
- * Default Header Template content.
+ * Header Template Block Template.
  *
- * This file syncs to the "Header Template" Block Template post on theme activation.
- * Edit the Block Template post in WordPress admin, then export back to this file
- * using the export button in the admin.
+ * Syncs with "Header Template" Block Template post.
+ * Edit in WordPress admin, then export using Block Templates → Sync Tools.
  *
  * @package CustomTheme
  */
@@ -13,4 +12,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<!-- wp:mbn-theme/site-navbar {"logoUrl":"https://hastingsandhastings.dev.local/wp-content/uploads/2026/04/img-logo-BGF-header.svg","logoId":22,"mobileMenuId":3} /-->
+<!-- wp:mbn-theme/header-navigation /-->

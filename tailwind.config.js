@@ -10,30 +10,46 @@ module.exports = {
     './resources/**/*.css',
   ],
   theme: {
+    colors: {
+      // Primary brand colors
+      primary: '#FFF24C',
+      secondary: '#3480C3',
+      
+      // Text colors
+      'text-heading': '#13263E',
+      'text-body': '#53585F',
+      
+      // Additional colors
+      'gray-light': '#D5DADD',
+      'accent-blue': '#286FB7',
+      'accent-yellow': '#FDE212',
+      
+      // Essential colors (white, black, transparent)
+      white: '#ffffff',
+      black: '#000000',
+      transparent: 'transparent',
+    },
+    fontFamily: {
+      heading: ['"Noto Serif"', 'serif'],
+      body: ['"Heebo"', 'sans-serif'],
+    },
+    fontSize: {
+      // Heading sizes calculated from H1 (56px) and H2 (40px) using ~71.4% ratio
+      'h1': '56px',     // 3.5rem
+      'h2': '40px',     // 2.5rem
+      'h3': '28px',     // 1.75rem
+      'h4': '20px',     // 1.25rem
+      'h5': '16px',     // 1rem
+      'h6': '14px',     // 0.875rem
+      
+      // Standard body sizes
+      'base': '16px',
+      'sm': '14px',
+      'xs': '12px',
+      'lg': '18px',
+      'xl': '20px',
+    },
     extend: {
-      colors: {
-        cream: '#F9F5EE',
-        'cream-light': '#FFF6E5',
-        'gold-light': '#FCE5B0',
-        gold: '#B89352',
-        'gold-dark': '#6B4502',
-        'dark-text': '#25272B',
-        'footer-bg': '#191919',
-        'paragraph-gray': '#B2B2B2',
-        'card-cream': '#F5F1E8',
-        'card-gold': '#FFF4D9',
-        'card-beige': '#F8F5F0',
-        'check-green': '#7CAA6D',
-        'divider-gold': '#CEB270',
-        'card-label': '#3A3A3A',
-        'intro-bg': '#EFEBE3',
-        'mission-text': 'rgba(0, 0, 0, 0.20)',
-      },
-      fontFamily: {
-        sofia: ['"Sofia Sans"', 'sans-serif'],
-        poppins: ['"Poppins"', 'sans-serif'],
-        inter: ['"Inter"', 'sans-serif'],
-      },
       letterSpacing: {
         'hero': '-0.74px',        // For h1 hero headings
         'heading': '-0.56px',     // For large h2 headings
