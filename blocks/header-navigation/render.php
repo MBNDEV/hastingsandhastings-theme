@@ -15,6 +15,7 @@ $button_text     = $attributes['buttonText'] ?? 'REQUEST A FREE CONSULTATION';
 $button_url      = $attributes['buttonUrl'] ?? '#';
 $main_menu_id    = $attributes['mainMenuId'] ?? 0;
 $contact_menu_id = $attributes['contactMenuId'] ?? 0;
+$mobile_menu_id  = $attributes['mobileMenuId'] ?? 0;
 $logo_full_url   = $attributes['logoFullUrl'] ?? '';
 $logo_mark_url   = $attributes['logoMarkUrl'] ?? '';
 
@@ -338,11 +339,13 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
   <!-- Mobile Menu Content -->
   <?php
-  // Mobile menu uses the same main menu with custom walker for accordion structure
-  if ( $main_menu_id > 0 ) {
+  // Use mobile menu if set, otherwise fallback to main menu
+  $mobile_menu_to_use = $mobile_menu_id > 0 ? $mobile_menu_id : $main_menu_id;
+
+  if ( $mobile_menu_to_use > 0 ) {
     wp_nav_menu(
       array(
-		  'menu'        => $main_menu_id,
+		  'menu'        => $mobile_menu_to_use,
 		  'container'   => false,
 		  'items_wrap'  => '%3$s',
 		  'fallback_cb' => false,
@@ -352,8 +355,8 @@ $wrapper_attributes = get_block_wrapper_attributes(
   } elseif ( current_user_can( 'edit_theme_options' ) ) {
     // Fallback message for admins
     echo '<div style="padding: 20px; text-align: center; color: #666;">';
-    echo '<p>' . esc_html__( '⚠️ Main menu not set up.', 'mbn-theme' ) . '</p>';
-    echo '<p style="font-size: 14px;">' . esc_html__( 'Please select a Main Menu in the block settings.', 'mbn-theme' ) . '</p>';
+    echo '<p>' . esc_html__( '⚠️ Mobile menu not set up.', 'mbn-theme' ) . '</p>';
+    echo '<p style="font-size: 14px;">' . esc_html__( 'Please select a Mobile Menu or Main Menu in the block settings.', 'mbn-theme' ) . '</p>';
     echo '</div>';
   }
   ?>

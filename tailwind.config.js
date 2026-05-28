@@ -24,6 +24,11 @@ module.exports = {
       'accent-blue': '#286FB7',
       'accent-yellow': '#FDE212',
       
+      // Footer colors
+      'footer-bg': '#13263E',
+      'footer-text': '#FFFFFF',
+      'footer-link-blue': '#599BD7',
+      
       // Essential colors (white, black, transparent)
       white: '#ffffff',
       black: '#000000',

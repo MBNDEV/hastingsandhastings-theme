@@ -14,7 +14,9 @@
   transition: all 0.3s ease-in-out;
   z-index: 1000;
 }
-
+.header-navigation-wrapper.is-sticky {
+  top: 16px;
+}
 .header-container {
   max-width: 1440px;
   margin: 0 auto;
@@ -642,6 +644,9 @@
   }
   .mobile-menu-toggle {
     display: flex;
+  }
+  .header-navigation-wrapper .header-container {
+    padding: 1rem 1.5rem;
   }
 }
 

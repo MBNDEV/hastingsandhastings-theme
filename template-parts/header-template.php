@@ -12,4 +12,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<!-- wp:mbn-theme/header-navigation /-->
+<!-- wp:mbn-theme/header-navigation {"mainMenuId":3,"contactMenuId":4,"mobileMenuId":7,"logoFullUrl":"http://hastingsandhastings.dev.local/wp-content/uploads/2026/05/logo-header.svg","logoFullId":58,"logoMarkUrl":"http://hastingsandhastings.dev.local/wp-content/uploads/2026/05/logo-mark.svg","logoMarkId":59} /-->

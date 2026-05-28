@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 
 export default function Edit({ attributes, setAttributes }) {
-  const { mainMenuId, contactMenuId, logoFullUrl, logoFullId, logoMarkUrl, logoMarkId, buttonText, buttonUrl } = attributes;
+  const { mainMenuId, contactMenuId, mobileMenuId, logoFullUrl, logoFullId, logoMarkUrl, logoMarkId, buttonText, buttonUrl } = attributes;
 
   // Fetch available menus
   const menus = useSelect((select) => {
@@ -125,8 +125,15 @@ export default function Edit({ attributes, setAttributes }) {
             onChange={(value) => setAttributes({ contactMenuId: parseInt(value) })}
             help={__('Select the menu for contact navigation', 'mbn-theme')}
           />
+          <SelectControl
+            label={__('Mobile Menu', 'mbn-theme')}
+            value={mobileMenuId}
+            options={menuOptions}
+            onChange={(value) => setAttributes({ mobileMenuId: parseInt(value) })}
+            help={__('Select a different menu for mobile navigation (optional, defaults to Main Menu)', 'mbn-theme')}
+          />
           <p style={{ fontSize: '12px', color: '#666', marginTop: '15px', padding: '10px', background: '#f0f0f0', borderRadius: '4px' }}>
-            <strong>{__('Note:', 'mbn-theme')}</strong> {__('Mobile menu uses the "Mobile Menu" location from Appearance → Menus.', 'mbn-theme')}
+            <strong>{__('Tip:', 'mbn-theme')}</strong> {__('If Mobile Menu is not set, the Main Menu will be used for mobile devices.', 'mbn-theme')}
           </p>
         </PanelBody>
 
@@ -177,7 +184,9 @@ export default function Edit({ attributes, setAttributes }) {
               <span>
                 {contactMenuId > 0 ? '✅ Contact Menu' : '❌ Contact Menu'}
               </span>
-              <span>📱 Mobile Menu (Theme Location)</span>
+              <span>
+                {mobileMenuId > 0 ? '✅ Mobile Menu' : '📱 Mobile Menu (uses Main)'}
+              </span>
             </div>
             
             <div style={{ 
