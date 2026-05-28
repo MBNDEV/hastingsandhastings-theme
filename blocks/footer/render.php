@@ -27,68 +27,100 @@ $wrapper_attributes = get_block_wrapper_attributes(
   )
 );
 
-/**
- * Render a WordPress menu with custom walker
- *
- * @param int    $menu_id        Menu ID to render.
- * @param string $container_class CSS class for container div.
- * @param string $links_class     CSS class for links div.
- */
-function render_footer_menu( $menu_id, $container_class = 'footer-column', $links_class = 'footer-links' ) {
-  if ( ! $menu_id ) {
-    return;
-  }
+if ( ! function_exists( 'build_footer_menu_tree' ) ) {
+	/**
+	 * Build hierarchical menu tree from flat menu items array
+	 *
+	 * @param array $menu_items Array of menu item objects.
+	 * @return array Hierarchical menu tree.
+	 */
+  function build_footer_menu_tree( $menu_items ) {
+      $menu_tree = array();
 
-  $menu_items = wp_get_nav_menu_items( $menu_id );
-  if ( ! $menu_items ) {
-    return;
-  }
-
-  // Group menu items by parent
-  $menu_tree = array();
-  foreach ( $menu_items as $item ) {
-    $parent = $item->menu_item_parent;
-    if ( 0 === $parent ) {
-      $menu_tree[ $item->ID ] = array(
-		  'item'     => $item,
-		  'children' => array(),
-      );
+      // First pass: collect all parent items
+    foreach ( $menu_items as $item ) {
+      if ( 0 === (int) $item->menu_item_parent ) {
+        $menu_tree[ $item->ID ] = array(
+            'item'     => $item,
+            'children' => array(),
+        );
+      }
     }
-  }
 
-  foreach ( $menu_items as $item ) {
-    $parent = $item->menu_item_parent;
-    if ( 0 !== $parent && isset( $menu_tree[ $parent ] ) ) {
-      $menu_tree[ $parent ]['children'][] = $item;
+      // Second pass: attach children to parents
+    foreach ( $menu_items as $item ) {
+        $parent = (int) $item->menu_item_parent;
+      if ( 0 !== $parent && isset( $menu_tree[ $parent ] ) ) {
+          $menu_tree[ $parent ]['children'][] = $item;
+      }
     }
-  }
 
-  // Render menu tree
-  foreach ( $menu_tree as $branch ) {
-    $parent_item = $branch['item'];
-    $children    = $branch['children'];
+      return $menu_tree;
+  }
+}
+
+if ( ! function_exists( 'render_footer_menu_column' ) ) {
+	/**
+	 * Render a single footer menu column
+	 *
+	 * @param object $parent_item     Parent menu item.
+	 * @param array  $children        Child menu items.
+	 * @param string $container_class CSS class for container div.
+	 * @param string $links_class     CSS class for links div.
+	 */
+  function render_footer_menu_column( $parent_item, $children, $container_class, $links_class ) {
     ?>
-    <div class="<?php echo esc_attr( $container_class ); ?> flex flex-col flex-[0_1_260px] min-w-[200px] max-w-[300px] self-start">
-      <span class="font-body text-base font-semibold text-footer-link-blue no-underline mb-4 block p-0">
-        <?php echo esc_html( $parent_item->title ); ?>
-      </span>
-      <?php if ( ! empty( $children ) ) : ?>
-        <div class="<?php echo esc_attr( $links_class ); ?> flex flex-col gap-2">
-          <?php
-          foreach ( $children as $child ) :
-            // Get custom CSS classes from menu item
-            $item_classes = ! empty( $child->classes ) ? implode( ' ', array_filter( $child->classes ) ) : '';
-            $base_classes = 'flex items-center gap-3 py-1 font-body text-[15px] font-normal text-white no-underline transition-all duration-200 cursor-pointer hover:text-secondary';
-            $all_classes  = trim( $base_classes . ' ' . $item_classes );
-            ?>
-            <a href="<?php echo esc_url( $child->url ); ?>" class="<?php echo esc_attr( $all_classes ); ?>">
-              <?php echo esc_html( $child->title ); ?>
-            </a>
-          <?php endforeach; ?>
-        </div>
-      <?php endif; ?>
-    </div>
-    <?php
+		<div class="<?php echo esc_attr( $container_class ); ?> flex flex-col flex-[0_1_260px] min-w-[200px] max-w-[300px] self-start">
+			<span class="font-body text-base font-semibold text-footer-link-blue no-underline mb-4 block p-0">
+              <?php echo esc_html( $parent_item->title ); ?>
+			</span>
+          <?php if ( ! empty( $children ) ) : ?>
+				<div class="<?php echo esc_attr( $links_class ); ?> flex flex-col gap-2">
+					<?php
+					foreach ( $children as $child ) :
+						$item_classes = ! empty( $child->classes ) ? implode( ' ', array_filter( $child->classes ) ) : '';
+						$base_classes = 'flex items-center gap-3 py-1 font-body text-[15px] font-normal text-white no-underline transition-all duration-200 cursor-pointer hover:text-secondary';
+						$all_classes  = trim( $base_classes . ' ' . $item_classes );
+                      ?>
+						<a href="<?php echo esc_url( $child->url ); ?>" class="<?php echo esc_attr( $all_classes ); ?>">
+							<?php echo esc_html( $child->title ); ?>
+						</a>
+					<?php endforeach; ?>
+				</div>
+			<?php endif; ?>
+		</div>
+		<?php
+  }
+}
+
+if ( ! function_exists( 'render_footer_menu' ) ) {
+	/**
+	 * Render a WordPress menu with custom walker
+	 *
+	 * @param int    $menu_id        Menu ID to render.
+	 * @param string $container_class CSS class for container div.
+	 * @param string $links_class     CSS class for links div.
+	 */
+  function render_footer_menu( $menu_id, $container_class = 'footer-column', $links_class = 'footer-links' ) {
+    if ( ! $menu_id ) {
+        return;
+    }
+
+      $menu_items = wp_get_nav_menu_items( $menu_id );
+    if ( ! $menu_items ) {
+        return;
+    }
+
+      $menu_tree = build_footer_menu_tree( $menu_items );
+
+    foreach ( $menu_tree as $branch ) {
+        render_footer_menu_column(
+          $branch['item'],
+          $branch['children'],
+          $container_class,
+          $links_class
+        );
+    }
   }
 }
 ?>

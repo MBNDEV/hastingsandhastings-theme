@@ -32,7 +32,7 @@
     let ticking = false;
 
     function updateHeaderState() {
-      const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollPosition = window.scrollY || document.documentElement.scrollTop;
       
       if (scrollPosition > SCROLL_THRESHOLD) {
         header.classList.add('is-sticky');

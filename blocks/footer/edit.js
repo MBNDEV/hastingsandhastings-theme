@@ -8,7 +8,7 @@ import { CSS } from '@dnd-kit/utilities';
 
 // Generate a unique ID (compatible with all browsers)
 function generateUniqueId() {
-  return 'id-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+  return 'id-' + Date.now() + '-' + Math.random().toString(36).slice (2, 11);
 }
 
 // Sortable Social Media Item
@@ -43,12 +43,12 @@ function SortableSocialItem({ item, index, updateItem, removeItem, duplicateItem
           <strong>{item.label || `Social ${index + 1}`}</strong>
         </div>
         <div style={{ display: 'flex', gap: '8px' }}>
-          <IconButton
+          <Button 
             icon="admin-page"
             label={__('Duplicate', 'mbn-theme')}
             onClick={() => duplicateItem(index)}
           />
-          <IconButton
+          <Button 
             icon="trash"
             label={__('Remove', 'mbn-theme')}
             onClick={() => removeItem(index)}
