@@ -59,6 +59,8 @@ function mbn_theme_setup() {
   register_nav_menus(
     array(
 		'primary-menu'  => __( 'Primary Menu', 'mbn-theme' ),
+		'main-menu'     => __( 'Main Menu', 'mbn-theme' ),
+		'contact-menu'  => __( 'Contact Menu', 'mbn-theme' ),
 		'footer-menu'   => __( 'Footer Menu', 'mbn-theme' ),
 		'footer-menu-1' => __( 'Footer Menu Column 1', 'mbn-theme' ),
 		'footer-menu-2' => __( 'Footer Menu Column 2', 'mbn-theme' ),
