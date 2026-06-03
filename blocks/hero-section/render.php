@@ -88,13 +88,13 @@ $wrapper_attributes = get_block_wrapper_attributes(
 						
 						<!-- Main Heading -->
 						<h1 class="font-heading font-semibold text-4xl md:text-5xl xl:text-6xl text-white xl:leading-[72px]">
-							<?php echo esc_html( $main_heading ); ?>
-						</h1>
+						<?php echo wp_kses_post( $main_heading ); ?>
+					</h1>
 
-						<!-- Subheading -->
-						<?php if ( $subheading ) : ?>
-							<p class="font-body text-gray-light text-lg md:text-xl leading-relaxed mt-2 pr-5">
-								<?php echo esc_html( $subheading ); ?>
+					<!-- Subheading -->
+					<?php if ( $subheading ) : ?>
+						<p class="font-body text-gray-light text-lg md:text-xl leading-relaxed mt-2 pr-5">
+							<?php echo wp_kses_post( $subheading ); ?>
 							</p>
 						<?php endif; ?>
 					</div>

@@ -76,7 +76,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 				
 				<?php if ( ! empty( $main_heading ) ) : ?>
 					<h2 class="font-heading font-semibold text-3xl md:text-4xl lg:text-5xl text-white !leading-normal">
-						<?php echo esc_html( $main_heading ); ?>
+					<?php echo wp_kses_post( $main_heading ); ?>
 					</h2>
 				<?php endif; ?>
 			</div>
@@ -108,12 +108,12 @@ $wrapper_attributes = get_block_wrapper_attributes(
 						<div class="flex-1 text-center lg:text-left max-w-2xl">
 							<?php if ( ! empty( $cta_heading ) ) : ?>
 								<h3 class="font-heading font-bold text-2xl md:text-3xl text-white mb-4">
-									<?php echo esc_html( $cta_heading ); ?>
-								</h3>
-							<?php endif; ?>
-							<?php if ( ! empty( $cta_text ) ) : ?>
-								<p class="font-body text-white/90 text-base md:text-lg leading-relaxed">
-									<?php echo esc_html( $cta_text ); ?>
+								<?php echo wp_kses_post( $cta_heading ); ?>
+							</h3>
+						<?php endif; ?>
+						<?php if ( ! empty( $cta_text ) ) : ?>
+							<p class="font-body text-white/90 text-base md:text-lg leading-relaxed">
+								<?php echo wp_kses_post( $cta_text ); ?>
 								</p>
 							<?php endif; ?>
 						</div>

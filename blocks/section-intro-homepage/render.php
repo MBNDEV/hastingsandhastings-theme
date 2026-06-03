@@ -44,14 +44,14 @@ $wrapper_attributes = get_block_wrapper_attributes(
 						
 						<!-- Main Heading -->
 						<h2 class="font-heading font-semibold text-3xl md:text-4xl lg:text-5xl text-heading !leading-[40px] md:!leading-[60px]">
-							<?php echo esc_html( $main_heading ); ?>
-						</h2>
-					</div>
+						<?php echo wp_kses_post( $main_heading ); ?>
+					</h2>
+				</div>
 
 					<!-- Right: Description -->
 					<div class="flex items-center lg:w-1/2">
 						<p class="font-body text-base md:text-lg text-text-body leading-relaxed md:!leading-[28px] lg:pt-10">
-							<?php echo esc_html( $subheading ); ?>
+							<?php echo wp_kses_post( $subheading ); ?>
 						</p>
 					</div>
 				</div>
