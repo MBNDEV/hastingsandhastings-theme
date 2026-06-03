@@ -13,7 +13,7 @@ $badges       = $attributes['badges'] ?? array();
 
 $wrapper_attributes = get_block_wrapper_attributes(
   array(
-	  'class' => 'testimonials-section-bg w-full py-12 md:py-16 lg:py-20',
+	  'class' => 'testimonials-section-bg w-full py-12 md:py-16 lg:py-20 overflow-hidden',
   )
 );
 
