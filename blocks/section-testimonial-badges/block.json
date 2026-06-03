@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-testimonial-badges",
+  "title": "Section: Testimonial Badges",
+  "category": "mbn-blocks",
+  "icon": "star-filled",
+  "description": "Testimonials slider with badges section",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "testimonials": {
+      "type": "array",
+      "default": []
+    },
+    "badges": {
+      "type": "array",
+      "default": []
+    }
+  }
+}
