@@ -19,10 +19,27 @@ module.exports = {
       'text-heading': '#13263E',
       'text-body': '#53585F',
       
+      // Gray scale
+      gray: {
+        50: '#f9fafb',
+        100: '#f3f4f6',
+        200: '#E8EAEC',
+        300: '#d1d5db',
+        400: '#9ca3af',
+        500: '#6b7280',
+        600: '#4b5563',
+        700: '#374151',
+        800: '#1f2937',
+        900: '#111827',
+        'light': '#D5DADD',
+      },
+      
       // Additional colors
-      'gray-light': '#D5DADD',
       'accent-blue': '#286FB7',
-      'accent-yellow': '#FDE212',
+      'accent-yellow': '#FFE066',
+      'accent-gold': '#FDE212',
+      'accent-gold-500': '#ECC806',
+      'text-muted': '#646B73',
       
       // Footer colors
       'footer-bg': '#13263E',
@@ -38,23 +55,16 @@ module.exports = {
       heading: ['"Noto Serif"', 'serif'],
       body: ['"Heebo"', 'sans-serif'],
     },
-    fontSize: {
-      // Heading sizes calculated from H1 (56px) and H2 (40px) using ~71.4% ratio
-      'h1': '56px',     // 3.5rem
-      'h2': '40px',     // 2.5rem
-      'h3': '28px',     // 1.75rem
-      'h4': '20px',     // 1.25rem
-      'h5': '16px',     // 1rem
-      'h6': '14px',     // 0.875rem
-      
-      // Standard body sizes
-      'base': '16px',
-      'sm': '14px',
-      'xs': '12px',
-      'lg': '18px',
-      'xl': '20px',
-    },
     extend: {
+      fontSize: {
+        // Heading sizes calculated from H1 (56px) and H2 (40px) using ~71.4% ratio
+        'h1': '56px',     // 3.5rem
+        'h2': '40px',     // 2.5rem
+        'h3': '28px',     // 1.75rem
+        'h4': '20px',     // 1.25rem
+        'h5': '16px',     // 1rem
+        'h6': '14px',     // 0.875rem
+      },
       letterSpacing: {
         'hero': '-0.74px',        // For h1 hero headings
         'heading': '-0.56px',     // For large h2 headings

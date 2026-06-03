@@ -1,0 +1,24 @@
+/* Section Intro Homepage Block Styles */
+
+.section-intro-homepage {
+  width: 100%;
+}
+
+/* Swiper Custom Styles */
+.awards-slider {
+  width: 100%;
+  padding: 20px 0;
+}
+
+.awards-slider .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+}
+
+/* Ensure images don't overflow */
+.awards-slider img {
+  max-width: 100%;
+  height: auto;
+}

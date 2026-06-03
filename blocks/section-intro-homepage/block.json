@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-intro-homepage",
+  "title": "Section Intro Homepage",
+  "category": "mbn-blocks",
+  "icon": "awards",
+  "description": "Homepage intro section with heading, description, and awards slider",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "eyebrowText": {
+      "type": "string",
+      "default": "Why Arizonans Choose Hastings & Hastings"
+    },
+    "mainHeading": {
+      "type": "string",
+      "default": "Trusted accident lawyer in Phoenix for decades"
+    },
+    "subheading": {
+      "type": "string",
+      "default": "For nearly 50 years, Hastings & Hastings' personal injury lawyers in Phoenix have helped injury victims across the Valley move forward after serious accidents. We've built our reputation by delivering experienced legal support, clear guidance, and a fee structure that helps clients keep more of what they recover."
+    },
+    "backgroundImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "backgroundImageId": {
+      "type": "number"
+    },
+    "awardsLabel": {
+      "type": "string",
+      "default": "Awards & Accolades"
+    },
+    "awards": {
+      "type": "array",
+      "default": []
+    }
+  }
+}
