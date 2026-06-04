@@ -69,11 +69,17 @@ $wrapper_attributes = get_block_wrapper_attributes(
 								
 								<?php foreach ( $awards as $award ) : ?>
 									<?php if ( ! empty( $award['imageUrl'] ) ) : ?>
-										<div class="swiper-slide">
-											<div class="flex items-center justify-center h-auto w-full">
-												<img 
-													src="<?php echo esc_url( $award['imageUrl'] ); ?>" 
-													alt="<?php esc_attr_e( 'Award', 'mbn-theme' ); ?>"
+										<?php
+										$award_alt_text = ! empty( $award['imageId'] ) ? get_post_meta( $award['imageId'], '_wp_attachment_image_alt', true ) : '';
+										if ( empty( $award_alt_text ) ) {
+											$award_alt_text = __( 'Award', 'mbn-theme' );
+										}
+										?>
+									<div class="swiper-slide">
+										<div class="flex items-center justify-center h-auto w-full">
+											<img 
+												src="<?php echo esc_url( $award['imageUrl'] ); ?>" 
+												alt="<?php echo esc_attr( $award_alt_text ); ?>"
 													class="h-full w-full max-h-24 object-contain"
 												/>
 											</div>
@@ -92,10 +98,16 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
 		<!-- Team Image with Text Overlay -->
 		<?php if ( $background_image_url ) : ?>
+			<?php
+			$bg_alt_text = ! empty( $background_image_id ) ? get_post_meta( $background_image_id, '_wp_attachment_image_alt', true ) : '';
+			if ( empty( $bg_alt_text ) ) {
+				$bg_alt_text = __( 'Team', 'mbn-theme' );
+			}
+			?>
 			<div class="relative w-full overflow-hidden -mt-24 md:-mt-56 xl:-mt-96">
 				<img 
 					src="<?php echo esc_url( $background_image_url ); ?>" 
-					alt="<?php esc_attr_e( 'Team', 'mbn-theme' ); ?>"
+					alt="<?php echo esc_attr( $bg_alt_text ); ?>"
 					class="w-full h-auto object-cover"
 				/>
 				<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>

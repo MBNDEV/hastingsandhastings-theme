@@ -77,4 +77,7 @@
     bottom: 320px;
     background: linear-gradient(to bottom, #BDC3C8 0%, #BDC3C8 100%, #FFF 100%);
   }
+  .btn-cta.w-full {
+    max-width: 100%;
+  }
 }

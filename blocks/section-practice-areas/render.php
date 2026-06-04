@@ -61,35 +61,41 @@ $wrapper_attributes = get_block_wrapper_attributes(
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
 			
 			<?php if ( ! empty( $cards ) ) : ?>
-				<?php foreach ( $cards as $card ) : ?>
-					<!-- Practice Area Card -->
-					<div class="practice-card overflow-hidden">
-						<?php if ( ! empty( $card['imageUrl'] ) ) : ?>
-							<div class="aspect-[4/3] bg-gray-200 overflow-hidden">
-								<img 
-									src="<?php echo esc_url( $card['imageUrl'] ); ?>" 
-									alt="<?php echo esc_attr( $card['heading'] ?? '' ); ?>" 
-									class="practice-card-image rounded-lg w-full h-full object-cover transition-transform duration-300"
-								/>
-							</div>
+              <?php foreach ( $cards as $card ) : ?>
+				<!-- Practice Area Card -->
+				<div class="practice-card overflow-hidden">
+					<?php if ( ! empty( $card['imageUrl'] ) ) : ?>
+						<?php
+						$card_alt_text = ! empty( $card['imageId'] ) ? get_post_meta( $card['imageId'], '_wp_attachment_image_alt', true ) : '';
+						if ( empty( $card_alt_text ) ) {
+							$card_alt_text = $card['heading'] ?? '';
+						}
+						?>
+						<div class="md:aspect-[4/3] bg-gray-200 overflow-hidden">
+							<img 
+								src="<?php echo esc_url( $card['imageUrl'] ); ?>" 
+								alt="<?php echo esc_attr( $card_alt_text ); ?>" 
+								class="practice-card-image rounded-lg w-full max-h-80 md:max-h-full h-full object-cover transition-transform duration-300"
+							/>
+						</div>
+					<?php endif; ?>
+					
+					<div class="py-6">
+						<?php if ( ! empty( $card['heading'] ) ) : ?>
+							<h3 class="font-heading font-bold text-xl md:text-2xl text-text-heading mb-3">
+								<?php echo esc_html( $card['heading'] ); ?>
+							</h3>
 						<?php endif; ?>
 						
-						<div class="py-6">
-							<?php if ( ! empty( $card['heading'] ) ) : ?>
-								<h3 class="font-heading font-bold text-xl md:text-2xl text-text-heading mb-3">
-									<?php echo esc_html( $card['heading'] ); ?>
-								</h3>
-							<?php endif; ?>
-							
-							<?php if ( ! empty( $card['description'] ) ) : ?>
-								<p class="font-body text-sm md:text-base text-text-body leading-relaxed">
-									<?php echo esc_html( $card['description'] ); ?>
-								</p>
-							<?php endif; ?>
-						</div>
+						<?php if ( ! empty( $card['description'] ) ) : ?>
+							<p class="font-body text-sm md:text-base text-text-body leading-relaxed">
+								<?php echo esc_html( $card['description'] ); ?>
+							</p>
+						<?php endif; ?>
 					</div>
-				<?php endforeach; ?>
-			<?php endif; ?>
+				</div>
+			<?php endforeach; ?>
+		<?php endif; ?>
 
 			<!-- CTA Panel -->
 			<?php if ( $show_cta_panel ) : ?>

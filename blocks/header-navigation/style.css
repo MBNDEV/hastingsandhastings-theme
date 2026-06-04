@@ -147,7 +147,7 @@
 
 /* Full-width mega menus (with columns) */
 .mega-menu-wrapper:has(.mega-column) {
-  left: 0;
+  left: -25px;
   right: 0;
   width: 100vw;
 }
@@ -167,6 +167,8 @@
 
 .header-navigation-wrapper.is-sticky .mega-menu-wrapper {
   max-width: 1440px;
+  left: 0;
+  width: calc(100vw - 50px);
 }
 
 /* MEGA MENU CONTENT - Centered container */
@@ -637,7 +639,7 @@
     flex: 0 1 200px;
     min-width: 180px;
   }
-  
+
   .header-container,
   .desktop-nav-container{
     gap: 1rem;

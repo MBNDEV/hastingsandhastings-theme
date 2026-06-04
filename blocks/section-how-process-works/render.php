@@ -72,8 +72,12 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
 				<?php if ( ! empty( $steps ) ) : ?>
 					<?php foreach ( $steps as $index => $step ) : ?>
+						<?php
+						$is_last_step = ( count( $steps ) - 1 === $index );
+						$step_margin  = $is_last_step ? 'mb-2 md:mb-12' : 'mb-8 md:mb-12';
+						?>
 						<!-- Step -->
-						<div class="mb-8 md:mb-12">
+						<div class="<?php echo esc_attr( $step_margin ); ?>">
 							<div class="flex gap-6 md:gap-8">
 								<!-- Timeline Dot -->
 								<div class="flex-shrink-0 pt-2">
@@ -102,7 +106,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 				<?php if ( $show_cta ) : ?>
 					<!-- CTA Card -->
 					<div class="-mt-5">
-						<div class="flex gap-6 md:gap-8">
+						<div class="flex flex-col relative z-10 md:flex-row gap-6 md:gap-8">
 							<!-- Timeline Dot -->
 							<div class="flex-shrink-0 pt-10">
 								<div class="timeline-dot"></div>
@@ -151,7 +155,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 											<?php endif; ?>
 											<?php if ( ! empty( $cta_phone_number ) ) : ?>
 												<a 
-													href="tel:<?php echo esc_attr( preg_replace( '/[^0-9]/', '', $cta_phone_number ) ); ?>" 
+													href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $cta_phone_number ) ); ?>" 
 													class="font-body font-bold text-base xl:text-lg text-primary underline hover:text-accent-gold transition-colors"
 												>
 													<?php echo esc_html( $cta_phone_number ); ?>

@@ -87,7 +87,10 @@ $wrapper_attributes = get_block_wrapper_attributes(
 					<?php foreach ( $badges as $badge ) : ?>
 						<div class="flex flex-col items-center text-center gap-6 section-3col-badge-item">
 							<?php if ( ! empty( $badge['imageUrl'] ) ) : ?>
-								<img src="<?php echo esc_url( $badge['imageUrl'] ); ?>" alt="" class="w-40 h-40 lg:w-full lg:h-full lg:max-w-[215px] lg:max-h-[215px] object-contain" />
+								<?php
+								$alt_text = ! empty( $badge['imageId'] ) ? get_post_meta( $badge['imageId'], '_wp_attachment_image_alt', true ) : '';
+								?>
+							<img src="<?php echo esc_url( $badge['imageUrl'] ); ?>" alt="<?php echo esc_attr( $alt_text ); ?>" class="w-40 h-40 lg:w-full lg:h-full lg:max-w-[215px] lg:max-h-[215px] object-contain" />
 							<?php endif; ?>
 							<?php if ( ! empty( $badge['text'] ) ) : ?>
 								<p class="font-body text-gray-200 text-sm md:text-base leading-relaxed">
@@ -125,7 +128,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 							</a>
 							<a href="<?php echo esc_url( $phone_number_url ); ?>" class="font-body font-bold text-sm transition-colors whitespace-nowrap">
 								<span class="text-white no-underline"><?php esc_html_e( 'CALL TODAY', 'mbn-theme' ); ?></span> 
-                <span class="text-primary underline"><?php echo esc_html( $phone_number ); ?></span>
+				<span class="text-primary underline"><?php echo esc_html( $phone_number ); ?></span>
 							</a>
 						</div>
 					</div>

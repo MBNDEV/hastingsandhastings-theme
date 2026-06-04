@@ -47,9 +47,9 @@ $wrapper_attributes = get_block_wrapper_attributes(
 			loop 
 			playsinline 
 			<?php
-            if ( $poster_image_url ) :
+			if ( $poster_image_url ) :
               ?>
-              poster="<?php echo esc_url( $poster_image_url ); ?>"<?php endif; ?>
+				poster="<?php echo esc_url( $poster_image_url ); ?>"<?php endif; ?>
 		>
 			<?php if ( $video_mp4_url ) : ?>
 				<source src="<?php echo esc_url( $video_mp4_url ); ?>" type="video/mp4">
@@ -101,10 +101,16 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
 					<!-- Badge -->
 					<?php if ( $badge_image_url ) : ?>
-						<div class="hero-badge flex-shrink-0 lg:self-end px-20">
-							<img 
-								src="<?php echo esc_url( $badge_image_url ); ?>" 
-								alt="<?php esc_attr_e( 'Badge', 'mbn-theme' ); ?>"
+						<?php
+						$badge_alt_text = ! empty( $badge_image_id ) ? get_post_meta( $badge_image_id, '_wp_attachment_image_alt', true ) : '';
+						if ( empty( $badge_alt_text ) ) {
+							$badge_alt_text = __( 'Badge', 'mbn-theme' );
+						}
+						?>
+					<div class="hero-badge flex-shrink-0 lg:self-end px-20">
+						<img 
+							src="<?php echo esc_url( $badge_image_url ); ?>" 
+							alt="<?php echo esc_attr( $badge_alt_text ); ?>"
 								class="w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 xl:w-64 xl:h-64"
 							/>
 						</div>

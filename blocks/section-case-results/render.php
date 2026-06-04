@@ -70,9 +70,12 @@ $wrapper_attributes = get_block_wrapper_attributes(
 						<!-- Image -->
 						<div class="w-full lg:w-1/2 flex-shrink-0">
 							<?php if ( ! empty( $case_result['imageUrl'] ) ) : ?>
+								<?php
+								$alt_text = ! empty( $case_result['imageId'] ) ? get_post_meta( $case_result['imageId'], '_wp_attachment_image_alt', true ) : '';
+								?>
 								<img 
 									src="<?php echo esc_url( $case_result['imageUrl'] ); ?>" 
-									alt="" 
+									alt="<?php echo esc_attr( $alt_text ); ?>" 
 									class="w-full max-h-96 lg:h-auto shadow-lg object-cover object-center"
 								/>
 							<?php endif; ?>
