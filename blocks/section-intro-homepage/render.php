@@ -70,11 +70,11 @@ $wrapper_attributes = get_block_wrapper_attributes(
 								<?php foreach ( $awards as $award ) : ?>
 									<?php if ( ! empty( $award['imageUrl'] ) ) : ?>
 										<div class="swiper-slide">
-											<div class="flex items-center justify-center !max-h-24 h-full w-full">
+											<div class="flex items-center justify-center h-auto w-full">
 												<img 
 													src="<?php echo esc_url( $award['imageUrl'] ); ?>" 
 													alt="<?php esc_attr_e( 'Award', 'mbn-theme' ); ?>"
-													class="h-full w-full object-contain"
+													class="h-full w-full max-h-24 object-contain"
 												/>
 											</div>
 										</div>

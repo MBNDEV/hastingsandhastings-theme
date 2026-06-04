@@ -1,0 +1,71 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-practice-areas",
+  "title": "Section: Practice Areas Grid",
+  "category": "mbn-blocks",
+  "icon": "grid-view",
+  "description": "Practice areas grid with CTA panel",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "eyebrowText": {
+      "type": "string",
+      "default": "INJURIES & ACCIDENTS WE HELP WITH"
+    },
+    "mainHeading": {
+      "type": "string",
+      "default": "Legal help for the injuries and accidents people face every day"
+    },
+    "description": {
+      "type": "string",
+      "default": "Whether you were hurt in a car or truck accident, a motorcycle crash, a dog bite, slip and fall, or another serious injury, Hastings & Hastings' personal injury lawyers in Phoenix are here to help you understand your options and take the next step."
+    },
+    "cards": {
+      "type": "array",
+      "default": []
+    },
+    "showCtaPanel": {
+      "type": "boolean",
+      "default": true
+    },
+    "ctaLogoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaLogoId": {
+      "type": "number"
+    },
+    "ctaHeading": {
+      "type": "string",
+      "default": "Not Sure Where Your Case Fits?"
+    },
+    "ctaDescription": {
+      "type": "string",
+      "default": "We believe accident victims deserve experienced legal help that feels accessible, responsive, and easy to understand."
+    },
+    "ctaButtonText": {
+      "type": "string",
+      "default": "VIEW ALL PRACTICE AREAS"
+    },
+    "ctaButtonUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "bg-light-blue"
+    }
+  }
+}

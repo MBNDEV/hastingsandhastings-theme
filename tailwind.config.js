@@ -40,6 +40,7 @@ module.exports = {
       'accent-gold': '#FDE212',
       'accent-gold-500': '#ECC806',
       'text-muted': '#646B73',
+      'light-blue': '#F3F7FC',
       
       // Footer colors
       'footer-bg': '#13263E',

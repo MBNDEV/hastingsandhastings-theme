@@ -9,10 +9,11 @@
   top: 32px;
   left: 0;
   right: 0;
-  width: 100%;
+  width: calc(100% - 50px);
   background: transparent;
   transition: all 0.3s ease-in-out;
   z-index: 1000;
+  margin: 0 auto;
 }
 .header-navigation-wrapper.is-sticky {
   top: 16px;
@@ -635,6 +636,11 @@
   .mega-column {
     flex: 0 1 200px;
     min-width: 180px;
+  }
+  
+  .header-container,
+  .desktop-nav-container{
+    gap: 1rem;
   }
 }
 

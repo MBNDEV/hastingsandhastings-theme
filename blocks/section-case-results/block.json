@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-case-results",
+  "title": "Section: Case Results",
+  "category": "mbn-blocks",
+  "icon": "awards",
+  "description": "Case results section with repeater cards",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "eyebrowText": {
+      "type": "string",
+      "default": "CASE RESULTS"
+    },
+    "mainHeading": {
+      "type": "string",
+      "default": "Proven experience. Real results."
+    },
+    "description": {
+      "type": "string",
+      "default": "Every case is different, but experience matters. Here are a few examples of results Hastings & Hastings' personal injury lawyers have secured for injury victims across Arizona."
+    },
+    "caseResults": {
+      "type": "array",
+      "default": []
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "SEE MORE CASE RESULTS"
+    },
+    "buttonUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "bg-white"
+    }
+  }
+}
