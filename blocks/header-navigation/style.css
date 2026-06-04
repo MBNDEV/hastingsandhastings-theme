@@ -170,6 +170,9 @@
   left: 0;
   width: calc(100vw - 50px);
 }
+.header-navigation-wrapper.is-sticky .mega-menu-wrapper:has(.dropdown-link) {
+  width: auto;
+}
 
 /* MEGA MENU CONTENT - Centered container */
 .mega-menu {
