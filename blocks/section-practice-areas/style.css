@@ -1,0 +1,5 @@
+/* Practice Areas Grid - Frontend Styles */
+
+.practice-card-image:hover {
+  transform: scale(1.05);
+}

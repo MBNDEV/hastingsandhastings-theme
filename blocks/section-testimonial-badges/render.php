@@ -80,8 +80,11 @@ $slider_id = 'testimonials-slider-' . wp_unique_id();
 							
 							<!-- Icon -->
 							<?php if ( ! empty( $badge['iconUrl'] ) ) : ?>
+								<?php
+								$alt_text = ! empty( $badge['iconId'] ) ? get_post_meta( $badge['iconId'], '_wp_attachment_image_alt', true ) : '';
+								?>
 								<div class="badge-icon flex-shrink-0">
-									<img src="<?php echo esc_url( $badge['iconUrl'] ); ?>" alt="" class="w-full h-full" />
+									<img src="<?php echo esc_url( $badge['iconUrl'] ); ?>" alt="<?php echo esc_attr( $alt_text ); ?>" class="w-full h-full" />
 								</div>
 							<?php endif; ?>
 							

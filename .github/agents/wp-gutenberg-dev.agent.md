@@ -391,7 +391,7 @@ npm install @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities --save
 **edit.js** with drag-and-drop:
 ```javascript
 import { useBlockProps, InspectorControls, RichText, MediaUpload } from '@wordpress/block-editor';
-import { PanelBody, Button, TextControl, TextareaControl, IconButton, Icon } from '@wordpress/components';
+import { PanelBody, Button, TextControl, TextareaControl, Icon } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
@@ -430,12 +430,12 @@ function SortableItem({ item, index, updateItem, removeItem, duplicateItem }) {
           <strong>{__('Item', 'mbn-theme')} {index + 1}</strong>
         </div>
         <div style={{ display: 'flex', gap: '8px' }}>
-          <IconButton
+          <Button
             icon="admin-page"
             label={__('Duplicate', 'mbn-theme')}
             onClick={() => duplicateItem(index)}
           />
-          <IconButton
+          <Button
             icon="trash"
             label={__('Remove', 'mbn-theme')}
             onClick={() => removeItem(index)}
@@ -687,12 +687,25 @@ npm run build
 - Use `setAttributes()` for state
 - Translate all UI text with `__()`
 - Destructure props and attributes
+- **Use `Button` component with `icon` prop**, NOT `IconButton` (deprecated)
+  - Import: `import { Button, Icon } from '@wordpress/components';`
+  - Usage: `<Button icon="admin-page" label="Duplicate" onClick={...} />`
+- **Use `.slice()` instead of `.substr()`** (deprecated)
+  - Pattern: `Math.random().toString(36).slice(2)` not `.substr(2)`
+- **Generate unique IDs**: Use `Date.now().toString(36) + Math.random().toString(36).slice(2)`
 
 ### PHP (for render.php)
 - Follow WordPress Coding Standards
 - Always escape: `esc_html()`, `esc_url()`, `esc_attr()`
-- Use `wp_kses_post()` for rich content
+- **Use `wp_kses_post()` for RichText fields** that can contain HTML formatting (not `esc_html()`)
 - Use `get_block_wrapper_attributes()`
+- **Phone number sanitization**: Use `/[^0-9+]/` regex to preserve international `+` prefix
+  - Pattern: `preg_replace( '/[^0-9+]/', '', $phone_number )`
+  - Preserves: `+1 (480) 480-2929` → `tel:+14804802929`
+- **Image alt text**: Always retrieve from media library for accessibility
+  - Pattern: `$alt_text = ! empty( $image_id ) ? get_post_meta( $image_id, '_wp_attachment_image_alt', true ) : '';`
+  - Provide fallback: `if ( empty( $alt_text ) ) { $alt_text = __( 'Fallback', 'mbn-theme' ); }`
+  - Then use: `alt="<?php echo esc_attr( $alt_text ); ?>"`
 
 ### CSS
 - **Tailwind-first**: Use utility classes

@@ -1,5 +1,5 @@
 import { useBlockProps, InspectorControls, MediaUpload } from '@wordpress/block-editor';
-import { PanelBody, SelectControl, TextControl, TextareaControl, Button, IconButton, Icon } from '@wordpress/components';
+import { PanelBody, SelectControl, TextControl, TextareaControl, Button, Icon } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Fragment, useEffect, useState } from '@wordpress/element';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';

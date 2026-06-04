@@ -1,0 +1,17 @@
+/* Full-width editor styles */
+.wp-block-mbn-theme-section-case-results {
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.wp-block-mbn-theme-section-case-results[data-align="full"] {
+  max-width: none;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.wp-block-mbn-theme-section-case-results[data-align="wide"] {
+  max-width: var(--wp--style--global--wide-size, 1280px);
+}

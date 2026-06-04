@@ -1,5 +1,5 @@
 import { useBlockProps, InspectorControls, RichText, MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
-import { PanelBody, TextControl, TextareaControl, Button, IconButton, Icon } from '@wordpress/components';
+import { PanelBody, TextControl, TextareaControl, Button, Icon } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
@@ -39,12 +39,12 @@ function SortableAward({ award, index, updateAward, removeAward, duplicateAward 
           <strong>{__('Award', 'mbn-theme')} {index + 1}</strong>
         </div>
         <div style={{ display: 'flex', gap: '8px' }}>
-          <IconButton
+          <Button
             icon="admin-page"
             label={__('Duplicate', 'mbn-theme')}
-            onClick={() => duplicateAward(index)}
+            onClick={() => duplicateItem(index)}
           />
-          <IconButton
+          <Button
             icon="trash"
             label={__('Remove', 'mbn-theme')}
             onClick={() => removeAward(index)}
@@ -75,7 +75,7 @@ function SortableAward({ award, index, updateAward, removeAward, duplicateAward 
 
 // Generate unique ID compatible with older browsers
 function generateUniqueId() {
-  return Date.now().toString(36) + Math.random().toString(36).substr(2);
+  return Date.now().toString(36) + Math.random().toString(36).slice(2);
 }
 
 export default function Edit({ attributes, setAttributes }) {

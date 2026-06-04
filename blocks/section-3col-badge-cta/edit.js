@@ -1,5 +1,5 @@
 import { useBlockProps, InspectorControls, MediaUpload, RichText } from '@wordpress/block-editor';
-import { PanelBody, TextControl, TextareaControl, ToggleControl, Button, IconButton, Icon } from '@wordpress/components';
+import { PanelBody, TextControl, TextareaControl, ToggleControl, Button, Icon } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
@@ -9,7 +9,7 @@ import './editor.css';
 
 // Generate unique ID for repeater items
 function generateUniqueId() {
-  return Date.now().toString(36) + Math.random().toString(36).substr(2);
+  return Date.now().toString(36) + Math.random().toString(36).slice(2);
 }
 
 // Sortable Badge Component
@@ -44,12 +44,12 @@ function SortableBadge({ item, index, updateItem, removeItem, duplicateItem }) {
           <strong>{__('Badge', 'mbn-theme')} {index + 1}</strong>
         </div>
         <div style={{ display: 'flex', gap: '8px' }}>
-          <IconButton
+          <Button
             icon="admin-page"
             label={__('Duplicate', 'mbn-theme')}
             onClick={() => duplicateItem(index)}
           />
-          <IconButton
+          <Button
             icon="trash"
             label={__('Remove', 'mbn-theme')}
             onClick={() => removeItem(index)}
