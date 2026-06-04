@@ -1,0 +1,79 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-how-process-works",
+  "title": "Section: How Process Works",
+  "category": "mbn-blocks",
+  "icon": "list-view",
+  "description": "How our process works section with timeline steps and CTA",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "eyebrowText": {
+      "type": "string",
+      "default": "WHAT HAPPENS NEXT? THREE EASY STEPS."
+    },
+    "mainHeading": {
+      "type": "string",
+      "default": "How our process works."
+    },
+    "description": {
+      "type": "string",
+      "default": "After an accident, it can be hard to know what to do first. Many people speak with the insurance company before they fully understand their options. Getting legal guidance from a personal injury attorney early can help you avoid missteps, protect your case, and move forward with more clarity."
+    },
+    "steps": {
+      "type": "array",
+      "default": []
+    },
+    "showCta": {
+      "type": "boolean",
+      "default": true
+    },
+    "ctaLogoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaLogoId": {
+      "type": "number"
+    },
+    "ctaHeading": {
+      "type": "string",
+      "default": "Start Your Free Consultation"
+    },
+    "ctaDescription": {
+      "type": "string",
+      "default": "Speak with Hastings & Hastings about your case and take the next step with confidence."
+    },
+    "ctaButtonText": {
+      "type": "string",
+      "default": "Start your free consultation now!"
+    },
+    "ctaButtonUrl": {
+      "type": "string",
+      "default": "#contact"
+    },
+    "ctaPhoneLabel": {
+      "type": "string",
+      "default": "CALL TODAY"
+    },
+    "ctaPhoneNumber": {
+      "type": "string",
+      "default": "(480) 480-2929"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "bg-white"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+/* Full-width editor styles */
+.wp-block-mbn-theme-section-how-process-works[data-align="full"] {
+  max-width: none;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+.wp-block-mbn-theme-section-how-process-works[data-align="wide"] {
+  max-width: var(--wp--style--global--wide-size);
+}

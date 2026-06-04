@@ -63,18 +63,18 @@ $wrapper_attributes = get_block_wrapper_attributes(
 			<?php if ( ! empty( $cards ) ) : ?>
 				<?php foreach ( $cards as $card ) : ?>
 					<!-- Practice Area Card -->
-					<div class="practice-card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+					<div class="practice-card overflow-hidden">
 						<?php if ( ! empty( $card['imageUrl'] ) ) : ?>
 							<div class="aspect-[4/3] bg-gray-200 overflow-hidden">
 								<img 
 									src="<?php echo esc_url( $card['imageUrl'] ); ?>" 
 									alt="<?php echo esc_attr( $card['heading'] ?? '' ); ?>" 
-									class="practice-card-image w-full h-full object-cover transition-transform duration-300"
+									class="practice-card-image rounded-lg w-full h-full object-cover transition-transform duration-300"
 								/>
 							</div>
 						<?php endif; ?>
 						
-						<div class="p-6">
+						<div class="py-6">
 							<?php if ( ! empty( $card['heading'] ) ) : ?>
 								<h3 class="font-heading font-bold text-xl md:text-2xl text-text-heading mb-3">
 									<?php echo esc_html( $card['heading'] ); ?>
@@ -93,8 +93,8 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
 			<!-- CTA Panel -->
 			<?php if ( $show_cta_panel ) : ?>
-				<div class="lg:col-span-2 bg-white rounded-lg overflow-hidden shadow-md border-2 border-secondary lg:col-start-3">
-					<div class="p-8 md:p-10 flex flex-col items-center justify-center text-center h-full">
+				<div class="col-span-1 md:col-span-2 bg-white rounded-2xl overflow-hidden shadow-md border-2 border-secondary">
+					<div class="p-8 md:p-10 flex flex-col h-full">
 						
 						<!-- Logo -->
 						<?php if ( ! empty( $cta_logo_url ) ) : ?>
