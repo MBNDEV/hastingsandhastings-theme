@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-client-testimonials",
+  "title": "Section: Client Testimonials",
+  "category": "mbn-blocks",
+  "icon": "star-filled",
+  "description": "Client testimonials section with stacking card animation",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "script": "file:./script.js",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "bg-white"
+    },
+    "eyebrowText": {
+      "type": "string",
+      "default": "CLIENT EXPERIENCES"
+    },
+    "mainHeading": {
+      "type": "string",
+      "default": "Trusted by injury victims across Arizona"
+    },
+    "description": {
+      "type": "string",
+      "default": "When people are dealing with the aftermath of an accident, trust matters. Our clients consistently speak to the care, clarity, and support they received throughout the process."
+    },
+    "testimonials": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}
