@@ -21,10 +21,10 @@ $logo_mark_url   = $attributes['logoMarkUrl'] ?? '';
 
 // Fallback to theme logos if not set
 if ( empty( $logo_full_url ) ) {
-  $logo_full_url = get_template_directory_uri() . '/assets/images/logo-header.svg';
+  $logo_full_url = get_theme_file_uri( '/assets/images/logo-header.svg' );
 }
 if ( empty( $logo_mark_url ) ) {
-  $logo_mark_url = get_template_directory_uri() . '/assets/images/logo-mark.svg';
+  $logo_mark_url = get_theme_file_uri( '/assets/images/logo-mark.svg' );
 }
 
 // Custom Walker for div-based structure matching HTML demo
@@ -249,7 +249,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 );
 ?>
 
-<header <?php echo wp_kses_post( $wrapper_attributes ); ?>>
+<header <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
   <!-- Desktop Header Container -->
   <div class="header-container">
     

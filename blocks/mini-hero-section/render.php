@@ -1,6 +1,6 @@
 <?php
 /**
- * Hero Section Block - Dynamic Rendering
+ * Mini-Hero Section Block - Dynamic Rendering
  *
  * @package CustomTheme
  *
@@ -9,9 +9,9 @@
  * @param WP_Block $block Block instance
  */
 
-$eyebrow_text           = $attributes['eyebrowText'] ?? 'Arizona\'s Discount Accident Lawyers';
-$main_heading           = $attributes['mainHeading'] ?? 'Personal injury attorneys trusted by accident victims for nearly 50 years';
-$subheading             = $attributes['subheading'] ?? '';
+$eyebrow_text           = $attributes['eyebrowText'] ?? 'GET STARTED TODAY';
+$main_heading           = $attributes['mainHeading'] ?? 'Talk to a Phoenix accident lawyer. Keep more with our 29% fee';
+$subheading             = $attributes['subheading'] ?? 'If you\'ve been injured in an accident, Hastings & Hastings is ready to help you understand your options and take the next step.';
 $badge_image_url        = $attributes['badgeImageUrl'] ?? '';
 $badge_image_id         = $attributes['badgeImageId'] ?? 0;
 $video_mp4_url          = $attributes['videoMp4Url'] ?? '';
@@ -29,56 +29,63 @@ $out_of_pocket_number   = $attributes['outOfPocketNumber'] ?? '$0';
 $out_of_pocket_label    = $attributes['outOfPocketLabel'] ?? 'Out-of-Pocket';
 $fee_until_win_number   = $attributes['feeUntilWinNumber'] ?? 'NO';
 $fee_until_win_label    = $attributes['feeUntilWinLabel'] ?? 'Fee Until We Win';
+$background_color       = $attributes['backgroundColor'] ?? 'bg-white';
+
+// Determine if background color is a hex code or Tailwind class
+$is_custom_color = strpos( $background_color, '#' ) === 0;
+$bg_class        = $is_custom_color ? '' : $background_color;
+$bg_style        = $is_custom_color ? 'background-color: ' . esc_attr( $background_color ) . ';' : '';
 
 $wrapper_attributes = get_block_wrapper_attributes(
   array(
-	  'class' => 'hero-video-container',
+	  'class' => 'mini-hero-video-container ' . esc_attr( $bg_class ),
+	  'style' => $bg_style,
   )
 );
 ?>
 
 <section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-	
-	<!-- Video Background -->
-	<?php if ( $video_mp4_url || $video_webm_url ) : ?>
-		<video 
-			class="hero-video" 
-			autoplay 
-			muted 
-			loop 
-			playsinline 
-			<?php
-			if ( $poster_image_url ) :
-              ?>
-				poster="<?php echo esc_url( $poster_image_url ); ?>"<?php endif; ?>
-		>
-			<?php if ( $video_mp4_url ) : ?>
-				<source src="<?php echo esc_url( $video_mp4_url ); ?>" type="video/mp4">
-			<?php endif; ?>
-			<?php if ( $video_webm_url ) : ?>
-				<source src="<?php echo esc_url( $video_webm_url ); ?>" type="video/webm">
-			<?php endif; ?>
-			<?php esc_html_e( 'Your browser does not support the video tag.', 'mbn-theme' ); ?>
-		</video>
-	<?php endif; ?>
-
-	<!-- Overlay Image -->
-	<?php if ( $overlay_image_url ) : ?>
-		<div class="hero-overlay" style="background-image: url('<?php echo esc_url( $overlay_image_url ); ?>');"></div>
-	<?php endif; ?>
 
 	<!-- Hero Content -->
-	<div class="hero-content flex items-center justify-center px-4 md:px-6 lg:px-12">
-		<div class="max-w-[1440px] w-full mx-auto py-20 md:pt-48 md:pb-16">
-			
+	<div class="relative  mini-hero-content flex items-center justify-center px-4 md:px-6 lg:px-12 py-16 md:py-20 ">
+    
+		<!-- Main Content Container -->
+		<div class="relative max-w-[1440px] w-full mx-auto py-8 md:py-16 lg:py-20 px-6 md:px-12 lg:px-24 rounded-3xl overflow-hidden">
+      <!-- Video Background -->
+      <?php if ( $video_mp4_url || $video_webm_url ) : ?>
+        <video 
+          class="mini-hero-video" 
+          autoplay 
+          muted 
+          loop 
+          playsinline 
+          <?php
+          if ( $poster_image_url ) :
+            ?>
+            poster="<?php echo esc_url( $poster_image_url ); ?>"<?php endif; ?>
+        >
+          <?php if ( $video_mp4_url ) : ?>
+            <source src="<?php echo esc_url( $video_mp4_url ); ?>" type="video/mp4">
+          <?php endif; ?>
+          <?php if ( $video_webm_url ) : ?>
+            <source src="<?php echo esc_url( $video_webm_url ); ?>" type="video/webm">
+          <?php endif; ?>
+          <?php esc_html_e( 'Your browser does not support the video tag.', 'mbn-theme' ); ?>
+        </video>
+      <?php endif; ?>
+
+      <!-- Overlay Image -->
+      <?php if ( $overlay_image_url ) : ?>
+        <div class="mini-hero-overlay" style="background-image: url('<?php echo esc_url( $overlay_image_url ); ?>');"></div>
+      <?php endif; ?> 
 			<!-- Main Content Container -->
-			<div class="flex flex-col items-center gap-8 md:gap-10">
+			<div class="relative z-20 flex flex-col items-center gap-8 md:gap-10">
 				
 				<!-- Heading Group with Badge -->
-				<div class="relative flex flex-col lg:flex-row md:justify-center items-center lg:items-end justify-between gap-6 lg:gap-12 w-full">
+				<div class="relative flex flex-col lg:flex-row md:justify-center items-center lg:items-end justify-between gap-6 lg:gap-10 w-full">
 					
 					<!-- Text Content Group -->
-					<div class="flex flex-col gap-4 md:gap-6 flex-1 max-w-4xl">
+					<div class="flex flex-col gap-4 md:gap-6 flex-1 max-w-5xl">
 						
 						<!-- Eyebrow Text -->
 						<?php if ( $eyebrow_text ) : ?>
@@ -88,13 +95,13 @@ $wrapper_attributes = get_block_wrapper_attributes(
 						<?php endif; ?>
 						
 						<!-- Main Heading -->
-						<h1 class="font-heading font-semibold text-4xl md:text-5xl xl:text-6xl text-white xl:leading-[72px]">
-						<?php echo wp_kses_post( $main_heading ); ?>
-					</h1>
+						<h2 class="font-heading font-semibold text-4xl md:text-5xl text-white md:leading-[60px]">
+              <?php echo wp_kses_post( $main_heading ); ?>
+            </h2>
 
 					<!-- Subheading -->
 					<?php if ( $subheading ) : ?>
-						<p class="font-body text-gray-light text-lg md:text-xl leading-relaxed mt-2 pr-5">
+						<p class="font-body text-gray-light text-lg md:text-xl leading-relaxed mt-2 pr-5 max-w-3xl">
 							<?php echo wp_kses_post( $subheading ); ?>
 							</p>
 						<?php endif; ?>
@@ -108,11 +115,11 @@ $wrapper_attributes = get_block_wrapper_attributes(
 							$badge_alt_text = __( 'Badge', 'mbn-theme' );
 						}
 						?>
-					<div class="hero-badge flex-shrink-0 lg:self-end px-20">
+					<div class="mini-hero-badge flex-shrink-0 lg:self-end px-10">
 						<img 
 							src="<?php echo esc_url( $badge_image_url ); ?>" 
 							alt="<?php echo esc_attr( $badge_alt_text ); ?>"
-								class="w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 xl:w-64 xl:h-64"
+								class="w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 xl:w-64 xl:h-64 -mb-10 md:-mb-20"
 							/>
 						</div>
 					<?php endif; ?>
@@ -120,7 +127,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
 				<!-- CTA Bar -->
 				<?php if ( $show_cta_bar ) : ?>
-					<div class="cta-bar border border-accent-blue w-full mt-8 rounded-3xl px-6 py-6 xl:px-12">
+					<div class="cta-bar border border-accent-blue w-full rounded-3xl px-4 md:px-6 py-6 xl:px-12">
 						<div class="flex flex-col lg:flex-row items-center justify-between gap-6">
 							
 							<!-- Left Side: Value Propositions -->

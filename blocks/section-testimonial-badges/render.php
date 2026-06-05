@@ -42,7 +42,7 @@ $slider_id = 'testimonials-slider-' . wp_unique_id();
 											<?php $star_count = intval( $testimonial['starRating'] ); ?>
 											<div class="flex gap-1">
 												<?php for ( $i = 0; $i < $star_count; $i++ ) : ?>
-													<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/icn-single-star.svg' ); ?>" alt="" class="star-icon" />
+												<img src="<?php echo esc_url( get_theme_file_uri( '/assets/icons/icn-single-star.svg' ) ); ?>" alt="" class="star-icon" />
 												<?php endfor; ?>
 											</div>
 										<?php endif; ?>

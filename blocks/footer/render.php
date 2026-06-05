@@ -125,7 +125,7 @@ if ( ! function_exists( 'render_footer_menu' ) ) {
 }
 ?>
 
-<footer <?php echo wp_kses_post( $wrapper_attributes ); ?>>
+<footer <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
   
   <!-- Locations & Practice Areas Section -->
   <div class="border-b border-white border-opacity-10">

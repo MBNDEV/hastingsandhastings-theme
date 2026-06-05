@@ -2,10 +2,12 @@ import { useBlockProps, InspectorControls, MediaUpload, MediaUploadCheck, RichTe
 import { PanelBody, TextControl, TextareaControl, ToggleControl, Button } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
+import BackgroundColorControl from '../shared/BackgroundColorControl';
 import './editor.css';
 
 export default function Edit({ attributes, setAttributes }) {
   const {
+    backgroundColor,
     eyebrowText,
     mainHeading,
     subheading,
@@ -32,10 +34,16 @@ export default function Edit({ attributes, setAttributes }) {
     feeUntilWinLabel,
   } = attributes;
 
+  // Determine background style
+  const isCustomColor = backgroundColor && backgroundColor.startsWith('#');
+  const bgStyle = isCustomColor ? { backgroundColor } : {};
+  const bgClass = isCustomColor ? '' : backgroundColor;
+
   const blockProps = useBlockProps({
-    className: 'relative min-h-screen bg-gray-900 overflow-hidden',
+    className: `relative min-h-screen overflow-hidden ${bgClass}`,
     style: {
-      backgroundImage: posterImageUrl ? `url(${posterImageUrl})` : 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+      ...bgStyle,
+      backgroundImage: posterImageUrl ? `url(${posterImageUrl})` : undefined,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }
@@ -45,6 +53,17 @@ export default function Edit({ attributes, setAttributes }) {
     <Fragment>
       <InspectorControls>
         
+        {/* Background Settings */}
+        <PanelBody title={__('Background', 'mbn-theme')} initialOpen={true}>
+          <BackgroundColorControl
+            value={backgroundColor}
+            onChange={(value) => setAttributes({ backgroundColor: value })}
+            defaultValue="bg-white"
+            label={__('Section Background', 'mbn-theme')}
+            help={__('Choose background color for the section', 'mbn-theme')}
+          />
+        </PanelBody>
+
         {/* Content Settings */}
         <PanelBody title={__('Hero Content', 'mbn-theme')} initialOpen={true}>
           <TextControl

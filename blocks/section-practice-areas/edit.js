@@ -355,7 +355,7 @@ export default function Edit({ attributes, setAttributes }) {
                   <p className="font-body text-base text-text-body mb-6">{ctaDescription}</p>
                 )}
                 {ctaButtonText && (
-                  <a href={ctaButtonUrl} className="inline-flex h-12 px-8 rounded-full font-body font-bold border">
+                  <a href={ctaButtonUrl} onClick={(e) => e.preventDefault()} className="inline-flex h-12 px-8 rounded-full font-body font-bold border">
                     {ctaButtonText}
                   </a>
                 )}

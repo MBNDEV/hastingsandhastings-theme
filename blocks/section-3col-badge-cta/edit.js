@@ -430,10 +430,10 @@ export default function Edit({ attributes, setAttributes }) {
                   
                   {/* Right: Buttons */}
                   <div className="flex flex-col items-center gap-4">
-                    <a href={ctaButtonUrl} className="btn-cta">
+                    <a href={ctaButtonUrl} onClick={(e) => e.preventDefault()} className="btn-cta">
                       {ctaButtonText}
                     </a>
-                    <a href={phoneNumberUrl} className="font-body font-bold text-sm transition-colors whitespace-nowrap">
+                    <a href={phoneNumberUrl} onClick={(e) => e.preventDefault()} className="font-body font-bold text-sm transition-colors whitespace-nowrap">
                       <span className="text-white no-underline">CALL TODAY</span> <span className="text-primary underline">{phoneNumber}</span>
                     </a>
                   </div>

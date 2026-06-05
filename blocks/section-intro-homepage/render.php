@@ -13,6 +13,7 @@ $eyebrow_text         = $attributes['eyebrowText'] ?? 'Why Arizonans Choose Hast
 $main_heading         = $attributes['mainHeading'] ?? 'Trusted accident lawyer in Phoenix for decades';
 $subheading           = $attributes['subheading'] ?? '';
 $background_image_url = $attributes['backgroundImageUrl'] ?? '';
+$background_image_id  = $attributes['backgroundImageId'] ?? 0;
 $awards_label         = $attributes['awardsLabel'] ?? 'Awards & Accolades';
 $awards               = $attributes['awards'] ?? array();
 
@@ -23,7 +24,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 );
 ?>
 
-<section <?php echo wp_kses_post( $wrapper_attributes ); ?>>
+<section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	<div class="w-full pt-12 md:pt-16 lg:pt-20 bg-white">
 		<div class="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-12 relative z-10">
 			
