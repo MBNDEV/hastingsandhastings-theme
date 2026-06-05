@@ -13,6 +13,7 @@ $eyebrow_text           = $attributes['eyebrowText'] ?? 'GET STARTED TODAY';
 $main_heading           = $attributes['mainHeading'] ?? 'Talk to a Phoenix accident lawyer. Keep more with our 29% fee';
 $subheading             = $attributes['subheading'] ?? 'If you\'ve been injured in an accident, Hastings & Hastings is ready to help you understand your options and take the next step.';
 $badge_image_url        = $attributes['badgeImageUrl'] ?? '';
+$badge_image_id         = $attributes['badgeImageId'] ?? 0;
 $video_mp4_url          = $attributes['videoMp4Url'] ?? '';
 $video_webm_url         = $attributes['videoWebmUrl'] ?? '';
 $poster_image_url       = $attributes['posterImageUrl'] ?? '';
@@ -43,7 +44,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 );
 ?>
 
-<section <?php echo wp_kses_post( $wrapper_attributes ); ?>>
+<section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 
 	<!-- Hero Content -->
 	<div class="relative  mini-hero-content flex items-center justify-center px-4 md:px-6 lg:px-12 py-16 md:py-20 ">

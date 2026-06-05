@@ -354,10 +354,10 @@ export default function Edit({ attributes, setAttributes }) {
                     
                     {/* CTA Button & Phone */}
                     <div className="flex flex-col sm:flex-row items-center gap-4 lg:gap-6">
-                      <a href={ctaButtonUrl} className="inline-flex items-center gap-2 h-12 md:h-14 px-6 md:px-8 rounded-full font-heading font-bold text-sm md:text-base bg-gradient-to-b from-accent-gold to-accent-gold-500 text-gray-900 hover:shadow-lg transition-all">
+                      <a href={ctaButtonUrl} onClick={(e) => e.preventDefault()} className="inline-flex items-center gap-2 h-12 md:h-14 px-6 md:px-8 rounded-full font-heading font-bold text-sm md:text-base bg-gradient-to-b from-accent-gold to-accent-gold-500 text-gray-900 hover:shadow-lg transition-all">
                         {ctaButtonText}
                       </a>
-                      <a href={phoneNumberUrl} className="inline-flex items-center gap-2 h-12 md:h-14 px-6 md:px-8 rounded-full font-heading font-bold text-sm md:text-base bg-white/10 backdrop-blur-sm border-2 border-white text-white hover:bg-white/20 transition-all">
+                      <a href={phoneNumberUrl} onClick={(e) => e.preventDefault()} className="inline-flex items-center gap-2 h-12 md:h-14 px-6 md:px-8 rounded-full font-heading font-bold text-sm md:text-base bg-white/10 backdrop-blur-sm border-2 border-white text-white hover:bg-white/20 transition-all">
                         {phoneNumber}
                       </a>
                     </div>

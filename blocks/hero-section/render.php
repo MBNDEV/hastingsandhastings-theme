@@ -13,6 +13,7 @@ $eyebrow_text           = $attributes['eyebrowText'] ?? 'Arizona\'s Discount Acc
 $main_heading           = $attributes['mainHeading'] ?? 'Personal injury attorneys trusted by accident victims for nearly 50 years';
 $subheading             = $attributes['subheading'] ?? '';
 $badge_image_url        = $attributes['badgeImageUrl'] ?? '';
+$badge_image_id         = $attributes['badgeImageId'] ?? 0;
 $video_mp4_url          = $attributes['videoMp4Url'] ?? '';
 $video_webm_url         = $attributes['videoWebmUrl'] ?? '';
 $poster_image_url       = $attributes['posterImageUrl'] ?? '';
@@ -36,7 +37,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 );
 ?>
 
-<section <?php echo wp_kses_post( $wrapper_attributes ); ?>>
+<section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	
 	<!-- Video Background -->
 	<?php if ( $video_mp4_url || $video_webm_url ) : ?>

@@ -693,6 +693,48 @@ npm run build
 - **Use `.slice()` instead of `.substr()`** (deprecated)
   - Pattern: `Math.random().toString(36).slice(2)` not `.substr(2)`
 - **Generate unique IDs**: Use `Date.now().toString(36) + Math.random().toString(36).slice(2)`
+- **Prevent accidental navigation in editor previews**: Always add `onClick={(e) => e.preventDefault()}` to `<a>` tags in edit.js
+  - ❌ BAD: `<a href={url} className="...">Button</a>` (can trigger navigation/protocol handlers like `tel:`)
+  - ✅ GOOD: `<a href={url} onClick={(e) => e.preventDefault()} className="...">Button</a>`
+  - Why: Clicking links in the block editor should not navigate away or trigger phone dialers
+  - Pattern: `<a href={buttonUrl} onClick={(e) => e.preventDefault()} className="btn">{buttonText}</a>`
+
+### Frontend JavaScript (for script.js)
+- **Prevent multi-instance bugs**: Query container elements first, then children within each container
+  - ❌ BAD: `document.querySelectorAll('.card')` (selects all cards globally, breaks with multiple block instances)
+  - ✅ GOOD: Loop through containers, then query cards within: `containers.forEach(container => container.querySelectorAll('.card'))`
+  - Why: Multiple blocks on the same page will have separate DOM trees with local indices
+- **Optimize scroll performance**: Use `requestAnimationFrame` to throttle scroll/resize handlers
+  - ❌ BAD: `window.addEventListener('scroll', updateCards)` (causes layout thrashing)
+  - ✅ GOOD: Use RAF pattern with ticking flag
+  - Pattern:
+    ```javascript
+    let ticking = false;
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateFunction);
+        ticking = true;
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    ```
+  - Why: Prevents layout thrashing from `getBoundingClientRect()` calls on every scroll tick
+  - Always use `{ passive: true }` for scroll listeners to improve scroll performance
+- **Initialize libraries per container**: When using libraries like Swiper, initialize each container independently
+  - ❌ BAD: `new Swiper('.swiper-container', { pagination: { el: '.swiper-pagination' } })` (only first instance, pagination conflicts)
+  - ✅ GOOD: Loop through containers and target local elements:
+    ```javascript
+    const containers = document.querySelectorAll('.swiper-container');
+    containers.forEach((container) => {
+      new Swiper(container, {
+        pagination: {
+          el: container.querySelector('.swiper-pagination'),
+          clickable: true,
+        },
+      });
+    });
+    ```
+  - Why: Global selectors only target the first element; local queries ensure each block instance works independently
 
 ### PHP (for render.php)
 - Follow WordPress Coding Standards
@@ -706,12 +748,60 @@ npm run build
   - Pattern: `$alt_text = ! empty( $image_id ) ? get_post_meta( $image_id, '_wp_attachment_image_alt', true ) : '';`
   - Provide fallback: `if ( empty( $alt_text ) ) { $alt_text = __( 'Fallback', 'mbn-theme' ); }`
   - Then use: `alt="<?php echo esc_attr( $alt_text ); ?>"`
+  - **IMPORTANT**: Always extract image ID from attributes alongside image URL:
+    - ❌ BAD: Extract only `$image_url = $attributes['imageUrl'] ?? '';` then use undefined `$image_id`
+    - ✅ GOOD: Extract both `$image_url = $attributes['imageUrl'] ?? '';` AND `$image_id = $attributes['imageId'] ?? 0;`
+    - Pattern: `$badge_image_url = $attributes['badgeImageUrl'] ?? '';` MUST be followed by `$badge_image_id = $attributes['badgeImageId'] ?? 0;`
+    - Why: Prevents undefined variable warnings and ensures alt text retrieval works correctly
+- **Theme asset paths**: Use `get_theme_file_uri()` instead of `get_template_directory_uri()`
+  - ❌ BAD: `get_template_directory_uri() . '/assets/icons/icon.svg'` (breaks child themes)
+  - ✅ GOOD: `get_theme_file_uri( '/assets/icons/icon.svg' )` (handles child theme overrides)
+  - Pattern: `<img src="<?php echo esc_url( get_theme_file_uri( '/assets/icons/icon.svg' ) ); ?>" alt="" />`
+  - Why: `get_theme_file_uri()` automatically checks child theme first, then parent theme
+- **Block wrapper attributes**: Output `$wrapper_attributes` directly, do NOT use `wp_kses_post()`
+  - ❌ BAD: `<?php echo wp_kses_post( $wrapper_attributes ); ?>` (can strip inline styles/corrupt attributes)
+  - ✅ GOOD: `<?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>`
+  - Why: `get_block_wrapper_attributes()` already returns safely escaped HTML attributes, not HTML content
+  - Pattern: `<section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>`
 
 ### CSS
 - **Tailwind-first**: Use utility classes
 - Custom CSS only when necessary
 - Mobile-first responsive design 
 - Use `@layer components` for reusable classes
+
+### External Libraries (Swiper, etc.)
+- **NEVER dynamically inject external libraries from CDN** in frontend JavaScript
+  - ❌ BAD: `document.createElement('script')` to load Swiper/libraries
+  - ❌ BAD: Checking `typeof Library === 'undefined'` then injecting
+- **ALWAYS use WordPress enqueue system** via PHP
+  - ✅ GOOD: Use `wp_enqueue_script()` and `wp_enqueue_style()` in render.php
+  - ✅ GOOD: Declare in `block.json` under `viewScript` if bundled locally
+
+**Why this matters:**
+- Prevents layout shifts and race conditions
+- Avoids duplicate requests when multiple blocks use same library
+- Respects Content Security Policies (CSP)
+- Follows WordPress standards and best practices
+- Ensures proper dependency management
+
+**Example (Swiper in dynamic block):**
+```php
+// In render.php - CORRECT approach
+wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', array(), '11.0.0' );
+wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), '11.0.0', true );
+```
+
+```javascript
+// In script.js - Just use the library (no dynamic injection)
+function initSwiper() {
+  if (typeof Swiper === 'undefined') return;
+  
+  new Swiper('.swiper-container', {
+    // config
+  });
+}
+```
 
 ## Constraints
 

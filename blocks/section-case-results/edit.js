@@ -335,7 +335,7 @@ export default function Edit({ attributes, setAttributes }) {
           {/* Button */}
           {buttonText && (
             <div className="text-center">
-              <a href={buttonUrl} className="inline-flex h-12 px-8 rounded-full font-body font-bold border">
+              <a href={buttonUrl} onClick={(e) => e.preventDefault()} className="inline-flex h-12 px-8 rounded-full font-body font-bold border">
                 {buttonText}
               </a>
             </div>

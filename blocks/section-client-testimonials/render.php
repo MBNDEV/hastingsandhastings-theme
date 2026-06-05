@@ -8,6 +8,10 @@
  * @param WP_Block $block      Block instance
  */
 
+// Enqueue Swiper for mobile slider (WordPress standard approach)
+wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', array(), '11.0.0' );
+wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), '11.0.0', true );
+
 $eyebrow_text     = $attributes['eyebrowText'] ?? 'CLIENT EXPERIENCES';
 $main_heading     = $attributes['mainHeading'] ?? 'Trusted by injury victims across Arizona';
 $description      = $attributes['description'] ?? 'When people are dealing with the aftermath of an accident, trust matters. Our clients consistently speak to the care, clarity, and support they received throughout the process.';
@@ -74,7 +78,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 									?>
 									<div class="stars">
 										<?php for ( $i = 0; $i < $rating; $i++ ) : ?>
-											<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/icons/icn-single-star-no-shadow.svg" alt="<?php esc_attr_e( 'Star', 'mbn-theme' ); ?>" class="star-icon">
+											<img src="<?php echo esc_url( get_theme_file_uri( '/assets/icons/icn-single-star-no-shadow.svg' ) ); ?>" alt="<?php esc_attr_e( 'Star', 'mbn-theme' ); ?>" class="star-icon">
 										<?php endfor; ?>
 									</div>
 
@@ -132,7 +136,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 						?>
 						<div class="stars">
 							<?php for ( $i = 0; $i < $rating; $i++ ) : ?>
-								<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/icons/icn-single-star-no-shadow.svg" alt="<?php esc_attr_e( 'Star', 'mbn-theme' ); ?>" class="star-icon">
+								<img src="<?php echo esc_url( get_theme_file_uri( '/assets/icons/icn-single-star-no-shadow.svg' ) ); ?>" alt="<?php esc_attr_e( 'Star', 'mbn-theme' ); ?>" class="star-icon">
 							<?php endfor; ?>
 							</div>
 
