@@ -1,0 +1,78 @@
+/**
+ * Blog Listing Filter Block Styles
+ * Uses Tailwind config values for consistency
+ */
+
+.blog-listing-filter-block {
+    background-color: #FFFFFF;
+}
+
+/* Line clamp utility */
+.blog-listing-filter-block .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Dropdown animation */
+.blog-listing-filter-block .dropdown-filter {
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Custom checkbox styling */
+.blog-listing-filter-block .category-checkbox {
+    cursor: pointer;
+}
+
+.blog-listing-filter-block .category-checkbox:checked {
+    background-color: #3480C3; /* secondary */
+    border-color: #3480C3; /* secondary */
+}
+
+/* Hover effects for cards */
+.blog-listing-filter-block article {
+    transition: all 0.3s ease;
+}
+
+.blog-listing-filter-block article:hover {
+    transform: translateY(-2px);
+}
+
+/* Read More link hover effect */
+.blog-listing-filter-block article a:hover {
+    color: #286FB7; /* accent-blue */
+}
+
+/* Filter button hover effects */
+.blog-listing-filter-block #clearFilters:hover {
+    color: #111827;
+}
+
+.blog-listing-filter-block #applyFilters:hover {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .blog-listing-filter-block .dropdown-filter {
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+}
+
+/* Pagination hover effects */
+.blog-listing-filter-block .pagination-link:hover {
+    color: #3480C3;
+}

@@ -64,6 +64,15 @@ blockDirs.forEach( ( dir ) => {
   );
 } );
 
+// Copy assets/icons directory to build
+copyPatterns.push(
+  {
+    from: path.resolve( __dirname, 'assets/icons' ),
+    to: path.resolve( __dirname, 'build/assets/icons' ),
+    noErrorOnMissing: true,
+  }
+);
+
 // Debug: Log copy patterns
 if ( copyPatterns.length > 0 ) {
   console.log( `📋 Copying ${ copyPatterns.length } files for ${ blockDirs.length } blocks...` );
