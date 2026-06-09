@@ -103,42 +103,40 @@
     function initializePhoneMasking() {
         // Phone number masking function
         function maskPhoneNumber(value) {
-            // Remove all non-digit characters
             const digits = value.replace(/\D/g, '');
-            
-            // Limit to 11 digits (1 + 10 digit phone number)
-            const limitedDigits = digits.substring(0, 11);
-            
-            // Apply mask: +1 (XXX) XXX-XXXX
-            let masked = '';
-            
-            if (limitedDigits.length === 0) {
+
+            if (digits.length === 0) {
                 return '';
             }
-            
-            // Always start with +1
-            masked = '+1';
-            
-            if (limitedDigits.length > 1) {
-                // Add opening parenthesis and area code
-                masked += ' (' + limitedDigits.substring(1, 4);
+
+            // Support both:
+            // - 10-digit input: 4807061100
+            // - 11-digit input with country code: 14807061100
+            const hasLeadingOne = digits.startsWith('1');
+            const nationalPart = hasLeadingOne ? digits.substring(1, 11) : digits.substring(0, 10);
+
+            let masked = '+1';
+
+            if (nationalPart.length > 0) {
+                masked += ' (' + nationalPart.substring(0, 3);
             }
-            
-            if (limitedDigits.length >= 4) {
-                // Close parenthesis after area code
+
+            if (nationalPart.length >= 3) {
                 masked += ')';
             }
-            
-            if (limitedDigits.length >= 5) {
-                // Add space and first 3 digits
-                masked += ' ' + limitedDigits.substring(4, 7);
+
+            if (nationalPart.length > 3) {
+                masked += ' ' + nationalPart.substring(3, 6);
             }
-            
-            if (limitedDigits.length >= 8) {
-                // Add hyphen and last 4 digits
-                masked += '-' + limitedDigits.substring(7, 11);
+
+            if (nationalPart.length >= 6) {
+                masked += '-';
             }
-            
+
+            if (nationalPart.length > 6) {
+                masked += nationalPart.substring(6, 10);
+            }
+
             return masked;
         }
         
@@ -149,9 +147,6 @@
             input.addEventListener('input', function(e) {
                 const oldValue = e.target.value;
                 const oldCursorPosition = e.target.selectionStart;
-                
-                // Get digits only
-                const digitsOnly = oldValue.replace(/\D/g, '');
                 
                 // Apply mask
                 const newValue = maskPhoneNumber(oldValue);

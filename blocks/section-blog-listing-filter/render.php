@@ -84,7 +84,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
       <!-- Filter Toggle -->
       <div class="relative size- inline-flex justify-start items-center gap-1.5">
           <div class="justify-start text-text-body text-sm font-normal font-body leading-5">Filter Articles:</div>
-          <button id="filterToggle" type="button" class="w-60 h-8 pl-3 pr-1 py-2 rounded-[40px] outline outline-1 outline-gray-300 flex justify-start items-center gap-2 cursor-pointer hover:bg-gray-50 transition-colors">
+          <button type="button" class="filter-toggle w-60 h-8 pl-3 pr-1 py-2 rounded-[40px] outline outline-1 outline-gray-300 flex justify-start items-center gap-2 cursor-pointer hover:bg-gray-50 transition-colors">
               <div class="flex-1 justify-start text-text-muted text-base font-normal font-body leading-6">All Topics</div>
               <div class="size-6 relative">
                   <div class="w-2.5 h-[4.96px] left-[7.35px] top-[9.92px] absolute">
@@ -96,21 +96,21 @@ $wrapper_attributes = get_block_wrapper_attributes(
           </button>
           
           <!-- Dropdown Filter -->
-          <div id="dropdownFilter" class="dropdown-filter hidden absolute top-full left-0 mt-2 z-50 w-full md:w-[700px] lg:w-[1100px] px-6 pt-4 pb-6 bg-gradient-to-b from-white to-light-blue rounded-2xl shadow-xl backdrop-blur-[10px] flex flex-col justify-start items-start gap-6 max-h-[70vh] md:max-h-[560px] lg:max-h-[620px] overflow-y-auto">
+          <div class="dropdown-filter hidden absolute top-full left-0 mt-2 z-50 w-full md:w-[700px] lg:w-[1100px] px-6 pt-4 pb-6 bg-gradient-to-b from-white to-light-blue rounded-2xl shadow-xl backdrop-blur-[10px] flex flex-col justify-start items-start gap-6 max-h-[70vh] md:max-h-[560px] lg:max-h-[620px] overflow-y-auto">
               <div class="self-stretch relative flex flex-col md:flex-row justify-between items-center">
                   <div class="flex flex-col justify-start items-start gap-1">
                     <div class="self-stretch justify-start text-gray-900 text-lg font-bold font-heading leading-7">Select topics to filter articles</div>
                     <div class="self-stretch justify-start text-gray-600 text-xs font-normal font-body">Choose one or more topics below, then apply your selection.</div>
                   </div>
                   <div class="flex justify-end items-center gap-2">
-                      <button type="button" id="clearFilters" class="text-gray-700 text-sm font-normal font-body leading-5 hover:text-gray-900 transition-colors">Clear Filters</button>
-                      <button type="button" id="applyFilters" class="h-11 px-6 py-3 bg-gradient-to-bl from-accent-blue via-text-heading to-text-heading rounded-full shadow-lg hover:shadow-xl transition-all flex justify-center items-center">
+                      <button type="button" class="clear-filters text-gray-700 text-sm font-normal font-body leading-5 hover:text-gray-900 transition-colors">Clear Filters</button>
+                      <button type="button" class="apply-filters h-11 px-6 py-3 bg-gradient-to-bl from-accent-blue via-text-heading to-text-heading rounded-full shadow-lg hover:shadow-xl transition-all flex justify-center items-center">
                           <span class="text-white text-sm font-bold font-body uppercase tracking-wide">Apply Filters</span>
                       </button>
                   </div>
               </div>
               
-              <form id="categoryFilterForm" class="self-stretch columns-1 md:columns-2 lg:columns-3 gap-6 md:gap-10">
+              <form class="category-filter-form self-stretch columns-1 md:columns-2 lg:columns-3 gap-6 md:gap-10">
                   <?php foreach ( $cat_tree_array as $parent_data ) : ?>
                       <?php $parent = $parent_data['category']; ?>
                       <?php $children = $parent_data['children']; ?>
@@ -163,7 +163,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
                       $fallback_image = esc_url( get_theme_file_uri( 'assets/images/bg-placeholder.jpg' ) );
                     ?>
                       <article class="bg-gray-50 rounded-lg shadow-sm border border-gray-200 flex flex-col justify-start items-start overflow-hidden hover:shadow-md transition-shadow">
-                          <div class="w-full h-72 md:h-56 relative overflow-hidden">
+                          <div class="w-full h-40 sm:h-72 md:h-56 relative overflow-hidden">
                               <img class="w-full h-full object-cover" 
                                   src="<?php echo esc_url( $thumbnail_url ? $thumbnail_url : $fallback_image ); ?>" 
                                   alt="<?php echo esc_attr( get_the_title() ); ?>" />
@@ -229,7 +229,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
                           <?php endif; ?>
                           
                           <!-- Page Numbers -->
-                          <div class="flex justify-center md:justify-start items-start order-3 sm:order-2 flex-1">
+                          <div class="flex justify-center md:justify-start items-start order-3 sm:order-2 flex-1 sm:flex-none">
                               <?php
                               $total_pages = $query->max_num_pages;
 

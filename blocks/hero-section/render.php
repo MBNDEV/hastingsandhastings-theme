@@ -30,7 +30,6 @@ $out_of_pocket_label    = $attributes['outOfPocketLabel'] ?? 'Out-of-Pocket';
 $fee_until_win_number   = $attributes['feeUntilWinNumber'] ?? 'NO';
 $fee_until_win_label    = $attributes['feeUntilWinLabel'] ?? 'Fee Until We Win';
 $background_image_url   = $attributes['backgroundImageUrl'] ?? '';
-$background_image_id    = $attributes['backgroundImageId'] ?? 0;
 $background_color       = $attributes['backgroundColor'] ?? 'bg-transparent';
 $padding_top            = $attributes['paddingTop'] ?? 'pt-48';
 $padding_bottom         = $attributes['paddingBottom'] ?? 'pb-48';
@@ -83,12 +82,6 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
 	<!-- Background Image -->
 	<?php if ( $background_image_url ) : ?>
-		<?php
-		$bg_image_alt_text = ! empty( $background_image_id ) ? get_post_meta( $background_image_id, '_wp_attachment_image_alt', true ) : '';
-		if ( empty( $bg_image_alt_text ) ) {
-			$bg_image_alt_text = __( 'Background', 'mbn-theme' );
-		}
-		?>
 		<div class="hero-background-image" style="background-image: url('<?php echo esc_url( $background_image_url ); ?>');"></div>
 	<?php endif; ?>
 
