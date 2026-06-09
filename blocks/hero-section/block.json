@@ -110,6 +110,37 @@
     "feeUntilWinLabel": {
       "type": "string",
       "default": "Fee Until We Win"
+    },
+    "backgroundImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "backgroundImageId": {
+      "type": "number"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "bg-transparent"
+    },
+    "paddingTop": {
+      "type": "string",
+      "default": "pt-36"
+    },
+    "paddingBottom": {
+      "type": "string",
+      "default": "pb-20"
+    },
+    "contentJustify": {
+      "type": "string",
+      "default": "justify-center"
+    },
+    "contentVerticalAlign": {
+      "type": "string",
+      "default": "items-center"
+    },
+    "textMaxWidth": {
+      "type": "string",
+      "default": "max-w-4xl"
     }
   }
 }

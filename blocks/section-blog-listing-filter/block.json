@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-blog-listing-filter",
+  "title": "Blog Listing with Filter",
+  "category": "mbn-blocks",
+  "icon": "list-view",
+  "description": "Displays blog posts with category filter and pagination",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "viewScript": "file:./script.js",
+  "render": "file:./render.php",
+  "attributes": {
+    "postsPerPage": {
+      "type": "number",
+      "default": 12
+    }
+  },
+  "supports": {
+    "align": ["wide", "full"]
+  }
+}

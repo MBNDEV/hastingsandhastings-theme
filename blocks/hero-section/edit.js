@@ -1,7 +1,8 @@
 import { useBlockProps, InspectorControls, MediaUpload, MediaUploadCheck, RichText } from '@wordpress/block-editor';
-import { PanelBody, TextControl, TextareaControl, ToggleControl, Button } from '@wordpress/components';
+import { PanelBody, TextControl, TextareaControl, ToggleControl, Button, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
+import BackgroundColorControl from '../shared/BackgroundColorControl';
 import './editor.css';
 
 export default function Edit({ attributes, setAttributes }) {
@@ -30,6 +31,14 @@ export default function Edit({ attributes, setAttributes }) {
     outOfPocketLabel,
     feeUntilWinNumber,
     feeUntilWinLabel,
+    backgroundImageUrl,
+    backgroundImageId,
+    backgroundColor,
+    paddingTop,
+    paddingBottom,
+    contentJustify,
+    contentVerticalAlign,
+    textMaxWidth,
   } = attributes;
 
   const blockProps = useBlockProps({
@@ -83,7 +92,17 @@ export default function Edit({ attributes, setAttributes }) {
                     {badgeImageUrl ? __('Replace Image', 'mbn-theme') : __('Select Image', 'mbn-theme')}
                   </Button>
                   {badgeImageUrl && (
-                    <img src={badgeImageUrl} alt="" style={{ marginTop: '10px', maxWidth: '150px', height: 'auto', borderRadius: '4px' }} />
+                    <>
+                      <img src={badgeImageUrl} alt="" style={{ marginTop: '10px', maxWidth: '150px', height: 'auto', borderRadius: '4px' }} />
+                      <Button 
+                        onClick={() => setAttributes({ badgeImageUrl: '', badgeImageId: 0 })}
+                        variant="link"
+                        isDestructive
+                        style={{ marginTop: '8px' }}
+                      >
+                        {__('Remove Image', 'mbn-theme')}
+                      </Button>
+                    </>
                   )}
                 </div>
               )}
@@ -102,9 +121,19 @@ export default function Edit({ attributes, setAttributes }) {
                     {videoMp4Url ? __('Replace Video', 'mbn-theme') : __('Select Video', 'mbn-theme')}
                   </Button>
                   {videoMp4Url && (
-                    <p style={{ marginTop: '8px', fontSize: '12px', color: '#666', wordBreak: 'break-all' }}>
-                      {videoMp4Url}
-                    </p>
+                    <>
+                      <p style={{ marginTop: '8px', fontSize: '12px', color: '#666', wordBreak: 'break-all' }}>
+                        {videoMp4Url}
+                      </p>
+                      <Button 
+                        onClick={() => setAttributes({ videoMp4Url: '', videoMp4Id: 0 })}
+                        variant="link"
+                        isDestructive
+                        style={{ marginTop: '8px' }}
+                      >
+                        {__('Remove Video', 'mbn-theme')}
+                      </Button>
+                    </>
                   )}
                 </div>
               )}
@@ -123,9 +152,19 @@ export default function Edit({ attributes, setAttributes }) {
                     {videoWebmUrl ? __('Replace Video', 'mbn-theme') : __('Select Video', 'mbn-theme')}
                   </Button>
                   {videoWebmUrl && (
-                    <p style={{ marginTop: '8px', fontSize: '12px', color: '#666', wordBreak: 'break-all' }}>
-                      {videoWebmUrl}
-                    </p>
+                    <>
+                      <p style={{ marginTop: '8px', fontSize: '12px', color: '#666', wordBreak: 'break-all' }}>
+                        {videoWebmUrl}
+                      </p>
+                      <Button 
+                        onClick={() => setAttributes({ videoWebmUrl: '', videoWebmId: 0 })}
+                        variant="link"
+                        isDestructive
+                        style={{ marginTop: '8px' }}
+                      >
+                        {__('Remove Video', 'mbn-theme')}
+                      </Button>
+                    </>
                   )}
                 </div>
               )}
@@ -145,7 +184,17 @@ export default function Edit({ attributes, setAttributes }) {
                     {posterImageUrl ? __('Replace Image', 'mbn-theme') : __('Select Image', 'mbn-theme')}
                   </Button>
                   {posterImageUrl && (
-                    <img src={posterImageUrl} alt="" style={{ marginTop: '10px', maxWidth: '100%', height: 'auto', borderRadius: '4px' }} />
+                    <>
+                      <img src={posterImageUrl} alt="" style={{ marginTop: '10px', maxWidth: '100%', height: 'auto', borderRadius: '4px' }} />
+                      <Button 
+                        onClick={() => setAttributes({ posterImageUrl: '', posterImageId: 0 })}
+                        variant="link"
+                        isDestructive
+                        style={{ marginTop: '8px' }}
+                      >
+                        {__('Remove Image', 'mbn-theme')}
+                      </Button>
+                    </>
                   )}
                 </div>
               )}
@@ -165,7 +214,17 @@ export default function Edit({ attributes, setAttributes }) {
                     {overlayImageUrl ? __('Replace Image', 'mbn-theme') : __('Select Image', 'mbn-theme')}
                   </Button>
                   {overlayImageUrl && (
-                    <img src={overlayImageUrl} alt="" style={{ marginTop: '10px', maxWidth: '100%', height: 'auto', borderRadius: '4px' }} />
+                    <>
+                      <img src={overlayImageUrl} alt="" style={{ marginTop: '10px', maxWidth: '100%', height: 'auto', borderRadius: '4px' }} />
+                      <Button 
+                        onClick={() => setAttributes({ overlayImageUrl: '', overlayImageId: 0 })}
+                        variant="link"
+                        isDestructive
+                        style={{ marginTop: '8px' }}
+                      >
+                        {__('Remove Image', 'mbn-theme')}
+                      </Button>
+                    </>
                   )}
                 </div>
               )}
@@ -250,10 +309,151 @@ export default function Edit({ attributes, setAttributes }) {
             </>
           )}
         </PanelBody>
+
+        {/* Background Settings */}
+        <PanelBody title={__('Background Settings', 'mbn-theme')} initialOpen={false}>
+          <BackgroundColorControl
+            value={backgroundColor}
+            onChange={(value) => setAttributes({ backgroundColor: value })}
+          />
+          
+          <MediaUploadCheck>
+            <MediaUpload
+              onSelect={(media) => setAttributes({ backgroundImageUrl: media.url, backgroundImageId: media.id })}
+              allowedTypes={['image']}
+              value={backgroundImageId}
+              render={({ open }) => (
+                <div style={{ marginTop: '15px' }}>
+                  <p style={{ fontWeight: '600', marginBottom: '8px' }}>{__('Background Image', 'mbn-theme')}</p>
+                  <p style={{ fontSize: '12px', color: '#666', marginBottom: '8px' }}>{__('Optional background image (will overlay on top of video/color)', 'mbn-theme')}</p>
+                  <Button onClick={open} variant="secondary">
+                    {backgroundImageUrl ? __('Replace Image', 'mbn-theme') : __('Select Image', 'mbn-theme')}
+                  </Button>
+                  {backgroundImageUrl && (
+                    <>
+                      <img src={backgroundImageUrl} alt="" style={{ marginTop: '10px', maxWidth: '100%', height: 'auto', borderRadius: '4px' }} />
+                      <Button 
+                        onClick={() => setAttributes({ backgroundImageUrl: '', backgroundImageId: 0 })}
+                        variant="link"
+                        isDestructive
+                        style={{ marginTop: '8px' }}
+                      >
+                        {__('Remove Image', 'mbn-theme')}
+                      </Button>
+                    </>
+                  )}
+                </div>
+              )}
+            />
+          </MediaUploadCheck>
+        </PanelBody>
+
+        {/* Layout Settings */}
+        <PanelBody title={__('Layout Settings', 'mbn-theme')} initialOpen={false}>
+          <SelectControl
+            label={__('Content Padding Top', 'mbn-theme')}
+            value={paddingTop}
+            options={[
+              { label: 'None (pt-0)', value: 'pt-0' },
+              { label: 'Small (pt-20)', value: 'pt-20' },
+              { label: 'Medium (pt-28)', value: 'pt-28' },
+              { label: 'Default (pt-36)', value: 'pt-36' },
+              { label: 'Large (pt-48)', value: 'pt-48' },
+              { label: 'Extra Large (pt-64)', value: 'pt-64' },
+            ]}
+            onChange={(value) => setAttributes({ paddingTop: value })}
+            help={__('Vertical padding at the top of content area', 'mbn-theme')}
+          />
+
+          <SelectControl
+            label={__('Content Padding Bottom', 'mbn-theme')}
+            value={paddingBottom}
+            options={[
+              { label: 'None (pb-0)', value: 'pb-0' },
+              { label: 'Small (pb-12)', value: 'pb-12' },
+              { label: 'Medium (pb-16)', value: 'pb-16' },
+              { label: 'Default (pb-20)', value: 'pb-20' },
+              { label: 'Large (pb-32)', value: 'pb-32' },
+              { label: 'Extra Large (pb-48)', value: 'pb-48' },
+            ]}
+            onChange={(value) => setAttributes({ paddingBottom: value })}
+            help={__('Vertical padding at the bottom of content area', 'mbn-theme')}
+          />
+
+          <SelectControl
+            label={__('Content Horizontal Alignment', 'mbn-theme')}
+            value={contentJustify}
+            options={[
+              { label: 'Start', value: 'justify-start' },
+              { label: 'Center', value: 'justify-center' },
+              { label: 'End', value: 'justify-end' },
+              { label: 'Between', value: 'justify-between' },
+            ]}
+            onChange={(value) => setAttributes({ contentJustify: value })}
+            help={__('Horizontal alignment of hero content', 'mbn-theme')}
+          />
+
+          <SelectControl
+            label={__('Content Vertical Alignment', 'mbn-theme')}
+            value={contentVerticalAlign}
+            options={[
+              { label: 'Top', value: 'items-start' },
+              { label: 'Center', value: 'items-center' },
+              { label: 'Bottom', value: 'items-end' },
+            ]}
+            onChange={(value) => setAttributes({ contentVerticalAlign: value })}
+            help={__('Vertical alignment of hero content', 'mbn-theme')}
+          />
+
+          <SelectControl
+            label={__('Text Content Max Width', 'mbn-theme')}
+            value={textMaxWidth}
+            options={[
+              { label: 'Small (max-w-xl)', value: 'max-w-xl' },
+              { label: 'Medium (max-w-2xl)', value: 'max-w-2xl' },
+              { label: 'Large (max-w-3xl)', value: 'max-w-3xl' },
+              { label: 'Default (max-w-4xl)', value: 'max-w-4xl' },
+              { label: 'Extra Large (max-w-5xl)', value: 'max-w-5xl' },
+              { label: 'Full Width (max-w-full)', value: 'max-w-full' },
+            ]}
+            onChange={(value) => setAttributes({ textMaxWidth: value })}
+            help={__('Maximum width of text content area', 'mbn-theme')}
+          />
+        </PanelBody>
       </InspectorControls>
 
       {/* Editor Preview */}
       <div {...blockProps}>
+        {/* Background Image */}
+        {backgroundImageUrl && (
+          <div 
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              backgroundImage: `url(${backgroundImageUrl})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              zIndex: 0
+            }}
+          />
+        )}
+
+        {/* Video Background Preview - only if no background image */}
+        {!backgroundImageUrl && (videoMp4Url || videoWebmUrl) && (
+          <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
+            <video 
+              className="w-full h-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster={posterImageUrl || undefined}
+            >
+              {videoMp4Url && <source src={videoMp4Url} type="video/mp4" />}
+              {videoWebmUrl && <source src={videoWebmUrl} type="video/webm" />}
+            </video>
+          </div>
+        )}
+        
         {/* Overlay Effect */}
         {overlayImageUrl && (
           <div 
@@ -262,12 +462,13 @@ export default function Edit({ attributes, setAttributes }) {
               backgroundImage: `url(${overlayImageUrl})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              opacity: 0.3
+              opacity: 0.3,
+              zIndex: 1
             }}
           />
         )}
         
-        <div className="relative flex items-center justify-center px-4 md:px-6 lg:px-12 min-h-screen">
+        <div className="relative flex items-center justify-center px-4 md:px-6 lg:px-12 min-h-screen" style={{ zIndex: 10 }}>
           <div className="max-w-[1440px] w-full mx-auto py-20 md:pt-48 md:pb-16">
             
             <div className="flex flex-col items-center gap-8 md:gap-10">

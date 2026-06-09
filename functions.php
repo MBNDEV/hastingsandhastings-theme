@@ -91,6 +91,7 @@ require_once get_theme_file_path( 'inc/includes-template-sync-tools.php' );    /
 require_once get_theme_file_path( 'inc/includes-page-sync.php' );              // Page content sync (optional).
 require_once get_theme_file_path( 'inc/includes-nav-menu-sync.php' );          // Nav menu export/import via Git.
 require_once get_theme_file_path( 'inc/includes-animation-helpers.php' );      // Animation data-attribute helpers.
+require_once get_theme_file_path( 'inc/includes-gravity-forms-api.php' );      // Gravity Forms REST API endpoint.
 
 /**
  * Enqueue scroll animation assets (frontend only).

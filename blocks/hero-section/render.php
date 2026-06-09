@@ -29,10 +29,23 @@ $out_of_pocket_number   = $attributes['outOfPocketNumber'] ?? '$0';
 $out_of_pocket_label    = $attributes['outOfPocketLabel'] ?? 'Out-of-Pocket';
 $fee_until_win_number   = $attributes['feeUntilWinNumber'] ?? 'NO';
 $fee_until_win_label    = $attributes['feeUntilWinLabel'] ?? 'Fee Until We Win';
+$background_image_url   = $attributes['backgroundImageUrl'] ?? '';
+$background_color       = $attributes['backgroundColor'] ?? 'bg-transparent';
+$padding_top            = $attributes['paddingTop'] ?? 'pt-48';
+$padding_bottom         = $attributes['paddingBottom'] ?? 'pb-48';
+$content_justify        = $attributes['contentJustify'] ?? 'justify-center';
+$content_vertical_align = $attributes['contentVerticalAlign'] ?? 'items-center';
+$text_max_width         = $attributes['textMaxWidth'] ?? 'max-w-4xl';
+
+// Determine if background color is a hex code or Tailwind class
+$is_custom_color = strpos( $background_color, '#' ) === 0;
+$bg_class        = $is_custom_color ? '' : $background_color;
+$bg_style        = $is_custom_color ? 'background-color: ' . esc_attr( $background_color ) . ';' : '';
 
 $wrapper_attributes = get_block_wrapper_attributes(
   array(
-	  'class' => 'hero-video-container',
+	  'class' => 'hero-video-container ' . esc_attr( $bg_class ),
+	  'style' => $bg_style,
   )
 );
 ?>
@@ -67,18 +80,23 @@ $wrapper_attributes = get_block_wrapper_attributes(
 		<div class="hero-overlay" style="background-image: url('<?php echo esc_url( $overlay_image_url ); ?>');"></div>
 	<?php endif; ?>
 
+	<!-- Background Image -->
+	<?php if ( $background_image_url ) : ?>
+		<div class="hero-background-image" style="background-image: url('<?php echo esc_url( $background_image_url ); ?>');"></div>
+	<?php endif; ?>
+
 	<!-- Hero Content -->
-	<div class="hero-content flex items-center justify-center px-4 md:px-6 lg:px-12">
-		<div class="max-w-[1440px] w-full mx-auto py-20 md:pt-48 md:pb-16">
+	<div class="hero-content flex <?php echo esc_attr( $content_vertical_align ); ?> px-6 md:px-8 lg:px-12">
+		<div class="max-w-[1440px] w-full mx-auto pt-36 pb-20 md:<?php echo esc_attr( $padding_top ); ?> md:<?php echo esc_attr( $padding_bottom ); ?>">
 			
 			<!-- Main Content Container -->
 			<div class="flex flex-col items-center gap-8 md:gap-10">
 				
 				<!-- Heading Group with Badge -->
-				<div class="relative flex flex-col lg:flex-row md:justify-center items-center lg:items-end justify-between gap-6 lg:gap-12 w-full">
+				<div class="relative flex flex-col lg:flex-row md:<?php echo esc_attr( $content_justify ); ?> items-center lg:items-start justify-between gap-6 lg:gap-12 w-full">
 					
 					<!-- Text Content Group -->
-					<div class="flex flex-col gap-4 md:gap-6 flex-1 max-w-4xl">
+					<div class="flex flex-col gap-4 md:gap-6 flex-1 <?php echo esc_attr( $text_max_width ); ?>">
 						
 						<!-- Eyebrow Text -->
 						<?php if ( $eyebrow_text ) : ?>
@@ -89,8 +107,8 @@ $wrapper_attributes = get_block_wrapper_attributes(
 						
 						<!-- Main Heading -->
 						<h1 class="font-heading font-semibold text-4xl md:text-5xl xl:text-6xl text-white xl:leading-[72px]">
-						<?php echo wp_kses_post( $main_heading ); ?>
-					</h1>
+							<?php echo wp_kses_post( $main_heading ); ?>
+						</h1>
 
 					<!-- Subheading -->
 					<?php if ( $subheading ) : ?>

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-video-bg-form",
+  "title": "Video Background Form Section",
+  "category": "mbn-blocks",
+  "icon": "video-alt3",
+  "description": "Full-screen video background section with consultation form",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./style.css",
+  "style": "file:./style.css",
+  "viewScript": "file:./script.js",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true
+  },
+  "attributes": {
+    "videoMp4Url": {
+      "type": "string",
+      "default": ""
+    },
+    "videoWebmUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "enableGradientOverlay": {
+      "type": "boolean",
+      "default": false
+    },
+    "eyebrowText": {
+      "type": "string",
+      "default": "Free Consultation"
+    },
+    "mainHeading": {
+      "type": "string",
+      "default": "Talk with Hastings & Hastings about your case"
+    },
+    "subheadingText": {
+      "type": "string",
+      "default": "If you were hurt in an accident, our team is here to listen, answer your questions, and help you understand the next step."
+    },
+    "gravityFormId": {
+      "type": "string",
+      "default": ""
+    }
+  }
+}
