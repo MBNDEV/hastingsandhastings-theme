@@ -204,3 +204,33 @@ function hastingsandhastings_validate_donation_amount( $result, $value, $form, $
 	return $result;
 }
 add_filter( 'gform_field_validation', 'hastingsandhastings_validate_donation_amount', 10, 4 );
+
+/**
+ * Enqueue dedicated assets for single blog post template.
+ *
+ * @return void
+ */
+function hastingsandhastings_enqueue_single_blog_assets() {
+  if ( ! is_single() || 'post' !== get_post_type() ) {
+    return;
+  }
+
+  $single_blog_style_path  = get_theme_file_path( 'assets/css/single-blog.css' );
+  $single_blog_script_path = get_theme_file_path( 'assets/js/single-blog-theme.js' );
+
+  wp_enqueue_style(
+    'hastingsandhastings-single-blog',
+    get_theme_file_uri( 'assets/css/single-blog.css' ),
+    array(),
+    file_exists( $single_blog_style_path ) ? (string) filemtime( $single_blog_style_path ) : null
+  );
+
+  wp_enqueue_script(
+    'hastingsandhastings-single-blog-theme',
+    get_theme_file_uri( 'assets/js/single-blog-theme.js' ),
+    array(),
+    file_exists( $single_blog_script_path ) ? (string) filemtime( $single_blog_script_path ) : null,
+    true
+  );
+}
+add_action( 'wp_enqueue_scripts', 'hastingsandhastings_enqueue_single_blog_assets', 20 );
