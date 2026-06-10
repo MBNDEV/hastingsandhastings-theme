@@ -193,8 +193,7 @@ html {
 
 /* Category tag text / link */
 
-.blog-hero__category-tag,
-.blog-hero__category-tag a {
+.blog-hero__category-tag{
     color: var(--primary-default);
     font-family: var(--type-font-family-secondary);
     font-size: var(--fontsize-body-sm);
@@ -202,10 +201,6 @@ html {
     line-height: var(--scale-50020);
     text-decoration: none;
     transition: color 0.3s ease;
-}
-
-.blog-hero__category-tag a:hover {
-    text-decoration: underline;
 }
 
 

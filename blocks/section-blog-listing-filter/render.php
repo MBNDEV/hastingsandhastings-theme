@@ -164,9 +164,9 @@ $wrapper_attributes = get_block_wrapper_attributes(
                     ?>
                       <article class="bg-gray-50 rounded-lg shadow-sm border border-gray-200 flex flex-col justify-start items-start overflow-hidden hover:shadow-md transition-shadow">
                           <div class="w-full h-40 sm:h-72 md:h-56 relative overflow-hidden">
-                              <a href="<?php echo esc_url( get_permalink() ); ?>" ><img class="w-full h-full object-cover" 
+                              <a href="<?php echo esc_url( get_permalink() ); ?>" tabindex="-1" aria-hidden="true"><img class="w-full h-full object-cover" 
                                   src="<?php echo esc_url( $thumbnail_url ? $thumbnail_url : $fallback_image ); ?>" 
-                                  alt="<?php echo esc_attr( get_the_title() ); ?>" /></a>
+                                  alt="" /></a>
                           </div>
                           <div class="w-full px-4 pt-5 pb-4 flex flex-col justify-start items-start gap-6">
                               <div class="w-full flex flex-col justify-start items-start gap-4">

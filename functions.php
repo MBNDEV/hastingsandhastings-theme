@@ -205,6 +205,54 @@ function hastingsandhastings_validate_donation_amount( $result, $value, $form, $
 }
 add_filter( 'gform_field_validation', 'hastingsandhastings_validate_donation_amount', 10, 4 );
 
+if ( ! function_exists( 'hastingsandhastings_get_first_image_from_content' ) ) {
+	/**
+	 * Extract first image URL from HTML content.
+	 *
+	 * @param string $content HTML content.
+	 * @return string
+	 */
+  function hastingsandhastings_get_first_image_from_content( $content ) {
+    if ( ! is_string( $content ) || '' === trim( $content ) ) {
+        return '';
+    }
+
+    if ( preg_match( '/<img[^>]+src=["\']([^"\']+)["\']/i', $content, $matches ) ) {
+        return isset( $matches[1] ) ? (string) $matches[1] : '';
+    }
+
+      return '';
+  }
+}
+
+if ( ! function_exists( 'hastingsandhastings_get_recent_article_image_url' ) ) {
+	/**
+	 * Get recent article image URL with fallback chain.
+	 *
+	 * Priority: featured image -> first image in content -> placeholder image.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return string
+	 */
+  function hastingsandhastings_get_recent_article_image_url( $post_id ) {
+      $post_id = (int) $post_id;
+
+    if ( $post_id > 0 && has_post_thumbnail( $post_id ) ) {
+        $featured = get_the_post_thumbnail_url( $post_id, 'large' );
+      if ( is_string( $featured ) && '' !== $featured ) {
+        return $featured;
+      }
+    }
+
+      $content_image = hastingsandhastings_get_first_image_from_content( (string) get_post_field( 'post_content', $post_id ) );
+    if ( '' !== $content_image ) {
+        return $content_image;
+    }
+
+      return get_theme_file_uri( '/assets/images/bg-placeholder.jpg' );
+  }
+}
+
 /**
  * Enqueue dedicated assets for single blog post template.
  *
@@ -230,7 +278,7 @@ function hastingsandhastings_enqueue_single_blog_assets() {
     get_theme_file_uri( 'assets/js/single-blog-theme.js' ),
     array(),
     file_exists( $single_blog_script_path ) ? (string) filemtime( $single_blog_script_path ) : null,
-    true
+    false
   );
 }
 add_action( 'wp_enqueue_scripts', 'hastingsandhastings_enqueue_single_blog_assets', 20 );

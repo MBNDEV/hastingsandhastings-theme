@@ -9,54 +9,6 @@ if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
 
-if ( ! function_exists( 'hastingsandhastings_get_first_image_from_content' ) ) {
-  /**
-   * Extract first image URL from HTML content.
-   *
-   * @param string $content HTML content.
-   * @return string
-   */
-  function hastingsandhastings_get_first_image_from_content( $content ) {
-    if ( ! is_string( $content ) || '' === trim( $content ) ) {
-      return '';
-    }
-
-    if ( preg_match( '/<img[^>]+src=["\']([^"\']+)["\']/i', $content, $matches ) ) {
-      return isset( $matches[1] ) ? (string) $matches[1] : '';
-    }
-
-    return '';
-  }
-}
-
-if ( ! function_exists( 'hastingsandhastings_get_recent_article_image_url' ) ) {
-  /**
-   * Get recent article image URL with fallback chain.
-   *
-   * Priority: featured image -> first image in content -> placeholder image.
-   *
-   * @param int $post_id Post ID.
-   * @return string
-   */
-  function hastingsandhastings_get_recent_article_image_url( $post_id ) {
-    $post_id = (int) $post_id;
-
-    if ( $post_id > 0 && has_post_thumbnail( $post_id ) ) {
-      $featured = get_the_post_thumbnail_url( $post_id, 'large' );
-      if ( is_string( $featured ) && '' !== $featured ) {
-        return $featured;
-      }
-    }
-
-    $content_image = hastingsandhastings_get_first_image_from_content( (string) get_post_field( 'post_content', $post_id ) );
-    if ( '' !== $content_image ) {
-      return $content_image;
-    }
-
-    return get_theme_file_uri( '/assets/images/bg-placeholder.jpg' );
-  }
-}
-
 get_header();
 ?>
 
@@ -69,8 +21,13 @@ get_header();
       $current_post_id = (int) get_the_ID();
       $post_title      = get_the_title();
       $post_url        = get_permalink();
-      $posts_page_url  = get_permalink( (int) get_option( 'page_for_posts' ) );
-      $categories      = get_the_category( $current_post_id );
+      $posts_page_id   = (int) get_option( 'page_for_posts' );
+      $posts_page_url  = $posts_page_id > 0 ? get_permalink( $posts_page_id ) : '';
+      if ( ! is_string( $posts_page_url ) || '' === $posts_page_url ) {
+        $posts_page_url = home_url( '/blog/' );
+      }
+
+      $categories = get_the_category( $current_post_id );
 
       $share_links = array(
 		  'x'        => 'https://twitter.com/intent/tweet?text=' . rawurlencode( $post_title ) . '&url=' . rawurlencode( $post_url ),
@@ -86,7 +43,7 @@ get_header();
           <nav class="blog-hero__breadcrumb" aria-label="<?php esc_attr_e( 'Breadcrumb', 'mbn-theme' ); ?>">
             <ol>
               <li class="blog-hero__breadcrumb-blog">
-                <a href="<?php echo esc_url( home_url( '/blog/' ) ); ?>"><?php esc_html_e( 'Blog', 'mbn-theme' ); ?></a>
+                <a href="<?php echo esc_url( $posts_page_url ); ?>"><?php esc_html_e( 'Blog', 'mbn-theme' ); ?></a>
               </li>
               <?php if ( ! empty( $categories ) ) : ?>
                 <?php foreach ( $categories as $index => $category ) : ?>
@@ -197,70 +154,69 @@ get_header();
         </aside>
       </div>
 
-      <section class="recent-articles">
-        <div class="recent-articles__container">
-          <div class="blog-content__divider" aria-hidden="true"></div>
+        <?php
+        $recent_posts_query = new WP_Query(
+          array(
+			  'post_type'           => 'post',
+			  'post_status'         => 'publish',
+			  'posts_per_page'      => 3,
+			  'post__not_in'        => array( $current_post_id ),
+			  'ignore_sticky_posts' => true,
+          )
+        );
 
-          <h2 class="recent-articles__heading"><?php esc_html_e( 'Recent Articles', 'mbn-theme' ); ?></h2>
+        if ( $recent_posts_query->have_posts() ) :
+          ?>
+          <section class="recent-articles">
+            <div class="recent-articles__container">
+              <div class="blog-content__divider" aria-hidden="true"></div>
 
-          <ul class="recent-articles__grid">
-            <?php
-            $recent_posts_query = new WP_Query(
-              array(
-				  'post_type'           => 'post',
-				  'post_status'         => 'publish',
-				  'posts_per_page'      => 3,
-				  'post__not_in'        => array( $current_post_id ),
-				  'ignore_sticky_posts' => true,
-              )
-            );
+              <h2 class="recent-articles__heading"><?php esc_html_e( 'Recent Articles', 'mbn-theme' ); ?></h2>
 
-            if ( $recent_posts_query->have_posts() ) :
-              while ( $recent_posts_query->have_posts() ) :
-                $recent_posts_query->the_post();
-
-                $recent_id        = (int) get_the_ID();
-                $recent_title     = get_the_title( $recent_id );
-                $recent_permalink = get_permalink( $recent_id );
-                $recent_excerpt   = get_the_excerpt( $recent_id );
-                if ( '' === trim( $recent_excerpt ) ) {
-                  $recent_excerpt = wp_trim_words( wp_strip_all_tags( (string) get_post_field( 'post_content', $recent_id ) ), 24 );
-                }
-
-                $recent_image_url = hastingsandhastings_get_recent_article_image_url( $recent_id );
-                ?>
-                <li class="recent-articles__item">
-                  <article class="recent-articles__card">
-                    <a href="<?php echo esc_url( $recent_permalink ); ?>" class="recent-articles__card-link" tabindex="-1" aria-hidden="true">
-                      <figure class="recent-articles__card-figure">
-                        <img src="<?php echo esc_url( $recent_image_url ); ?>" alt="<?php echo esc_attr( $recent_title ); ?>" class="recent-articles__card-img">
-                        
-                      </figure>
-                    </a>
-                    <div class="recent-articles__card-body">
-                      <h3 class="recent-articles__card-title">
-                        <a href="<?php echo esc_url( $recent_permalink ); ?>"><?php echo esc_html( $recent_title ); ?></a>
-                      </h3>
-                      <p class="recent-articles__card-excerpt"><?php echo esc_html( $recent_excerpt ); ?></p>
-                      <a href="<?php echo esc_url( $recent_permalink ); ?>" class="recent-articles__card-read-more">
-                        <span class="recent-articles__card-read-more-label"><?php esc_html_e( 'Read More', 'mbn-theme' ); ?></span>
-                        <span class="recent-articles__card-read-more-icon" aria-hidden="true">
-                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                        </span>
-                      </a>
-                    </div>
-                  </article>
-                </li>
+              <ul class="recent-articles__grid">
                 <?php
-              endwhile;
-              wp_reset_postdata();
-            endif;
-            ?>
-          </ul>
-        </div>
-      </section>
+                while ( $recent_posts_query->have_posts() ) :
+                  $recent_posts_query->the_post();
+
+                  $recent_id        = (int) get_the_ID();
+                  $recent_title     = get_the_title( $recent_id );
+                  $recent_permalink = get_permalink( $recent_id );
+                  $recent_excerpt   = wp_trim_words( get_the_excerpt( $recent_id ), 24 );
+                  $recent_image_url = hastingsandhastings_get_recent_article_image_url( $recent_id );
+                  ?>
+                  <li class="recent-articles__item">
+                    <article class="recent-articles__card">
+                      <a href="<?php echo esc_url( $recent_permalink ); ?>" class="recent-articles__card-link" tabindex="-1" aria-hidden="true">
+                        <figure class="recent-articles__card-figure">
+                          <img src="<?php echo esc_url( $recent_image_url ); ?>" alt="<?php echo esc_attr( $recent_title ); ?>" class="recent-articles__card-img">
+                        </figure>
+                      </a>
+                      <div class="recent-articles__card-body">
+                        <h3 class="recent-articles__card-title">
+                          <a href="<?php echo esc_url( $recent_permalink ); ?>"><?php echo esc_html( $recent_title ); ?></a>
+                        </h3>
+                        <p class="recent-articles__card-excerpt"><?php echo esc_html( $recent_excerpt ); ?></p>
+                        <a href="<?php echo esc_url( $recent_permalink ); ?>" class="recent-articles__card-read-more">
+                          <span class="recent-articles__card-read-more-label"><?php esc_html_e( 'Read More', 'mbn-theme' ); ?></span>
+                          <span class="recent-articles__card-read-more-icon" aria-hidden="true">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                          </span>
+                        </a>
+                      </div>
+                    </article>
+                  </li>
+                  <?php
+                endwhile;
+                ?>
+              </ul>
+            </div>
+          </section>
+          <?php
+        endif;
+        wp_reset_postdata();
+        ?>
 
       <?php
     endwhile;
