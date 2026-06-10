@@ -164,15 +164,15 @@ $wrapper_attributes = get_block_wrapper_attributes(
                     ?>
                       <article class="bg-gray-50 rounded-lg shadow-sm border border-gray-200 flex flex-col justify-start items-start overflow-hidden hover:shadow-md transition-shadow">
                           <div class="w-full h-40 sm:h-72 md:h-56 relative overflow-hidden">
-                              <img class="w-full h-full object-cover" 
+                              <a href="<?php echo esc_url( get_permalink() ); ?>" tabindex="-1" aria-hidden="true"><img class="w-full h-full object-cover" 
                                   src="<?php echo esc_url( $thumbnail_url ? $thumbnail_url : $fallback_image ); ?>" 
-                                  alt="<?php echo esc_attr( get_the_title() ); ?>" />
+                                  alt="" /></a>
                           </div>
                           <div class="w-full px-4 pt-5 pb-4 flex flex-col justify-start items-start gap-6">
                               <div class="w-full flex flex-col justify-start items-start gap-4">
                                   <div class="w-full flex flex-col justify-start items-start gap-2">
                                       <h3 class="w-full justify-start text-text-heading text-xl font-bold font-heading leading-7">
-                                          <?php echo esc_html( get_the_title() ); ?>
+                                          <a href="<?php echo esc_url( get_permalink() ); ?>" ><?php echo esc_html( get_the_title() ); ?></a>
                                       </h3>
                                       <div class="w-full justify-start text-gray-600 text-sm font-normal font-body leading-5 line-clamp-3">
                                           <?php echo wp_kses_post( wp_trim_words( get_the_excerpt(), 30 ) ); ?>
