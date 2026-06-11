@@ -15,7 +15,7 @@ $awards_with_images = array_values(
   array_filter(
     $awards,
     static function ( $award ) {
-      return ! empty( $award['imageUrl'] );
+      return is_array( $award ) && ! empty( $award['imageUrl'] );
     }
   )
 );
@@ -24,8 +24,8 @@ if ( empty( $awards_with_images ) ) {
   return;
 }
 
-wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', array(), '11.0.0' );
-wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), '11.0.0', true );
+wp_enqueue_style( 'mbn-theme-swiper', get_theme_file_uri( '/assets/vendor/swiper/swiper-bundle.min.css' ), array(), '11.0.0' );
+wp_enqueue_script( 'mbn-theme-swiper', get_theme_file_uri( '/assets/vendor/swiper/swiper-bundle.min.js' ), array(), '11.0.0', true );
 
 $wrapper_attributes = get_block_wrapper_attributes(
   array(
@@ -49,7 +49,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
             $award_image_id  = $award['imageId'] ?? 0;
             $award_alt_text  = ! empty( $award_image_id ) ? get_post_meta( $award_image_id, '_wp_attachment_image_alt', true ) : '';
             if ( empty( $award_alt_text ) ) {
-              $award_alt_text = __( 'Award', 'mbn-theme' );
+              $award_alt_text = '';
             }
             ?>
             <div class="swiper-slide">

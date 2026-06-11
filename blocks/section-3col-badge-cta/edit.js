@@ -104,7 +104,7 @@ export default function Edit({ attributes, setAttributes }) {
     overlayImageId,
     showOverlay,
     overlayFallbackStyle,
-    badges,
+    badges = [],
     badgeTextColor,
     showCtaBar,
     ctaHeading,

@@ -43,17 +43,19 @@ if ( ! in_array( $badge_text_color, $allowed_badge_text_colors, true ) ) {
 
 if ( $show_overlay ) {
   if ( $overlay_image_url ) {
-      $overlay_style = 'background-image: url(\'' . esc_url( $overlay_image_url ) . '\'); background-size: cover; background-position: center;';
+	  $overlay_style = 'background-image: url(\'' . esc_url( $overlay_image_url ) . '\'); background-size: cover; background-position: center;';
   } elseif ( 'transparent' === $overlay_fallback_style ) {
-      $overlay_style = 'background: transparent;';
+	  $overlay_style = 'background: transparent;';
   } else {
-      $overlay_style = 'background: linear-gradient(180deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.40) 100%);';
+	  $overlay_style = 'background: linear-gradient(180deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.40) 100%);';
   }
 }
-$is_custom_color    = strpos( $background_color, '#' ) === 0;
-$bg_class           = $is_custom_color ? '' : $background_color;
-$bg_style           = $is_custom_color ? 'background-color: ' . esc_attr( $background_color ) . ';' : '';
-$wrapper_attributes = get_block_wrapper_attributes(
+
+$overlay_inline_style = $overlay_style . ' pointer-events: none;';
+$is_custom_color      = strpos( $background_color, '#' ) === 0;
+$bg_class             = $is_custom_color ? '' : $background_color;
+$bg_style             = $is_custom_color ? 'background-color: ' . esc_attr( $background_color ) . ';' : '';
+$wrapper_attributes   = get_block_wrapper_attributes(
   array(
 	  'class' => 'relative overflow-hidden ' . esc_attr( $bg_class ),
 	  'style' => $bg_style,
@@ -90,7 +92,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
 	<!-- Overlay Image -->
 	<?php if ( $show_overlay ) : ?>
-		<div class="absolute inset-0 w-full h-full" style="<?php echo esc_attr( $overlay_style ); ?> pointer-events: none;"></div>
+		<div class="absolute inset-0 w-full h-full" style="<?php echo safecss_filter_attr( $overlay_inline_style ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"></div>
 	<?php endif; ?>
 
 	<div class="relative py-12 md:py-16 lg:py-20">

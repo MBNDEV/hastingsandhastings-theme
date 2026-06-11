@@ -80,7 +80,7 @@ function SortableAwardItem({ award, index, updateAward, duplicateAward, removeAw
 }
 
 export default function Edit({ attributes, setAttributes }) {
-  const { awardsLabel, awards } = attributes;
+  const { awardsLabel, awards = [] } = attributes;
 
   const sensors = useSensors(
     useSensor(PointerSensor),

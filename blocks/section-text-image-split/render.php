@@ -34,7 +34,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
 $image_alt = ! empty( $image_id ) ? get_post_meta( $image_id, '_wp_attachment_image_alt', true ) : '';
 if ( empty( $image_alt ) ) {
-	$image_alt = __( 'Image', 'mbn-theme' );
+  $image_alt = '';
 }
 ?>
 

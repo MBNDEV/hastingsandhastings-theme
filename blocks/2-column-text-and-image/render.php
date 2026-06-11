@@ -69,7 +69,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
           <?php
           $image_alt_text = ! empty( $background_image_id ) ? get_post_meta( $background_image_id, '_wp_attachment_image_alt', true ) : '';
           if ( empty( $image_alt_text ) ) {
-            $image_alt_text = __( 'Image', 'mbn-theme' );
+            $image_alt_text = '';
           }
           ?>
           <img
