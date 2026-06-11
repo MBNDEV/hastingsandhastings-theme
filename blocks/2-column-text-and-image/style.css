@@ -1,0 +1,50 @@
+.wp-block-mbn-theme-two-column-text-and-image {
+  width: 100%;
+}
+
+.section-two-column-text-image__layout {
+  position: relative;
+}
+
+.section-two-column-text-image__image-wrap {
+  position: relative;
+}
+
+.section-two-column-text-image__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 1024px) {
+  .section-two-column-text-image__layout--image-right .section-two-column-text-image__image-wrap {
+    margin-right: calc(100% - 55vw);
+  }
+
+  .section-two-column-text-image__layout--image-left .section-two-column-text-image__image-wrap {
+    margin-left: calc(100% - 55vw);
+  }
+
+  .section-two-column-text-image__layout--image-right .section-two-column-text-image__text-wrap {
+    margin-right: -4rem;
+    z-index: 2;
+    position: relative;
+  }
+
+  .section-two-column-text-image__layout--image-left .section-two-column-text-image__text-wrap {
+    margin-left: -4rem;
+    z-index: 2;
+    position: relative;
+  }
+}
+
+.section-two-column-text-image__awards-slider {
+  width: 100%;
+}
+
+.section-two-column-text-image__awards-slider .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -15,3 +15,21 @@
 .wp-block-mbn-theme-section-3col-badge-cta[data-align="wide"] {
   max-width: var(--wp--style--global--wide-size, 1280px);
 }
+
+.wp-block-mbn-theme-section-3col-badge-cta .section-3col-badge-cta__sub-heading {
+  color: #13263e;
+  text-align: center;
+  font-family: "Noto Serif", serif;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 40px;
+}
+
+.wp-block-mbn-theme-section-3col-badge-cta .section-3col-badge-cta__main-content {
+  color: #53585f;
+  text-align: center;
+  font-family: "Heebo", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+}

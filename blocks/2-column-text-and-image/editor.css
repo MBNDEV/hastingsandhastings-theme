@@ -1,0 +1,7 @@
+.wp-block-mbn-theme-two-column-text-and-image {
+  outline: 0;
+}
+
+.wp-block-mbn-theme-two-column-text-and-image .section-two-column-text-image__preview-image {
+  min-height: 260px;
+}
