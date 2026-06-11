@@ -20,6 +20,10 @@
       "type": "string",
       "default": "full"
     },
+    "backgroundColor": {
+      "type": "string",
+      "default": "bg-white"
+    },
     "eyebrowText": {
       "type": "string",
       "default": "MORE OF YOUR SETTLEMENT STAYS WITH YOU"
@@ -27,6 +31,14 @@
     "mainHeading": {
       "type": "string",
       "default": "A more affordable way to get trusted legal help"
+    },
+    "subHeading": {
+      "type": "string",
+      "default": ""
+    },
+    "mainContent": {
+      "type": "string",
+      "default": ""
     },
     "backgroundImageUrl": {
       "type": "string",
@@ -63,6 +75,15 @@
     "overlayImageId": {
       "type": "number"
     },
+    "showOverlay": {
+      "type": "boolean",
+      "default": true
+    },
+    "overlayFallbackStyle": {
+      "type": "string",
+      "default": "gradient",
+      "enum": ["gradient", "transparent"]
+    },
     "badges": {
       "type": "array",
       "default": []
@@ -78,6 +99,11 @@
     "ctaText": {
       "type": "string",
       "default": "If you were hurt in an accident, Hastings & Hastings offers experienced legal help with a 29% settlement fee designed to help clients keep more of their recovery."
+    },
+    "badgeTextColor": {
+      "type": "string",
+      "default": "text-gray-200",
+      "enum": ["text-gray-200", "text-body"]
     },
     "ctaButtonText": {
       "type": "string",

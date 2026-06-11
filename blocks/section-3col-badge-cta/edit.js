@@ -1,10 +1,11 @@
 import { useBlockProps, InspectorControls, MediaUpload, RichText } from '@wordpress/block-editor';
-import { PanelBody, TextControl, TextareaControl, ToggleControl, Button, Icon } from '@wordpress/components';
+import { PanelBody, TextControl, TextareaControl, ToggleControl, SelectControl, Button, Icon } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import BackgroundColorControl from '../shared/BackgroundColorControl';
 import './editor.css';
 
 // Generate unique ID for repeater items
@@ -86,8 +87,11 @@ function SortableBadge({ item, index, updateItem, removeItem, duplicateItem }) {
 
 export default function Edit({ attributes, setAttributes }) {
   const {
+    backgroundColor,
     eyebrowText,
     mainHeading,
+    subHeading,
+    mainContent,
     backgroundImageUrl,
     backgroundImageId,
     videoMp4Url,
@@ -98,7 +102,10 @@ export default function Edit({ attributes, setAttributes }) {
     posterImageId,
     overlayImageUrl,
     overlayImageId,
-    badges,
+    showOverlay,
+    overlayFallbackStyle,
+    badges = [],
+    badgeTextColor,
     showCtaBar,
     ctaHeading,
     ctaText,
@@ -159,9 +166,14 @@ export default function Edit({ attributes, setAttributes }) {
     }
   };
 
+  const isCustomColor = backgroundColor && backgroundColor.startsWith('#');
+  const bgStyle = isCustomColor ? { backgroundColor } : {};
+  const bgClass = isCustomColor ? '' : backgroundColor;
+
   const blockProps = useBlockProps({
-    className: 'relative bg-gray-900',
+    className: `relative overflow-hidden ${bgClass}`,
     style: {
+      ...bgStyle,
       backgroundImage: posterImageUrl ? `url(${posterImageUrl})` : (backgroundImageUrl ? `url(${backgroundImageUrl})` : 'none'),
       backgroundSize: 'cover',
       backgroundPosition: 'center',
@@ -171,9 +183,18 @@ export default function Edit({ attributes, setAttributes }) {
   return (
     <Fragment>
       <InspectorControls>
+        <PanelBody title={__('Background', 'mbn-theme')} initialOpen={true}>
+          <BackgroundColorControl
+            value={backgroundColor}
+            onChange={(value) => setAttributes({ backgroundColor: value })}
+            defaultValue="bg-white"
+            label={__('Section Background', 'mbn-theme')}
+            help={__('Choose a preset or custom background color', 'mbn-theme')}
+          />
+        </PanelBody>
         
         {/* Content Settings */}
-        <PanelBody title={__('Section Content', 'mbn-theme')} initialOpen={true}>
+        <PanelBody title={__('Section Content', 'mbn-theme')} initialOpen={false}>
           <TextControl
             label={__('Eyebrow Text', 'mbn-theme')}
             value={eyebrowText}
@@ -184,6 +205,20 @@ export default function Edit({ attributes, setAttributes }) {
             label={__('Main Heading', 'mbn-theme')}
             value={mainHeading}
             onChange={(value) => setAttributes({ mainHeading: value })}
+            rows={3}
+          />
+
+          <TextareaControl
+            label={__('Heading (H3)', 'mbn-theme')}
+            value={subHeading}
+            onChange={(value) => setAttributes({ subHeading: value })}
+            rows={2}
+          />
+
+          <TextareaControl
+            label={__('Main Content', 'mbn-theme')}
+            value={mainContent}
+            onChange={(value) => setAttributes({ mainContent: value })}
             rows={3}
           />
 
@@ -278,9 +313,38 @@ export default function Edit({ attributes, setAttributes }) {
               </div>
             )}
           />
+
+          <ToggleControl
+            label={__('Show Overlay Layer', 'mbn-theme')}
+            checked={showOverlay}
+            onChange={(value) => setAttributes({ showOverlay: value })}
+          />
+
+          {showOverlay && (
+            <SelectControl
+              label={__('Overlay Fallback', 'mbn-theme')}
+              value={overlayFallbackStyle}
+              options={[
+                { label: __('Gradient', 'mbn-theme'), value: 'gradient' },
+                { label: __('Transparent', 'mbn-theme'), value: 'transparent' },
+              ]}
+              onChange={(value) => setAttributes({ overlayFallbackStyle: value })}
+              help={__('Used when no overlay image is set.', 'mbn-theme')}
+            />
+          )}
         </PanelBody>
         {/* Badges Settings */}
         <PanelBody title={__('Badges', 'mbn-theme')} initialOpen={false}>
+          <SelectControl
+            label={__('Badge Text Color', 'mbn-theme')}
+            value={badgeTextColor}
+            options={[
+              { label: __('Light Gray (text-gray-200)', 'mbn-theme'), value: 'text-gray-200' },
+              { label: __('Body (text-body)', 'mbn-theme'), value: 'text-body' },
+            ]}
+            onChange={(value) => setAttributes({ badgeTextColor: value })}
+          />
+
           <p style={{ marginBottom: '15px', fontSize: '13px', color: '#666' }}>
             {__('Drag and drop to reorder badges', 'mbn-theme')}
           </p>
@@ -382,6 +446,22 @@ export default function Edit({ attributes, setAttributes }) {
                 placeholder={__('Enter heading...', 'mbn-theme')}
                 className="font-heading font-semibold text-3xl md:text-4xl lg:text-5xl text-white"
               />
+
+              <RichText
+                tagName="h3"
+                value={subHeading}
+                onChange={(value) => setAttributes({ subHeading: value })}
+                placeholder={__('Enter heading (H3)...', 'mbn-theme')}
+                className="section-3col-badge-cta__sub-heading font-heading text-heading text-center text-[28px] font-semibold leading-10 mt-4"
+              />
+
+              <RichText
+                tagName="p"
+                value={mainContent}
+                onChange={(value) => setAttributes({ mainContent: value })}
+                placeholder={__('Enter main content...', 'mbn-theme')}
+                className="section-3col-badge-cta__main-content font-body text-body text-center text-lg font-normal leading-7 mt-3"
+              />
             </div>
 
             {/* 3 Column Badges */}
@@ -397,7 +477,7 @@ export default function Edit({ attributes, setAttributes }) {
                     <img src={badge.imageUrl} alt="" className="w-40 h-40 object-contain" />
                   )}
                   {badge.text && (
-                    <p className="font-body text-white text-sm md:text-base leading-relaxed">
+                    <p className={`font-body ${badgeTextColor} text-sm md:text-base leading-relaxed`}>
                       {badge.text}
                     </p>
                   )}
@@ -424,7 +504,7 @@ export default function Edit({ attributes, setAttributes }) {
                       value={ctaText}
                       onChange={(value) => setAttributes({ ctaText: value })}
                       placeholder={__('Enter CTA text...', 'mbn-theme')}
-                      className="font-body text-white/90 text-base md:text-lg leading-relaxed"
+                      className="font-body text-gray-200 text-base md:text-lg leading-relaxed"
                     />
                   </div>
                   
