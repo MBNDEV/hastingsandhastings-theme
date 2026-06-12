@@ -92,6 +92,8 @@ require_once get_theme_file_path( 'inc/includes-page-sync.php' );              /
 require_once get_theme_file_path( 'inc/includes-nav-menu-sync.php' );          // Nav menu export/import via Git.
 require_once get_theme_file_path( 'inc/includes-animation-helpers.php' );      // Animation data-attribute helpers.
 require_once get_theme_file_path( 'inc/includes-gravity-forms-api.php' );      // Gravity Forms REST API endpoint.
+require_once get_theme_file_path( 'inc/includes-attorney-cpt.php' );            // Attorney custom post type.
+require_once get_theme_file_path( 'inc/includes-attorney-fields.php' );         // Attorney ACF field groups.
 
 /**
  * Enqueue scroll animation assets (frontend only).
@@ -282,3 +284,24 @@ function hastingsandhastings_enqueue_single_blog_assets() {
   );
 }
 add_action( 'wp_enqueue_scripts', 'hastingsandhastings_enqueue_single_blog_assets', 20 );
+
+/**
+ * Enqueue dedicated assets for single attorney template.
+ *
+ * @return void
+ */
+function hastingsandhastings_enqueue_single_attorney_assets() {
+  if ( ! is_singular( 'attorney' ) ) {
+      return;
+  }
+
+	$single_attorney_style_path = get_theme_file_path( 'assets/css/single-attorney.css' );
+
+	wp_enqueue_style(
+      'hastingsandhastings-single-attorney',
+      get_theme_file_uri( 'assets/css/single-attorney.css' ),
+      array(),
+      file_exists( $single_attorney_style_path ) ? (string) filemtime( $single_attorney_style_path ) : null
+	);
+}
+add_action( 'wp_enqueue_scripts', 'hastingsandhastings_enqueue_single_attorney_assets', 20 );
