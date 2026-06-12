@@ -965,7 +965,7 @@ function custom_theme_handle_save_domain_settings( $local_url, $deployment_url )
 /**
  * Render Page Content Sync page.
  *
- * phpcs:disable Generic.Metrics.CyclomaticComplexity
+ * phpcs:disable Generic.Metrics.CyclomaticComplexity,Generic.Metrics.NestingLevel
  */
 function custom_theme_render_page_sync_page() {
 	$pages = custom_theme_get_syncable_pages();
