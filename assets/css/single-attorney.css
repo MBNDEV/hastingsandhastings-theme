@@ -379,7 +379,7 @@ a.single-attorney-contact__row:hover {
     position: sticky;
     top: 96px;
     align-self: flex-start;
-    max-width: 255px
+    max-width: 255px;
   }
 
   .single-attorney__main {

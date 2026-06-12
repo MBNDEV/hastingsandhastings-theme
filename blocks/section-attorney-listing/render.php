@@ -52,7 +52,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
     <?php endif; ?>
 
     <?php if ( $attorney_query->have_posts() ) : ?>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12">
         <?php
         while ( $attorney_query->have_posts() ) :
           $attorney_query->the_post();
@@ -74,7 +74,8 @@ $wrapper_attributes = get_block_wrapper_attributes(
           $phone_display = $phone;
           $phone_href    = preg_replace( '/[^0-9+]/', '', $phone_display );
 
-          $excerpt_source = '' !== trim( wp_strip_all_tags( $main_bio ) ) ? wp_strip_all_tags( $main_bio ) : get_the_excerpt( $current_post_id );
+          $stripped_bio   = wp_strip_all_tags( $main_bio );
+          $excerpt_source = '' !== trim( $stripped_bio ) ? $stripped_bio : get_the_excerpt( $current_post_id );
           $excerpt_text   = wp_trim_words( $excerpt_source, 26, '...' );
           ?>
           <article class="attorney-listing-card">
@@ -103,16 +104,16 @@ $wrapper_attributes = get_block_wrapper_attributes(
               <p class="attorney-listing-excerpt font-body text-text-body mb-5"><?php echo esc_html( $excerpt_text ); ?></p>
             <?php endif; ?>
 
-            <div class="flex items-center gap-6">
+            <div class="flex items-center justify-between gap-6">
               <a class="attorney-listing-action" href="<?php echo esc_url( $profile_url ); ?>">
                 <span><?php esc_html_e( 'View Profile', 'mbn-theme' ); ?></span>
-                <img src="<?php echo esc_url( get_theme_file_uri( 'assets/icons/icon-chevron-right-blue.svg' ) ); ?>" alt="" aria-hidden="true" class="w-4 h-4" />
+                <img src="<?php echo esc_url( get_theme_file_uri( 'assets/icons/icon-chevron-right-blue.svg' ) ); ?>" alt="" aria-hidden="true" class="w-6 h-6" />
               </a>
 
               <?php if ( '' !== $phone_href ) : ?>
                 <a class="attorney-listing-action" href="<?php echo esc_url( 'tel:' . $phone_href ); ?>">
                   <span><?php esc_html_e( 'Call Office', 'mbn-theme' ); ?></span>
-                  <img src="<?php echo esc_url( get_theme_file_uri( 'assets/icons/icn-form-call.svg' ) ); ?>" alt="" aria-hidden="true" class="w-4 h-4" />
+                  <img src="<?php echo esc_url( get_theme_file_uri( 'assets/icons/icn-phone-blue.svg' ) ); ?>" alt="" aria-hidden="true" class="w-6 h-6" />
                 </a>
               <?php endif; ?>
             </div>
