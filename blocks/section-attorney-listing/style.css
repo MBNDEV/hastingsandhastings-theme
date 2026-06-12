@@ -1,0 +1,77 @@
+.attorney-listing-block .attorney-listing-card {
+  min-width: 0;
+}
+
+.attorney-listing-block .attorney-listing-name {
+  font-size: 24px;
+  line-height: 1.08;
+}
+.attorney-listing-block .attorney-listing-name a:hover{
+  color: #286fb7;
+  text-decoration: none;
+}
+
+.attorney-listing-block .attorney-listing-meta {
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.attorney-listing-block .attorney-listing-image-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #d6d7d9;
+}
+
+.attorney-listing-block .attorney-listing-image {
+  width: 100%;
+  aspect-ratio: 11 / 10;
+  object-fit: cover;
+  display: block;
+}
+
+.attorney-listing-block .attorney-listing-image--fallback {
+  width: 100%;
+  aspect-ratio: 11 / 10;
+  background: linear-gradient(135deg, #c9cfd8 0%, #dde2e8 100%);
+}
+
+.attorney-listing-block .attorney-listing-excerpt {
+  font-size: 16px;
+  line-height: 1.22;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.attorney-listing-block .attorney-listing-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #23354d;
+  font-family: inherit;
+  font-size: 18px;
+  line-height: 1.3;
+  font-weight: 500;
+  transition: gap 0.25s ease, opacity 0.25s ease;
+}
+
+.attorney-listing-block .attorney-listing-action:hover {
+  gap: 14px;
+  opacity: 0.9;
+}
+
+.attorney-listing-placeholder-image {
+  width: 100%;
+  aspect-ratio: 11 / 10;
+  background: linear-gradient(135deg, #c9cfd8 0%, #dde2e8 100%);
+}
+
+
+@media (max-width: 639px) {
+
+  .attorney-listing-block .attorney-listing-action {
+    font-size: 16px;
+    gap: 8px;
+  }
+}
