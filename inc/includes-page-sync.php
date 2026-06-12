@@ -454,16 +454,44 @@ function custom_theme_resolve_page_template_slug( $template ) {
 }
 
 /**
+ * Normalize the _wp_page_template meta value to a valid template slug string.
+ *
+ * @param mixed $meta_value Raw meta value.
+ * @return string Safe template slug.
+ */
+function custom_theme_sanitize_page_template_meta_value( $meta_value ) {
+  if ( is_array( $meta_value ) ) {
+      $meta_value = array_values(
+        array_filter(
+          $meta_value,
+          'is_string'
+        )
+      );
+      $meta_value = ! empty( $meta_value ) ? $meta_value[0] : '';
+  }
+
+  if ( ! is_string( $meta_value ) ) {
+      $meta_value = '';
+  }
+
+	$meta_value = trim( $meta_value );
+
+  if ( '' === $meta_value || 'default' === $meta_value ) {
+      return 'page-templates/template-blank.php';
+  }
+
+	return $meta_value;
+}
+
+/**
  * Ensure _wp_page_template in custom fields defaults to the blank template.
  *
  * @param array $custom_fields Custom fields array.
  * @return array Normalized custom fields.
  */
 function custom_theme_normalize_custom_fields_template( $custom_fields ) {
-	$meta = isset( $custom_fields['_wp_page_template'] ) ? $custom_fields['_wp_page_template'] : '';
-  if ( empty( $meta ) || 'default' === $meta ) {
-      $custom_fields['_wp_page_template'] = 'page-templates/template-blank.php';
-  }
+	$meta                               = isset( $custom_fields['_wp_page_template'] ) ? $custom_fields['_wp_page_template'] : '';
+	$custom_fields['_wp_page_template'] = custom_theme_sanitize_page_template_meta_value( $meta );
 	return $custom_fields;
 }
 
@@ -610,6 +638,9 @@ function custom_theme_import_single_page_from_pattern( $data ) {
 	// Set custom fields.
 	if ( ! empty( $normalized['custom_fields'] ) ) {
       foreach ( $normalized['custom_fields'] as $meta_key => $meta_value ) {
+        if ( '_wp_page_template' === $meta_key ) {
+            $meta_value = custom_theme_sanitize_page_template_meta_value( $meta_value );
+        }
           update_post_meta( $page_id, $meta_key, $meta_value );
       }
 	}
@@ -719,6 +750,88 @@ function custom_theme_import_pages_from_patterns( $selected_files = array() ) {
 
 	return $result;
 }
+
+/**
+ * Repair invalid array values stored in _wp_page_template for the current page.
+ *
+ * Runs early on frontend requests so body_class() receives a string value.
+ *
+ * @return void
+ */
+function custom_theme_fix_invalid_current_page_template_meta() {
+  if ( ! is_page() ) {
+      return;
+  }
+
+	$page_id = get_queried_object_id();
+  if ( empty( $page_id ) ) {
+      return;
+  }
+
+	$current_template = get_post_meta( $page_id, '_wp_page_template', true );
+  if ( ! is_array( $current_template ) ) {
+      return;
+  }
+
+	update_post_meta( $page_id, '_wp_page_template', custom_theme_sanitize_page_template_meta_value( $current_template ) );
+	clean_post_cache( $page_id );
+}
+add_action( 'wp', 'custom_theme_fix_invalid_current_page_template_meta', 1 );
+
+/**
+ * One-time bulk repair for invalid _wp_page_template values on pages.
+ *
+ * Repairs historical bad data (for example, array values imported from pattern files)
+ * so core template/body class logic always receives a string.
+ *
+ * @return void
+ */
+function custom_theme_bulk_repair_page_template_meta_once() {
+	global $wpdb;
+
+	$repair_option_key = 'custom_theme_page_template_meta_bulk_repaired_v1';
+
+  if ( '1' === get_option( $repair_option_key, '0' ) ) {
+      return;
+  }
+
+	$rows = $wpdb->get_results(
+      $wpdb->prepare(
+        "SELECT pm.meta_id, pm.post_id, pm.meta_value
+			FROM {$wpdb->postmeta} pm
+			INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+			WHERE pm.meta_key = %s
+			AND p.post_type = %s",
+        '_wp_page_template',
+        'page'
+      )
+	);
+
+  if ( empty( $rows ) ) {
+      update_option( $repair_option_key, '1', false );
+      return;
+  }
+
+  foreach ( $rows as $row ) {
+      $raw_meta_value       = maybe_unserialize( $row->meta_value );
+      $sanitized_meta_value = custom_theme_sanitize_page_template_meta_value( $raw_meta_value );
+
+    if ( ! is_string( $raw_meta_value ) || $raw_meta_value !== $sanitized_meta_value ) {
+        $wpdb->update(
+          $wpdb->postmeta,
+          array( 'meta_value' => $sanitized_meta_value ),
+          array( 'meta_id' => (int) $row->meta_id ),
+          array( '%s' ),
+          array( '%d' )
+        );
+
+        clean_post_cache( (int) $row->post_id );
+    }
+  }
+
+	update_option( $repair_option_key, '1', false );
+}
+add_action( 'init', 'custom_theme_bulk_repair_page_template_meta_once', 5 );
 
 /**
  * Handle export pages action.
