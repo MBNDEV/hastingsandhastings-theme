@@ -965,7 +965,7 @@ function custom_theme_handle_save_domain_settings( $local_url, $deployment_url )
 /**
  * Render Page Content Sync page.
  *
- * phpcs:disable Generic.Metrics.CyclomaticComplexity
+ * phpcs:disable Generic.Metrics.CyclomaticComplexity,Generic.Metrics.NestingLevel
  */
 function custom_theme_render_page_sync_page() {
 	$pages = custom_theme_get_syncable_pages();
@@ -1141,6 +1141,15 @@ function custom_theme_render_page_sync_page() {
 								<?php
 								$has_thumbnail = has_post_thumbnail( $page->ID );
 								$page_template = get_page_template_slug( $page->ID );
+								$template_slug = '';
+								if ( is_string( $page_template ) ) {
+									$template_slug = $page_template;
+								} elseif ( is_array( $page_template ) ) {
+									$first_template = reset( $page_template );
+                                  if ( is_string( $first_template ) ) {
+                                      $template_slug = $first_template;
+                                  }
+								}
 								?>
 								<tr>
 									<td>
@@ -1151,8 +1160,8 @@ function custom_theme_render_page_sync_page() {
 										<?php if ( $page->post_parent > 0 ) : ?>
 											<br><small style="color: #666;">↳ Child of: <?php echo esc_html( get_the_title( $page->post_parent ) ); ?></small>
 										<?php endif; ?>
-										<?php if ( ! empty( $page_template ) && 'default' !== $page_template ) : ?>
-											<br><small style="color: #2271b1;">📄 Template: <?php echo esc_html( basename( $page_template, '.php' ) ); ?></small>
+										<?php if ( ! empty( $template_slug ) && 'default' !== $template_slug ) : ?>
+											<br><small style="color: #2271b1;">📄 Template: <?php echo esc_html( basename( $template_slug, '.php' ) ); ?></small>
 										<?php endif; ?>
 										<div class="row-actions">
 											<a href="<?php echo esc_url( get_edit_post_link( $page->ID ) ); ?>" target="_blank">Edit</a> |
