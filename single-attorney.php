@@ -27,20 +27,23 @@ if ( have_posts() ) :
     $contact_information = is_array( $personal_info ) ? ( $personal_info['attorney_contact_information'] ?? array() ) : array();
     $main_content        = is_array( $personal_info ) ? ( $personal_info['attorney_main_content'] ?? '' ) : '';
 
+    $contact_information_rows = array();
+    if ( is_array( $contact_information ) ) {
+      if ( isset( $contact_information[0] ) && is_array( $contact_information[0] ) ) {
+        $contact_information_rows = $contact_information;
+      } elseif ( isset( $contact_information['office_name'] ) || isset( $contact_information['phone_number'] ) || isset( $contact_information['office_address'] ) || isset( $contact_information['office_link'] ) ) {
+        // Backward compatibility for old data saved before repeater migration.
+        $contact_information_rows = array( $contact_information );
+      }
+    }
+
     $display_name = '' !== $attorney_name ? $attorney_name : get_the_title();
 
-    $image_url          = '';
-    $image_alt          = '';
-    $office_link_url    = '';
-    $office_link_target = '_self';
+    $image_url = '';
+    $image_alt = '';
     if ( is_array( $profile_image ) ) {
       $image_url = isset( $profile_image['url'] ) ? (string) $profile_image['url'] : '';
       $image_alt = isset( $profile_image['alt'] ) ? (string) $profile_image['alt'] : '';
-    }
-
-    if ( is_array( $contact_information ) && ! empty( $contact_information['office_link'] ) && is_array( $contact_information['office_link'] ) ) {
-      $office_link_url    = isset( $contact_information['office_link']['url'] ) ? (string) $contact_information['office_link']['url'] : '';
-      $office_link_target = isset( $contact_information['office_link']['target'] ) && '' !== (string) $contact_information['office_link']['target'] ? (string) $contact_information['office_link']['target'] : '_self';
     }
     ?>
 
@@ -139,44 +142,59 @@ if ( have_posts() ) :
             </section>
           <?php endif; ?>
 
-          <?php if ( ! empty( $contact_information ) && is_array( $contact_information ) ) : ?>
+          <?php if ( ! empty( $contact_information_rows ) ) : ?>
             <section class="single-attorney-section single-attorney-contact">
               <h2 class="single-attorney-section__title"><?php esc_html_e( 'Contact Information', 'mbn-theme' ); ?></h2>
 
-              <?php if ( ! empty( $contact_information['office_name'] ) ) : ?>
-                <?php if ( '' !== $office_link_url ) : ?>
-                <a class="single-attorney-contact__office" href="<?php echo esc_url( $office_link_url ); ?>" target="<?php echo esc_attr( $office_link_target ); ?>"<?php echo '_blank' === $office_link_target ? ' rel="noopener noreferrer"' : ''; ?>><?php echo esc_html( $contact_information['office_name'] ); ?></a>
-              <?php else : ?>
-                <p class="single-attorney-contact__office">
-                <?php echo esc_html( $contact_information['office_name'] ); ?>
-                </p>
-              <?php endif; ?>
-              <?php endif; ?>
+              <?php foreach ( $contact_information_rows as $contact_information_row ) : ?>
+                <?php
+                $office_name        = isset( $contact_information_row['office_name'] ) ? (string) $contact_information_row['office_name'] : '';
+                $phone_number       = isset( $contact_information_row['phone_number'] ) ? (string) $contact_information_row['phone_number'] : '';
+                $office_address     = isset( $contact_information_row['office_address'] ) ? (string) $contact_information_row['office_address'] : '';
+                $office_link_url    = '';
+                $office_link_target = '_self';
 
-              <?php if ( ! empty( $contact_information['phone_number'] ) ) : ?>
-                <?php $phone_href = preg_replace( '/[^0-9+]/', '', (string) $contact_information['phone_number'] ); ?>
-                <a class="single-attorney-contact__row" href="<?php echo esc_url( 'tel:' . $phone_href ); ?>">
-                  <img
-                    class="single-attorney-contact__icon"
-                    src="<?php echo esc_url( get_theme_file_uri( 'assets/icons/icn-phone-blue.svg' ) ); ?>"
-                    alt=""
-                    aria-hidden="true"
-                  />
-                  <span><?php echo esc_html( $contact_information['phone_number'] ); ?></span>
-                </a>
-              <?php endif; ?>
+                if ( ! empty( $contact_information_row['office_link'] ) && is_array( $contact_information_row['office_link'] ) ) {
+                  $office_link_url    = isset( $contact_information_row['office_link']['url'] ) ? (string) $contact_information_row['office_link']['url'] : '';
+                  $office_link_target = isset( $contact_information_row['office_link']['target'] ) && '' !== (string) $contact_information_row['office_link']['target'] ? (string) $contact_information_row['office_link']['target'] : '_self';
+                }
+                ?>
 
-              <?php if ( ! empty( $contact_information['office_address'] ) ) : ?>
-                <div class="single-attorney-contact__row">
-                  <img
-                    class="single-attorney-contact__icon"
-                    src="<?php echo esc_url( get_theme_file_uri( 'assets/icons/icn-location-blue.svg' ) ); ?>"
-                    alt=""
-                    aria-hidden="true"
-                  />
-                  <address class="single-attorney-contact__address"><?php echo nl2br( esc_html( $contact_information['office_address'] ) ); ?></address>
-                </div>
-              <?php endif; ?>
+                <?php if ( '' !== $office_name ) : ?>
+                  <?php if ( '' !== $office_link_url ) : ?>
+                    <a class="single-attorney-contact__office" href="<?php echo esc_url( $office_link_url ); ?>" target="<?php echo esc_attr( $office_link_target ); ?>"<?php echo '_blank' === $office_link_target ? ' rel="noopener noreferrer"' : ''; ?>><?php echo esc_html( $office_name ); ?></a>
+                  <?php else : ?>
+                    <p class="single-attorney-contact__office">
+                      <?php echo esc_html( $office_name ); ?>
+                    </p>
+                  <?php endif; ?>
+                <?php endif; ?>
+
+                <?php if ( '' !== $phone_number ) : ?>
+                  <?php $phone_href = preg_replace( '/[^0-9+]/', '', $phone_number ); ?>
+                  <a class="single-attorney-contact__row" href="<?php echo esc_url( 'tel:' . $phone_href ); ?>">
+                    <img
+                      class="single-attorney-contact__icon"
+                      src="<?php echo esc_url( get_theme_file_uri( 'assets/icons/icn-phone-blue.svg' ) ); ?>"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    <span><?php echo esc_html( $phone_number ); ?></span>
+                  </a>
+                <?php endif; ?>
+
+                <?php if ( '' !== $office_address ) : ?>
+                  <div class="single-attorney-contact__row">
+                    <img
+                      class="single-attorney-contact__icon"
+                      src="<?php echo esc_url( get_theme_file_uri( 'assets/icons/icn-location-blue.svg' ) ); ?>"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    <address class="single-attorney-contact__address"><?php echo nl2br( esc_html( $office_address ) ); ?></address>
+                  </div>
+                <?php endif; ?>
+              <?php endforeach; ?>
 
             </section>
           <?php endif; ?>

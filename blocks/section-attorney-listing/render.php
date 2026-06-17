@@ -63,8 +63,13 @@ $wrapper_attributes = get_block_wrapper_attributes(
           $attorney_type = (string) get_post_meta( $current_post_id, 'attorney_profile_attorney_type', true );
           $position      = (string) get_post_meta( $current_post_id, 'attorney_profile_attorney_position', true );
           $image_id      = (int) get_post_meta( $current_post_id, 'attorney_profile_attorney_profile_image', true );
-          $phone         = (string) get_post_meta( $current_post_id, 'attorney_personal_information_attorney_contact_information_phone_number', true );
+          $phone         = (string) get_post_meta( $current_post_id, 'attorney_personal_information_attorney_contact_information_0_phone_number', true );
           $main_bio      = (string) get_post_meta( $current_post_id, 'attorney_personal_information_attorney_main_content', true );
+
+          if ( '' === $phone ) {
+            // Backward compatibility for entries saved before contact info became a repeater.
+            $phone = (string) get_post_meta( $current_post_id, 'attorney_personal_information_attorney_contact_information_phone_number', true );
+          }
 
           $display_name  = '' !== $name ? $name : get_the_title();
           $display_role  = trim( $position );
@@ -107,13 +112,13 @@ $wrapper_attributes = get_block_wrapper_attributes(
             <div class="flex items-center justify-between gap-6">
               <a class="attorney-listing-action" href="<?php echo esc_url( $profile_url ); ?>">
                 <span><?php esc_html_e( 'View Profile', 'mbn-theme' ); ?></span>
-                <img src="<?php echo esc_url( get_theme_file_uri( 'assets/icons/icon-chevron-right-blue.svg' ) ); ?>" alt="" aria-hidden="true" class="w-6 h-6" />
+                <img src="<?php echo esc_url( get_theme_file_uri( 'assets/icons/icon-chevron-right-blue.svg' ) ); ?>" alt="" aria-hidden="true" class="-ml-2 w-6 h-6" />
               </a>
 
               <?php if ( '' !== $phone_href ) : ?>
                 <a class="attorney-listing-action" href="<?php echo esc_url( 'tel:' . $phone_href ); ?>">
                   <span><?php esc_html_e( 'Call Office', 'mbn-theme' ); ?></span>
-                  <img src="<?php echo esc_url( get_theme_file_uri( 'assets/icons/icn-phone-blue.svg' ) ); ?>" alt="" aria-hidden="true" class="w-6 h-6" />
+                  <img src="<?php echo esc_url( get_theme_file_uri( 'assets/icons/icn-phone-blue.svg' ) ); ?>" alt="" aria-hidden="true" class="-rotate-90 w-6 h-6" />
                 </a>
               <?php endif; ?>
             </div>
