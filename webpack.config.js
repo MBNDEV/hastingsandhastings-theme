@@ -60,6 +60,11 @@ blockDirs.forEach( ( dir ) => {
       from: path.resolve( dir, 'script.js' ),
       to: path.resolve( __dirname, `build/blocks/${ blockName }/script.js` ),
       noErrorOnMissing: true,
+    },
+    {
+      from: path.resolve( dir, 'assets' ),
+      to: path.resolve( __dirname, `build/blocks/${ blockName }/assets` ),
+      noErrorOnMissing: true,
     }
   );
 } );
