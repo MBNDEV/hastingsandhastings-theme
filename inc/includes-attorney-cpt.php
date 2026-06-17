@@ -54,7 +54,7 @@ function custom_theme_register_attorney_post_type(): void {
 		'show_in_rest'       => true,
 		'menu_position'      => 22,
 		'menu_icon'          => 'dashicons-businessperson',
-		'supports'           => array( 'title', 'revisions' ),
+		'supports'           => array( 'title', 'revisions', 'page-attributes' ),
     )
   );
 }

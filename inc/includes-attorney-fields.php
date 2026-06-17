@@ -94,12 +94,13 @@ function custom_theme_register_attorney_acf_fields(): void {
 						),
 					),
 					array(
-						'key'        => 'field_attorney_contact_information_group',
-						'label'      => __( 'Contact Information', 'mbn-theme' ),
-						'name'       => 'attorney_contact_information',
-						'type'       => 'group',
-						'layout'     => 'block',
-						'sub_fields' => array(
+						'key'          => 'field_attorney_contact_information_group',
+						'label'        => __( 'Contact Information', 'mbn-theme' ),
+						'name'         => 'attorney_contact_information',
+						'type'         => 'repeater',
+						'layout'       => 'block',
+						'button_label' => __( 'Add Contact Information', 'mbn-theme' ),
+						'sub_fields'   => array(
 							array(
 								'key'   => 'field_attorney_office_name',
 								'label' => __( 'Office Name', 'mbn-theme' ),
