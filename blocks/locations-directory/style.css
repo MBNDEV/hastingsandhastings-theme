@@ -148,6 +148,7 @@
   line-height: 1.5;
   color: var(--loc-color-link);
   white-space: nowrap;
+  transition: margin-left 0.2s ease;
 }
 
 .locations-directory__area-link-item a:hover {
@@ -156,12 +157,10 @@
 }
 
 .locations-directory__area-link-item:hover .locations-directory__link-icon {
-  transition: margin-left 0.2s ease;
   margin-left: 6px;
 }
 
 .locations-directory__area-link-item:hover a {
-  transition: margin-left 0.2s ease;
   margin-left: -6px;
 }
 
@@ -169,6 +168,7 @@
   width: 24px;
   height: 24px;
   flex-shrink: 0;
+  transition: margin-left 0.2s ease;
 }
 
 /* ============================================================
@@ -254,6 +254,7 @@
   line-height: 1.5;
   color: var(--loc-color-link);
   white-space: nowrap;
+  transition: margin-left 0.2s ease;
 }
 
 .locations-directory__sidebar-link-item a:hover {
@@ -261,11 +262,9 @@
   color: var(--loc-color-primary);
 }
 .locations-directory__sidebar-link-item:hover .locations-directory__link-icon {
-  transition: margin-left 0.2s ease;
   margin-left: 6px;
 }
 .locations-directory__sidebar-link-item:hover a {
-  transition: margin-left 0.2s ease;
   margin-left: -6px;
 }
 

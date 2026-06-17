@@ -72,8 +72,8 @@ const Edit = ( { attributes, setAttributes } ) => {
     iconPhoneUrl,
     mapTitle,
     mapEmbedUrl,
-    regions,
-    mapAreas,
+    regions = [],
+    mapAreas = [],
   } = attributes;
 
   const [ activeEditorSection, setActiveEditorSection ] = useState( 'map' );
@@ -369,9 +369,25 @@ const Edit = ( { attributes, setAttributes } ) => {
                       allowedTypes={ [ 'image' ] }
                       value={ card.imageId || 0 }
                       render={ ( { open } ) => (
-                        <Button onClick={ open } variant="secondary" style={ { marginBottom: '10px' } }>
-                          { card.imageUrl ? 'Replace Card Image' : 'Select Card Image' }
-                        </Button>
+                        <>
+                          <Button onClick={ open } variant="secondary" style={ { marginBottom: '10px' } }>
+                            { card.imageUrl ? 'Replace Card Image' : 'Select Card Image' }
+                          </Button>
+                          { card.imageUrl && (
+                            <Button
+                              onClick={ () => {
+                                setRegionCardField( regionIndex, cardIndex, 'imageId', 0 );
+                                setRegionCardField( regionIndex, cardIndex, 'imageUrl', '' );
+                                setRegionCardField( regionIndex, cardIndex, 'imageAlt', '' );
+                              } }
+                              variant="link"
+                              isDestructive
+                              style={ { marginBottom: '10px', marginLeft: '10px' } }
+                            >
+                              Remove Image
+                            </Button>
+                          ) }
+                        </>
                       ) }
                     />
                   </MediaUploadCheck>

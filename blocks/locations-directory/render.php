@@ -50,6 +50,9 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
       <?php foreach ( $regions as $region_index => $region ) : ?>
         <?php
+        if ( ! is_array( $region ) ) {
+            continue;
+        }
         $is_last_region   = count( $regions ) - 1 === $region_index;
         $region_classes   = 'locations-directory__region';
         $region_classes  .= $is_last_region ? ' locations-directory__region--last' : '';
@@ -80,6 +83,9 @@ $wrapper_attributes = get_block_wrapper_attributes(
           <div class="locations-directory__region-cards">
             <?php foreach ( $region_cards as $card ) : ?>
               <?php
+              if ( ! is_array( $card ) ) {
+                  continue;
+              }
               $card_fallback = ! empty( $card['imageFallback'] )
                 ? $theme_uri . '/blocks/locations-directory/assets/images/' . ltrim( $card['imageFallback'], '/' )
                 : $theme_uri . '/blocks/locations-directory/assets/images/office-mesa.jpg';
@@ -128,6 +134,9 @@ $wrapper_attributes = get_block_wrapper_attributes(
       <div class="locations-directory__area-grid">
         <?php foreach ( $map_areas as $area ) : ?>
           <?php
+          if ( ! is_array( $area ) ) {
+              continue;
+          }
           $area_links       = ! empty( $area['links'] ) && is_array( $area['links'] ) ? $area['links'] : array();
           $area_link_class  = 'locations-directory__area-links';
           $area_link_class .= count( $area_links ) > 3 ? ' locations-directory__area-links--grid' : '';
