@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Locations Directory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Heebo:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<!--
+Asset Manifest:
+- assets/images/map-arizona-locations.jpg     : Arizona map with office location pins
+- assets/images/office-central-phoenix.jpg    : Central Phoenix office building exterior
+- assets/images/office-phoenix-paradise-valley.jpg : Phoenix & Paradise Valley office
+- assets/images/office-scottsdale.jpg         : Scottsdale office building
+- assets/images/office-mesa.jpg               : Mesa office building (also used for Casa Grande placeholder)
+- assets/images/office-chandler.jpg           : Chandler/Gilbert/Ahwatukee office building
+- assets/images/office-tempe.jpg              : Tempe office building
+- assets/images/office-east-mesa-gilbert.jpg  : East Mesa/Gilbert office building
+- assets/images/office-west-valley.jpg        : West Valley office building
+- assets/images/office-northwest-valley.jpg   : Northwest Valley/Glendale office building
+- assets/images/icon-chevron-link.svg         : Blue chevron arrow icon for links
+- assets/images/icon-map-pin.svg              : Blue map pin icon for addresses
+- assets/images/icon-phone.svg                : Blue phone icon for phone numbers
+-->
+
+<section class="locations-directory">
+
+  <!-- ===== LOCATIONS LIST SECTION ===== -->
+  <div class="locations-directory__list-section">
+    <div class="locations-directory__container">
+
+      <!-- ===== PHOENIX AREA ===== -->
+      <div class="locations-directory__region">
+        <div class="locations-directory__region-sidebar">
+          <div class="locations-directory__region-text">
+            <h3 class="locations-directory__region-title">Phoenix Area</h3>
+            <p class="locations-directory__region-desc">Locations serving central Phoenix, Paradise Valley, and nearby communities.</p>
+          </div>
+          <ul class="locations-directory__sidebar-links">
+            <li class="locations-directory__sidebar-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Phoenix</a>
+            </li>
+            <li class="locations-directory__sidebar-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Paradise Valley</a>
+            </li>
+            <li class="locations-directory__sidebar-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Scottsdale</a>
+            </li>
+          </ul>
+        </div><!-- /.locations-directory__region-sidebar -->
+
+        <div class="locations-directory__region-cards">
+
+          <article class="locations-directory__card">
+            <figure class="locations-directory__card-figure">
+              <img src="assets/images/office-central-phoenix.jpg" alt="Central Phoenix office building" class="locations-directory__card-img">
+            </figure>
+            <div class="locations-directory__card-content">
+              <h5 class="locations-directory__card-title">Central Phoenix</h5>
+              <div class="locations-directory__card-meta">
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-map-pin.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="https://maps.app.goo.gl/JjUqpXEe2X8UFAhp7" target="_blank" rel="noopener noreferrer">1221 E. Osborn Rd., Ste. A202, Phoenix, AZ 85014</a>
+                </div>
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-phone.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="tel:+16024332323">(602) 433-2323</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="locations-directory__card">
+            <figure class="locations-directory__card-figure">
+              <img src="assets/images/office-phoenix-paradise-valley.jpg" alt="Phoenix and Paradise Valley office building" class="locations-directory__card-img">
+            </figure>
+            <div class="locations-directory__card-content">
+              <h5 class="locations-directory__card-title">Phoenix &amp; Paradise Valley</h5>
+              <div class="locations-directory__card-meta">
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-map-pin.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="https://goo.gl/maps/JXyFqkFFWQF1PdGp9" target="_blank" rel="noopener noreferrer">3420 E. Shea Blvd, #200, Phoenix, AZ 85028</a>
+                </div>
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-phone.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="tel:+16024332323">(602) 433-2323</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="locations-directory__card">
+            <figure class="locations-directory__card-figure">
+              <img src="assets/images/office-scottsdale.jpg" alt="Scottsdale office building" class="locations-directory__card-img">
+            </figure>
+            <div class="locations-directory__card-content">
+              <h5 class="locations-directory__card-title">Scottsdale</h5>
+              <div class="locations-directory__card-meta">
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-map-pin.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="https://maps.app.goo.gl/p2veWpCXffNNtTX66" target="_blank" rel="noopener noreferrer">7150 E. Camelback Rd, #444, Scottsdale, AZ 85251</a>
+                </div>
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-phone.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="tel:+14807061100">(480) 706-1100</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div><!-- /.locations-directory__region-cards -->
+      </div><!-- /.locations-directory__region -->
+
+      <!-- ===== EAST VALLEY ===== -->
+      <div class="locations-directory__region">
+        <div class="locations-directory__region-sidebar">
+          <div class="locations-directory__region-text">
+            <h3 class="locations-directory__region-title">East Valley</h3>
+            <p class="locations-directory__region-desc">Office locations across Mesa, Chandler, Gilbert, Ahwatukee, Tempe, and Queen Creek.</p>
+          </div>
+          <ul class="locations-directory__sidebar-links locations-directory__sidebar-links--grid">
+            <li class="locations-directory__sidebar-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Mesa</a>
+            </li>
+            <li class="locations-directory__sidebar-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Ahwatukee</a>
+            </li>
+            <li class="locations-directory__sidebar-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Chandler</a>
+            </li>
+            <li class="locations-directory__sidebar-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Tempe</a>
+            </li>
+            <li class="locations-directory__sidebar-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Gilbert</a>
+            </li>
+            <li class="locations-directory__sidebar-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Queen Creek</a>
+            </li>
+          </ul>
+        </div><!-- /.locations-directory__region-sidebar -->
+
+        <div class="locations-directory__region-cards">
+
+          <article class="locations-directory__card">
+            <figure class="locations-directory__card-figure">
+              <img src="assets/images/office-mesa.jpg" alt="Mesa office building" class="locations-directory__card-img">
+            </figure>
+            <div class="locations-directory__card-content">
+              <h5 class="locations-directory__card-title">Mesa</h5>
+              <div class="locations-directory__card-meta">
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-map-pin.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="https://goo.gl/maps/313bUsiaJQYEctwTA" target="_blank" rel="noopener noreferrer">1830 S. Alma School Rd., Suite 129, Mesa, AZ 85210</a>
+                </div>
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-phone.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="tel:+14806491800">(480) 649-1800</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="locations-directory__card">
+            <figure class="locations-directory__card-figure">
+              <img src="assets/images/office-chandler.jpg" alt="Chandler, Gilbert, and Ahwatukee area office building" class="locations-directory__card-img">
+            </figure>
+            <div class="locations-directory__card-content">
+              <h5 class="locations-directory__card-title">Chandler, Gilbert, Ahwatukee</h5>
+              <div class="locations-directory__card-meta">
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-map-pin.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="https://maps.app.goo.gl/cPGEfvEFZeEwhvNE8" target="_blank" rel="noopener noreferrer">5505 W. Chandler Blvd, Suite 15, Chandler, AZ 85226</a>
+                </div>
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-phone.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="tel:+14807061100">(480) 706-1100</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="locations-directory__card">
+            <figure class="locations-directory__card-figure">
+              <img src="assets/images/office-tempe.jpg" alt="Tempe office building" class="locations-directory__card-img">
+            </figure>
+            <div class="locations-directory__card-content">
+              <h5 class="locations-directory__card-title">Tempe</h5>
+              <div class="locations-directory__card-meta">
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-map-pin.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="https://maps.app.goo.gl/Eb2cLYgQahJqaqu39" target="_blank" rel="noopener noreferrer">64 E. Broadway, Suite 200, Tempe, AZ 85282</a>
+                </div>
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-phone.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="tel:+14807061100">(480) 706-1100</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="locations-directory__card">
+            <figure class="locations-directory__card-figure">
+              <img src="assets/images/office-east-mesa-gilbert.jpg" alt="East Mesa and Gilbert area office building" class="locations-directory__card-img">
+            </figure>
+            <div class="locations-directory__card-content">
+              <h5 class="locations-directory__card-title">East Mesa, Gilbert</h5>
+              <div class="locations-directory__card-meta">
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-map-pin.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="https://maps.app.goo.gl/X7qXFYJLyYv9CwGP8" target="_blank" rel="noopener noreferrer">4135 S. Power Rd, Suite 111, Mesa, AZ 85212</a>
+                </div>
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-phone.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="tel:+14807061100">(480) 706-1100</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div><!-- /.locations-directory__region-cards -->
+      </div><!-- /.locations-directory__region -->
+
+      <!-- ===== WEST VALLEY ===== -->
+      <div class="locations-directory__region">
+        <div class="locations-directory__region-sidebar">
+          <div class="locations-directory__region-text">
+            <h3 class="locations-directory__region-title">West Valley</h3>
+            <p class="locations-directory__region-desc">Convenient legal support for clients in Glendale, Peoria, Surprise, and Buckeye.</p>
+          </div>
+          <ul class="locations-directory__sidebar-links locations-directory__sidebar-links--grid">
+            <li class="locations-directory__sidebar-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Buckeye</a>
+            </li>
+            <li class="locations-directory__sidebar-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Peoria</a>
+            </li>
+            <li class="locations-directory__sidebar-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Glendale</a>
+            </li>
+            <li class="locations-directory__sidebar-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Surprise</a>
+            </li>
+          </ul>
+        </div><!-- /.locations-directory__region-sidebar -->
+
+        <div class="locations-directory__region-cards">
+
+          <article class="locations-directory__card">
+            <figure class="locations-directory__card-figure">
+              <img src="assets/images/office-west-valley.jpg" alt="West Valley office building" class="locations-directory__card-img">
+            </figure>
+            <div class="locations-directory__card-content">
+              <h5 class="locations-directory__card-title">West Valley</h5>
+              <div class="locations-directory__card-meta">
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-map-pin.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="https://maps.app.goo.gl/2xkuTVmyxWdzK6ob7" target="_blank" rel="noopener noreferrer">9150 W. Indian School Rd, Suite 103, Phoenix, AZ 85037</a>
+                </div>
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-phone.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="tel:+16238451345">(623) 845-1345</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="locations-directory__card">
+            <figure class="locations-directory__card-figure">
+              <img src="assets/images/office-northwest-valley.jpg" alt="Northwest Valley office building in Glendale" class="locations-directory__card-img">
+            </figure>
+            <div class="locations-directory__card-content">
+              <h5 class="locations-directory__card-title">Northwest Valley</h5>
+              <div class="locations-directory__card-meta">
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-map-pin.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="https://maps.app.goo.gl/3LBwoc7RqKgeFUyF7" target="_blank" rel="noopener noreferrer">18205 N 51st Avenue, Suite 119, Glendale, AZ 85308</a>
+                </div>
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-phone.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="tel:+16022831500">(602) 283-1500</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div><!-- /.locations-directory__region-cards -->
+      </div><!-- /.locations-directory__region -->
+
+      <!-- ===== SOUTHERN ARIZONA ===== -->
+      <div class="locations-directory__region locations-directory__region--last">
+        <div class="locations-directory__region-sidebar">
+          <div class="locations-directory__region-text">
+            <h3 class="locations-directory__region-title">Southern Arizona</h3>
+            <p class="locations-directory__region-desc">Serving injury victims in Casa Grande and surrounding areas.</p>
+          </div>
+          <ul class="locations-directory__sidebar-links">
+            <li class="locations-directory__sidebar-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Casa Grande</a>
+            </li>
+          </ul>
+        </div><!-- /.locations-directory__region-sidebar -->
+
+        <div class="locations-directory__region-cards">
+
+          <article class="locations-directory__card">
+            <figure class="locations-directory__card-figure">
+              <img src="assets/images/office-mesa.jpg" alt="Casa Grande office building" class="locations-directory__card-img">
+            </figure>
+            <div class="locations-directory__card-content">
+              <h5 class="locations-directory__card-title">Casa Grande</h5>
+              <div class="locations-directory__card-meta">
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-map-pin.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="https://maps.app.goo.gl/fRdDxSwMkshBsPqB8" target="_blank" rel="noopener noreferrer">251 E. Cottonwood Lane, Ste. 251D, Casa Grande, AZ 85122</a>
+                </div>
+                <div class="locations-directory__card-row">
+                  <img src="assets/images/icon-phone.svg" alt="" class="locations-directory__meta-icon" aria-hidden="true">
+                  <a href="tel:+14806491800">(480) 649-1800</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div><!-- /.locations-directory__region-cards -->
+      </div><!-- /.locations-directory__region -->
+
+    </div><!-- /.locations-directory__container -->
+  </div><!-- /.locations-directory__list-section -->
+
+  <!-- ===== MAP OVERVIEW SECTION ===== -->
+  <div class="locations-directory__map-section">
+    <div class="locations-directory__container">
+
+      <figure class="locations-directory__map">
+        <iframe
+          src="https://www.google.com/maps/d/embed?mid=1BU_B90ZoJAEWzUgMy_fXd-KdC5y5WdXm&ehbc=2E312F"
+          title="Hastings &amp; Hastings office locations across Arizona"
+          class="locations-directory__map-iframe"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </figure>
+
+      <div class="locations-directory__area-grid">
+
+        <div class="locations-directory__area-col">
+          <div class="locations-directory__area-text">
+            <h4 class="locations-directory__area-title">Phoenix Area</h4>
+            <p class="locations-directory__area-desc">Locations serving central Phoenix, Paradise Valley, and nearby communities.</p>
+          </div>
+          <ul class="locations-directory__area-links">
+            <li class="locations-directory__area-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Phoenix</a>
+            </li>
+            <li class="locations-directory__area-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Paradise Valley</a>
+            </li>
+            <li class="locations-directory__area-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Scottsdale</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="locations-directory__area-col">
+          <div class="locations-directory__area-text">
+            <h4 class="locations-directory__area-title">East Valley</h4>
+            <p class="locations-directory__area-desc">Office locations across Mesa, Chandler, Gilbert, Ahwatukee, Tempe, and Queen Creek.</p>
+          </div>
+          <ul class="locations-directory__area-links locations-directory__area-links--grid">
+            <li class="locations-directory__area-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Mesa</a>
+            </li>
+            <li class="locations-directory__area-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Ahwatukee</a>
+            </li>
+            <li class="locations-directory__area-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Chandler</a>
+            </li>
+            <li class="locations-directory__area-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Tempe</a>
+            </li>
+            <li class="locations-directory__area-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Gilbert</a>
+            </li>
+            <li class="locations-directory__area-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Queen Creek</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="locations-directory__area-col">
+          <div class="locations-directory__area-text">
+            <h4 class="locations-directory__area-title">West Valley</h4>
+            <p class="locations-directory__area-desc">Convenient legal support for clients in Glendale, Peoria, Surprise, and Buckeye.</p>
+          </div>
+          <ul class="locations-directory__area-links locations-directory__area-links--grid">
+            <li class="locations-directory__area-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Buckeye</a>
+            </li>
+            <li class="locations-directory__area-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Peoria</a>
+            </li>
+            <li class="locations-directory__area-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Glendale</a>
+            </li>
+            <li class="locations-directory__area-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Surprise</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="locations-directory__area-col">
+          <div class="locations-directory__area-text">
+            <h4 class="locations-directory__area-title">Southern Arizona</h4>
+            <p class="locations-directory__area-desc">Serving injury victims in Casa Grande and surrounding areas.</p>
+          </div>
+          <ul class="locations-directory__area-links">
+            <li class="locations-directory__area-link-item">
+              <img src="assets/images/icon-chevron-link.svg" alt="" class="locations-directory__link-icon" aria-hidden="true">
+              <a href="#">Casa Grande</a>
+            </li>
+          </ul>
+        </div>
+
+      </div><!-- /.locations-directory__area-grid -->
+    </div><!-- /.locations-directory__container -->
+  </div><!-- /.locations-directory__map-section -->
+
+</section><!-- /.locations-directory -->
+
+</body>
+</html>

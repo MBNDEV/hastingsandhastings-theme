@@ -8,3 +8,5 @@ build/
 .DS_Store
 html_tailwind/*
 .github/copilot-instructions.md
+.claude/
+.github/skills/*
