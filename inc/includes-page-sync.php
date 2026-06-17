@@ -752,33 +752,6 @@ function custom_theme_import_pages_from_patterns( $selected_files = array() ) {
 }
 
 /**
- * Repair invalid array values stored in _wp_page_template for the current page.
- *
- * Runs early on frontend requests so body_class() receives a string value.
- *
- * @return void
- */
-function custom_theme_fix_invalid_current_page_template_meta() {
-  if ( ! is_page() ) {
-      return;
-  }
-
-	$page_id = get_queried_object_id();
-  if ( empty( $page_id ) ) {
-      return;
-  }
-
-	$current_template = get_post_meta( $page_id, '_wp_page_template', true );
-  if ( ! is_array( $current_template ) ) {
-      return;
-  }
-
-	update_post_meta( $page_id, '_wp_page_template', custom_theme_sanitize_page_template_meta_value( $current_template ) );
-	clean_post_cache( $page_id );
-}
-add_action( 'wp', 'custom_theme_fix_invalid_current_page_template_meta', 1 );
-
-/**
  * One-time bulk repair for invalid _wp_page_template values on pages.
  *
  * Repairs historical bad data (for example, array values imported from pattern files)
@@ -813,19 +786,20 @@ function custom_theme_bulk_repair_page_template_meta_once() {
   }
 
   foreach ( $rows as $row ) {
-      $raw_meta_value       = maybe_unserialize( $row->meta_value );
-      $sanitized_meta_value = custom_theme_sanitize_page_template_meta_value( $raw_meta_value );
+          $raw_meta_value = maybe_unserialize( $row->meta_value );
 
-    if ( ! is_string( $raw_meta_value ) || $raw_meta_value !== $sanitized_meta_value ) {
-        $wpdb->update(
-          $wpdb->postmeta,
-          array( 'meta_value' => $sanitized_meta_value ),
-          array( 'meta_id' => (int) $row->meta_id ),
-          array( '%s' ),
-          array( '%d' )
-        );
+    if ( ! is_string( $raw_meta_value ) ) {
+            $sanitized_meta_value = custom_theme_sanitize_page_template_meta_value( $raw_meta_value );
 
-        clean_post_cache( (int) $row->post_id );
+            $wpdb->update(
+              $wpdb->postmeta,
+              array( 'meta_value' => $sanitized_meta_value ),
+              array( 'meta_id' => (int) $row->meta_id ),
+              array( '%s' ),
+              array( '%d' )
+            );
+
+            clean_post_cache( (int) $row->post_id );
     }
   }
 
