@@ -6,19 +6,19 @@
  * @param array $attributes Block attributes.
  */
 
-$theme_uri = get_template_directory_uri();
+$block_assets_uri = get_theme_file_uri( '/build/blocks/locations-directory/assets/images' );
 
 $icon_chevron = ! empty( $attributes['iconChevronUrl'] )
   ? $attributes['iconChevronUrl']
-  : $theme_uri . '/blocks/locations-directory/assets/images/icon-chevron-link.svg';
+  : $block_assets_uri . '/icon-chevron-link.svg';
 
 $icon_map_pin = ! empty( $attributes['iconMapPinUrl'] )
   ? $attributes['iconMapPinUrl']
-  : $theme_uri . '/blocks/locations-directory/assets/images/icon-map-pin.svg';
+  : $block_assets_uri . '/icon-map-pin.svg';
 
 $icon_phone = ! empty( $attributes['iconPhoneUrl'] )
   ? $attributes['iconPhoneUrl']
-  : $theme_uri . '/blocks/locations-directory/assets/images/icon-phone.svg';
+  : $block_assets_uri . '/icon-phone.svg';
 
 $map_title = ! empty( $attributes['mapTitle'] )
   ? $attributes['mapTitle']
@@ -87,8 +87,8 @@ $wrapper_attributes = get_block_wrapper_attributes(
                   continue;
               }
               $card_fallback = ! empty( $card['imageFallback'] )
-                ? $theme_uri . '/blocks/locations-directory/assets/images/' . ltrim( $card['imageFallback'], '/' )
-                : $theme_uri . '/blocks/locations-directory/assets/images/office-mesa.jpg';
+                ? $block_assets_uri . '/' . ltrim( $card['imageFallback'], '/' )
+                : $block_assets_uri . '/office-mesa.jpg';
               $card_image    = ! empty( $card['imageUrl'] ) ? $card['imageUrl'] : $card_fallback;
               ?>
 
