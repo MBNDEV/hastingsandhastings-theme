@@ -1,0 +1,479 @@
+/* ============================================================
+   LOCATIONS DIRECTORY BLOCK
+   Combined: Map Overview Section + Location Cards Section
+   ============================================================ */
+
+/* === CUSTOM PROPERTIES === */
+.locations-directory {
+  --loc-font-primary: 'Noto Serif', Georgia, serif;
+  --loc-font-secondary: 'Heebo', Arial, sans-serif;
+
+  --loc-color-blue-50: #f3f7fc;
+  --loc-color-primary: #286fb7;
+  --loc-color-heading: #13263e;
+  --loc-color-body: #53585f;
+  --loc-color-link: #363b3f;
+  --loc-color-border: #e8eaec;
+  --loc-color-white: #ffffff;
+
+  --loc-container-width: 1100px;
+  --loc-sidebar-width: 254px;
+  --loc-card-img-w: 197px;
+  --loc-card-img-h: 125px;
+}
+
+/* ============================================================
+   SHARED / BASE
+   ============================================================ */
+
+.locations-directory,
+.locations-directory *,
+.locations-directory *::before,
+.locations-directory *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.locations-directory ul {
+  list-style: none;
+}
+
+.locations-directory a {
+  color: var(--loc-color-link);
+  text-decoration: none;
+}
+
+.locations-directory a:hover {
+  text-decoration: underline;
+}
+
+.locations-directory img {
+  display: block;
+  max-width: 100%;
+}
+
+.locations-directory__container {
+  max-width: var(--loc-container-width);
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 40px);
+}
+
+/* ============================================================
+   MAP SECTION  (Section 2 — light blue background, top)
+   ============================================================ */
+
+.locations-directory__map-section {
+  background-color: var(--loc-color-blue-50);
+  padding-block: 80px;
+}
+
+/* Map figure */
+.locations-directory__map {
+  margin: 0;
+  border: 1px solid var(--loc-color-border);
+  border-radius: 16px;
+  box-shadow: 0px 1px 16px 0px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  margin-bottom: 48px;
+}
+
+.locations-directory__map-iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1099 / 598;
+  border: none;
+}
+
+/* 4-column area grid */
+.locations-directory__area-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+
+.locations-directory__area-col {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.locations-directory__area-text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.locations-directory__area-title {
+  font-family: var(--loc-font-primary);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 32px;
+  color: var(--loc-color-heading);
+}
+
+.locations-directory__area-desc {
+  font-family: var(--loc-font-secondary);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--loc-color-body);
+}
+
+/* Area link list */
+.locations-directory__area-links {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.locations-directory__area-links--grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+}
+
+.locations-directory__area-link-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-block: 2px;
+  padding-right: 8px;
+}
+
+.locations-directory__area-link-item a {
+  font-family: var(--loc-font-secondary);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--loc-color-link);
+  white-space: nowrap;
+}
+
+.locations-directory__area-link-item a:hover {
+  color: var(--loc-color-primary);
+  text-decoration: none;
+}
+
+.locations-directory__area-link-item:hover .locations-directory__link-icon {
+  transition: margin-left 0.2s ease;
+  margin-left: 6px;
+}
+
+.locations-directory__area-link-item:hover a {
+  transition: margin-left 0.2s ease;
+  margin-left: -6px;
+}
+
+.locations-directory__link-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   LIST SECTION  (Section 1 — white background, bottom)
+   ============================================================ */
+
+.locations-directory__list-section {
+  background-color: var(--loc-color-white);
+  padding-block: 80px;
+}
+
+/* Region row */
+.locations-directory__region {
+  display: flex;
+  gap: 90px;
+  align-items: flex-start;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--loc-color-border);
+  margin-bottom: 40px;
+}
+
+.locations-directory__region--last {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+/* Sidebar */
+.locations-directory__region-sidebar {
+  flex-shrink: 0;
+  width: var(--loc-sidebar-width);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.locations-directory__region-text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.locations-directory__region-title {
+  font-family: var(--loc-font-primary);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 40px;
+  color: var(--loc-color-primary);
+}
+
+.locations-directory__region-desc {
+  font-family: var(--loc-font-secondary);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--loc-color-body);
+}
+
+/* Sidebar link lists */
+.locations-directory__sidebar-links {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.locations-directory__sidebar-links--grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+}
+
+.locations-directory__sidebar-link-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-block: 2px;
+  padding-right: 8px;
+}
+
+.locations-directory__sidebar-link-item a {
+  font-family: var(--loc-font-secondary);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--loc-color-link);
+  white-space: nowrap;
+}
+
+.locations-directory__sidebar-link-item a:hover {
+  text-decoration: none;
+  color: var(--loc-color-primary);
+}
+.locations-directory__sidebar-link-item:hover .locations-directory__link-icon {
+  transition: margin-left 0.2s ease;
+  margin-left: 6px;
+}
+.locations-directory__sidebar-link-item:hover a {
+  transition: margin-left 0.2s ease;
+  margin-left: -6px;
+}
+
+/* Cards column */
+.locations-directory__region-cards {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Individual card */
+.locations-directory__card {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.locations-directory__card-figure {
+  flex-shrink: 0;
+  width: var(--loc-card-img-w);
+  height: var(--loc-card-img-h);
+  margin: 0;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.locations-directory__card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.locations-directory__card-content {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.locations-directory__card-title {
+  font-family: var(--loc-font-primary);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--loc-color-heading);
+  margin-bottom: 8px;
+}
+
+.locations-directory__card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.locations-directory__card-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-block: 2px;
+  padding-right: 8px;
+}
+
+.locations-directory__card-row span,
+.locations-directory__card-row a {
+  font-family: var(--loc-font-secondary);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--loc-color-link);
+  white-space: nowrap;
+}
+
+.locations-directory__card-row a:hover {
+  color: var(--loc-color-primary);
+}
+
+.locations-directory__meta-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   TABLET: 768px to 1023px
+   ============================================================ */
+@media screen and (max-width: 1023px) {
+
+  .locations-directory__map-section {
+    padding-block: 56px;
+  }
+
+  .locations-directory__map {
+    margin-bottom: 36px;
+  }
+
+  .locations-directory__area-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 24px;
+  }
+
+  .locations-directory__list-section {
+    padding-block: 56px;
+  }
+
+  .locations-directory__region {
+    gap: 40px;
+  }
+
+  .locations-directory__region-sidebar {
+    width: 200px;
+  }
+
+  .locations-directory__card {
+    gap: 20px;
+  }
+
+  .locations-directory__card-figure {
+    width: 150px;
+    height: 100px;
+  }
+
+  .locations-directory__card-title {
+    font-size: 20px;
+  }
+
+  .locations-directory__card-row span,
+  .locations-directory__card-row a {
+    white-space: normal;
+  }
+}
+
+/* ============================================================
+   MOBILE: below 768px
+   ============================================================ */
+@media screen and (max-width: 767px) {
+
+  .locations-directory__map-section {
+    padding-block: 40px;
+  }
+
+  .locations-directory__map {
+    border-radius: 10px;
+    margin-bottom: 28px;
+  }
+
+  .locations-directory__area-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .locations-directory__area-col {
+    gap: 16px;
+  }
+
+  .locations-directory__area-title {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+
+  .locations-directory__list-section {
+    padding-block: 40px;
+  }
+
+  .locations-directory__region {
+    flex-direction: column;
+    gap: 24px;
+    padding-bottom: 32px;
+    margin-bottom: 32px;
+  }
+
+  .locations-directory__region-sidebar {
+    width: 100%;
+    gap: 20px;
+  }
+
+  .locations-directory__region-title {
+    font-size: 22px;
+    line-height: 32px;
+  }
+
+  .locations-directory__sidebar-links--grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .locations-directory__card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .locations-directory__card-figure {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 197 / 125;
+  }
+
+  .locations-directory__card-title {
+    font-size: 18px;
+  }
+
+  .locations-directory__card-row span,
+  .locations-directory__card-row a {
+    white-space: normal;
+    font-size: 13px;
+  }
+
+  .locations-directory__area-links--grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
