@@ -47,10 +47,6 @@ $serving_columns = ! empty( $attributes['servingColumns'] ) && is_array( $attrib
 $chevron_icon = $block_assets_uri . '/chevron-right.svg';
 $star_icon    = $block_assets_uri . '/icn-single-star-gold.svg';
 
-// Enqueue Swiper library for testimonials slider.
-wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', array(), '11.0.0' );
-wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), '11.0.0', true );
-
 $wrapper_attributes = get_block_wrapper_attributes(
   array(
 	  'class' => 'ldp-page',

@@ -374,7 +374,13 @@
     }
   },
   "editorScript": "file:./index.js",
-  "viewScript": "file:./script.js",
-  "style": "file:./style.css",
+  "viewScript": [
+    "file:./assets/vendor/swiper-bundle.min.js",
+    "file:./script.js"
+  ],
+  "style": [
+    "file:./assets/vendor/swiper-bundle.min.css",
+    "file:./style.css"
+  ],
   "render": "file:./render.php"
 }

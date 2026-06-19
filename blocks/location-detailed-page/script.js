@@ -49,7 +49,9 @@ document.addEventListener('DOMContentLoaded', function() {
     btn.addEventListener('click', function() {
       var item   = btn.closest('.ldp-accordion__item');
       var answer = document.getElementById(btn.getAttribute('aria-controls'));
-      var icon   = btn.querySelector('.ldp-accordion__icon');
+      if (!item || !answer) {
+        return;
+      }
       var isOpen = item.classList.contains('ldp-accordion__item--open');
 
       if (isOpen) {
