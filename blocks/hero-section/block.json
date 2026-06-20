@@ -71,6 +71,14 @@
       "type": "boolean",
       "default": true
     },
+    "heroButtonText": {
+      "type": "string",
+      "default": "START YOUR FREE CONSULTATION NOW!"
+    },
+    "heroButtonUrl": {
+      "type": "string",
+      "default": "#contact"
+    },
     "ctaButtonText": {
       "type": "string",
       "default": "REQUEST A FREE CONSULTATION"
@@ -141,6 +149,22 @@
     "textMaxWidth": {
       "type": "string",
       "default": "max-w-4xl"
+    },
+    "showQuickCall": {
+      "type": "boolean",
+      "default": false
+    },
+    "quickCallLabel": {
+      "type": "string",
+      "default": "CALL TODAY"
+    },
+    "quickCallPhoneNumber": {
+      "type": "string",
+      "default": "(480) 480-2929"
+    },
+    "quickCallPhoneNumberUrl": {
+      "type": "string",
+      "default": "tel:4804802929"
     }
   }
 }

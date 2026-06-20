@@ -19,6 +19,8 @@ $video_webm_url         = $attributes['videoWebmUrl'] ?? '';
 $poster_image_url       = $attributes['posterImageUrl'] ?? '';
 $overlay_image_url      = $attributes['overlayImageUrl'] ?? '';
 $show_cta_bar           = $attributes['showCtaBar'] ?? true;
+$hero_button_text       = $attributes['heroButtonText'] ?? 'START YOUR FREE CONSULTATION NOW!';
+$hero_button_url        = $attributes['heroButtonUrl'] ?? '#contact';
 $cta_button_text        = $attributes['ctaButtonText'] ?? 'REQUEST A FREE CONSULTATION';
 $cta_button_url         = $attributes['ctaButtonUrl'] ?? '#contact';
 $phone_number           = $attributes['phoneNumber'] ?? '(480) 480-2929';
@@ -36,6 +38,10 @@ $padding_bottom         = $attributes['paddingBottom'] ?? 'pb-48';
 $content_justify        = $attributes['contentJustify'] ?? 'justify-center';
 $content_vertical_align = $attributes['contentVerticalAlign'] ?? 'items-center';
 $text_max_width         = $attributes['textMaxWidth'] ?? 'max-w-4xl';
+$show_quick_call        = $attributes['showQuickCall'] ?? false;
+$quick_call_label       = $attributes['quickCallLabel'] ?? 'CALL TODAY';
+$quick_call_phone       = $attributes['quickCallPhoneNumber'] ?? '(480) 480-2929';
+$quick_call_phone_url   = $attributes['quickCallPhoneNumberUrl'] ?? 'tel:4804802929';
 
 // Determine if background color is a hex code or Tailwind class
 $is_custom_color = strpos( $background_color, '#' ) === 0;
@@ -87,13 +93,13 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
 	<!-- Hero Content -->
 	<div class="hero-content flex <?php echo esc_attr( $content_vertical_align ); ?> px-6 md:px-8 lg:px-12">
-		<div class="max-w-[1440px] w-full mx-auto pt-36 pb-20 md:<?php echo esc_attr( $padding_top ); ?> md:<?php echo esc_attr( $padding_bottom ); ?>">
+		<div class="max-w-[1366px] w-full mx-auto pt-36 pb-20 md:<?php echo esc_attr( $padding_top ); ?> md:<?php echo esc_attr( $padding_bottom ); ?>">
 			
 			<!-- Main Content Container -->
 			<div class="flex flex-col items-center gap-8 md:gap-10">
 				
 				<!-- Heading Group with Badge -->
-				<div class="relative flex flex-col lg:flex-row md:<?php echo esc_attr( $content_justify ); ?> items-center lg:items-start justify-between gap-6 lg:gap-12 w-full">
+				<div class="relative flex flex-col lg:flex-row md:<?php echo esc_attr( $content_justify ); ?> items-center lg:items-end justify-between gap-6 lg:gap-12 w-full">
 					
 					<!-- Text Content Group -->
 					<div class="flex flex-col gap-4 md:gap-6 flex-1 <?php echo esc_attr( $text_max_width ); ?>">
@@ -132,6 +138,22 @@ $wrapper_attributes = get_block_wrapper_attributes(
 							alt="<?php echo esc_attr( $badge_alt_text ); ?>"
 								class="w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 xl:w-64 xl:h-64"
 							/>
+						</div>
+					<?php endif; ?>
+					<?php if ( $show_quick_call ) : ?>		
+						<div class="flex flex-col items-center justify-self-end w-full lg:w-4/12 xl:w-3/12 gap-4">
+							<a href="<?php echo esc_url( $hero_button_url ); ?>" class="btn-cta">
+								<?php echo esc_html( $hero_button_text ); ?>
+							</a>
+							
+							<div class="flex items-center gap-2 text-white">
+								<span class="font-body font-semibold text-base xl:text-lg">
+									<?php echo esc_html( $quick_call_label ); ?>
+								</span>
+								<a href="<?php echo esc_url( $quick_call_phone_url ); ?>" class="font-body font-bold text-base xl:text-lg text-primary underline hover:text-accent-gold transition-colors">
+									<?php echo esc_html( $quick_call_phone ); ?>
+								</a>
+							</div>
 						</div>
 					<?php endif; ?>
 				</div>
@@ -197,14 +219,16 @@ $wrapper_attributes = get_block_wrapper_attributes(
 								<a href="<?php echo esc_url( $cta_button_url ); ?>" class="btn-cta">
 									<?php echo esc_html( $cta_button_text ); ?>
 								</a>
-								<div class="flex items-center gap-2 text-white">
-									<span class="font-body font-semibold text-base xl:text-lg">
-										<?php esc_html_e( 'CALL TODAY', 'mbn-theme' ); ?>
-									</span>
-									<a href="<?php echo esc_url( $phone_number_url ); ?>" class="font-body font-bold text-base xl:text-lg text-primary underline hover:text-accent-gold transition-colors">
-										<?php echo esc_html( $phone_number ); ?>
-									</a>
-								</div>
+							<?php if ( $show_quick_call ) : ?>
+							<div class="flex items-center gap-2 text-white">
+								<span class="font-body font-semibold text-base xl:text-lg">
+									<?php echo esc_html( $quick_call_label ); ?>
+								</span>
+								<a href="<?php echo esc_url( $quick_call_phone_url ); ?>" class="font-body font-bold text-base xl:text-lg text-primary underline hover:text-accent-gold transition-colors">
+									<?php echo esc_html( $quick_call_phone ); ?>
+								</a>
+							</div>
+							<?php endif; ?>
 							</div>
 
 						</div>
