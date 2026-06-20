@@ -6,7 +6,7 @@ import {
   MediaUpload,
   MediaUploadCheck,
 } from '@wordpress/block-editor';
-import { PanelBody, TextControl, TextareaControl, Button, ToggleControl } from '@wordpress/components';
+import { PanelBody, TextControl, Button, ToggleControl } from '@wordpress/components';
 import { Fragment, useState } from '@wordpress/element';
 import metadata from './block.json';
 import './style.css';
@@ -40,7 +40,7 @@ const makeCaseCategory = () => ( {
 const makeFaqItem = () => ( {
   question: '',
   answer: '',
-  isOpen: false,
+  bullets: '',
 } );
 
 const makeServingColumn = () => ( {
@@ -93,6 +93,30 @@ const makeHowWeHelpItem = () => ( {
   imagePosition: 'right',
 } );
 
+const makeFaultDamageType = () => ( {
+  title: '',
+  description: '',
+} );
+
+const makeFaultStep = () => ( {
+  number: '',
+  title: '',
+  description: '',
+} );
+
+const makeBadgeTextParagraph = () => ( {
+  text: '',
+} );
+
+const makeBadgeItem = () => ( {
+  imageId: 0,
+  imageUrl: '',
+  imageFallback: '',
+  imageAlt: '',
+  imageWidth: 303,
+  imageHeight: 303,
+} );
+
 const sectionStyle = ( isActive ) => ( {
   border: isActive ? '2px solid #286fb7' : '1px solid #d5dadd',
   borderRadius: '8px',
@@ -121,8 +145,10 @@ function Edit( { attributes, setAttributes } ) {
     howWeHelpHeaderImageAlt,
     howWeHelpItems = [],
     caseCategoriesTitle,
+    caseCategoriesSubtitle,
     caseCategoriesClosing,
     faqTitle,
+    faqSubtitle,
     servingTitle,
     caseResultsTitle,
     caseResultsSubtitle,
@@ -132,7 +158,33 @@ function Edit( { attributes, setAttributes } ) {
     caseResults = [],
     resourcesLinks = [],
     caseCategories = [],
+    faultIntroTitle,
+    faultIntroText,
+    faultIntroImageId,
+    faultIntroImageUrl,
+    faultIntroImageAlt,
+    faultComparativeTitle,
+    faultComparativeColumn1,
+    faultComparativeColumn2,
+    faultCompensationTitle,
+    faultCompensationSubtitle,
+    faultDamageTypes = [],
+    faultStepsTitle,
+    faultStepsSubtitle,
+    faultSteps = [],
+    faultTimeLimitTitle,
+    faultTimeLimitParagraph1,
+    faultTimeLimitParagraph2,
+    faultTimeLimitImageId,
+    faultTimeLimitImageUrl,
+    faultTimeLimitImageAlt,
+    faultStatuteImageId,
+    faultStatuteImageUrl,
+    faultStatuteImageAlt,
+    faultStatuteText,
     faqItems = [],
+    badgesTextParagraphs = [],
+    badgesItems = [],
     servingColumns = [],
   } = attributes;
 
@@ -176,12 +228,34 @@ function Edit( { attributes, setAttributes } ) {
             value={ whyChooseTitle }
             onChange={ ( value ) => setAttributes( { whyChooseTitle: value } ) }
           />
-          <TextareaControl
-            label="Intro text"
-            value={ whyChooseIntro }
-            onChange={ ( value ) => setAttributes( { whyChooseIntro: value } ) }
-            rows={ 5 }
-          />
+          <div style={ { marginBottom: '16px' } }>
+            <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+              Intro text
+            </label>
+            <div style={ {
+              border: '1px solid #949494',
+              borderRadius: '2px',
+              padding: '8px',
+              minHeight: '120px',
+              fontSize: '13px',
+              lineHeight: '1.4',
+            } }>
+              <RichText
+                tagName="p"
+                identifier="why-choose-intro"
+                placeholder="Enter intro text..."
+                value={ whyChooseIntro }
+                onChange={ ( value ) => setAttributes( { whyChooseIntro: value } ) }
+                allowedFormats={ [
+                  'core/bold',
+                  'core/italic',
+                  'core/link',
+                  'core/strikethrough',
+                  'core/underline',
+                ] }
+              />
+            </div>
+          </div>
 
           <ToggleControl
             label="Show image instead of stats"
@@ -240,28 +314,16 @@ function Edit( { attributes, setAttributes } ) {
                   <TextControl
                     label={ `Stat ${ index + 1 } Number` }
                     value={ stat.number || '' }
-                    onChange={ ( value ) => {
-                      const updated = [ ...whyChooseStats ];
-                      updated[ index ] = { ...updated[ index ], number: value };
-                      setAttributes( { whyChooseStats: updated } );
-                    } }
+                    onChange={ ( value ) => updateArrayItem( 'whyChooseStats', index, { number: value } ) }
                   />
                   <TextControl
                     label="Stat label"
                     value={ stat.label || '' }
-                    onChange={ ( value ) => {
-                      const updated = [ ...whyChooseStats ];
-                      updated[ index ] = { ...updated[ index ], label: value };
-                      setAttributes( { whyChooseStats: updated } );
-                    } }
+                    onChange={ ( value ) => updateArrayItem( 'whyChooseStats', index, { label: value } ) }
                   />
                   <Button
                     isDestructive
-                    onClick={ () =>
-                      setAttributes( {
-                        whyChooseStats: whyChooseStats.filter( ( _, i ) => i !== index ),
-                      } )
-                    }
+                    onClick={ () => removeArrayItem( 'whyChooseStats', index ) }
                   >
                     Remove Stat
                   </Button>
@@ -286,42 +348,46 @@ function Edit( { attributes, setAttributes } ) {
               <TextControl
                 label={ `Item ${ index + 1 } Heading` }
                 value={ item.heading || '' }
-                onChange={ ( value ) => {
-                  const updated = [ ...whyChooseItems ];
-                  updated[ index ] = { ...updated[ index ], heading: value };
-                  setAttributes( { whyChooseItems: updated } );
-                } }
+                onChange={ ( value ) => updateArrayItem( 'whyChooseItems', index, { heading: value } ) }
               />
-              <TextareaControl
-                label="Paragraph"
-                value={ item.paragraph || '' }
-                onChange={ ( value ) => {
-                  const updated = [ ...whyChooseItems ];
-                  updated[ index ] = { ...updated[ index ], paragraph: value };
-                  setAttributes( { whyChooseItems: updated } );
-                } }
-                rows={ 4 }
-              />
+              <div style={ { marginBottom: '16px' } }>
+                <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+                  Paragraph
+                </label>
+                <div style={ {
+                  border: '1px solid #949494',
+                  borderRadius: '2px',
+                  padding: '8px',
+                  minHeight: '96px',
+                  fontSize: '13px',
+                  lineHeight: '1.4',
+                } }>
+                  <RichText
+                    tagName="p"
+                    identifier={ `why-choose-item-${ index }` }
+                    placeholder="Enter paragraph text..."
+                    value={ item.paragraph || '' }
+                    onChange={ ( value ) => updateArrayItem( 'whyChooseItems', index, { paragraph: value } ) }
+                    allowedFormats={ [
+                      'core/bold',
+                      'core/italic',
+                      'core/link',
+                      'core/strikethrough',
+                      'core/underline',
+                    ] }
+                  />
+                </div>
+              </div>
               <TextControl
                 label="Image Alt"
                 value={ item.imageAlt || '' }
-                onChange={ ( value ) => {
-                  const updated = [ ...whyChooseItems ];
-                  updated[ index ] = { ...updated[ index ], imageAlt: value };
-                  setAttributes( { whyChooseItems: updated } );
-                } }
+                onChange={ ( value ) => updateArrayItem( 'whyChooseItems', index, { imageAlt: value } ) }
               />
               <MediaUploadCheck>
                 <MediaUpload
-                  onSelect={ ( media ) => {
-                    const updated = [ ...whyChooseItems ];
-                    updated[ index ] = {
-                      ...updated[ index ],
-                      imageId: media.id,
-                      imageUrl: media.url,
-                    };
-                    setAttributes( { whyChooseItems: updated } );
-                  } }
+                  onSelect={ ( media ) =>
+                    updateArrayItem( 'whyChooseItems', index, { imageId: media.id, imageUrl: media.url } )
+                  }
                   allowedTypes={ [ 'image' ] }
                   value={ item.imageId || 0 }
                   render={ ( { open } ) => (
@@ -333,11 +399,7 @@ function Edit( { attributes, setAttributes } ) {
               </MediaUploadCheck>
               <Button
                 isDestructive
-                onClick={ () =>
-                  setAttributes( {
-                    whyChooseItems: whyChooseItems.filter( ( _, i ) => i !== index ),
-                  } )
-                }
+                onClick={ () => removeArrayItem( 'whyChooseItems', index ) }
               >
                 Remove Item
               </Button>
@@ -369,12 +431,34 @@ function Edit( { attributes, setAttributes } ) {
                 value={ card.title || '' }
                 onChange={ ( value ) => updateArrayItem( 'ctaCards', index, { title: value } ) }
               />
-              <TextareaControl
-                label="Description"
-                value={ card.description || '' }
-                onChange={ ( value ) => updateArrayItem( 'ctaCards', index, { description: value } ) }
-                rows={ 4 }
-              />
+              <div style={ { marginBottom: '16px' } }>
+                <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+                  Description
+                </label>
+                <div style={ {
+                  border: '1px solid #949494',
+                  borderRadius: '2px',
+                  padding: '8px',
+                  minHeight: '96px',
+                  fontSize: '13px',
+                  lineHeight: '1.4',
+                } }>
+                  <RichText
+                    tagName="p"
+                    identifier={ `cta-card-${ index }` }
+                    placeholder="Enter description..."
+                    value={ card.description || '' }
+                    onChange={ ( value ) => updateArrayItem( 'ctaCards', index, { description: value } ) }
+                    allowedFormats={ [
+                      'core/bold',
+                      'core/italic',
+                      'core/link',
+                      'core/strikethrough',
+                      'core/underline',
+                    ] }
+                  />
+                </div>
+              </div>
               <TextControl
                 label="Button text"
                 value={ card.buttonText || '' }
@@ -447,12 +531,34 @@ function Edit( { attributes, setAttributes } ) {
             value={ testimonialsTitle }
             onChange={ ( value ) => setAttributes( { testimonialsTitle: value } ) }
           />
-          <TextareaControl
-            label="Section subtitle"
-            value={ testimonialsSubtitle }
-            onChange={ ( value ) => setAttributes( { testimonialsSubtitle: value } ) }
-            rows={ 3 }
-          />
+          <div style={ { marginBottom: '16px' } }>
+            <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+              Section subtitle
+            </label>
+            <div style={ {
+              border: '1px solid #949494',
+              borderRadius: '2px',
+              padding: '8px',
+              minHeight: '72px',
+              fontSize: '13px',
+              lineHeight: '1.4',
+            } }>
+              <RichText
+                tagName="p"
+                identifier="testimonials-subtitle"
+                placeholder="Enter section subtitle..."
+                value={ testimonialsSubtitle }
+                onChange={ ( value ) => setAttributes( { testimonialsSubtitle: value } ) }
+                allowedFormats={ [
+                  'core/bold',
+                  'core/italic',
+                  'core/link',
+                  'core/strikethrough',
+                  'core/underline',
+                ] }
+              />
+            </div>
+          </div>
 
           { testimonials.map( ( testimonial, index ) => (
             <div
@@ -464,33 +570,43 @@ function Edit( { attributes, setAttributes } ) {
                 marginBottom: '12px',
               } }
             >
-              <TextareaControl
-                label={ `Testimonial ${ index + 1 } Quote` }
-                value={ testimonial.quote || '' }
-                onChange={ ( value ) => {
-                  const updated = [ ...testimonials ];
-                  updated[ index ] = { ...updated[ index ], quote: value };
-                  setAttributes( { testimonials: updated } );
-                } }
-                rows={ 4 }
-              />
+              <div style={ { marginBottom: '16px' } }>
+                <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+                  { `Testimonial ${ index + 1 } Quote` }
+                </label>
+                <div style={ {
+                  border: '1px solid #949494',
+                  borderRadius: '2px',
+                  padding: '8px',
+                  minHeight: '96px',
+                  fontSize: '13px',
+                  lineHeight: '1.4',
+                } }>
+                  <RichText
+                    tagName="p"
+                    identifier={ `testimonial-${ index }` }
+                    placeholder="Enter testimonial quote..."
+                    value={ testimonial.quote || '' }
+                    onChange={ ( value ) => updateArrayItem( 'testimonials', index, { quote: value } ) }
+                    allowedFormats={ [
+                      'core/bold',
+                      'core/italic',
+                      'core/link',
+                      'core/strikethrough',
+                      'core/underline',
+                    ] }
+                  />
+                </div>
+              </div>
               <TextControl
                 label="Author name"
                 value={ testimonial.authorName || '' }
-                onChange={ ( value ) => {
-                  const updated = [ ...testimonials ];
-                  updated[ index ] = { ...updated[ index ], authorName: value };
-                  setAttributes( { testimonials: updated } );
-                } }
+                onChange={ ( value ) => updateArrayItem( 'testimonials', index, { authorName: value } ) }
               />
               <TextControl
                 label="Author role"
                 value={ testimonial.authorRole || '' }
-                onChange={ ( value ) => {
-                  const updated = [ ...testimonials ];
-                  updated[ index ] = { ...updated[ index ], authorRole: value };
-                  setAttributes( { testimonials: updated } );
-                } }
+                onChange={ ( value ) => updateArrayItem( 'testimonials', index, { authorRole: value } ) }
               />
               <TextControl
                 label="Star rating (1-5)"
@@ -498,19 +614,11 @@ function Edit( { attributes, setAttributes } ) {
                 min="1"
                 max="5"
                 value={ testimonial.rating || 5 }
-                onChange={ ( value ) => {
-                  const updated = [ ...testimonials ];
-                  updated[ index ] = { ...updated[ index ], rating: parseInt( value, 10 ) || 5 };
-                  setAttributes( { testimonials: updated } );
-                } }
+                onChange={ ( value ) => updateArrayItem( 'testimonials', index, { rating: parseInt( value, 10 ) || 5 } ) }
               />
               <Button
                 isDestructive
-                onClick={ () =>
-                  setAttributes( {
-                    testimonials: testimonials.filter( ( _, i ) => i !== index ),
-                  } )
-                }
+                onClick={ () => removeArrayItem( 'testimonials', index ) }
               >
                 Remove Testimonial
               </Button>
@@ -531,12 +639,34 @@ function Edit( { attributes, setAttributes } ) {
             value={ howWeHelpTitle }
             onChange={ ( value ) => setAttributes( { howWeHelpTitle: value } ) }
           />
-          <TextareaControl
-            label="Intro Paragraph"
-            value={ howWeHelpIntro }
-            onChange={ ( value ) => setAttributes( { howWeHelpIntro: value } ) }
-            rows={ 3 }
-          />
+          <div style={ { marginBottom: '16px' } }>
+            <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+              Intro Paragraph
+            </label>
+            <div style={ {
+              border: '1px solid #949494',
+              borderRadius: '2px',
+              padding: '8px',
+              minHeight: '72px',
+              fontSize: '13px',
+              lineHeight: '1.4',
+            } }>
+              <RichText
+                tagName="p"
+                identifier="how-we-help-intro"
+                placeholder="Enter intro paragraph..."
+                value={ howWeHelpIntro }
+                onChange={ ( value ) => setAttributes( { howWeHelpIntro: value } ) }
+                allowedFormats={ [
+                  'core/bold',
+                  'core/italic',
+                  'core/link',
+                  'core/strikethrough',
+                  'core/underline',
+                ] }
+              />
+            </div>
+          </div>
           <hr />
           <p><strong>Header Image</strong></p>
           <MediaUploadCheck>
@@ -566,12 +696,34 @@ function Edit( { attributes, setAttributes } ) {
           { howWeHelpItems.map( ( item, index ) => (
             <div key={ index } style={ sectionStyle( false ) }>
               <p style={ { marginBottom: '8px', fontWeight: '600' } }>Row { index + 1 }</p>
-              <TextareaControl
-                label="Paragraph Text"
-                value={ item.text }
-                onChange={ ( value ) => updateArrayItem( 'howWeHelpItems', index, { text: value } ) }
-                rows={ 4 }
-              />
+              <div style={ { marginBottom: '16px' } }>
+                <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+                  Paragraph Text
+                </label>
+                <div style={ {
+                  border: '1px solid #949494',
+                  borderRadius: '2px',
+                  padding: '8px',
+                  minHeight: '96px',
+                  fontSize: '13px',
+                  lineHeight: '1.4',
+                } }>
+                  <RichText
+                    tagName="p"
+                    identifier={ `how-we-help-item-${ index }` }
+                    placeholder="Enter paragraph text..."
+                    value={ item.text }
+                    onChange={ ( value ) => updateArrayItem( 'howWeHelpItems', index, { text: value } ) }
+                    allowedFormats={ [
+                      'core/bold',
+                      'core/italic',
+                      'core/link',
+                      'core/strikethrough',
+                      'core/underline',
+                    ] }
+                  />
+                </div>
+              </div>
               <ToggleControl
                 label="Image Position"
                 help={ item.imagePosition === 'left' ? 'Image on Left' : 'Image on Right (default)' }
@@ -660,12 +812,34 @@ function Edit( { attributes, setAttributes } ) {
                 value={ item.title || '' }
                 onChange={ ( value ) => updateArrayItem( 'caseResults', index, { title: value } ) }
               />
-              <TextareaControl
-                label="Description"
-                value={ item.description || '' }
-                onChange={ ( value ) => updateArrayItem( 'caseResults', index, { description: value } ) }
-                rows={ 3 }
-              />
+              <div style={ { marginBottom: '16px' } }>
+                <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+                  Description
+                </label>
+                <div style={ {
+                  border: '1px solid #949494',
+                  borderRadius: '2px',
+                  padding: '8px',
+                  minHeight: '72px',
+                  fontSize: '13px',
+                  lineHeight: '1.4',
+                } }>
+                  <RichText
+                    tagName="p"
+                    identifier={ `case-result-${ index }` }
+                    placeholder="Enter description..."
+                    value={ item.description || '' }
+                    onChange={ ( value ) => updateArrayItem( 'caseResults', index, { description: value } ) }
+                    allowedFormats={ [
+                      'core/bold',
+                      'core/italic',
+                      'core/link',
+                      'core/strikethrough',
+                      'core/underline',
+                    ] }
+                  />
+                </div>
+              </div>
               <TextControl
                 label="Image alt"
                 value={ item.imageAlt || '' }
@@ -718,28 +892,16 @@ function Edit( { attributes, setAttributes } ) {
               <TextControl
                 label="Label"
                 value={ link.label || '' }
-                onChange={ ( value ) => {
-                  const updated = [ ...resourcesLinks ];
-                  updated[ index ] = { ...updated[ index ], label: value };
-                  setAttributes( { resourcesLinks: updated } );
-                } }
+                onChange={ ( value ) => updateArrayItem( 'resourcesLinks', index, { label: value } ) }
               />
               <TextControl
                 label="URL"
                 value={ link.url || '' }
-                onChange={ ( value ) => {
-                  const updated = [ ...resourcesLinks ];
-                  updated[ index ] = { ...updated[ index ], url: value };
-                  setAttributes( { resourcesLinks: updated } );
-                } }
+                onChange={ ( value ) => updateArrayItem( 'resourcesLinks', index, { url: value } ) }
               />
               <Button
                 isDestructive
-                onClick={ () =>
-                  setAttributes( {
-                    resourcesLinks: resourcesLinks.filter( ( _, i ) => i !== index ),
-                  } )
-                }
+                onClick={ () => removeArrayItem( 'resourcesLinks', index ) }
               >
                 Remove Link
               </Button>
@@ -763,13 +925,63 @@ function Edit( { attributes, setAttributes } ) {
             value={ caseCategoriesTitle }
             onChange={ ( value ) => setAttributes( { caseCategoriesTitle: value } ) }
           />
-          <TextareaControl
-            label="Closing Paragraph"
-            value={ caseCategoriesClosing }
-            onChange={ ( value ) => setAttributes( { caseCategoriesClosing: value } ) }
-            rows={ 4 }
-            help="Optional closing text that appears after all case category sections."
-          />
+          <div style={ { marginBottom: '16px' } }>
+            <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+              Section Subtitle
+            </label>
+            <div style={ {
+              border: '1px solid #949494',
+              borderRadius: '2px',
+              padding: '8px',
+              minHeight: '72px',
+              fontSize: '13px',
+              lineHeight: '1.4',
+            } }>
+              <RichText
+                tagName="p"
+                identifier="case-categories-subtitle"
+                placeholder="Enter section subtitle..."
+                value={ caseCategoriesSubtitle }
+                onChange={ ( value ) => setAttributes( { caseCategoriesSubtitle: value } ) }
+                allowedFormats={ [
+                  'core/bold',
+                  'core/italic',
+                  'core/link',
+                  'core/strikethrough',
+                  'core/underline',
+                ] }
+              />
+            </div>
+          </div>
+          <div style={ { marginBottom: '16px' } }>
+            <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+              Closing Paragraph
+            </label>
+            <div style={ {
+              border: '1px solid #949494',
+              borderRadius: '2px',
+              padding: '8px',
+              minHeight: '96px',
+              fontSize: '13px',
+              lineHeight: '1.4',
+            } }>
+              <RichText
+                tagName="p"
+                identifier="case-categories-closing"
+                placeholder="Enter closing paragraph..."
+                value={ caseCategoriesClosing }
+                onChange={ ( value ) => setAttributes( { caseCategoriesClosing: value } ) }
+                allowedFormats={ [
+                  'core/bold',
+                  'core/italic',
+                  'core/link',
+                  'core/strikethrough',
+                  'core/underline',
+                ] }
+              />
+            </div>
+            <p style={ { marginTop: '4px', fontSize: '12px', color: '#757575' } }>Optional closing text that appears after all case category sections.</p>
+          </div>
           <hr />
           { caseCategories.map( ( category, catIndex ) => (
             <div
@@ -786,12 +998,34 @@ function Edit( { attributes, setAttributes } ) {
                 value={ category.title || '' }
                 onChange={ ( value ) => updateArrayItem( 'caseCategories', catIndex, { title: value } ) }
               />
-              <TextareaControl
-                label="Description"
-                value={ category.description || '' }
-                onChange={ ( value ) => updateArrayItem( 'caseCategories', catIndex, { description: value } ) }
-                rows={ 3 }
-              />
+              <div style={ { marginBottom: '16px' } }>
+                <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+                  Description
+                </label>
+                <div style={ {
+                  border: '1px solid #949494',
+                  borderRadius: '2px',
+                  padding: '8px',
+                  minHeight: '72px',
+                  fontSize: '13px',
+                  lineHeight: '1.4',
+                } }>
+                  <RichText
+                    tagName="p"
+                    identifier={ `case-category-${ catIndex }` }
+                    placeholder="Enter description..."
+                    value={ category.description || '' }
+                    onChange={ ( value ) => updateArrayItem( 'caseCategories', catIndex, { description: value } ) }
+                    allowedFormats={ [
+                      'core/bold',
+                      'core/italic',
+                      'core/link',
+                      'core/strikethrough',
+                      'core/underline',
+                    ] }
+                  />
+                </div>
+              </div>
               <TextControl
                 label="Image alt"
                 value={ category.imageAlt || '' }
@@ -821,34 +1055,27 @@ function Edit( { attributes, setAttributes } ) {
                     label="Link label"
                     value={ link.label || '' }
                     onChange={ ( value ) => {
-                      const updated = [ ...caseCategories ];
-                      const links = [ ...( updated[ catIndex ].links || [] ) ];
+                      const links = [ ...( category.links || [] ) ];
                       links[ linkIndex ] = { ...links[ linkIndex ], label: value };
-                      updated[ catIndex ] = { ...updated[ catIndex ], links };
-                      setAttributes( { caseCategories: updated } );
+                      updateArrayItem( 'caseCategories', catIndex, { links } );
                     } }
                   />
                   <TextControl
                     label="Link URL"
                     value={ link.url || '' }
                     onChange={ ( value ) => {
-                      const updated = [ ...caseCategories ];
-                      const links = [ ...( updated[ catIndex ].links || [] ) ];
+                      const links = [ ...( category.links || [] ) ];
                       links[ linkIndex ] = { ...links[ linkIndex ], url: value };
-                      updated[ catIndex ] = { ...updated[ catIndex ], links };
-                      setAttributes( { caseCategories: updated } );
+                      updateArrayItem( 'caseCategories', catIndex, { links } );
                     } }
                   />
                   <Button
                     isDestructive
-                    onClick={ () => {
-                      const updated = [ ...caseCategories ];
-                      updated[ catIndex ] = {
-                        ...updated[ catIndex ],
-                        links: ( updated[ catIndex ].links || [] ).filter( ( _, i ) => i !== linkIndex ),
-                      };
-                      setAttributes( { caseCategories: updated } );
-                    } }
+                    onClick={ () =>
+                      updateArrayItem( 'caseCategories', catIndex, {
+                        links: ( category.links || [] ).filter( ( _, i ) => i !== linkIndex ),
+                      } )
+                    }
                   >
                     Remove Category Link
                   </Button>
@@ -858,14 +1085,11 @@ function Edit( { attributes, setAttributes } ) {
               <div style={ { marginTop: '8px' } }>
                 <Button
                   isSecondary
-                  onClick={ () => {
-                    const updated = [ ...caseCategories ];
-                    updated[ catIndex ] = {
-                      ...updated[ catIndex ],
-                      links: [ ...( updated[ catIndex ].links || [] ), makeSimpleLink() ],
-                    };
-                    setAttributes( { caseCategories: updated } );
-                  } }
+                  onClick={ () =>
+                    updateArrayItem( 'caseCategories', catIndex, {
+                      links: [ ...( category.links || [] ), makeSimpleLink() ],
+                    } )
+                  }
                 >
                   Add Category Link
                 </Button>
@@ -883,6 +1107,430 @@ function Edit( { attributes, setAttributes } ) {
         </PanelBody>
 
         <PanelBody
+          key={ `fault-${ activeEditorSection }` }
+          title="Determining Fault"
+          initialOpen={ activeEditorSection === 'fault' }
+        >
+          <p><strong>Intro Section</strong></p>
+          <TextControl
+            label="Intro Title"
+            value={ faultIntroTitle }
+            onChange={ ( value ) => setAttributes( { faultIntroTitle: value } ) }
+          />
+          <div style={ { marginBottom: '16px' } }>
+            <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+              Intro Text
+            </label>
+            <div style={ {
+              border: '1px solid #949494',
+              borderRadius: '2px',
+              padding: '8px',
+              minHeight: '96px',
+              fontSize: '13px',
+              lineHeight: '1.4',
+            } }>
+              <RichText
+                tagName="p"
+                identifier="fault-intro-text"
+                placeholder="Enter intro text..."
+                value={ faultIntroText }
+                onChange={ ( value ) => setAttributes( { faultIntroText: value } ) }
+                allowedFormats={ [
+                  'core/bold',
+                  'core/italic',
+                  'core/link',
+                  'core/strikethrough',
+                  'core/underline',
+                ] }
+              />
+            </div>
+          </div>
+          <MediaUploadCheck>
+            <MediaUpload
+              onSelect={ ( media ) => setAttributes( { faultIntroImageId: media.id, faultIntroImageUrl: media.url } ) }
+              allowedTypes={ [ 'image' ] }
+              value={ faultIntroImageId }
+              render={ ( { open } ) => (
+                <div>
+                  <Button onClick={ open } variant="secondary">
+                    { faultIntroImageUrl ? 'Replace Intro Image' : 'Select Intro Image' }
+                  </Button>
+                  { faultIntroImageUrl && (
+                    <img src={ faultIntroImageUrl } alt="" style={ { marginTop: '10px', maxWidth: '100%', height: 'auto' } } />
+                  ) }
+                </div>
+              ) }
+            />
+          </MediaUploadCheck>
+          <TextControl
+            label="Intro Image Alt Text"
+            value={ faultIntroImageAlt }
+            onChange={ ( value ) => setAttributes( { faultIntroImageAlt: value } ) }
+          />
+          <hr />
+          <p><strong>Comparative Negligence</strong></p>
+          <TextControl
+            label="Comparative Title"
+            value={ faultComparativeTitle }
+            onChange={ ( value ) => setAttributes( { faultComparativeTitle: value } ) }
+          />
+          <div style={ { marginBottom: '16px' } }>
+            <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+              Column 1 Text
+            </label>
+            <div style={ {
+              border: '1px solid #949494',
+              borderRadius: '2px',
+              padding: '8px',
+              minHeight: '144px',
+              fontSize: '13px',
+              lineHeight: '1.4',
+            } }>
+              <RichText
+                tagName="p"
+                identifier="fault-comparative-column1"
+                placeholder="Enter column 1 text..."
+                value={ faultComparativeColumn1 }
+                onChange={ ( value ) => setAttributes( { faultComparativeColumn1: value } ) }
+                allowedFormats={ [
+                  'core/bold',
+                  'core/italic',
+                  'core/link',
+                  'core/strikethrough',
+                  'core/underline',
+                ] }
+              />
+            </div>
+          </div>
+          <div style={ { marginBottom: '16px' } }>
+            <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+              Column 2 Text
+            </label>
+            <div style={ {
+              border: '1px solid #949494',
+              borderRadius: '2px',
+              padding: '8px',
+              minHeight: '144px',
+              fontSize: '13px',
+              lineHeight: '1.4',
+            } }>
+              <RichText
+                tagName="p"
+                identifier="fault-comparative-column2"
+                placeholder="Enter column 2 text..."
+                value={ faultComparativeColumn2 }
+                onChange={ ( value ) => setAttributes( { faultComparativeColumn2: value } ) }
+                allowedFormats={ [
+                  'core/bold',
+                  'core/italic',
+                  'core/link',
+                  'core/strikethrough',
+                  'core/underline',
+                ] }
+              />
+            </div>
+          </div>
+          <hr />
+          <p><strong>Compensation Section</strong></p>
+          <TextControl
+            label="Compensation Title"
+            value={ faultCompensationTitle }
+            onChange={ ( value ) => setAttributes( { faultCompensationTitle: value } ) }
+          />
+          <div style={ { marginBottom: '16px' } }>
+            <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+              Compensation Subtitle
+            </label>
+            <div style={ {
+              border: '1px solid #949494',
+              borderRadius: '2px',
+              padding: '8px',
+              minHeight: '72px',
+              fontSize: '13px',
+              lineHeight: '1.4',
+            } }>
+              <RichText
+                tagName="p"
+                identifier="fault-compensation-subtitle"
+                placeholder="Enter subtitle..."
+                value={ faultCompensationSubtitle }
+                onChange={ ( value ) => setAttributes( { faultCompensationSubtitle: value } ) }
+                allowedFormats={ [
+                  'core/bold',
+                  'core/italic',
+                  'core/link',
+                  'core/strikethrough',
+                  'core/underline',
+                ] }
+              />
+            </div>
+          </div>
+          { faultDamageTypes.map( ( damage, index ) => (
+            <div key={ index } style={ { border: '1px solid #d5dadd', borderRadius: '6px', padding: '12px', marginBottom: '12px' } }>
+              <TextControl
+                label={ `Damage Type ${ index + 1 } Title` }
+                value={ damage.title || '' }
+                onChange={ ( value ) => updateArrayItem( 'faultDamageTypes', index, { title: value } ) }
+              />
+              <div style={ { marginBottom: '16px' } }>
+                <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+                  Description
+                </label>
+                <div style={ {
+                  border: '1px solid #949494',
+                  borderRadius: '2px',
+                  padding: '8px',
+                  minHeight: '96px',
+                  fontSize: '13px',
+                  lineHeight: '1.4',
+                } }>
+                  <RichText
+                    tagName="p"
+                    identifier={ `fault-damage-${ index }` }
+                    placeholder="Enter description..."
+                    value={ damage.description || '' }
+                    onChange={ ( value ) => updateArrayItem( 'faultDamageTypes', index, { description: value } ) }
+                    allowedFormats={ [
+                      'core/bold',
+                      'core/italic',
+                      'core/link',
+                      'core/strikethrough',
+                      'core/underline',
+                    ] }
+                  />
+                </div>
+              </div>
+              <Button isDestructive onClick={ () => removeArrayItem( 'faultDamageTypes', index ) }>
+                Remove Damage Type
+              </Button>
+            </div>
+          ) ) }
+          <Button isPrimary onClick={ () => addArrayItem( 'faultDamageTypes', makeFaultDamageType ) }>
+            Add Damage Type
+          </Button>
+          <hr />
+          <p><strong>Steps Section</strong></p>
+          <TextControl
+            label="Steps Title"
+            value={ faultStepsTitle }
+            onChange={ ( value ) => setAttributes( { faultStepsTitle: value } ) }
+          />
+          <div style={ { marginBottom: '16px' } }>
+            <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+              Steps Subtitle
+            </label>
+            <div style={ {
+              border: '1px solid #949494',
+              borderRadius: '2px',
+              padding: '8px',
+              minHeight: '72px',
+              fontSize: '13px',
+              lineHeight: '1.4',
+            } }>
+              <RichText
+                tagName="p"
+                identifier="fault-steps-subtitle"
+                placeholder="Enter subtitle..."
+                value={ faultStepsSubtitle }
+                onChange={ ( value ) => setAttributes( { faultStepsSubtitle: value } ) }
+                allowedFormats={ [
+                  'core/bold',
+                  'core/italic',
+                  'core/link',
+                  'core/strikethrough',
+                  'core/underline',
+                ] }
+              />
+            </div>
+          </div>
+          { faultSteps.map( ( step, index ) => (
+            <div key={ index } style={ { border: '1px solid #d5dadd', borderRadius: '6px', padding: '12px', marginBottom: '12px' } }>
+              <TextControl
+                label={ `Step ${ index + 1 } Number` }
+                value={ step.number || '' }
+                onChange={ ( value ) => updateArrayItem( 'faultSteps', index, { number: value } ) }
+              />
+              <TextControl
+                label="Step Title"
+                value={ step.title || '' }
+                onChange={ ( value ) => updateArrayItem( 'faultSteps', index, { title: value } ) }
+              />
+              <div style={ { marginBottom: '16px' } }>
+                <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+                  Step Description
+                </label>
+                <div style={ {
+                  border: '1px solid #949494',
+                  borderRadius: '2px',
+                  padding: '8px',
+                  minHeight: '96px',
+                  fontSize: '13px',
+                  lineHeight: '1.4',
+                } }>
+                  <RichText
+                    tagName="p"
+                    identifier={ `fault-step-${ index }` }
+                    placeholder="Enter step description..."
+                    value={ step.description || '' }
+                    onChange={ ( value ) => updateArrayItem( 'faultSteps', index, { description: value } ) }
+                    allowedFormats={ [
+                      'core/bold',
+                      'core/italic',
+                      'core/link',
+                      'core/strikethrough',
+                      'core/underline',
+                    ] }
+                  />
+                </div>
+              </div>
+              <Button isDestructive onClick={ () => removeArrayItem( 'faultSteps', index ) }>
+                Remove Step
+              </Button>
+            </div>
+          ) ) }
+          <Button isPrimary onClick={ () => addArrayItem( 'faultSteps', makeFaultStep ) }>
+            Add Step
+          </Button>
+          <hr />
+          <p><strong>Time Limit Section</strong></p>
+          <TextControl
+            label="Time Limit Title"
+            value={ faultTimeLimitTitle }
+            onChange={ ( value ) => setAttributes( { faultTimeLimitTitle: value } ) }
+          />
+          <div style={ { marginBottom: '16px' } }>
+            <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+              Paragraph 1
+            </label>
+            <div style={ {
+              border: '1px solid #949494',
+              borderRadius: '2px',
+              padding: '8px',
+              minHeight: '72px',
+              fontSize: '13px',
+              lineHeight: '1.4',
+            } }>
+              <RichText
+                tagName="p"
+                identifier="fault-time-limit-paragraph1"
+                placeholder="Enter paragraph text..."
+                value={ faultTimeLimitParagraph1 }
+                onChange={ ( value ) => setAttributes( { faultTimeLimitParagraph1: value } ) }
+                allowedFormats={ [
+                  'core/bold',
+                  'core/italic',
+                  'core/link',
+                  'core/strikethrough',
+                  'core/underline',
+                ] }
+              />
+            </div>
+          </div>
+          <div style={ { marginBottom: '16px' } }>
+            <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+              Paragraph 2
+            </label>
+            <div style={ {
+              border: '1px solid #949494',
+              borderRadius: '2px',
+              padding: '8px',
+              minHeight: '72px',
+              fontSize: '13px',
+              lineHeight: '1.4',
+            } }>
+              <RichText
+                tagName="p"
+                identifier="fault-time-limit-paragraph2"
+                placeholder="Enter paragraph text..."
+                value={ faultTimeLimitParagraph2 }
+                onChange={ ( value ) => setAttributes( { faultTimeLimitParagraph2: value } ) }
+                allowedFormats={ [
+                  'core/bold',
+                  'core/italic',
+                  'core/link',
+                  'core/strikethrough',
+                  'core/underline',
+                ] }
+              />
+            </div>
+          </div>
+          <MediaUploadCheck>
+            <MediaUpload
+              onSelect={ ( media ) => setAttributes( { faultTimeLimitImageId: media.id, faultTimeLimitImageUrl: media.url } ) }
+              allowedTypes={ [ 'image' ] }
+              value={ faultTimeLimitImageId }
+              render={ ( { open } ) => (
+                <div>
+                  <Button onClick={ open } variant="secondary">
+                    { faultTimeLimitImageUrl ? 'Replace Time Limit Image' : 'Select Time Limit Image' }
+                  </Button>
+                  { faultTimeLimitImageUrl && (
+                    <img src={ faultTimeLimitImageUrl } alt="" style={ { marginTop: '10px', maxWidth: '100%', height: 'auto' } } />
+                  ) }
+                </div>
+              ) }
+            />
+          </MediaUploadCheck>
+          <TextControl
+            label="Time Limit Image Alt Text"
+            value={ faultTimeLimitImageAlt }
+            onChange={ ( value ) => setAttributes( { faultTimeLimitImageAlt: value } ) }
+          />
+          <hr />
+          <p><strong>Statute Section</strong></p>
+          <MediaUploadCheck>
+            <MediaUpload
+              onSelect={ ( media ) => setAttributes( { faultStatuteImageId: media.id, faultStatuteImageUrl: media.url } ) }
+              allowedTypes={ [ 'image' ] }
+              value={ faultStatuteImageId }
+              render={ ( { open } ) => (
+                <div>
+                  <Button onClick={ open } variant="secondary">
+                    { faultStatuteImageUrl ? 'Replace Statute Image' : 'Select Statute Image' }
+                  </Button>
+                  { faultStatuteImageUrl && (
+                    <img src={ faultStatuteImageUrl } alt="" style={ { marginTop: '10px', maxWidth: '100%', height: 'auto' } } />
+                  ) }
+                </div>
+              ) }
+            />
+          </MediaUploadCheck>
+          <TextControl
+            label="Statute Image Alt Text"
+            value={ faultStatuteImageAlt }
+            onChange={ ( value ) => setAttributes( { faultStatuteImageAlt: value } ) }
+          />
+          <div style={ { marginBottom: '16px' } }>
+            <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+              Statute Text
+            </label>
+            <div style={ {
+              border: '1px solid #949494',
+              borderRadius: '2px',
+              padding: '8px',
+              minHeight: '96px',
+              fontSize: '13px',
+              lineHeight: '1.4',
+            } }>
+              <RichText
+                tagName="p"
+                identifier="fault-statute-text"
+                placeholder="Enter statute text..."
+                value={ faultStatuteText }
+                onChange={ ( value ) => setAttributes( { faultStatuteText: value } ) }
+                allowedFormats={ [
+                  'core/bold',
+                  'core/italic',
+                  'core/link',
+                  'core/strikethrough',
+                  'core/underline',
+                ] }
+              />
+            </div>
+          </div>
+        </PanelBody>
+
+        <PanelBody
           key={ `faq-${ activeEditorSection }` }
           title="FAQ"
           initialOpen={ activeEditorSection === 'faq' }
@@ -892,6 +1540,34 @@ function Edit( { attributes, setAttributes } ) {
             value={ faqTitle }
             onChange={ ( value ) => setAttributes( { faqTitle: value } ) }
           />
+          <div style={ { marginBottom: '16px' } }>
+            <label style={ { display: 'block', marginBottom: '8px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#1e1e1e' } }>
+              Section Subtitle
+            </label>
+            <div style={ {
+              border: '1px solid #949494',
+              borderRadius: '2px',
+              padding: '8px',
+              minHeight: '72px',
+              fontSize: '13px',
+              lineHeight: '1.4',
+            } }>
+              <RichText
+                tagName="p"
+                identifier="faq-subtitle"
+                placeholder="Enter section subtitle..."
+                value={ faqSubtitle }
+                onChange={ ( value ) => setAttributes( { faqSubtitle: value } ) }
+                allowedFormats={ [
+                  'core/bold',
+                  'core/italic',
+                  'core/link',
+                  'core/strikethrough',
+                  'core/underline',
+                ] }
+              />
+            </div>
+          </div>
           <hr />
           { faqItems.map( ( faq, index ) => (
             <div
@@ -901,6 +1577,7 @@ function Edit( { attributes, setAttributes } ) {
                 borderRadius: '6px',
                 padding: '12px',
                 marginBottom: '12px',
+                backgroundColor: '#fff',
               } }
             >
               <TextControl
@@ -908,7 +1585,82 @@ function Edit( { attributes, setAttributes } ) {
                 value={ faq.question || '' }
                 onChange={ ( value ) => updateArrayItem( 'faqItems', index, { question: value } ) }
               />
-              <p style={ { fontSize: '12px', color: '#757575', marginTop: '8px' } }>Click "Edit FAQ" below to edit answers with formatting toolbar</p>
+              <div style={ { marginTop: '12px' } }>
+                <label
+                  style={ {
+                    display: 'block',
+                    marginBottom: '8px',
+                    fontSize: '11px',
+                    fontWeight: 600,
+                    textTransform: 'uppercase',
+                    color: '#1e1e1e',
+                  } }
+                >
+                  Answer (with formatting)
+                </label>
+                <div style={ {
+                  border: '1px solid #949494',
+                  borderRadius: '2px',
+                  padding: '8px',
+                  minHeight: '100px',
+                  fontSize: '13px',
+                  lineHeight: '1.4',
+                } }>
+                  <RichText
+                    tagName="p"
+                    identifier={ `faq-answer-${ index }` }
+                    value={ faq.answer || '' }
+                    onChange={ ( value ) => updateArrayItem( 'faqItems', index, { answer: value } ) }
+                    placeholder="Type your answer here. Use the toolbar for formatting..."
+                    allowedFormats={ [
+                      'core/bold',
+                      'core/italic',
+                      'core/link',
+                      'core/strikethrough',
+                      'core/underline',
+                    ] }
+                  />
+                </div>
+              </div>
+              <div style={ { marginTop: '12px' } }>
+                <label
+                  style={ {
+                    display: 'block',
+                    marginBottom: '8px',
+                    fontSize: '11px',
+                    fontWeight: 600,
+                    textTransform: 'uppercase',
+                    color: '#1e1e1e',
+                  } }
+                >
+                  Bullet Points (optional)
+                </label>
+                <div style={ {
+                  border: '1px solid #949494',
+                  borderRadius: '2px',
+                  padding: '8px',
+                  fontSize: '13px',
+                  lineHeight: '1.4',
+                  listStyleType: 'disc',
+                  paddingLeft: '24px',
+                } }>
+                  <RichText
+                    tagName="ul"
+                    multiline="li"
+                    identifier={ `faq-bullets-${ index }` }
+                    value={ faq.bullets || '' }
+                    onChange={ ( value ) => updateArrayItem( 'faqItems', index, { bullets: value } ) }
+                    placeholder="Add a bullet point (press Enter for next)..."
+                    allowedFormats={ [
+                      'core/bold',
+                      'core/italic',
+                      'core/link',
+                      'core/strikethrough',
+                      'core/underline',
+                    ] }
+                  />
+                </div>
+              </div>
               <Button isDestructive onClick={ () => removeArrayItem( 'faqItems', index ) } style={ { marginTop: '10px' } }>
                 Remove FAQ
               </Button>
@@ -916,6 +1668,145 @@ function Edit( { attributes, setAttributes } ) {
           ) ) }
           <Button isPrimary onClick={ () => addArrayItem( 'faqItems', makeFaqItem ) }>
             Add FAQ
+          </Button>
+        </PanelBody>
+
+        <PanelBody
+          key={ `badges-${ activeEditorSection }` }
+          title="FAQ Badges Section"
+          initialOpen={ activeEditorSection === 'badges' }
+        >
+          <h3 style={ { fontSize: '13px', marginBottom: '12px' } }>Badge Text Paragraphs</h3>
+          { badgesTextParagraphs.map( ( paragraph, index ) => (
+            <div
+              key={ index }
+              style={ {
+                border: '1px solid #d5dadd',
+                borderRadius: '6px',
+                padding: '12px',
+                marginBottom: '12px',
+                backgroundColor: '#fff',
+              } }
+            >
+              <label
+                style={ {
+                  display: 'block',
+                  marginBottom: '8px',
+                  fontSize: '11px',
+                  fontWeight: 600,
+                  textTransform: 'uppercase',
+                  color: '#1e1e1e',
+                } }
+              >
+                Paragraph { index + 1 }
+              </label>
+              <div style={ {
+                border: '1px solid #949494',
+                borderRadius: '2px',
+                padding: '8px',
+                minHeight: '60px',
+                fontSize: '13px',
+                lineHeight: '1.4',
+              } }>
+                <RichText
+                  tagName="p"
+                  identifier={ `badge-text-${ index }` }
+                  value={ paragraph.text || '' }
+                  onChange={ ( value ) => updateArrayItem( 'badgesTextParagraphs', index, { text: value } ) }
+                  placeholder="Enter paragraph text..."
+                  allowedFormats={ [
+                    'core/bold',
+                    'core/italic',
+                    'core/link',
+                    'core/strikethrough',
+                    'core/underline',
+                  ] }
+                />
+              </div>
+              <Button isDestructive onClick={ () => removeArrayItem( 'badgesTextParagraphs', index ) } style={ { marginTop: '10px' } }>
+                Remove Paragraph
+              </Button>
+            </div>
+          ) ) }
+          <Button isPrimary onClick={ () => addArrayItem( 'badgesTextParagraphs', makeBadgeTextParagraph ) }>
+            Add Paragraph
+          </Button>
+
+          <hr style={ { margin: '20px 0' } } />
+
+          <h3 style={ { fontSize: '13px', marginBottom: '12px' } }>Badge Images</h3>
+          { badgesItems.map( ( badge, index ) => (
+            <div
+              key={ index }
+              style={ {
+                border: '1px solid #d5dadd',
+                borderRadius: '6px',
+                padding: '12px',
+                marginBottom: '12px',
+                backgroundColor: '#fff',
+              } }
+            >
+              <h4 style={ { fontSize: '12px', marginBottom: '8px' } }>Badge { index + 1 }</h4>
+
+              <TextControl
+                label="Image Alt Text"
+                value={ badge.imageAlt || '' }
+                onChange={ ( value ) => updateArrayItem( 'badgesItems', index, { imageAlt: value } ) }
+              />
+
+              <TextControl
+                label="Image Width (px)"
+                type="number"
+                value={ badge.imageWidth || 303 }
+                onChange={ ( value ) => updateArrayItem( 'badgesItems', index, { imageWidth: parseInt( value ) } ) }
+              />
+
+              <TextControl
+                label="Image Height (px)"
+                type="number"
+                value={ badge.imageHeight || 303 }
+                onChange={ ( value ) => updateArrayItem( 'badgesItems', index, { imageHeight: parseInt( value ) } ) }
+              />
+
+              <TextControl
+                label="Fallback Image (filename)"
+                value={ badge.imageFallback || '' }
+                onChange={ ( value ) => updateArrayItem( 'badgesItems', index, { imageFallback: value } ) }
+                help="e.g., badge-90-plus-combined-legal-experience-blck.svg"
+              />
+
+              <MediaUploadCheck>
+                <MediaUpload
+                  onSelect={ ( media ) =>
+                    updateArrayItem( 'badgesItems', index, {
+                      imageId: media.id,
+                      imageUrl: media.url,
+                    } )
+                  }
+                  allowedTypes={ [ 'image' ] }
+                  value={ badge.imageId }
+                  render={ ( { open } ) => (
+                    <div style={ { marginTop: '10px' } }>
+                      <Button onClick={ open } isSecondary>
+                        { badge.imageUrl ? 'Change Image' : 'Upload Image' }
+                      </Button>
+                      { badge.imageUrl && (
+                        <div style={ { marginTop: '10px' } }>
+                          <img src={ badge.imageUrl } style={ { maxWidth: '150px', height: 'auto' } } alt="" />
+                        </div>
+                      ) }
+                    </div>
+                  ) }
+                />
+              </MediaUploadCheck>
+
+              <Button isDestructive onClick={ () => removeArrayItem( 'badgesItems', index ) } style={ { marginTop: '10px' } }>
+                Remove Badge
+              </Button>
+            </div>
+          ) ) }
+          <Button isPrimary onClick={ () => addArrayItem( 'badgesItems', makeBadgeItem ) }>
+            Add Badge
           </Button>
         </PanelBody>
 
@@ -952,34 +1843,27 @@ function Edit( { attributes, setAttributes } ) {
                     label="Link label"
                     value={ link.label || '' }
                     onChange={ ( value ) => {
-                      const updated = [ ...servingColumns ];
-                      const links = [ ...( updated[ colIndex ].links || [] ) ];
+                      const links = [ ...( column.links || [] ) ];
                       links[ linkIndex ] = { ...links[ linkIndex ], label: value };
-                      updated[ colIndex ] = { ...updated[ colIndex ], links };
-                      setAttributes( { servingColumns: updated } );
+                      updateArrayItem( 'servingColumns', colIndex, { links } );
                     } }
                   />
                   <TextControl
                     label="Link URL"
                     value={ link.url || '' }
                     onChange={ ( value ) => {
-                      const updated = [ ...servingColumns ];
-                      const links = [ ...( updated[ colIndex ].links || [] ) ];
+                      const links = [ ...( column.links || [] ) ];
                       links[ linkIndex ] = { ...links[ linkIndex ], url: value };
-                      updated[ colIndex ] = { ...updated[ colIndex ], links };
-                      setAttributes( { servingColumns: updated } );
+                      updateArrayItem( 'servingColumns', colIndex, { links } );
                     } }
                   />
                   <Button
                     isDestructive
-                    onClick={ () => {
-                      const updated = [ ...servingColumns ];
-                      updated[ colIndex ] = {
-                        ...updated[ colIndex ],
-                        links: ( updated[ colIndex ].links || [] ).filter( ( _, i ) => i !== linkIndex ),
-                      };
-                      setAttributes( { servingColumns: updated } );
-                    } }
+                    onClick={ () =>
+                      updateArrayItem( 'servingColumns', colIndex, {
+                        links: ( column.links || [] ).filter( ( _, i ) => i !== linkIndex ),
+                      } )
+                    }
                   >
                     Remove Column Link
                   </Button>
@@ -989,14 +1873,11 @@ function Edit( { attributes, setAttributes } ) {
               <div style={ { marginTop: '8px' } }>
                 <Button
                   isSecondary
-                  onClick={ () => {
-                    const updated = [ ...servingColumns ];
-                    updated[ colIndex ] = {
-                      ...updated[ colIndex ],
-                      links: [ ...( updated[ colIndex ].links || [] ), makeSimpleLink() ],
-                    };
-                    setAttributes( { servingColumns: updated } );
-                  } }
+                  onClick={ () =>
+                    updateArrayItem( 'servingColumns', colIndex, {
+                      links: [ ...( column.links || [] ), makeSimpleLink() ],
+                    } )
+                  }
                 >
                   Add Column Link
                 </Button>
@@ -1024,12 +1905,26 @@ function Edit( { attributes, setAttributes } ) {
             value={ whyChooseTitle }
             onChange={ ( value ) => setAttributes( { whyChooseTitle: value } ) }
             placeholder="Why Choose heading"
+            allowedFormats={ [
+              'core/bold',
+              'core/italic',
+              'core/link',
+              'core/strikethrough',
+              'core/underline',
+            ] }
           />
           <RichText
             tagName="p"
             value={ whyChooseIntro }
             onChange={ ( value ) => setAttributes( { whyChooseIntro: value } ) }
             placeholder="Intro text"
+            allowedFormats={ [
+              'core/bold',
+              'core/italic',
+              'core/link',
+              'core/strikethrough',
+              'core/underline',
+            ] }
           />
         </div>
 
@@ -1049,12 +1944,26 @@ function Edit( { attributes, setAttributes } ) {
             value={ caseResultsTitle }
             onChange={ ( value ) => setAttributes( { caseResultsTitle: value } ) }
             placeholder="Case Results heading"
+            allowedFormats={ [
+              'core/bold',
+              'core/italic',
+              'core/link',
+              'core/strikethrough',
+              'core/underline',
+            ] }
           />
           <RichText
             tagName="p"
             value={ caseResultsSubtitle }
             onChange={ ( value ) => setAttributes( { caseResultsSubtitle: value } ) }
             placeholder="Case Results subtitle"
+            allowedFormats={ [
+              'core/bold',
+              'core/italic',
+              'core/link',
+              'core/strikethrough',
+              'core/underline',
+            ] }
           />
           <p>{ caseResults.length } result card(s)</p>
         </div>
@@ -1068,12 +1977,26 @@ function Edit( { attributes, setAttributes } ) {
             value={ testimonialsTitle }
             onChange={ ( value ) => setAttributes( { testimonialsTitle: value } ) }
             placeholder="Testimonials heading"
+            allowedFormats={ [
+              'core/bold',
+              'core/italic',
+              'core/link',
+              'core/strikethrough',
+              'core/underline',
+            ] }
           />
           <RichText
             tagName="p"
             value={ testimonialsSubtitle }
             onChange={ ( value ) => setAttributes( { testimonialsSubtitle: value } ) }
             placeholder="Testimonials subtitle"
+            allowedFormats={ [
+              'core/bold',
+              'core/italic',
+              'core/link',
+              'core/strikethrough',
+              'core/underline',
+            ] }
           />
           <p>{ testimonials.length } testimonial(s)</p>
         </div>
@@ -1087,12 +2010,26 @@ function Edit( { attributes, setAttributes } ) {
             value={ howWeHelpTitle }
             onChange={ ( value ) => setAttributes( { howWeHelpTitle: value } ) }
             placeholder="How We Help heading"
+            allowedFormats={ [
+              'core/bold',
+              'core/italic',
+              'core/link',
+              'core/strikethrough',
+              'core/underline',
+            ] }
           />
           <RichText
             tagName="p"
             value={ howWeHelpIntro }
             onChange={ ( value ) => setAttributes( { howWeHelpIntro: value } ) }
             placeholder="Intro paragraph"
+            allowedFormats={ [
+              'core/bold',
+              'core/italic',
+              'core/link',
+              'core/strikethrough',
+              'core/underline',
+            ] }
           />
           { howWeHelpHeaderImageUrl && (
             <div style={ { marginTop: '10px' } }>
@@ -1125,64 +2062,28 @@ function Edit( { attributes, setAttributes } ) {
             value={ faqTitle }
             onChange={ ( value ) => setAttributes( { faqTitle: value } ) }
             placeholder="FAQ section title"
+            allowedFormats={ [
+              'core/bold',
+              'core/italic',
+              'core/link',
+              'core/strikethrough',
+              'core/underline',
+            ] }
           />
-          { activeEditorSection === 'faq' && (
-            <div style={ { marginTop: '16px' } }>
-              { faqItems.map( ( faq, index ) => (
-                <div
-                  key={ index }
-                  style={ {
-                    border: '2px solid #0073aa',
-                    borderRadius: '8px',
-                    padding: '16px',
-                    marginBottom: '16px',
-                    backgroundColor: '#fff',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                  } }
-                >
-                  <div style={ { backgroundColor: '#e3f2fd', padding: '8px 12px', borderRadius: '4px', marginBottom: '12px' } }>
-                    <p style={ { fontWeight: '600', marginBottom: '4px', color: '#1976d2' } }>Question { index + 1 }:</p>
-                    <p style={ { fontStyle: 'italic', color: '#424242' } }>{ faq.question || 'No question text' }</p>
-                  </div>
-                  <div style={ { backgroundColor: '#fff3e0', padding: '8px 12px', borderRadius: '4px', marginBottom: '8px' } }>
-                    <p style={ { fontWeight: '600', marginBottom: '8px', color: '#e65100' } }>Answer:</p>
-                  </div>
-                  <RichText
-                    tagName="div"
-                    value={ faq.answer || '' }
-                    onChange={ ( value ) => updateArrayItem( 'faqItems', index, { answer: value } ) }
-                    placeholder="Click here and start typing. Use the toolbar above for formatting..."
-                    allowedFormats={ [
-                      'core/bold',
-                      'core/italic',
-                      'core/link',
-                      'core/strikethrough',
-                      'core/underline',
-                      'core/list',
-                    ] }
-                    multiline="p"
-                    style={ {
-                      border: '2px solid #ff9800',
-                      borderRadius: '6px',
-                      padding: '12px',
-                      minHeight: '120px',
-                      backgroundColor: '#fff',
-                      fontSize: '14px',
-                      lineHeight: '1.6',
-                    } }
-                  />
-                </div>
-              ) ) }
-              { faqItems.length === 0 && (
-                <div style={ { padding: '20px', textAlign: 'center', backgroundColor: '#fff', borderRadius: '6px' } }>
-                  <p style={ { color: '#666', fontStyle: 'italic' } }>No FAQ items yet. Add items in the FAQ sidebar panel first.</p>
-                </div>
-              ) }
-            </div>
-          ) }
-          { activeEditorSection !== 'faq' && (
-            <p>{ faqItems.length } FAQ item(s)</p>
-          ) }
+          <RichText
+            tagName="p"
+            value={ faqSubtitle }
+            onChange={ ( value ) => setAttributes( { faqSubtitle: value } ) }
+            placeholder="FAQ section subtitle"
+            allowedFormats={ [
+              'core/bold',
+              'core/italic',
+              'core/link',
+              'core/strikethrough',
+              'core/underline',
+            ] }
+          />
+          <p>{ faqItems.length } FAQ item(s). Edit questions and answers in the FAQ sidebar panel.</p>
         </div>
 
         <div style={ sectionStyle( activeEditorSection === 'serving' ) }>

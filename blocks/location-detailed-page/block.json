@@ -219,6 +219,10 @@
       "type": "string",
       "default": "Mesa Personal Injury Cases We Handle"
     },
+    "caseCategoriesSubtitle": {
+      "type": "string",
+      "default": ""
+    },
     "caseCategoriesClosing": {
       "type": "string",
       "default": ""
@@ -307,23 +311,56 @@
       "type": "string",
       "default": "FAQ: Arizona Personal Injury Claims"
     },
+    "faqSubtitle": {
+      "type": "string",
+      "default": "Below we address some of the common questions that we receive about personal injury claims."
+    },
     "faqItems": {
       "type": "array",
       "default": [
         {
           "question": "Q. How Do I Know If I Have a Personal Injury Case?",
-          "answer": "To determine if you have a personal injury case, you generally need an injury, fault by another party, and documented damages. A qualified personal injury attorney can evaluate your unique facts and advise you on your options.",
-          "isOpen": true
+          "answer": "To determine if you have a personal injury case, you generally need an injury, fault by another party, and documented damages. A qualified personal injury attorney can evaluate your unique facts and advise you on your options."
         },
         {
           "question": "Q. Will My Personal Injury Case Be Settled Out of Court?",
-          "answer": "Most personal injury cases in Arizona are settled out of court. However, the specific outcome depends on the facts and circumstances of each case.",
-          "isOpen": false
+          "answer": "Most personal injury cases in Arizona are settled out of court. However, the specific outcome depends on the facts and circumstances of each case."
         },
         {
           "question": "Q. What Evidence Will I Need For My Mesa Personal Injury Lawyer?",
-          "answer": "Important evidence includes medical records, photographs of the accident scene and injuries, witness statements, police reports, and documentation of lost wages and expenses.",
-          "isOpen": false
+          "answer": "Important evidence includes medical records, photographs of the accident scene and injuries, witness statements, police reports, and documentation of lost wages and expenses."
+        }
+      ]
+    },
+    "badgesTextParagraphs": {
+      "type": "array",
+      "default": [
+        {
+          "text": "We guarantee that you will speak with a licensed Arizona attorney at your initial consultation."
+        },
+        {
+          "text": "If we're able to take your case, we'll pursue compensation on your behalf in the maximum amount possible, and our experience and client testimonials make that clear. Our Discount Fee arrangement demonstrates our clear commitment to putting our clients first. Let us help you or your loved one with a personal injury case."
+        }
+      ]
+    },
+    "badgesItems": {
+      "type": "array",
+      "default": [
+        {
+          "imageId": 0,
+          "imageUrl": "",
+          "imageFallback": "badge-90-plus-combined-legal-experience-blck.svg",
+          "imageAlt": "90+ Years Combined Legal Experience badge",
+          "imageWidth": 303,
+          "imageHeight": 303
+        },
+        {
+          "imageId": 0,
+          "imageUrl": "",
+          "imageFallback": "badge-29-percent-discount.svg",
+          "imageAlt": "29% Fee — Discount Accident Lawyers badge",
+          "imageWidth": 303,
+          "imageHeight": 303
         }
       ]
     },
@@ -371,6 +408,133 @@
           ]
         }
       ]
+    },
+    "faultIntroTitle": {
+      "type": "string",
+      "default": "Determining Fault for Your Mesa, AZ Accident"
+    },
+    "faultIntroText": {
+      "type": "string",
+      "default": ""
+    },
+    "faultIntroImageId": {
+      "type": "number",
+      "default": 0
+    },
+    "faultIntroImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "faultIntroImageAlt": {
+      "type": "string",
+      "default": "Car accident intersection scene in Arizona"
+    },
+    "faultComparativeTitle": {
+      "type": "string",
+      "default": "Comparative Negligence Laws in Arizona Accidents"
+    },
+    "faultComparativeColumn1": {
+      "type": "string",
+      "default": ""
+    },
+    "faultComparativeColumn2": {
+      "type": "string",
+      "default": ""
+    },
+    "faultCompensationTitle": {
+      "type": "string",
+      "default": "Recovering Compensation After an Injury"
+    },
+    "faultCompensationSubtitle": {
+      "type": "string",
+      "default": ""
+    },
+    "faultDamageTypes": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Economic damages",
+          "description": "Economic damages are any costs that are paid out of your own pocket, or that represent monetary loss in the future. Most commonly, these are the straightforward damages requested in a lawsuit — medical bills and expenses, lost wages, property damages, loss of earning potential, and insurance monies. In short, any damage that can be assigned a fixed dollar amount is an economic damage."
+        },
+        {
+          "title": "Non-economic damages",
+          "description": "Non-economic damages are amounts that represent non-monetary compensation. While these damages can be more difficult to prove, they provide opportunities for significant compensation to victims, and an effective attorney will ensure that non-economic damages are adequately accounted for. Non-economic damages most often include pain and suffering, emotional damages, loss of consortium, loss of enjoyment, and punitive damages in severe cases."
+        }
+      ],
+      "items": {
+        "type": "object"
+      }
+    },
+    "faultStepsTitle": {
+      "type": "string",
+      "default": "Important Steps for Your Mesa Personal Injury Case"
+    },
+    "faultStepsSubtitle": {
+      "type": "string",
+      "default": ""
+    },
+    "faultSteps": {
+      "type": "array",
+      "default": [
+        {
+          "number": "1",
+          "title": "Seek Medical Attention Immediately",
+          "description": "Even if you think you don't need it, you should immediately seek medical attention after being involved in an accident. Some injuries don't immediately present symptoms, and you may be injured without knowing it. Otherwise, seeking medical attention allows you to obtain important documentation that could be vital in seeking future compensation."
+        },
+        {
+          "number": "2",
+          "title": "Gather Evidence and Documentation",
+          "description": "After ensuring your physical safety, you should take as much documentation as possible about your accident. Take photos and videos to the fullest extent possible. Record or write a narrative of your memories as soon as you can after the accident. This step is important because memories fade very fast, and you may be surprised about the details you begin to forget as time goes on after your accident."
+        },
+        {
+          "number": "3",
+          "title": "Contact a Personal Injury Lawyer As Soon As Possible",
+          "description": "Contact an attorney as soon as possible after you seek medical attention, and avoid speaking to anyone about your personal injury case until you have retained an attorney. Before you have a lawyer, you may be contacted by insurance companies or other representatives of the defendant seeking statements from you. You should avoid providing any such statements before you have a lawyer – as your own words can be used against you in the future. Consulting with a Mesa personal injury attorney ensures that you are fully protecting your rights and your ability to recover compensation in the future."
+        }
+      ],
+      "items": {
+        "type": "object"
+      }
+    },
+    "faultTimeLimitTitle": {
+      "type": "string",
+      "default": "How Long Do I Have to File a Personal Injury Claim in Mesa, Arizona?"
+    },
+    "faultTimeLimitParagraph1": {
+      "type": "string",
+      "default": ""
+    },
+    "faultTimeLimitParagraph2": {
+      "type": "string",
+      "default": ""
+    },
+    "faultTimeLimitImageId": {
+      "type": "number",
+      "default": 0
+    },
+    "faultTimeLimitImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "faultTimeLimitImageAlt": {
+      "type": "string",
+      "default": "Accident scene highlighting the urgency of filing claims"
+    },
+    "faultStatuteImageId": {
+      "type": "number",
+      "default": 0
+    },
+    "faultStatuteImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "faultStatuteImageAlt": {
+      "type": "string",
+      "default": "Legal and medical billing documents"
+    },
+    "faultStatuteText": {
+      "type": "string",
+      "default": ""
     }
   },
   "editorScript": "file:./index.js",
