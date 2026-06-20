@@ -5,7 +5,7 @@
    ============================================================ */
 
 /* === DESIGN TOKENS === */
-:root {
+.pal-practice-area {
   --ldp-text-heading: #13263e;
   --ldp-text-body:    #53585f;
   --ldp-text-link:    #363b3f;
@@ -133,7 +133,7 @@
 /* === TABLET: 768px to 1023px === */
 @media screen and (max-width: 1023px) {
 
-  :root {
+  .pal-practice-area {
     --ldp-section-pad-v: 56px;
     --ldp-section-pad-h: 32px;
   }
@@ -156,7 +156,7 @@
 /* === MOBILE: below 768px === */
 @media screen and (max-width: 767px) {
 
-  :root {
+  .pal-practice-area {
     --ldp-section-pad-v: 40px;
     --ldp-section-pad-h: 20px;
   }

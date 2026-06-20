@@ -11,7 +11,7 @@ import {
 	Button,
 	Icon 
 } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n'
 import { Fragment, useState } from '@wordpress/element';
 import metadata from './block.json';
 
@@ -93,7 +93,7 @@ function Edit( { attributes, setAttributes } ) {
 	 */
 	const updateLink = ( categoryIndex, linkIndex, updates ) => {
 		const updatedCategories = [ ...categories ];
-		const updatedLinks = [ ...updatedCategories[ categoryIndex ].links ];
+		const updatedLinks = [ ...( updatedCategories[ categoryIndex ].links || [] ) ];
 		updatedLinks[ linkIndex ] = { 
 			...updatedLinks[ linkIndex ], 
 			...updates 
@@ -113,7 +113,7 @@ function Edit( { attributes, setAttributes } ) {
 		updatedCategories[ categoryIndex ] = {
 			...updatedCategories[ categoryIndex ],
 			links: [
-				...updatedCategories[ categoryIndex ].links,
+				...( updatedCategories[ categoryIndex ].links || [] ),
 				{
 					id: generateUniqueId(),
 					text: '',
@@ -150,7 +150,7 @@ function Edit( { attributes, setAttributes } ) {
 					{ categories.map( ( category, categoryIndex ) => (
 						<PanelBody
 							key={ category.id }
-							title={ category.title || __( `Category ${categoryIndex + 1}`, 'mbn-theme' ) }
+              title={ category.title || sprintf( __( 'Category %d', 'mbn-theme' ), categoryIndex + 1 ) }
 							initialOpen={ activeSection === categoryIndex }
 							onToggle={ () => setActiveSection( activeSection === categoryIndex ? null : categoryIndex ) }
 						>
@@ -377,7 +377,7 @@ function Edit( { attributes, setAttributes } ) {
 												fontWeight: 600,
 												color: '#1e1e1e'
 											} }>
-												{ category.title || __( `Category ${index + 1}`, 'mbn-theme' ) }
+                        { category.title || sprintf( __( 'Category %d', 'mbn-theme' ), index + 1 ) }
 											</h4>
 											{ category.description && (
 												<p style={ { 

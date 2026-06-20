@@ -32,11 +32,14 @@ $default_images = array(
 );
 
 // Enqueue stylesheet
+$style_path    = get_theme_file_path( '/build/blocks/section-practice-area-lists/style.css' );
+$style_version = file_exists( $style_path ) ? filemtime( $style_path ) : false;
+
 wp_enqueue_style(
   'section-practice-area-lists',
   get_theme_file_uri( '/build/blocks/section-practice-area-lists/style.css' ),
   array(),
-  filemtime( get_theme_file_path( '/build/blocks/section-practice-area-lists/style.css' ) )
+  $style_version
 );
 ?>
 
@@ -75,8 +78,7 @@ wp_enqueue_style(
 						<?php if ( ! empty( $category['description'] ) ) : ?>
 							<p><?php echo esc_html( $category['description'] ); ?></p>
 						<?php endif; ?>
-
-						<?php if ( ! empty( $category['links'] ) ) : ?>
+						<?php if ( ! empty( $category['links'] ) && is_array( $category['links'] ) ) : ?>
 							<ul class="pal-link-grid">
 							<?php foreach ( $category['links'] as $link_item ) : ?>
 								<?php if ( ! empty( $link_item['text'] ) ) : ?>
