@@ -1,0 +1,89 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-practice-area-lists",
+  "title": "Section - Practice Area Lists",
+  "category": "mbn-blocks",
+  "icon": "list-view",
+  "description": "Practice area categories with alternating image layouts and link lists",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "categories": {
+      "type": "array",
+      "default": [
+        {
+          "id": 1,
+          "title": "Vehicle Accidents",
+          "description": "Representation for injuries caused by car, truck, motorcycle, rideshare, bicycle, bus, boat, and other roadway-related accidents.",
+          "imageUrl": "",
+          "imageId": 0,
+          "links": [
+            { "id": 1, "text": "Car Accidents", "url": "#" },
+            { "id": 2, "text": "Phoenix Truck Accidents", "url": "#" },
+            { "id": 3, "text": "Motorcycle Accidents", "url": "#" },
+            { "id": 4, "text": "Bicycle Accidents", "url": "#" },
+            { "id": 5, "text": "Bus Accidents", "url": "#" },
+            { "id": 6, "text": "Boat Accidents", "url": "#" },
+            { "id": 7, "text": "Uber & Lyft Accidents", "url": "#" },
+            { "id": 8, "text": "Distracted Driving Accidents", "url": "#" },
+            { "id": 9, "text": "Drunk Driving Accidents", "url": "#" },
+            { "id": 10, "text": "Pedestrian Accidents", "url": "#" }
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Serious & Catastrophic Injuries",
+          "description": "Legal help for severe injuries and life-altering cases that often involve long-term recovery, ongoing care, or permanent impact.",
+          "imageUrl": "",
+          "imageId": 0,
+          "links": [
+            { "id": 1, "text": "Traumatic Brain Injury", "url": "#" },
+            { "id": 2, "text": "Amputation Injuries", "url": "#" },
+            { "id": 3, "text": "Spinal Cord Injuries", "url": "#" },
+            { "id": 4, "text": "Catastrophic Injuries", "url": "#" },
+            { "id": 5, "text": "Burn Injuries", "url": "#" },
+            { "id": 6, "text": "Wrongful Death", "url": "#" }
+          ]
+        },
+        {
+          "id": 3,
+          "title": "Property & Negligence Claims",
+          "description": "Support for injuries caused by unsafe conditions, negligent property owners, or preventable incidents on someone else's property.",
+          "imageUrl": "",
+          "imageId": 0,
+          "links": [
+            { "id": 1, "text": "Slip & Fall Injuries", "url": "#" },
+            { "id": 2, "text": "Negligent Security", "url": "#" },
+            { "id": 3, "text": "Premises Liability", "url": "#" },
+            { "id": 4, "text": "Dog Bites", "url": "#" }
+          ]
+        },
+        {
+          "id": 4,
+          "title": "Additional Injury Claims",
+          "description": "Guidance for other injury cases involving work-related accidents, construction incidents, child injuries, daycare injuries, and general personal injury claims.",
+          "imageUrl": "",
+          "imageId": 0,
+          "links": [
+            { "id": 1, "text": "Workplace Injuries", "url": "#" },
+            { "id": 2, "text": "Daycare Injuries", "url": "#" },
+            { "id": 3, "text": "Construction Accidents", "url": "#" },
+            { "id": 4, "text": "Personal Injury", "url": "#" },
+            { "id": 5, "text": "Child Injuries", "url": "#" }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,180 @@
+/* ============================================================
+   Section Practice Area Lists
+   Block: section-practice-area-lists
+   Prefix: pal-
+   ============================================================ */
+
+/* === DESIGN TOKENS === */
+:root {
+  --ldp-text-heading: #13263e;
+  --ldp-text-body:    #53585f;
+  --ldp-text-link:    #363b3f;
+  --ldp-font-primary:   'Noto Serif', Georgia, serif;
+  --ldp-font-secondary: 'Heebo', Arial, sans-serif;
+  --ldp-content-width: 1366px;
+  --ldp-section-pad-v: 80px;
+  --ldp-section-pad-h: clamp(24px, 5vw, 170px);
+}
+
+/* === DESKTOP: 1024px and above === */
+
+/* Base reset */
+.pal-practice-area {
+  box-sizing: border-box;
+  font-family: var(--ldp-font-secondary);
+  color: var(--ldp-text-body);
+  font-size: 18px;
+  line-height: 1.556;
+}
+
+.pal-practice-area * {
+  box-sizing: border-box;
+}
+
+/* Container */
+.pal-container {
+  max-width: var(--ldp-content-width);
+  margin-inline: auto;
+  padding-inline: var(--ldp-section-pad-h);
+  width: 100%;
+}
+
+/* Link grid (chevron lists) */
+.pal-link-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+}
+
+.pal-link-grid li a {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px 2px 0;
+  font-family: var(--ldp-font-secondary);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ldp-text-link);
+  text-decoration: none;
+}
+
+.pal-link-grid li a img {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.pal-link-grid li a:hover {
+  text-decoration: underline;
+}
+
+/* Practice area section */
+.pal-practice-area {
+  padding-block: var(--ldp-section-pad-v);
+}
+
+.pal-practice-area .pal-container {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+.pal-practice-area__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.pal-practice-area__row--img-left .pal-practice-area__img {
+  order: -1;
+}
+
+.pal-practice-area__text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pal-practice-area__text > p {
+  font-size: 18px;
+  line-height: 1.556;
+  color: var(--ldp-text-body);
+  margin: 0;
+}
+
+.pal-practice-area__cat-title {
+  font-family: var(--ldp-font-primary);
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1.5;
+  color: var(--ldp-text-heading);
+  margin: 0 0 8px;
+}
+
+.pal-practice-area__img {
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 536 / 338;
+}
+
+.pal-practice-area__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* === TABLET: 768px to 1023px === */
+@media screen and (max-width: 1023px) {
+
+  :root {
+    --ldp-section-pad-v: 56px;
+    --ldp-section-pad-h: 32px;
+  }
+
+  .pal-practice-area__row {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .pal-practice-area__row--img-left .pal-practice-area__img {
+    order: 0;
+  }
+
+  .pal-practice-area__row--text-left {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}
+
+/* === MOBILE: below 768px === */
+@media screen and (max-width: 767px) {
+
+  :root {
+    --ldp-section-pad-v: 40px;
+    --ldp-section-pad-h: 20px;
+  }
+
+  .pal-practice-area .pal-container {
+    gap: 40px;
+  }
+
+  .pal-practice-area__row {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .pal-link-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pal-practice-area__cat-title {
+    font-size: 20px;
+  }
+}
