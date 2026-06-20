@@ -1,0 +1,550 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/location-detailed-page",
+  "title": "Location Detailed Page",
+  "category": "mbn-blocks",
+  "icon": "location-alt",
+  "description": "Dynamic location detailed landing page block.",
+  "textdomain": "mbn-theme",
+  "attributes": {
+    "whyChooseTitle": {
+      "type": "string",
+      "default": "Why Choose Hastings and Hastings As Your Mesa Personal Injury Lawyer?"
+    },
+    "whyChooseIntro": {
+      "type": "string",
+      "default": "Hastings and Hastings is a Phoenix and Mesa personal injury law firm with the experience and knowledge to effectively advocate for you and your family. We've been serving Arizona accident victims and their families for more than 40 years, and our Mesa injury lawyers have almost 100 years of combined experience handling personal injury lawsuits, including truck accident cases."
+    },
+    "whyChooseItems": {
+      "type": "array",
+      "default": [
+        {
+          "heading": "Proven Track Record from Real Clients",
+          "paragraph": "Our track record is evident not only through the cases that we've won but in the reviews and referrals that we receive from our clients.",
+          "imageId": 0,
+          "imageUrl": "",
+          "imageFallback": "",
+          "imageAlt": ""
+        },
+        {
+          "heading": "Innovative Discount Fee Structure",
+          "paragraph": "At Hastings and Hastings, we pioneered Discount Fees for our clients and prioritize putting the most amount of money possible back into our clients' pockets.",
+          "imageId": 0,
+          "imageUrl": "",
+          "imageFallback": "badge-no-fee.svg",
+          "imageAlt": "No Fee Until We Win badge"
+        },
+        {
+          "heading": "Licensed Arizona Personal Injury Attorneys Handling Your Case",
+          "paragraph": "You will speak to a licensed attorney at your free initial consultation from your very first contact with our law firm.",
+          "imageId": 0,
+          "imageUrl": "",
+          "imageFallback": "img-team.png",
+          "imageAlt": "Hastings and Hastings legal team"
+        }
+      ]
+    },
+    "whyChooseStatsDisplayMode": {
+      "type": "string",
+      "default": "stats"
+    },
+    "whyChooseStats": {
+      "type": "array",
+      "default": [
+        {
+          "number": "600+",
+          "label": "Real, Handwritten Reviews"
+        },
+        {
+          "number": "500+",
+          "label": "Five-star Google reviews from verified, actual past clients."
+        }
+      ]
+    },
+    "whyChooseStatsImageId": {
+      "type": "number",
+      "default": 0
+    },
+    "whyChooseStatsImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "whyChooseStatsImageFallback": {
+      "type": "string",
+      "default": "img-team.png"
+    },
+    "whyChooseStatsImageAlt": {
+      "type": "string",
+      "default": "Why choose supporting image"
+    },
+    "ctaCards": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Start Your Free Consultation",
+          "description": "Our Mesa personal injury attorneys are ready to listen to your story, be honest with you about whether you may be able to recover compensation for your injuries, and if we're able, work hard to represent you and your family.",
+          "buttonText": "Start your free consultation now!",
+          "phoneLabel": "Call Today",
+          "phoneText": "(480) 480-2929",
+          "phoneUrl": "tel:4804802929",
+          "backgroundImageId": 0,
+          "backgroundImageUrl": "",
+          "backgroundImageFallback": "column-bg.jpg",
+          "logoImageId": 0,
+          "logoImageUrl": "",
+          "logoImageFallback": "logo-hh.svg"
+        },
+        {
+          "title": "Contact a Mesa Personal Injury Attorney Today",
+          "description": "Our team at Hastings and Hastings is ready to hear from you today. Our free case consultations are always offered at no cost and no risk to prospective clients, and we're committed to ensuring that your injury case is handled by a licensed attorney from the very beginning.",
+          "buttonText": "Request Free Consultation",
+          "phoneLabel": "Call Today",
+          "phoneText": "(480) 480-2929",
+          "phoneUrl": "tel:4804802929",
+          "backgroundImageId": 0,
+          "backgroundImageUrl": "",
+          "backgroundImageFallback": "column-bg-faq.jpg",
+          "logoImageId": 0,
+          "logoImageUrl": "",
+          "logoImageFallback": "logo-hh.svg"
+        }
+      ]
+    },
+    "caseResultsTitle": {
+      "type": "string",
+      "default": "Case Results"
+    },
+    "caseResultsSubtitle": {
+      "type": "string",
+      "default": "We have successfully recovered millions of dollars for our clients."
+    },
+    "caseResults": {
+      "type": "array",
+      "default": [
+        {
+          "tag": "Car Accident",
+          "amount": "$15,000,000",
+          "title": "Catastrophic automobile accident result involving serious injuries.",
+          "description": "Our lower fee structure helped this client keep an additional $1,050,000 compared to a typical 45% litigation fee.",
+          "imageId": 0,
+          "imageUrl": "",
+          "imageFallback": "case-car-accident.jpg",
+          "imageAlt": "Car accident at intersection in Arizona"
+        },
+        {
+          "tag": "Motorcycle Accident",
+          "amount": "$300,000",
+          "title": "Motorcycle accident result.",
+          "description": "Our lower fee structure helped this client keep an additional $10,000.",
+          "imageId": 0,
+          "imageUrl": "",
+          "imageFallback": "case-motorcycle-accident.jpg",
+          "imageAlt": "Wrecked motorcycle at accident scene"
+        },
+        {
+          "tag": "Wrongful Death",
+          "amount": "$1,687,682",
+          "title": "Wrongful death settlement result.",
+          "description": "Our lower fee structure helped this client keep an additional $73,133.",
+          "imageId": 0,
+          "imageUrl": "",
+          "imageFallback": "case-wrongful-death.jpg",
+          "imageAlt": "Family consulting attorney for wrongful death case"
+        }
+      ]
+    },
+    "caseResultsButtonText": {
+      "type": "string",
+      "default": "See More Case Results"
+    },
+    "caseResultsButtonUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "howWeHelpTitle": {
+      "type": "string",
+      "default": "How Can Our Mesa Personal Injury Lawyer Help?"
+    },
+    "howWeHelpIntro": {
+      "type": "string",
+      "default": "In the moments immediately following an accident, your legal options likely aren't the first thing on your mind."
+    },
+    "howWeHelpHeaderImageId": {
+      "type": "number",
+      "default": 0
+    },
+    "howWeHelpHeaderImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "howWeHelpHeaderImageAlt": {
+      "type": "string",
+      "default": "Attorney at desk reviewing personal injury case documents"
+    },
+    "howWeHelpItems": {
+      "type": "array",
+      "default": [
+        {
+          "text": "Accidents are expensive. In obtaining medical treatment, victims rack up significant expenses in hospital bills, insurance copays, medication, transportation, and doctor office visits.",
+          "imageId": 0,
+          "imageUrl": "",
+          "imageFallback": "accident-ambulance.jpg",
+          "imageAlt": "Multi-vehicle accident scene with ambulance at night",
+          "imagePosition": "left"
+        },
+        {
+          "text": "Long story short, accidents are incredibly expensive for victims. Lawsuits allow victims to recover the money they've lost due to the negligence or carelessness of another person or company.",
+          "imageId": 0,
+          "imageUrl": "",
+          "imageFallback": "billing-statement.jpg",
+          "imageAlt": "Medical billing statement with stethoscope",
+          "imagePosition": "right"
+        }
+      ]
+    },
+    "resourcesLinks": {
+      "type": "array",
+      "default": [
+        { "label": "Mesa Personal Injury Cases We Handle", "url": "#cases-we-handle" },
+        { "label": "Determining Fault for Your Mesa Accident", "url": "#determining-fault" },
+        { "label": "Recovering Compensation After an Injury", "url": "#compensation" },
+        { "label": "Important Steps for Your Mesa Injury Case", "url": "#steps" },
+        { "label": "How Long Do I Have to File a Personal Injury Claim in Arizona?", "url": "#time-limit" },
+        { "label": "FAQ: Arizona Personal Injury Claims", "url": "#faq" },
+        { "label": "Contact a Mesa Personal Injury Attorney Today", "url": "#contact" }
+      ]
+    },
+    "caseCategoriesTitle": {
+      "type": "string",
+      "default": "Mesa Personal Injury Cases We Handle"
+    },
+    "caseCategoriesSubtitle": {
+      "type": "string",
+      "default": ""
+    },
+    "caseCategoriesClosing": {
+      "type": "string",
+      "default": ""
+    },
+    "caseCategories": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Vehicle Accidents",
+          "description": "Representation for injuries caused by car, truck, motorcycle, rideshare, bicycle, bus, boat, and other roadway-related accidents.",
+          "imageId": 0,
+          "imageUrl": "",
+          "imageFallback": "vehicle-accidents.jpg",
+          "imageAlt": "Crashed cars at Arizona intersection",
+          "links": [
+            { "label": "Car Accidents", "url": "#" },
+            { "label": "Phoenix Truck Accidents", "url": "#" },
+            { "label": "Motorcycle Accidents", "url": "#" },
+            { "label": "Bicycle Accidents", "url": "#" }
+          ]
+        },
+        {
+          "title": "Serious & Catastrophic Injuries",
+          "description": "Legal help for severe injuries and life-altering cases that often involve long-term recovery, ongoing care, or permanent impact.",
+          "imageId": 0,
+          "imageUrl": "",
+          "imageFallback": "serious-injuries.jpg",
+          "imageAlt": "Person suffering from serious injury",
+          "links": [
+            { "label": "Traumatic Brain Injury", "url": "#" },
+            { "label": "Amputation Injuries", "url": "#" },
+            { "label": "Spinal Cord Injuries", "url": "#" },
+            { "label": "Wrongful Death", "url": "#" }
+          ]
+        },
+        {
+          "title": "Property & Negligence Claims",
+          "description": "Support for injuries caused by unsafe conditions, negligent property owners, or preventable incidents on someone else's property.",
+          "imageId": 0,
+          "imageUrl": "",
+          "imageFallback": "property-claims.jpg",
+          "imageAlt": "Dog bite and property negligence incident",
+          "links": [
+            { "label": "Slip & Fall Injuries", "url": "#" },
+            { "label": "Negligent Security", "url": "#" },
+            { "label": "Premises Liability", "url": "#" },
+            { "label": "Dog Bites", "url": "#" }
+          ]
+        },
+        {
+          "title": "Additional Injury Claims",
+          "description": "Guidance for other injury cases involving work-related accidents, construction incidents, child injuries, daycare injuries, and general personal injury claims.",
+          "imageId": 0,
+          "imageUrl": "",
+          "imageFallback": "additional-claims.jpg",
+          "imageAlt": "Construction site workplace accident",
+          "links": [
+            { "label": "Workplace Injuries", "url": "#" },
+            { "label": "Daycare Injuries", "url": "#" },
+            { "label": "Construction Accidents", "url": "#" },
+            { "label": "Personal Injury", "url": "#" }
+          ]
+        }
+      ]
+    },
+    "testimonialsTitle": {
+      "type": "string",
+      "default": "Client Testimonial"
+    },
+    "testimonialsSubtitle": {
+      "type": "string",
+      "default": "We have successfully recovered millions of dollars for our clients."
+    },
+    "testimonials": {
+      "type": "array",
+      "default": [
+        {
+          "quote": "Hastings and Hastings handled my claim after I had tried to deal with insurance company myself.",
+          "authorName": "Verified Client",
+          "authorRole": "Car Accident Victim",
+          "rating": 5
+        }
+      ]
+    },
+    "faqTitle": {
+      "type": "string",
+      "default": "FAQ: Arizona Personal Injury Claims"
+    },
+    "faqSubtitle": {
+      "type": "string",
+      "default": "Below we address some of the common questions that we receive about personal injury claims."
+    },
+    "faqItems": {
+      "type": "array",
+      "default": [
+        {
+          "question": "Q. How Do I Know If I Have a Personal Injury Case?",
+          "answer": "To determine if you have a personal injury case, you generally need an injury, fault by another party, and documented damages. A qualified personal injury attorney can evaluate your unique facts and advise you on your options."
+        },
+        {
+          "question": "Q. Will My Personal Injury Case Be Settled Out of Court?",
+          "answer": "Most personal injury cases in Arizona are settled out of court. However, the specific outcome depends on the facts and circumstances of each case."
+        },
+        {
+          "question": "Q. What Evidence Will I Need For My Mesa Personal Injury Lawyer?",
+          "answer": "Important evidence includes medical records, photographs of the accident scene and injuries, witness statements, police reports, and documentation of lost wages and expenses."
+        }
+      ]
+    },
+    "badgesTextParagraphs": {
+      "type": "array",
+      "default": [
+        {
+          "text": "We guarantee that you will speak with a licensed Arizona attorney at your initial consultation."
+        },
+        {
+          "text": "If we're able to take your case, we'll pursue compensation on your behalf in the maximum amount possible, and our experience and client testimonials make that clear. Our Discount Fee arrangement demonstrates our clear commitment to putting our clients first. Let us help you or your loved one with a personal injury case."
+        }
+      ]
+    },
+    "badgesItems": {
+      "type": "array",
+      "default": [
+        {
+          "imageId": 0,
+          "imageUrl": "",
+          "imageFallback": "badge-90-plus-combined-legal-experience-blck.svg",
+          "imageAlt": "90+ Years Combined Legal Experience badge",
+          "imageWidth": 303,
+          "imageHeight": 303
+        },
+        {
+          "imageId": 0,
+          "imageUrl": "",
+          "imageFallback": "badge-29-percent-discount.svg",
+          "imageAlt": "29% Fee — Discount Accident Lawyers badge",
+          "imageWidth": 303,
+          "imageHeight": 303
+        }
+      ]
+    },
+    "servingTitle": {
+      "type": "string",
+      "default": "Proudly Serving Mesa, AZ and the Phoenix Area"
+    },
+    "servingColumns": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Central & Historic Mesa",
+          "links": [
+            { "label": "Historic District", "url": "#" },
+            { "label": "Fraser Fields", "url": "#" },
+            { "label": "Reed Park", "url": "#" },
+            { "label": "Kleinman Park", "url": "#" }
+          ]
+        },
+        {
+          "title": "East Mesa",
+          "links": [
+            { "label": "Apache Wells", "url": "#" },
+            { "label": "Eastmark", "url": "#" },
+            { "label": "Mulberry", "url": "#" },
+            { "label": "Superstition Springs", "url": "#" }
+          ]
+        },
+        {
+          "title": "South & West Mesa",
+          "links": [
+            { "label": "Dobson Ranch", "url": "#" },
+            { "label": "Fiesta Park Village", "url": "#" },
+            { "label": "Carriage Manor", "url": "#" },
+            { "label": "Sherwood Manor", "url": "#" }
+          ]
+        },
+        {
+          "title": "Surrounding Mesa Communities",
+          "links": [
+            { "label": "Community Fiesta", "url": "#" },
+            { "label": "Fountain of the Sun", "url": "#" },
+            { "label": "Holden Rock", "url": "#" },
+            { "label": "Northgrove", "url": "#" }
+          ]
+        }
+      ]
+    },
+    "faultIntroTitle": {
+      "type": "string",
+      "default": "Determining Fault for Your Mesa, AZ Accident"
+    },
+    "faultIntroText": {
+      "type": "string",
+      "default": ""
+    },
+    "faultIntroImageId": {
+      "type": "number",
+      "default": 0
+    },
+    "faultIntroImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "faultIntroImageAlt": {
+      "type": "string",
+      "default": "Car accident intersection scene in Arizona"
+    },
+    "faultComparativeTitle": {
+      "type": "string",
+      "default": "Comparative Negligence Laws in Arizona Accidents"
+    },
+    "faultComparativeColumn1": {
+      "type": "string",
+      "default": ""
+    },
+    "faultComparativeColumn2": {
+      "type": "string",
+      "default": ""
+    },
+    "faultCompensationTitle": {
+      "type": "string",
+      "default": "Recovering Compensation After an Injury"
+    },
+    "faultCompensationSubtitle": {
+      "type": "string",
+      "default": ""
+    },
+    "faultDamageTypes": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Economic damages",
+          "description": "Economic damages are any costs that are paid out of your own pocket, or that represent monetary loss in the future. Most commonly, these are the straightforward damages requested in a lawsuit — medical bills and expenses, lost wages, property damages, loss of earning potential, and insurance monies. In short, any damage that can be assigned a fixed dollar amount is an economic damage."
+        },
+        {
+          "title": "Non-economic damages",
+          "description": "Non-economic damages are amounts that represent non-monetary compensation. While these damages can be more difficult to prove, they provide opportunities for significant compensation to victims, and an effective attorney will ensure that non-economic damages are adequately accounted for. Non-economic damages most often include pain and suffering, emotional damages, loss of consortium, loss of enjoyment, and punitive damages in severe cases."
+        }
+      ],
+      "items": {
+        "type": "object"
+      }
+    },
+    "faultStepsTitle": {
+      "type": "string",
+      "default": "Important Steps for Your Mesa Personal Injury Case"
+    },
+    "faultStepsSubtitle": {
+      "type": "string",
+      "default": ""
+    },
+    "faultSteps": {
+      "type": "array",
+      "default": [
+        {
+          "number": "1",
+          "title": "Seek Medical Attention Immediately",
+          "description": "Even if you think you don't need it, you should immediately seek medical attention after being involved in an accident. Some injuries don't immediately present symptoms, and you may be injured without knowing it. Otherwise, seeking medical attention allows you to obtain important documentation that could be vital in seeking future compensation."
+        },
+        {
+          "number": "2",
+          "title": "Gather Evidence and Documentation",
+          "description": "After ensuring your physical safety, you should take as much documentation as possible about your accident. Take photos and videos to the fullest extent possible. Record or write a narrative of your memories as soon as you can after the accident. This step is important because memories fade very fast, and you may be surprised about the details you begin to forget as time goes on after your accident."
+        },
+        {
+          "number": "3",
+          "title": "Contact a Personal Injury Lawyer As Soon As Possible",
+          "description": "Contact an attorney as soon as possible after you seek medical attention, and avoid speaking to anyone about your personal injury case until you have retained an attorney. Before you have a lawyer, you may be contacted by insurance companies or other representatives of the defendant seeking statements from you. You should avoid providing any such statements before you have a lawyer – as your own words can be used against you in the future. Consulting with a Mesa personal injury attorney ensures that you are fully protecting your rights and your ability to recover compensation in the future."
+        }
+      ],
+      "items": {
+        "type": "object"
+      }
+    },
+    "faultTimeLimitTitle": {
+      "type": "string",
+      "default": "How Long Do I Have to File a Personal Injury Claim in Mesa, Arizona?"
+    },
+    "faultTimeLimitParagraph1": {
+      "type": "string",
+      "default": ""
+    },
+    "faultTimeLimitParagraph2": {
+      "type": "string",
+      "default": ""
+    },
+    "faultTimeLimitImageId": {
+      "type": "number",
+      "default": 0
+    },
+    "faultTimeLimitImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "faultTimeLimitImageAlt": {
+      "type": "string",
+      "default": "Accident scene highlighting the urgency of filing claims"
+    },
+    "faultStatuteImageId": {
+      "type": "number",
+      "default": 0
+    },
+    "faultStatuteImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "faultStatuteImageAlt": {
+      "type": "string",
+      "default": "Legal and medical billing documents"
+    },
+    "faultStatuteText": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "editorScript": "file:./index.js",
+  "viewScript": [
+    "file:./assets/vendor/swiper-bundle.min.js",
+    "file:./script.js"
+  ],
+  "style": [
+    "file:./assets/vendor/swiper-bundle.min.css",
+    "file:./style.css"
+  ],
+  "render": "file:./render.php"
+}
