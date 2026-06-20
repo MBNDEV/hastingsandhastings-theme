@@ -21,6 +21,8 @@ export default function Edit({ attributes, setAttributes }) {
     overlayImageUrl,
     overlayImageId,
     showCtaBar,
+    heroButtonText,
+    heroButtonUrl,
     ctaButtonText,
     ctaButtonUrl,
     phoneNumber,
@@ -39,6 +41,10 @@ export default function Edit({ attributes, setAttributes }) {
     contentJustify,
     contentVerticalAlign,
     textMaxWidth,
+    showQuickCall,
+    quickCallLabel,
+    quickCallPhoneNumber,
+    quickCallPhoneNumberUrl,
   } = attributes;
 
   const blockProps = useBlockProps({
@@ -75,6 +81,19 @@ export default function Edit({ attributes, setAttributes }) {
             value={subheading}
             onChange={(value) => setAttributes({ subheading: value })}
             rows={4}
+          />
+          
+          <TextControl
+            label={__('Hero Button Text', 'mbn-theme')}
+            value={heroButtonText}
+            onChange={(value) => setAttributes({ heroButtonText: value })}
+          />
+          
+          <TextControl
+            label={__('Hero Button URL', 'mbn-theme')}
+            value={heroButtonUrl}
+            onChange={(value) => setAttributes({ heroButtonUrl: value })}
+            help={__('URL for the hero button (e.g., #contact)', 'mbn-theme')}
           />
         </PanelBody>
 
@@ -310,6 +329,38 @@ export default function Edit({ attributes, setAttributes }) {
           )}
         </PanelBody>
 
+        {/* Hero Quick Call CTA */}
+        <PanelBody title={__('Hero Quick Call CTA', 'mbn-theme')} initialOpen={false}>
+          <ToggleControl
+            label={__('Show Quick Call', 'mbn-theme')}
+            checked={showQuickCall}
+            onChange={(value) => setAttributes({ showQuickCall: value })}
+            help={showQuickCall ? __('Quick call section is visible', 'mbn-theme') : __('Quick call section is hidden', 'mbn-theme')}
+          />
+
+          {showQuickCall && (
+            <>
+              <TextControl
+                label={__('Quick Call Label', 'mbn-theme')}
+                value={quickCallLabel}
+                onChange={(value) => setAttributes({ quickCallLabel: value })}
+                help={__('Text before phone number (e.g., "CALL TODAY")', 'mbn-theme')}
+              />
+              <TextControl
+                label={__('Quick Call Phone (Display)', 'mbn-theme')}
+                value={quickCallPhoneNumber}
+                onChange={(value) => setAttributes({ quickCallPhoneNumber: value })}
+              />
+              <TextControl
+                label={__('Quick Call Phone (Link)', 'mbn-theme')}
+                value={quickCallPhoneNumberUrl}
+                onChange={(value) => setAttributes({ quickCallPhoneNumberUrl: value })}
+                help={__('Format: tel:4804802929', 'mbn-theme')}
+              />
+            </>
+          )}
+        </PanelBody>
+
         {/* Background Settings */}
         <PanelBody title={__('Background Settings', 'mbn-theme')} initialOpen={false}>
           <BackgroundColorControl
@@ -511,6 +562,23 @@ export default function Edit({ attributes, setAttributes }) {
                     <img src={badgeImageUrl} alt="Badge" className="w-36 md:w-44 lg:w-52 h-auto" />
                   </div>
                 )}
+                
+                {/* Hero Button & Quick Call */}
+                <div className="flex flex-col items-center justify-self-end gap-4">
+                  <a href={heroButtonUrl} onClick={(e) => e.preventDefault()} className="inline-flex items-center gap-2 h-12 md:h-14 px-6 md:px-8 rounded-full font-heading font-bold text-sm md:text-base bg-gradient-to-b from-accent-gold to-accent-gold-500 text-gray-900 hover:shadow-lg transition-all">
+                    {heroButtonText}
+                  </a>
+                  {showQuickCall && (
+                    <div className="flex items-center gap-2 text-white">
+                      <span className="font-body font-semibold text-base">
+                        {quickCallLabel}
+                      </span>
+                      <a href={quickCallPhoneNumberUrl} onClick={(e) => e.preventDefault()} className="font-body font-bold text-base text-accent-gold underline hover:text-accent-gold-300 transition-colors">
+                        {quickCallPhoneNumber}
+                      </a>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* CTA Bar */}
