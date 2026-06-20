@@ -73,7 +73,7 @@
     },
     "heroButtonText": {
       "type": "string",
-      "default": "REQUEST A FREE CONSULTATION"
+      "default": "START YOUR FREE CONSULTATION NOW!"
     },
     "heroButtonUrl": {
       "type": "string",

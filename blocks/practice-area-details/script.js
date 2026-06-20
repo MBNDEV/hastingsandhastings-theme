@@ -20,6 +20,9 @@
         btn.addEventListener('click', function () {
           const item = btn.closest('.pad-steps__item');
           const answer = block.querySelector('#' + btn.getAttribute('aria-controls'));
+          if (!answer) {
+            return;
+          }
           const isOpen = item.classList.contains('pad-steps__item--open');
 
           if (isOpen) {

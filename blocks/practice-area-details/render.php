@@ -125,8 +125,8 @@ $wrapper_attributes = get_block_wrapper_attributes();
       <div class="pad-why-hire__features">
         <?php foreach ( $why_hire_features as $feature ) : ?>
         <article class="pad-why-hire__feature">
-          <h3><?php echo esc_html( $feature['title'] ); ?></h3>
-          <?php echo wp_kses_post( $feature['description'] ); ?>
+          <h3><?php echo esc_html( $feature['title'] ?? '' ); ?></h3>
+          <?php echo wp_kses_post( $feature['description'] ?? '' ); ?>
         </article>
         <?php endforeach; ?>
       </div>
@@ -225,7 +225,7 @@ $wrapper_attributes = get_block_wrapper_attributes();
         );
         foreach ( $after_accident_splits as $index => $split ) :
           $layout_class    = 'pad-split--' . esc_attr( $split['layout'] ?? 'text-left' );
-          $split_image_url = ! empty( $split['imageUrl'] ) ? $split['imageUrl'] : $block_assets_uri . '/' . $split_default_images[ $index ];
+          $split_image_url = ! empty( $split['imageUrl'] ) ? $split['imageUrl'] : $block_assets_uri . '/' . $split_default_images[ $index % count( $split_default_images ) ];
           $split_image_id  = $split['imageId'] ?? 0;
 
           // Get alt text
@@ -279,11 +279,11 @@ $wrapper_attributes = get_block_wrapper_attributes();
           ?>
         <div class="pad-steps__item <?php echo $is_open ? 'pad-steps__item--open' : ''; ?>" role="listitem">
           <button class="pad-steps__question" aria-expanded="<?php echo $is_open ? 'true' : 'false'; ?>" aria-controls="<?php echo esc_attr( $step_id ); ?>">
-            <ol class="pad-steps__ol" start="<?php echo esc_attr( $step_index + 1 ); ?>"><li><?php echo esc_html( $step['question'] ); ?></li></ol>
+            <ol class="pad-steps__ol" start="<?php echo esc_attr( $step_index + 1 ); ?>"><li><?php echo esc_html( $step['question'] ?? '' ); ?></li></ol>
             <img src="<?php echo esc_url( $chevron_icon ); ?>" alt="" aria-hidden="true" class="pad-steps__icon">
           </button>
           <div class="pad-steps__answer <?php echo $is_open ? '' : 'pad-steps__answer--hidden'; ?>" id="<?php echo esc_attr( $step_id ); ?>">
-            <?php echo wp_kses_post( $step['answer'] ); ?>
+            <?php echo wp_kses_post( $step['answer'] ?? '' ); ?>
           </div>
         </div>
         <?php endforeach; ?>
@@ -396,9 +396,9 @@ $wrapper_attributes = get_block_wrapper_attributes();
       <li class="pad-liability__item">
         <hr class="pad-liability__divider" aria-hidden="true">
         <div class="pad-liability__row">
-          <h3 class="pad-liability__term"><?php echo esc_html( $item['term'] ); ?></h3>
+          <h3 class="pad-liability__term"><?php echo esc_html( $item['term'] ?? '' ); ?></h3>
           <div class="pad-liability__desc">
-            <?php echo wp_kses_post( $item['description'] ); ?>
+            <?php echo wp_kses_post( $item['description'] ?? '' ); ?>
           </div>
         </div>
       </li>
@@ -424,8 +424,8 @@ $wrapper_attributes = get_block_wrapper_attributes();
 
       <?php foreach ( $compensation_items as $item ) : ?>
       <article class="pad-compensation__item">
-        <h3><?php echo esc_html( $item['title'] ); ?></h3>
-        <?php echo wp_kses_post( $item['description'] ); ?>
+        <h3><?php echo esc_html( $item['title'] ?? '' ); ?></h3>
+        <?php echo wp_kses_post( $item['description'] ?? '' ); ?>
       </article>
       <?php endforeach; ?>
 
@@ -477,7 +477,7 @@ $wrapper_attributes = get_block_wrapper_attributes();
 		  'badge-14-percent.svg',
       );
       foreach ( $badge_cards as $badge_index => $badge ) :
-        $badge_image_url = ! empty( $badge['imageUrl'] ) ? $badge['imageUrl'] : $block_assets_uri . '/' . $badge_default_images[ $badge_index ];
+        $badge_image_url = ! empty( $badge['imageUrl'] ) ? $badge['imageUrl'] : $block_assets_uri . '/' . $badge_default_images[ $badge_index % count( $badge_default_images ) ];
         $badge_image_id  = $badge['imageId'] ?? 0;
         ?>
 
@@ -485,7 +485,7 @@ $wrapper_attributes = get_block_wrapper_attributes();
         <div class="pad-badge pad-badge--num pad-badge--sm" aria-label="Badge">
           <img src="<?php echo esc_url( $badge_image_url ); ?>" alt="" aria-hidden="true">
         </div>
-        <p><?php echo esc_html( $badge['description'] ); ?></p>
+        <p><?php echo esc_html( $badge['description'] ?? '' ); ?></p>
       </div>
 
       <?php endforeach; ?>
