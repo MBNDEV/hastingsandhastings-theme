@@ -94,6 +94,7 @@ require_once get_theme_file_path( 'inc/includes-animation-helpers.php' );      /
 require_once get_theme_file_path( 'inc/includes-gravity-forms-api.php' );      // Gravity Forms REST API endpoint.
 require_once get_theme_file_path( 'inc/includes-attorney-cpt.php' );            // Attorney custom post type.
 require_once get_theme_file_path( 'inc/includes-attorney-fields.php' );         // Attorney ACF field groups.
+require_once get_theme_file_path( 'inc/includes-case-results.php' );            // Case Results custom post type and fields.
 
 /**
  * Enqueue scroll animation assets (frontend only).

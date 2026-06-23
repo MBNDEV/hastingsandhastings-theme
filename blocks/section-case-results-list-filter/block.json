@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-case-results-list-filter",
+  "title": "Section: Case Results List Filter",
+  "category": "mbn-blocks",
+  "icon": "filter",
+  "description": "Displays all Case Results with client-side category filtering.",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "viewScript": "file:./script.js",
+  "render": "file:./render.php",
+  "attributes": {
+    "filterLabel": {
+      "type": "string",
+      "default": "Filter Cases:"
+    },
+    "filterDefaultText": {
+      "type": "string",
+      "default": "All Cases"
+    },
+    "filterTitle": {
+      "type": "string",
+      "default": "Select topics to filter articles"
+    },
+    "filterSubtitle": {
+      "type": "string",
+      "default": "Choose one or more topics below, then apply your selection."
+    },
+    "clearButtonText": {
+      "type": "string",
+      "default": "Clear Filters"
+    },
+    "applyButtonText": {
+      "type": "string",
+      "default": "Apply Filters"
+    },
+    "noResultsText": {
+      "type": "string",
+      "default": "No case results match the selected filters."
+    }
+  },
+  "supports": {
+    "align": ["wide", "full"]
+  }
+}
