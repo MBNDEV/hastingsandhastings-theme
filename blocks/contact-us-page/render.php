@@ -26,16 +26,6 @@ $badges            = $attributes['badges'] ?? array();
 
 $block_assets_uri = get_theme_file_uri( '/build/blocks/contact-us-page/assets/images' );
 
-$style_path    = get_theme_file_path( '/build/blocks/contact-us-page/style.css' );
-$style_version = file_exists( $style_path ) ? filemtime( $style_path ) : false;
-
-wp_enqueue_style(
-  'contact-us-page',
-  get_theme_file_uri( '/build/blocks/contact-us-page/style.css' ),
-  array(),
-  $style_version
-);
-
 $wrapper_attributes = get_block_wrapper_attributes(
   array(
 	  'class' => 'contact-us-page-block',
@@ -85,7 +75,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 								<?php foreach ( $social_links as $social ) : ?>
 									<?php if ( ! empty( $social['url'] ) && ! empty( $social['icon'] ) ) : ?>
 										<a href="<?php echo esc_url( $social['url'] ); ?>" aria-label="<?php echo esc_attr( $social['platform'] ?? $social['icon'] ); ?>">
-											<img src="<?php echo esc_url( $block_assets_uri . '/icon-' . $social['icon'] . '.svg' ); ?>" alt="<?php echo esc_attr( $social['platform'] ?? $social['icon'] ); ?>" width="24" height="24">
+											<img src="<?php echo esc_url( $block_assets_uri . '/icon-' . sanitize_key( $social['icon'] ) . '.svg' ); ?>" alt="<?php echo esc_attr( $social['platform'] ?? $social['icon'] ); ?>" width="24" height="24">
 										</a>
 									<?php endif; ?>
 								<?php endforeach; ?>

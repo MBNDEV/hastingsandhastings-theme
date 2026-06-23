@@ -82,9 +82,9 @@ export default function Edit({ attributes, setAttributes }) {
 
 	// Add array item helper
 	const addArrayItem = (arrayName, defaultItem) => {
-		const array = attributes[arrayName];
-		setAttributes({ [arrayName]: [...array, defaultItem] });
-	};
+    const array = attributes[arrayName] || [];
+    setAttributes({ [arrayName]: [...array, defaultItem] });
+  };
 
 	const blockProps = useBlockProps({
 		className: 'contact-us-page-block-editor',
