@@ -219,16 +219,11 @@ $wrapper_attributes = get_block_wrapper_attributes(
 								<a href="<?php echo esc_url( $cta_button_url ); ?>" class="btn-cta">
 									<?php echo esc_html( $cta_button_text ); ?>
 								</a>
-							<?php if ( $show_quick_call ) : ?>
-							<div class="flex items-center gap-2 text-white">
-								<span class="font-body font-semibold text-base xl:text-lg">
-									<?php echo esc_html( $quick_call_label ); ?>
-								</span>
-								<a href="<?php echo esc_url( $quick_call_phone_url ); ?>" class="font-body font-bold text-base xl:text-lg text-primary underline hover:text-accent-gold transition-colors">
-									<?php echo esc_html( $quick_call_phone ); ?>
+								<a href="<?php echo esc_url( $phone_number_url ); ?>" class="font-body font-bold text-base xl:text-lg text-primary hover:text-accent-gold transition-colors">
+									<span class="text-white no-underline"><?php esc_html_e( 'CALL TODAY', 'mbn-theme' ); ?></span> 
+									<span class="text-primary underline"><?php echo esc_html( $phone_number ); ?></span>
 								</a>
-							</div>
-							<?php endif; ?>
+								
 							</div>
 
 						</div>
