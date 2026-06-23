@@ -53,11 +53,11 @@ body, html {
 
 .menu-item > a,
 .menu-item:hover > a {
-    color: var(--colors-text-body);
+    color: var(--contact-us-color-body) !important;
     transition: color 0.2s ease;
 }
 .menu-item > a:hover {
-    color: var(--colors-text-headings);
+    color: var(--contact-us-color-heading) !important;
 }
 
 /* ============================================================
@@ -400,7 +400,7 @@ body, html {
   background: linear-gradient(180deg, #FFF24C 0%, #FDE212 50%, #E5C700 100%);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
   transform: translateY(-2px);
-  color: #13263E;
+  color: var(--contact-us-color-heading);
 }
 
 .contact-hero__form-wrapper .gform_wrapper .gform_button:active,
