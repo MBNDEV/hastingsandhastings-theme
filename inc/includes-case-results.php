@@ -311,13 +311,18 @@ function custom_theme_generate_case_result_categories_xml(): string {
 	$xml .= '	<wp:base_blog_url>' . esc_url( $site_url ) . '</wp:base_blog_url>' . "\n\n";
 
   foreach ( $all_terms as $term ) {
+      $parent_slug = '';
+    if ( $term->parent > 0 ) {
+        $parent_slug_field = get_term_field( 'slug', $term->parent, 'case_result_category' );
+        $parent_slug       = is_wp_error( $parent_slug_field ) ? '' : $parent_slug_field;
+    }
       $xml .= '	<wp:term>' . "\n";
       $xml .= '		<wp:term_id>' . esc_html( $term->term_id ) . '</wp:term_id>' . "\n";
       $xml .= '		<wp:term_taxonomy>case_result_category</wp:term_taxonomy>' . "\n";
       $xml .= '		<wp:term_slug>' . esc_html( $term->slug ) . '</wp:term_slug>' . "\n";
-      $xml .= '		<wp:term_parent>' . esc_html( $term->parent > 0 ? get_term_field( 'slug', $term->parent, 'case_result_category' ) : '' ) . '</wp:term_parent>' . "\n";
-      $xml .= '		<wp:term_name><![CDATA[' . $term->name . ']]></wp:term_name>' . "\n";
-      $xml .= '		<wp:term_description><![CDATA[' . $term->description . ']]></wp:term_description>' . "\n";
+      $xml .= '		<wp:term_parent>' . esc_html( $parent_slug ) . '</wp:term_parent>' . "\n";
+      $xml .= '		<wp:term_name><![CDATA[' . str_replace( ']]>', ']]]]><![CDATA[>', $term->name ) . ']]></wp:term_name>' . "\n";
+      $xml .= '		<wp:term_description><![CDATA[' . str_replace( ']]>', ']]]]><![CDATA[>', $term->description ) . ']]></wp:term_description>' . "\n";
       $xml .= '	</wp:term>' . "\n";
   }
 
