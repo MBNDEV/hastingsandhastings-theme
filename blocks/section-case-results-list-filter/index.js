@@ -104,6 +104,7 @@ function Edit({ attributes, setAttributes }) {
               value={filterLabel}
               onChange={(value) => setAttributes({ filterLabel: value })}
               placeholder={__('Filter Cases:', 'mbn-theme')}
+              allowedFormats={ [] }
             />
           </div>
           <div className="case-results-filter-editor__inline-field">
@@ -113,6 +114,7 @@ function Edit({ attributes, setAttributes }) {
               value={filterDefaultText}
               onChange={(value) => setAttributes({ filterDefaultText: value })}
               placeholder={__('All Cases', 'mbn-theme')}
+              allowedFormats={ [] }
             />
           </div>
         </div>

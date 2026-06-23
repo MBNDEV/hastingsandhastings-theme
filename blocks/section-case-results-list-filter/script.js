@@ -101,14 +101,13 @@
         toggle.setAttribute('aria-expanded', 'false');
       }
 
-      toggle.addEventListener('click', function(event) {
-        event.stopPropagation();
+      toggle.addEventListener('click', function() {
         var isOpen = panel.classList.toggle('is-open');
         toggle.setAttribute('aria-expanded', String(isOpen));
       });
 
       document.addEventListener('click', function(event) {
-        if (!block.contains(event.target)) {
+        if (!toggle.contains(event.target) && !panel.contains(event.target)) {
           closePanel();
         }
       });
@@ -125,6 +124,7 @@
             checkbox.checked = false;
           });
           applyFilters();
+          closePanel();
         });
       }
 

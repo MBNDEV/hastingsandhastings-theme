@@ -167,12 +167,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
         aria-controls="<?php echo esc_attr( $instance_id ); ?>-dropdown"
       >
         <span class="case-results-filter__dropdown-text"><?php echo esc_html( $filter_default_text ); ?></span>
-        <img
-          src="<?php echo esc_url( get_theme_file_uri( '/build/blocks/section-case-results-list-filter/assets/images/icon-dropdown-arrow.svg' ) ); ?>"
-          alt=""
-          aria-hidden="true"
-          class="case-results-filter__dropdown-icon"
-        >
+        <svg class="case-results-filter__dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5z" fill="currentColor"/></svg>
       </button>
 
       <div
@@ -261,7 +256,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
       <?php wp_reset_postdata(); ?>
     </ul>
 
-    <p class="case-results-filter__empty" hidden><?php echo esc_html( $no_results_text ); ?></p>
+    <p class="case-results-filter__empty" hidden><?php echo wp_kses_post( $no_results_text ); ?></p>
 
   </div>
 </section>
