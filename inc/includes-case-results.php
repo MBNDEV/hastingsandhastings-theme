@@ -216,7 +216,9 @@ function custom_theme_sync_case_result_categories(): void { // phpcs:ignore Gene
 
   update_option( 'custom_theme_case_result_category_sync_hash', $sync_hash, false );
 }
-add_action( 'init', 'custom_theme_sync_case_result_categories', 20 );
+add_action( 'created_category', 'custom_theme_sync_case_result_categories', 10, 0 );
+add_action( 'edited_category', 'custom_theme_sync_case_result_categories', 10, 0 );
+add_action( 'delete_category', 'custom_theme_sync_case_result_categories', 10, 0 );
 
 /**
  * Add custom fields meta box for Case Results.
