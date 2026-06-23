@@ -276,11 +276,11 @@ function custom_theme_render_case_results_meta_box( WP_Post $post ): void { // p
           <?php
           $child_terms = get_terms(
             array(
-				'taxonomy'   => 'case_result_category',
-				'hide_empty' => false,
-				'parent'     => (int) $parent_term->term_id,
-		    'orderby'    => 'ID',
-				'order'      => 'ASC',
+                'taxonomy'   => 'case_result_category',
+                'hide_empty' => false,
+                'parent'     => (int) $parent_term->term_id,
+                'orderby'    => 'ID',
+                'order'      => 'ASC',
             )
           );
           ?>
