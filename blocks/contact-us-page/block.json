@@ -1,0 +1,202 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/contact-us-page",
+  "title": "Contact Us Page",
+  "category": "mbn-blocks",
+  "icon": "phone",
+  "description": "Full contact page with form, office locations, map, and badges",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "viewScript": "file:./script.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true
+  },
+  "attributes": {
+    "eyebrowText": {
+      "type": "string",
+      "default": "Contact Us"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Talk with Hastings & Hastings about your case"
+    },
+    "bodyText": {
+      "type": "string",
+      "default": "If you were hurt in an accident, our team is here to listen, answer your questions, and help you understand the next step."
+    },
+    "phoneLabel": {
+      "type": "string",
+      "default": "Call Local:"
+    },
+    "phoneNumber": {
+      "type": "string",
+      "default": "(480) 706-1100"
+    },
+    "phoneUrl": {
+      "type": "string",
+      "default": "tel:4807061100"
+    },
+    "socialLabel": {
+      "type": "string",
+      "default": "Connect with Us"
+    },
+    "socialLinks": {
+      "type": "array",
+      "default": [
+        {
+          "platform": "LinkedIn",
+          "url": "#",
+          "icon": "linkedin"
+        },
+        {
+          "platform": "Facebook",
+          "url": "#",
+          "icon": "facebook"
+        },
+        {
+          "platform": "Instagram",
+          "url": "#",
+          "icon": "instagram"
+        },
+        {
+          "platform": "YouTube",
+          "url": "#",
+          "icon": "youtube"
+        }
+      ]
+    },
+    "gravityFormId": {
+      "type": "string",
+      "default": ""
+    },
+    "locationsHeading": {
+      "type": "string",
+      "default": "Office Locations"
+    },
+    "officeLocations": {
+      "type": "array",
+      "default": [
+        {
+          "name": "Central Phoenix Office",
+          "address": "1221 E. Osborn Rd. Suite A202 Phoenix 85014",
+          "addressUrl": "",
+          "phoneNumber": "(602) 433-2323",
+          "phoneUrl": "tel:6024332323",
+          "byAppointmentOnly": false
+        },
+        {
+          "name": "Northwest Peoria",
+          "address": "16165 N 83rd Ave Suite 200, Peoria, AZ 85382",
+          "addressUrl": "",
+          "phoneNumber": "(480) 706-1100",
+          "phoneUrl": "tel:4807061100",
+          "byAppointmentOnly": false
+        },
+        {
+          "name": "Mesa",
+          "address": "1830 S. Alma School Rd. Suite 129 Mesa 85210",
+          "addressUrl": "",
+          "phoneNumber": "(480) 649-1800",
+          "phoneUrl": "tel:4806491800",
+          "byAppointmentOnly": false
+        },
+        {
+          "name": "Casa Grande",
+          "address": "251 E. Cottonwood Lane Suite 251D Casa Grande 85122",
+          "addressUrl": "",
+          "phoneNumber": "(520) 421-9100",
+          "phoneUrl": "tel:5204219100",
+          "byAppointmentOnly": false
+        },
+        {
+          "name": "Paradise Valley",
+          "address": "3420 E. Shea Blvd. #200 Phoenix 85028",
+          "addressUrl": "",
+          "phoneNumber": "",
+          "phoneUrl": "",
+          "byAppointmentOnly": true
+        },
+        {
+          "name": "Goodyear",
+          "address": "15150 W Park Place, 2nd Floor, Goodyear, AZ 85395",
+          "addressUrl": "https://www.google.com/maps?cid=16819770425094825101",
+          "phoneNumber": "",
+          "phoneUrl": "",
+          "byAppointmentOnly": true
+        },
+        {
+          "name": "West Valley",
+          "address": "9150 W. Indian School Rd. Suite 103 Phoenix 85037",
+          "addressUrl": "",
+          "phoneNumber": "(623) 845-1345",
+          "phoneUrl": "tel:6238451345",
+          "byAppointmentOnly": false
+        },
+        {
+          "name": "Chandler",
+          "address": "5505 W. Chandler Blvd. Suite 15 Chandler 85226",
+          "addressUrl": "",
+          "phoneNumber": "(480) 706-1100",
+          "phoneUrl": "tel:4807061100",
+          "byAppointmentOnly": false
+        },
+        {
+          "name": "East Mesa",
+          "address": "4135 S. Power Rd. Suite 111 Mesa 85212",
+          "addressUrl": "",
+          "phoneNumber": "(623) 845-1345",
+          "phoneUrl": "tel:6238451345",
+          "byAppointmentOnly": false
+        },
+        {
+          "name": "Scottsdale",
+          "address": "7272 E Indian School Rd, Ste. 540 Scottsdale, AZ 85251",
+          "addressUrl": "",
+          "phoneNumber": "",
+          "phoneUrl": "",
+          "byAppointmentOnly": true
+        },
+        {
+          "name": "Tempe",
+          "address": "64 E. Broadway Rd. Suite 200 Tempe 85282",
+          "addressUrl": "",
+          "phoneNumber": "",
+          "phoneUrl": "",
+          "byAppointmentOnly": true
+        }
+      ]
+    },
+    "mapIframeUrl": {
+      "type": "string",
+      "default": "https://www.google.com/maps/d/embed?mid=1BU_B90ZoJAEWzUgMy_fXd-KdC5y5WdXm&ehbc=2E312F"
+    },
+    "mapTitle": {
+      "type": "string",
+      "default": "Map showing Hastings & Hastings office locations across Arizona"
+    },
+    "badges": {
+      "type": "array",
+      "default": [
+        {
+          "imageUrl": "",
+          "imageId": 0,
+          "caption": "You pay nothing upfront and nothing out of pocket. Hastings & Hastings only gets paid if your case results in a recovery."
+        },
+        {
+          "imageUrl": "",
+          "imageId": 0,
+          "caption": "Hastings & Hastings is known for its 29% settlement fee, giving clients a more affordable way to get experienced legal representation."
+        },
+        {
+          "imageUrl": "",
+          "imageId": 0,
+          "caption": "Compared to firms that charge 33%, our lower fee structure gives Hastings & Hastings a meaningful cost advantage."
+        }
+      ]
+    }
+  }
+}

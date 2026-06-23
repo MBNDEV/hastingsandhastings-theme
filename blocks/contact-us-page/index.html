@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,700&family=Heebo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<!--
+Asset Manifest:
+- assets/images/icon-chevron-phone.svg       : Phone/chevron icon used next to phone number
+- assets/images/icon-linkedin.svg            : LinkedIn social icon
+- assets/images/icon-facebook.svg            : Facebook social icon
+- assets/images/icon-instagram.svg           : Instagram social icon
+- assets/images/icon-youtube.svg             : YouTube social icon
+- assets/images/icon-mail.svg                : Email/mail icon inside email input
+- assets/images/icon-phone.svg               : Phone icon inside phone input
+- assets/images/icon-location-pin.svg        : Map pin/location icon for addresses
+- assets/images/icon-phone-chevron.svg       : Phone/chevron icon for office listings
+- assets/images/badge-no-fee-until-win.svg   : No Fee Until We Win award badge
+- assets/images/badge-29-percent-discount.svg: 29% Discount Accident Lawyers badge
+- assets/images/badge-14-percent.svg         : 14% Lower Fees than 33% badge
+-->
+
+<!-- ===== SECTION 1: CONTACT HERO ===== -->
+<section class="contact-hero">
+  <div class="contact-hero__container">
+
+    <!-- Left: Message + Contact Info -->
+    <article class="contact-hero__message">
+      <header class="contact-hero__text-wrapper">
+        <p class="contact-hero__eyebrow">Contact Us</p>
+        <h1 class="contact-hero__heading">Talk with Hastings &amp; Hastings about your case</h1>
+        <p class="contact-hero__body">If you were hurt in an accident, our team is here to listen, answer your questions, and help you understand the next step.</p>
+      </header>
+
+      <div class="contact-hero__links-row">
+        <div class="contact-hero__link-group">
+          <p class="contact-hero__link-label">Call Local:</p>
+          <a href="tel:4807061100" class="contact-hero__phone-link">
+            <img src="assets/images/icon-chevron-phone.svg" alt="" class="contact-hero__phone-icon" aria-hidden="true">
+            <span>(480) 706-1100</span>
+          </a>
+        </div>
+
+        <div class="contact-hero__link-group">
+          <p class="contact-hero__link-label">Connect with Us</p>
+          <nav class="contact-hero__social-icons" aria-label="Social media links">
+            <a href="#" aria-label="LinkedIn">
+              <img src="assets/images/icon-linkedin.svg" alt="LinkedIn" width="24" height="24">
+            </a>
+            <a href="#" aria-label="Facebook">
+              <img src="assets/images/icon-facebook.svg" alt="Facebook" width="24" height="24">
+            </a>
+            <a href="#" aria-label="Instagram">
+              <img src="assets/images/icon-instagram.svg" alt="Instagram" width="24" height="24">
+            </a>
+            <a href="#" aria-label="YouTube">
+              <img src="assets/images/icon-youtube.svg" alt="YouTube" width="24" height="24">
+            </a>
+          </nav>
+        </div>
+      </div>
+    </article>
+
+    <!-- Right: Contact Form -->
+    <div class="contact-hero__form-wrapper">
+      <form class="contact-hero__form" novalidate>
+
+        <div class="contact-hero__form-row">
+          <div class="contact-hero__input-group">
+            <label for="contact-first-name">First name</label>
+            <input type="text" id="contact-first-name" name="first_name" autocomplete="given-name">
+          </div>
+          <div class="contact-hero__input-group">
+            <label for="contact-last-name">Last name</label>
+            <input type="text" id="contact-last-name" name="last_name" autocomplete="family-name">
+          </div>
+        </div>
+
+        <div class="contact-hero__input-group">
+          <label for="contact-email">Email address</label>
+          <div class="contact-hero__input-icon-wrap">
+            <img src="assets/images/icon-mail.svg" alt="" class="contact-hero__input-icon" aria-hidden="true" width="24" height="24">
+            <input type="email" id="contact-email" name="email" placeholder="email@example.com" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="contact-hero__input-group">
+          <label for="contact-phone">Phone Number</label>
+          <div class="contact-hero__input-icon-wrap">
+            <img src="assets/images/icon-phone.svg" alt="" class="contact-hero__input-icon" aria-hidden="true" width="24" height="24">
+            <input type="tel" id="contact-phone" name="phone" placeholder="+1" autocomplete="tel">
+          </div>
+        </div>
+
+        <div class="contact-hero__input-group">
+          <label for="contact-case">Describe Your Case</label>
+          <textarea id="contact-case" name="case_description" rows="4"></textarea>
+        </div>
+
+        <button type="submit" class="contact-hero__submit-btn">Submit</button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== SECTION 2: OFFICE LOCATIONS + BADGES ===== -->
+<section class="contact-locations">
+  <div class="contact-locations__container">
+
+    <!-- ===== OFFICE LOCATIONS HEADER ===== -->
+    <h2 class="contact-locations__heading">Office Locations</h2>
+
+    <!-- ===== OFFICE LOCATIONS GRID ===== -->
+    <div class="contact-locations__offices-grid">
+
+      <!-- Column 1 -->
+      <div class="contact-locations__offices-col">
+
+        <article class="contact-locations__office">
+          <header class="contact-locations__office-header">
+            <h3 class="contact-locations__office-name">Central Phoenix Office</h3>
+          </header>
+          <ul class="contact-locations__office-links">
+            <li class="contact-locations__office-link contact-locations__office-link--address">
+              <img src="assets/images/icon-location-pin.svg" alt="" width="24" height="24" aria-hidden="true">
+              <span>1221 E. Osborn Rd. Suite A202 Phoenix 85014</span>
+            </li>
+            <li class="contact-locations__office-link contact-locations__office-link--phone">
+              <img src="assets/images/icon-phone-chevron.svg" alt="" width="24" height="24" aria-hidden="true">
+              <a href="tel:6024332323">(602) 433-2323</a>
+            </li>
+          </ul>
+        </article>
+
+        <article class="contact-locations__office">
+          <header class="contact-locations__office-header">
+            <h3 class="contact-locations__office-name">Northwest Peoria</h3>
+          </header>
+          <ul class="contact-locations__office-links">
+            <li class="contact-locations__office-link contact-locations__office-link--address">
+              <img src="assets/images/icon-location-pin.svg" alt="" width="24" height="24" aria-hidden="true">
+              <span>16165 N 83rd Ave Suite 200, Peoria, AZ 85382</span>
+            </li>
+            <li class="contact-locations__office-link contact-locations__office-link--phone">
+              <img src="assets/images/icon-phone-chevron.svg" alt="" width="24" height="24" aria-hidden="true">
+              <a href="tel:4807061100">(480) 706-1100</a>
+            </li>
+          </ul>
+        </article>
+
+        <article class="contact-locations__office">
+          <header class="contact-locations__office-header">
+            <h3 class="contact-locations__office-name">Mesa</h3>
+          </header>
+          <ul class="contact-locations__office-links">
+            <li class="contact-locations__office-link contact-locations__office-link--address">
+              <img src="assets/images/icon-location-pin.svg" alt="" width="24" height="24" aria-hidden="true">
+              <span>1830 S. Alma School Rd. Suite 129 Mesa 85210</span>
+            </li>
+            <li class="contact-locations__office-link contact-locations__office-link--phone">
+              <img src="assets/images/icon-phone-chevron.svg" alt="" width="24" height="24" aria-hidden="true">
+              <a href="tel:4806491800">(480) 649-1800</a>
+            </li>
+          </ul>
+        </article>
+
+        <article class="contact-locations__office">
+          <header class="contact-locations__office-header">
+            <h3 class="contact-locations__office-name">Casa Grande</h3>
+          </header>
+          <ul class="contact-locations__office-links">
+            <li class="contact-locations__office-link contact-locations__office-link--address">
+              <img src="assets/images/icon-location-pin.svg" alt="" width="24" height="24" aria-hidden="true">
+              <span>251 E. Cottonwood Lane Suite 251D Casa Grande 85122</span>
+            </li>
+            <li class="contact-locations__office-link contact-locations__office-link--phone">
+              <img src="assets/images/icon-phone-chevron.svg" alt="" width="24" height="24" aria-hidden="true">
+              <a href="tel:5204219100">(520) 421-9100</a>
+            </li>
+          </ul>
+        </article>
+
+      </div>
+
+      <!-- Column 2 -->
+      <div class="contact-locations__offices-col">
+
+        <article class="contact-locations__office">
+          <header class="contact-locations__office-header">
+            <h3 class="contact-locations__office-name">Paradise Valley</h3>
+            <p class="contact-locations__office-note">(By Appointment Only)</p>
+          </header>
+          <ul class="contact-locations__office-links">
+            <li class="contact-locations__office-link contact-locations__office-link--address">
+              <img src="assets/images/icon-location-pin.svg" alt="" width="24" height="24" aria-hidden="true">
+              <span>3420 E. Shea Blvd. #200 Phoenix 85028</span>
+            </li>
+          </ul>
+        </article>
+
+        <article class="contact-locations__office">
+          <header class="contact-locations__office-header">
+            <h3 class="contact-locations__office-name">Goodyear</h3>
+            <p class="contact-locations__office-note">(By Appointment Only)</p>
+          </header>
+          <ul class="contact-locations__office-links">
+            <li class="contact-locations__office-link contact-locations__office-link--address">
+              <img src="assets/images/icon-location-pin.svg" alt="" width="24" height="24" aria-hidden="true">
+              <a href="https://www.google.com/maps?cid=16819770425094825101" target="_blank" rel="noopener noreferrer">15150 W Park Place, 2nd Floor, Goodyear, AZ 85395</a>
+            </li>
+          </ul>
+        </article>
+
+        <article class="contact-locations__office">
+          <header class="contact-locations__office-header">
+            <h3 class="contact-locations__office-name">West Valley</h3>
+          </header>
+          <ul class="contact-locations__office-links">
+            <li class="contact-locations__office-link contact-locations__office-link--address">
+              <img src="assets/images/icon-location-pin.svg" alt="" width="24" height="24" aria-hidden="true">
+              <span>9150 W. Indian School Rd. Suite 103 Phoenix 85037</span>
+            </li>
+            <li class="contact-locations__office-link contact-locations__office-link--phone">
+              <img src="assets/images/icon-phone-chevron.svg" alt="" width="24" height="24" aria-hidden="true">
+              <a href="tel:6238451345">(623) 845-1345</a>
+            </li>
+          </ul>
+        </article>
+
+        <article class="contact-locations__office">
+          <header class="contact-locations__office-header">
+            <h3 class="contact-locations__office-name">Chandler</h3>
+          </header>
+          <ul class="contact-locations__office-links">
+            <li class="contact-locations__office-link contact-locations__office-link--address">
+              <img src="assets/images/icon-location-pin.svg" alt="" width="24" height="24" aria-hidden="true">
+              <span>5505 W. Chandler Blvd. Suite 15 Chandler 85226</span>
+            </li>
+            <li class="contact-locations__office-link contact-locations__office-link--phone">
+              <img src="assets/images/icon-phone-chevron.svg" alt="" width="24" height="24" aria-hidden="true">
+              <a href="tel:4807061100">(480) 706-1100</a>
+            </li>
+          </ul>
+        </article>
+
+      </div>
+
+      <!-- Column 3 -->
+      <div class="contact-locations__offices-col">
+
+        <article class="contact-locations__office">
+          <header class="contact-locations__office-header">
+            <h3 class="contact-locations__office-name">East Mesa</h3>
+          </header>
+          <ul class="contact-locations__office-links">
+            <li class="contact-locations__office-link contact-locations__office-link--address">
+              <img src="assets/images/icon-location-pin.svg" alt="" width="24" height="24" aria-hidden="true">
+              <span>4135 S. Power Rd. Suite 111 Mesa 85212</span>
+            </li>
+            <li class="contact-locations__office-link contact-locations__office-link--phone">
+              <img src="assets/images/icon-phone-chevron.svg" alt="" width="24" height="24" aria-hidden="true">
+              <a href="tel:6238451345">(623) 845-1345</a>
+            </li>
+          </ul>
+        </article>
+
+        <article class="contact-locations__office">
+          <header class="contact-locations__office-header">
+            <h3 class="contact-locations__office-name">Scottsdale</h3>
+            <p class="contact-locations__office-note">(By Appointment Only)</p>
+          </header>
+          <ul class="contact-locations__office-links">
+            <li class="contact-locations__office-link contact-locations__office-link--address">
+              <img src="assets/images/icon-location-pin.svg" alt="" width="24" height="24" aria-hidden="true">
+              <span>7272 E Indian School Rd, Ste. 540 Scottsdale, AZ 85251</span>
+            </li>
+          </ul>
+        </article>
+
+        <article class="contact-locations__office">
+          <header class="contact-locations__office-header">
+            <h3 class="contact-locations__office-name">Tempe</h3>
+            <p class="contact-locations__office-note">(By Appointment Only)</p>
+          </header>
+          <ul class="contact-locations__office-links">
+            <li class="contact-locations__office-link contact-locations__office-link--address">
+              <img src="assets/images/icon-location-pin.svg" alt="" width="24" height="24" aria-hidden="true">
+              <span>64 E. Broadway Rd. Suite 200 Tempe 85282</span>
+            </li>
+          </ul>
+        </article>
+
+      </div>
+
+    </div>
+
+    <!-- ===== MAP ===== -->
+    <figure class="contact-locations__map">
+      <iframe
+          src="https://www.google.com/maps/d/embed?mid=1BU_B90ZoJAEWzUgMy_fXd-KdC5y5WdXm&ehbc=2E312F"
+          title="Map showing Hastings & Hastings office locations across Arizona"
+          class="contact-locations__map-iframe"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+    </figure>
+
+    <!-- ===== BADGE CARDS ===== -->
+    <div class="contact-locations__badges">
+
+      <!-- Badge 1: No Fee Until We Win -->
+      <article class="contact-locations__badge-card">
+        <figure class="contact-locations__badge">
+          <img src="assets/images/badge-no-fee-until-win.svg" alt="No Fee Until We Win — No Settlement, No Fee" class="contact-locations__badge-img">
+        </figure>
+        <p class="contact-locations__badge-caption">You pay nothing upfront and nothing out of pocket. Hastings &amp; Hastings only gets paid if your case results in a recovery.</p>
+      </article>
+
+      <!-- Badge 2: 29% Discount Fee -->
+      <article class="contact-locations__badge-card">
+        <figure class="contact-locations__badge">
+          <img src="assets/images/badge-29-percent-discount.svg" alt="29% Fee — Discount Accident Lawyers" class="contact-locations__badge-img">
+        </figure>
+        <p class="contact-locations__badge-caption">Hastings &amp; Hastings is known for its 29% settlement fee, giving clients a more affordable way to get experienced legal representation.</p>
+      </article>
+
+      <!-- Badge 3: 14% Lower Fees -->
+      <article class="contact-locations__badge-card">
+        <figure class="contact-locations__badge">
+          <img src="assets/images/badge-14-percent.svg" alt="14% Lower Fees than 33%" class="contact-locations__badge-img">
+        </figure>
+        <p class="contact-locations__badge-caption">Compared to firms that charge 33%, our lower fee structure gives Hastings &amp; Hastings a meaningful cost advantage.</p>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+</body>
+</html>
