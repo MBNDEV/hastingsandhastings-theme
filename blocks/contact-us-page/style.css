@@ -35,8 +35,8 @@
   /* Container Widths */
   --contact-us-container-max: 1440px;
   --contact-us-locations-max: 1440px;
-  --contact-us-message-max: 536px;
-  --contact-us-form-max: 500px;
+  --contact-us-message-max: 570px;
+  --contact-us-form-max: 600px;
 
   /* Form Field Heights */
   --contact-us-input-height: 48px;
