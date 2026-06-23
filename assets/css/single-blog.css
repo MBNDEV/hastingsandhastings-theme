@@ -118,7 +118,8 @@ html {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.menu-item > a {
+.menu-item > a,
+.menu-item:hover > a {
     color: var(--colors-text-body);
     transition: color 0.2s ease;
 }
