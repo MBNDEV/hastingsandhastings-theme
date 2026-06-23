@@ -1,0 +1,263 @@
+<!--
+Asset Manifest:
+- icon-dropdown-arrow.svg: Dropdown chevron arrow icon (Material Icons arrow_drop_down shape)
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Results List Filter</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,600;0,700&family=Heebo:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<section class="case-results-filter">
+  <div class="case-results-filter__inner">
+
+    <div class="case-results-filter__bar">
+      <span class="case-results-filter__bar-label">Filter Cases:</span>
+      <button id="filterToggle" class="case-results-filter__dropdown" type="button" aria-haspopup="listbox" aria-expanded="false">
+        <span class="case-results-filter__dropdown-text">All Cases</span>
+        <img
+          src="assets/images/icon-dropdown-arrow.svg"
+          alt=""
+          aria-hidden="true"
+          class="case-results-filter__dropdown-icon"
+        >
+      </button>
+
+      <div id="dropdownFilter" class="dropdown-filter" role="dialog" aria-label="Filter cases">
+
+        <div class="dropdown-filter__header">
+          <p class="dropdown-filter__title">Select topics to filter articles</p>
+          <p class="dropdown-filter__subtitle">Choose one or more topics below, then apply your selection.</p>
+          <div class="dropdown-filter__actions">
+            <button type="button" class="dropdown-filter__btn-clear">Clear Filters</button>
+            <button type="button" class="dropdown-filter__btn-apply">
+              <span class="dropdown-filter__btn-apply-text">Apply Filters</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="dropdown-filter__columns">
+
+          <div class="dropdown-filter__column">
+            <p class="dropdown-filter__section-title">Vehicle Accidents</p>
+            <ul class="dropdown-filter__option-list">
+              <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Car Accidents</span></label></li>
+              <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Truck Accidents</span></label></li>
+              <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Motorcycle Accidents</span></label></li>
+              <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Bicycle Accidents</span></label></li>
+              <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Bus Accidents</span></label></li>
+              <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Boat Accidents</span></label></li>
+              <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Uber &amp; Lyft Accidents</span></label></li>
+              <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Distracted Driving Accidents</span></label></li>
+              <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Drunk Driving Accidents</span></label></li>
+              <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Pedestrian Accidents</span></label></li>
+            </ul>
+          </div>
+
+          <div class="dropdown-filter__column">
+            <div class="dropdown-filter__sub-group">
+              <p class="dropdown-filter__section-title">Serious &amp; Catastrophic Injuries</p>
+              <ul class="dropdown-filter__option-list">
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Traumatic Brain Injury</span></label></li>
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Spinal Cord Injuries</span></label></li>
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Burn Injuries</span></label></li>
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Amputation Injuries</span></label></li>
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Catastrophic Injuries</span></label></li>
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Wrongful Death</span></label></li>
+              </ul>
+            </div>
+            <div class="dropdown-filter__sub-group">
+              <p class="dropdown-filter__section-title">Property &amp; Negligence Claims</p>
+              <ul class="dropdown-filter__option-list">
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Slip &amp; Fall Injuries</span></label></li>
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Premises Liability</span></label></li>
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Negligent Security</span></label></li>
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Dog Bites</span></label></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="dropdown-filter__column">
+            <div class="dropdown-filter__sub-group">
+              <p class="dropdown-filter__section-title">Additional Injury Claims</p>
+              <ul class="dropdown-filter__option-list">
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Workplace Injuries</span></label></li>
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Construction Accidents</span></label></li>
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Child Injuries</span></label></li>
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Daycare Injuries</span></label></li>
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Personal Injury</span></label></li>
+              </ul>
+            </div>
+            <div class="dropdown-filter__sub-group">
+              <p class="dropdown-filter__section-title">More Topics</p>
+              <ul class="dropdown-filter__option-list">
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Arizona Laws</span></label></li>
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Firm News</span></label></li>
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Insurance</span></label></li>
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Medical Liens</span></label></li>
+                <li><label class="dropdown-filter__option"><input type="checkbox" class="dropdown-filter__checkbox"><span class="dropdown-filter__option-text">Seasonal Safety</span></label></li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <ul class="case-results-filter__grid" role="list">
+
+      <li class="case-results-filter__item">
+        <article class="case-results-filter__card">
+          <header class="case-results-filter__card-header">
+            <span class="case-results-filter__tag">Car Accident</span>
+          </header>
+          <p class="case-results-filter__amount">$15,000,000</p>
+          <h3 class="case-results-filter__case-title">Catastrophic automobile accident result involving serious injuries.</h3>
+          <p class="case-results-filter__description">Our lower fee structure helped this client keep an additional $1,050,000 compared to a typical 45% litigation fee.</p>
+        </article>
+      </li>
+
+      <li class="case-results-filter__item">
+        <article class="case-results-filter__card">
+          <header class="case-results-filter__card-header">
+            <span class="case-results-filter__tag">Car Accident</span>
+          </header>
+          <p class="case-results-filter__amount">$1,050,000</p>
+          <h3 class="case-results-filter__case-title">Serious car accident result involving major injuries.</h3>
+          <p class="case-results-filter__description">Our lower fee structure helped this client keep an additional $35,000.</p>
+        </article>
+      </li>
+
+      <li class="case-results-filter__item">
+        <article class="case-results-filter__card">
+          <header class="case-results-filter__card-header">
+            <span class="case-results-filter__tag">Car Accident</span>
+          </header>
+          <p class="case-results-filter__amount">$1,350,000</p>
+          <h3 class="case-results-filter__case-title">Serious car accident result involving major injuries.</h3>
+          <p class="case-results-filter__description">Our lower fee structure helped this client keep an additional $45,000.</p>
+        </article>
+      </li>
+
+      <li class="case-results-filter__item">
+        <article class="case-results-filter__card">
+          <header class="case-results-filter__card-header">
+            <span class="case-results-filter__tag">Car Accident</span>
+          </header>
+          <p class="case-results-filter__amount">$750,000</p>
+          <h3 class="case-results-filter__case-title">Serious car accident settlement involving major injuries.</h3>
+          <p class="case-results-filter__description">Our lower fee structure helped this client keep an additional $25,000.</p>
+        </article>
+      </li>
+
+      <li class="case-results-filter__item">
+        <article class="case-results-filter__card">
+          <header class="case-results-filter__card-header">
+            <span class="case-results-filter__tag">Motorcycle Accident</span>
+          </header>
+          <p class="case-results-filter__amount">$300,000</p>
+          <h3 class="case-results-filter__case-title">Motorcycle accident result.</h3>
+          <p class="case-results-filter__description">Our lower fee structure helped this client keep an additional $10,000.</p>
+        </article>
+      </li>
+
+      <li class="case-results-filter__item">
+        <article class="case-results-filter__card">
+          <header class="case-results-filter__card-header">
+            <span class="case-results-filter__tag">Motorcycle Accident</span>
+          </header>
+          <p class="case-results-filter__amount">$194,484</p>
+          <h3 class="case-results-filter__case-title">Motorcycle accident settlement result.</h3>
+          <p class="case-results-filter__description">Our lower fee structure helped this client keep an additional $15,558.</p>
+        </article>
+      </li>
+
+      <li class="case-results-filter__item">
+        <article class="case-results-filter__card">
+          <header class="case-results-filter__card-header">
+            <span class="case-results-filter__tag">Wrongful Death</span>
+          </header>
+          <p class="case-results-filter__amount">$1,687,682</p>
+          <h3 class="case-results-filter__case-title">Wrongful death settlement result.</h3>
+          <p class="case-results-filter__description">Our lower fee structure helped this client keep an additional $73,133.</p>
+        </article>
+      </li>
+
+      <li class="case-results-filter__item">
+        <article class="case-results-filter__card">
+          <header class="case-results-filter__card-header">
+            <span class="case-results-filter__tag">Bicycle vs Car Accident</span>
+          </header>
+          <p class="case-results-filter__amount">$200,000</p>
+          <h3 class="case-results-filter__case-title">Bicycle versus car accident result.</h3>
+          <p class="case-results-filter__description">Our lower fee structure helped this client keep an additional $26,700.</p>
+        </article>
+      </li>
+
+      <li class="case-results-filter__item">
+        <article class="case-results-filter__card">
+          <header class="case-results-filter__card-header">
+            <span class="case-results-filter__tag">Motorcycle Accident</span>
+          </header>
+          <p class="case-results-filter__amount">$250,000</p>
+          <h3 class="case-results-filter__case-title">Motorcycle accident settlement result.</h3>
+          <p class="case-results-filter__description">Our lower fee structure helped this client keep an additional $10,833.</p>
+        </article>
+      </li>
+
+      <li class="case-results-filter__item">
+        <article class="case-results-filter__card">
+          <header class="case-results-filter__card-header">
+            <span class="case-results-filter__tag">Car Accident</span>
+          </header>
+          <p class="case-results-filter__amount">$355,000</p>
+          <h3 class="case-results-filter__case-title">Serious car accident settlement result.</h3>
+          <p class="case-results-filter__description">Our lower fee structure helped this client keep an additional $15,383.</p>
+        </article>
+      </li>
+
+    </ul>
+
+  </div>
+</section>
+
+<script>
+  const filterToggle = document.getElementById('filterToggle');
+  const dropdownFilter = document.getElementById('dropdownFilter');
+
+  filterToggle.addEventListener('click', function (event) {
+    event.stopPropagation();
+    const isOpen = dropdownFilter.classList.toggle('is-open');
+    filterToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  document.addEventListener('click', function (event) {
+    if (!filterToggle.contains(event.target) && !dropdownFilter.contains(event.target)) {
+      dropdownFilter.classList.remove('is-open');
+      filterToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      dropdownFilter.classList.remove('is-open');
+      filterToggle.setAttribute('aria-expanded', 'false');
+      filterToggle.focus();
+    }
+  });
+
+  document.querySelector('.dropdown-filter__btn-clear').addEventListener('click', function () {
+    dropdownFilter.querySelectorAll('.dropdown-filter__checkbox').forEach(function (checkbox) {
+      checkbox.checked = false;
+    });
+  });
+</script>
+</body>
+</html>
