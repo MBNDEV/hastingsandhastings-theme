@@ -564,21 +564,22 @@ export default function Edit({ attributes, setAttributes }) {
                 )}
                 
                 {/* Hero Button & Quick Call */}
-                <div className="flex flex-col items-center justify-self-end gap-4">
-                  <a href={heroButtonUrl} onClick={(e) => e.preventDefault()} className="inline-flex items-center gap-2 h-12 md:h-14 px-6 md:px-8 rounded-full font-heading font-bold text-sm md:text-base bg-gradient-to-b from-accent-gold to-accent-gold-500 text-gray-900 hover:shadow-lg transition-all">
-                    {heroButtonText}
-                  </a>
-                  {showQuickCall && (
+                {showQuickCall && (
+                  <div className="flex flex-col items-center gap-4 w-full lg:w-auto">
+                    <a href={heroButtonUrl} onClick={(e) => e.preventDefault()} className="inline-flex items-center justify-center gap-2 h-12 md:h-14 px-6 md:px-8 rounded-full font-heading font-bold text-sm md:text-base bg-gradient-to-b from-accent-gold to-accent-gold-500 text-gray-900 hover:shadow-lg transition-all shadow-md hover:-translate-y-0.5">
+                      {heroButtonText}
+                    </a>
+                    
                     <div className="flex items-center gap-2 text-white">
-                      <span className="font-body font-semibold text-base">
+                      <span className="font-body font-semibold text-base xl:text-lg">
                         {quickCallLabel}
                       </span>
-                      <a href={quickCallPhoneNumberUrl} onClick={(e) => e.preventDefault()} className="font-body font-bold text-base text-accent-gold underline hover:text-accent-gold-300 transition-colors">
+                      <a href={quickCallPhoneNumberUrl} onClick={(e) => e.preventDefault()} className="font-body font-bold text-base xl:text-lg text-accent-gold underline hover:text-accent-gold-300 transition-colors">
                         {quickCallPhoneNumber}
                       </a>
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
 
               {/* CTA Bar */}
@@ -603,12 +604,13 @@ export default function Edit({ attributes, setAttributes }) {
                     </div>
                     
                     {/* CTA Button & Phone */}
-                    <div className="flex flex-col sm:flex-row items-center gap-4 lg:gap-6">
-                      <a href={ctaButtonUrl} onClick={(e) => e.preventDefault()} className="inline-flex items-center gap-2 h-12 md:h-14 px-6 md:px-8 rounded-full font-heading font-bold text-sm md:text-base bg-gradient-to-b from-accent-gold to-accent-gold-500 text-gray-900 hover:shadow-lg transition-all">
+                    <div className="flex flex-col items-center justify-center gap-4">
+                      <a href={ctaButtonUrl} onClick={(e) => e.preventDefault()} className="inline-flex items-center justify-center gap-2 h-12 md:h-14 px-6 md:px-8 rounded-full font-heading font-bold text-sm md:text-base bg-gradient-to-b from-accent-gold to-accent-gold-500 text-gray-900 hover:shadow-lg transition-all shadow-md hover:-translate-y-0.5">
                         {ctaButtonText}
                       </a>
-                      <a href={phoneNumberUrl} onClick={(e) => e.preventDefault()} className="inline-flex items-center gap-2 h-12 md:h-14 px-6 md:px-8 rounded-full font-heading font-bold text-sm md:text-base bg-white/10 backdrop-blur-sm border-2 border-white text-white hover:bg-white/20 transition-all">
-                        {phoneNumber}
+                      <a href={phoneNumberUrl} onClick={(e) => e.preventDefault()} className="font-body font-bold text-base xl:text-lg hover:text-accent-gold transition-colors">
+                        <span className="text-white no-underline">{__('CALL TODAY', 'mbn-theme')}</span>{' '}
+                        <span className="text-accent-gold underline">{phoneNumber}</span>
                       </a>
                     </div>
                   </div>
