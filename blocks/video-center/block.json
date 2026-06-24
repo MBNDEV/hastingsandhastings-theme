@@ -1,0 +1,83 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/video-center",
+  "title": "Video Center",
+  "category": "mbn-blocks",
+  "icon": "video-alt3",
+  "description": "Display a grid of video cards with modal player",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "script": "file:./script.js",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "videoCards": {
+      "type": "array",
+      "default": [
+        {
+          "title": "What do do after an accident?",
+          "videoType": "youtube",
+          "videoSrc": "https://www.youtube.com/watch?v=Fjznp7AZmmw",
+          "videoId": 0,
+          "thumbnailId": 0,
+          "thumbnailUrl": "",
+          "thumbnailAlt": "TV spot still: What do do after an accident?"
+        },
+        {
+          "title": "Hastings Y Hastings",
+          "videoType": "youtube",
+          "videoSrc": "https://www.youtube.com/watch?v=fKiE5hjI-p8",
+          "videoId": 0,
+          "thumbnailId": 0,
+          "thumbnailUrl": "",
+          "thumbnailAlt": "TV spot still: Hastings Y Hastings"
+        },
+        {
+          "title": "Protect Yourself",
+          "videoType": "youtube",
+          "videoSrc": "https://www.youtube.com/watch?v=41V2IEMIl0M",
+          "videoId": 0,
+          "thumbnailId": 0,
+          "thumbnailUrl": "",
+          "thumbnailAlt": "TV spot still: Protect Yourself"
+        },
+        {
+          "title": "T.V. Spot",
+          "videoType": "youtube",
+          "videoSrc": "https://www.youtube.com/watch?v=cvPmr05DEkM",
+          "videoId": 0,
+          "thumbnailId": 0,
+          "thumbnailUrl": "",
+          "thumbnailAlt": "TV spot still: T.V. Spot"
+        },
+        {
+          "title": "Preparing for a consultation",
+          "videoType": "youtube",
+          "videoSrc": "https://www.youtube.com/watch?v=3nZ4INJUxfk",
+          "videoId": 0,
+          "thumbnailId": 0,
+          "thumbnailUrl": "",
+          "thumbnailAlt": "TV spot still: Preparing for a consultation"
+        },
+        {
+          "title": "Community Concept",
+          "videoType": "youtube",
+          "videoSrc": "https://www.youtube.com/watch?v=IUUljgeKF9A",
+          "videoId": 0,
+          "thumbnailId": 0,
+          "thumbnailUrl": "",
+          "thumbnailAlt": "TV spot still: Community Concept"
+        }
+      ]
+    }
+  }
+}

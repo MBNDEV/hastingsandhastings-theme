@@ -1,0 +1,341 @@
+/* ============================================================
+   VIDEO CENTER BLOCK
+   ============================================================ */
+
+/* === DESKTOP: 1024px and above === */
+
+.video-center {
+  --vc-bg-card: #f8f9fa;
+  --vc-border-card: #e8eaec;
+  --vc-color-heading: #13263e;
+  --vc-color-link: #13263e;
+  --vc-shadow-card: 0px 1px 16px 0px rgba(0, 0, 0, 0.04);
+  --vc-radius-card: 8px;
+  --vc-gap-grid: 12px;
+  --vc-font-primary: 'Noto Serif', Georgia, serif;
+  --vc-font-secondary: 'Heebo', sans-serif;
+
+  width: 100%;
+  background-color: #fff;
+  padding: 80px 0;
+}
+
+.video-center__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px;
+  box-sizing: content-box;
+}
+
+.video-center__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--vc-gap-grid);
+  row-gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.video-center__item {
+  display: flex;
+  flex-direction: column;
+}
+
+/* === Card === */
+
+.video-center__card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--vc-bg-card);
+  border: 1px solid var(--vc-border-card);
+  border-radius: var(--vc-radius-card);
+  box-shadow: var(--vc-shadow-card);
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  height: 100%;
+}
+
+.video-center__card:hover {
+  box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.10);
+  transform: translateY(-2px);
+}
+
+/* === Thumbnail === */
+
+.video-center__thumbnail {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 405 / 270;
+  overflow: hidden;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.video-center__thumb-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.video-center__thumb-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0);
+  transition: background-color 0.2s ease;
+}
+
+.video-center__card:hover .video-center__thumb-overlay {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.video-center__play-icon {
+  width: 56px;
+  height: 56px;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.video-center__card:hover .video-center__play-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* === Card Content === */
+
+.video-center__content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px 16px 16px;
+  flex: 1;
+}
+
+.video-center__title {
+  font-family: var(--vc-font-primary);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--vc-color-heading);
+  margin: 0;
+  word-break: break-word;
+}
+
+/* === Watch Video Button === */
+
+.video-center__watch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  padding: 2px 0;
+  cursor: pointer;
+  font-family: var(--vc-font-secondary);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--vc-color-link);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+.video-center__watch-btn:hover {
+  color: #1a4a7a;
+}
+
+.video-center__chevron {
+  display: block;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+
+.video-center__modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-center__modal[hidden] {
+  display: none;
+}
+
+.video-center__modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.80);
+  cursor: pointer;
+}
+
+.video-center__modal-inner {
+  position: relative;
+  z-index: 1;
+  width: 90vw;
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.video-center__modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.30);
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.15s ease;
+  flex-shrink: 0;
+  margin-bottom: -30px;
+  z-index: 1;
+  margin-right: -20px;
+}
+
+.video-center__modal-close:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.video-center__modal-close svg {
+  display: block;
+}
+
+.video-center__modal-player {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #000;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.video-center__modal-player iframe,
+.video-center__modal-player video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: none;
+}
+
+.video-center__embed-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  height: 100%;
+  color: #fff;
+  text-align: center;
+  font-family: var(--vc-font-secondary);
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.video-center__embed-fallback p {
+  margin: 0;
+  font-size: 16px;
+  opacity: 0.85;
+}
+
+.video-center__yt-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ff0000;
+  color: #fff;
+  font-family: var(--vc-font-secondary);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  transition: background-color 0.15s ease;
+}
+
+.video-center__yt-link:hover {
+  background-color: #cc0000;
+  color: #fff;
+}
+
+/* === TABLET: 768px to 1023px === */
+@media screen and (max-width: 1023px) {
+  .video-center {
+    padding: 60px 0;
+  }
+
+  .video-center__container {
+    padding: 0 40px;
+  }
+
+  .video-center__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .video-center__title {
+    font-size: 18px;
+    line-height: 26px;
+  }
+
+  .video-center__modal-inner {
+    width: 95vw;
+  }
+}
+
+/* === MOBILE: below 768px === */
+@media screen and (max-width: 767px) {
+  .video-center {
+    padding: 40px 0;
+  }
+
+  .video-center__container {
+    padding: 0 20px;
+  }
+
+  .video-center__grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .video-center__title {
+    font-size: 18px;
+    line-height: 26px;
+  }
+
+  .video-center__content {
+    gap: 16px;
+    padding: 16px 16px 14px;
+  }
+
+  .video-center__modal-inner {
+    width: 100vw;
+    max-width: 100vw;
+    gap: 8px;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .video-center__modal-player {
+    border-radius: 0;
+  }
+}
