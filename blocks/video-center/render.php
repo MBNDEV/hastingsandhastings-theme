@@ -58,8 +58,13 @@ $wrapper_attributes = get_block_wrapper_attributes(
           </figure>
           <div class="video-center__content">
             <h3 class="video-center__title"><?php echo esc_html( $card['title'] ?? '' ); ?></h3>
-            <button class="video-center__watch-btn" aria-label="<?php echo esc_attr( 'Watch video: ' . ( $card['title'] ?? '' ) ); ?>">
-              <span>Watch Video</span>
+            <button class="video-center__watch-btn" aria-label="
+            <?php
+              /* translators: %s: Video title */
+              echo esc_attr( ! empty( $card['title'] ) ? sprintf( __( 'Watch video: %s', 'mbn-theme' ), $card['title'] ) : __( 'Watch video', 'mbn-theme' ) );
+            ?>
+              ">
+              <span><?php esc_html_e( 'Watch Video', 'mbn-theme' ); ?></span>
               <img src="<?php echo esc_url( $block_assets_uri . '/icon-chevron-right.svg' ); ?>" alt="" aria-hidden="true" class="video-center__chevron" width="24" height="24">
             </button>
           </div>
@@ -68,19 +73,18 @@ $wrapper_attributes = get_block_wrapper_attributes(
       <?php endforeach; ?>
 
     </ul>
+    <!-- Video Modal Overlay -->
+    <div class="video-center__modal" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Video player', 'mbn-theme' ); ?>" hidden>
+      <div class="video-center__modal-backdrop"></div>
+      <div class="video-center__modal-inner">
+        <button class="video-center__modal-close" aria-label="<?php esc_attr_e( 'Close video', 'mbn-theme' ); ?>">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="24" height="24">
+            <line x1="18" y1="6" x2="6" y2="18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <line x1="6" y1="6" x2="18" y2="18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <div class="video-center__modal-player"></div>
+      </div>
+    </div>
   </div>
 </section>
-
-<!-- Video Modal Overlay -->
-<div class="video-center__modal" id="videoCenterModal" role="dialog" aria-modal="true" aria-label="Video player" hidden>
-  <div class="video-center__modal-backdrop" id="videoCenterBackdrop"></div>
-  <div class="video-center__modal-inner">
-    <button class="video-center__modal-close" id="videoCenterClose" aria-label="Close video">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="24" height="24">
-        <line x1="18" y1="6" x2="6" y2="18" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        <line x1="6" y1="6" x2="18" y2="18" stroke="white" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </button>
-    <div class="video-center__modal-player" id="videoCenterPlayer"></div>
-  </div>
-</div>

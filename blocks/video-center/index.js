@@ -7,8 +7,8 @@ import metadata from './block.json';
 import './style.css';
 
 function Edit({ attributes, setAttributes }) {
-  const { videoCards } = attributes;
-
+  const { videoCards = [] } = attributes;
+  
   const blockProps = useBlockProps({
     className: 'video-center-editor',
   });
@@ -27,7 +27,7 @@ function Edit({ attributes, setAttributes }) {
       videoCards: [
         ...videoCards,
         {
-          title: 'New Video',
+          title: __('New Video', 'mbn-theme'),
           videoType: 'youtube',
           videoSrc: '',
           videoId: 0,
