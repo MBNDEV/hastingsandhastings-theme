@@ -262,7 +262,7 @@ if ( ! function_exists( 'render_footer_menu' ) ) {
       <!-- Phone Number Button -->
       <?php if ( ! empty( $mobile_phone_number ) ) : ?>
         <a 
-          href="tel:<?php echo esc_attr( preg_replace( '/[^0-9]/', '', $mobile_phone_number ) ); ?>" 
+          href="tel:<?php echo esc_attr( preg_replace( '/[^0-9]+/', '', $mobile_phone_number ) ); ?>" 
           class="flex-1 flex items-center justify-center gap-2 py-4 px-6 bg-secondary text-white font-bold text-base rounded-full hover:bg-opacity-90 transition-all duration-300 shadow-lg"
           aria-label="<?php esc_attr_e( 'Call us', 'mbn-theme' ); ?>"
         >
