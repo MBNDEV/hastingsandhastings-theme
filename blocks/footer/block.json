@@ -61,6 +61,14 @@
     "copyrightText": {
       "type": "string",
       "default": "© 2026 Hastings & Hastings. All rights reserved."
+    },
+    "mobileContactUrl": {
+      "type": "string",
+      "default": "/contact-us/"
+    },
+    "mobilePhoneNumber": {
+      "type": "string",
+      "default": "(480) 418-2483"
     }
   }
 }

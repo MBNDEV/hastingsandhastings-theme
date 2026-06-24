@@ -90,7 +90,7 @@ function SortableSocialItem({ item, index, updateItem, removeItem, duplicateItem
 }
 
 export default function Edit({ attributes, setAttributes }) {
-  const { locationsMenuId, practiceAreasMenuId, mainFooterMenuId, locationsButtonText, locationsButtonUrl, practiceAreasButtonText, practiceAreasButtonUrl, footerLogoUrl, footerLogoId, footerTagline, socialMedia, copyrightText } = attributes;
+  const { locationsMenuId, practiceAreasMenuId, mainFooterMenuId, locationsButtonText, locationsButtonUrl, practiceAreasButtonText, practiceAreasButtonUrl, footerLogoUrl, footerLogoId, footerTagline, socialMedia, copyrightText, mobileContactUrl, mobilePhoneNumber } = attributes;
   
   const [menus, setMenus] = useState([]);
 
@@ -291,6 +291,24 @@ export default function Edit({ attributes, setAttributes }) {
             label={__('Copyright Text', 'mbn-theme')}
             value={copyrightText}
             onChange={(value) => setAttributes({ copyrightText: value })}
+          />
+        </PanelBody>
+
+        <PanelBody title={__('Mobile Sticky Banner', 'mbn-theme')} initialOpen={false}>
+          <p style={{ fontSize: '13px', color: '#666', marginBottom: '15px' }}>
+            {__('Configure the sticky banner displayed at the bottom on mobile devices only.', 'mbn-theme')}
+          </p>
+          <TextControl
+            label={__('Contact Page URL', 'mbn-theme')}
+            value={mobileContactUrl}
+            onChange={(value) => setAttributes({ mobileContactUrl: value })}
+            help={__('URL for the contact icon button (default: /contact-us/)', 'mbn-theme')}
+          />
+          <TextControl
+            label={__('Phone Number', 'mbn-theme')}
+            value={mobilePhoneNumber}
+            onChange={(value) => setAttributes({ mobilePhoneNumber: value })}
+            help={__('Phone number displayed on the call button', 'mbn-theme')}
           />
         </PanelBody>
       </InspectorControls>
