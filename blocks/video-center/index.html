@@ -1,0 +1,310 @@
+<!--
+Asset Manifest:
+- icon-chevron-right.svg: Chevron right arrow used in Watch Video link
+- Video thumbnails are loaded automatically from YouTube CDN (no local images needed)
+
+Video fields per card (repeater):
+- data-video-type: "youtube" or "mp4"
+- data-video-src: any YouTube URL (watch, youtu.be, or embed) or direct .mp4 URL
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Center</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<section class="video-center">
+  <div class="video-center__container">
+    <ul class="video-center__grid" role="list">
+
+      <!-- Card 1 -->
+      <li class="video-center__item">
+        <article class="video-center__card"
+                 data-video-type="youtube"
+                 data-video-src="https://www.youtube.com/watch?v=Fjznp7AZmmw">
+          <figure class="video-center__thumbnail">
+            <img
+              src=""
+              alt="TV spot still: What do do after an accident?"
+              class="video-center__thumb-img"
+              width="405"
+              height="270"
+            >
+            <div class="video-center__thumb-overlay" aria-hidden="true">
+              <svg class="video-center__play-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="32" cy="32" r="32" fill="rgba(0,0,0,0.5)"/>
+                <polygon points="26,20 50,32 26,44" fill="white"/>
+              </svg>
+            </div>
+          </figure>
+          <div class="video-center__content">
+            <h3 class="video-center__title">What do do after an accident?</h3>
+            <button class="video-center__watch-btn" aria-label="Watch video: What do do after an accident?">
+              <span>Watch Video</span>
+              <img src="assets/images/icon-chevron-right.svg" alt="" aria-hidden="true" class="video-center__chevron" width="24" height="24">
+            </button>
+          </div>
+        </article>
+      </li>
+
+      <!-- Card 2 -->
+      <li class="video-center__item">
+        <article class="video-center__card"
+                 data-video-type="youtube"
+                 data-video-src="https://www.youtube.com/watch?v=fKiE5hjI-p8">
+          <figure class="video-center__thumbnail">
+            <img
+              src=""
+              alt="TV spot still: Hastings Y Hastings"
+              class="video-center__thumb-img"
+              width="405"
+              height="270"
+            >
+            <div class="video-center__thumb-overlay" aria-hidden="true">
+              <svg class="video-center__play-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="32" cy="32" r="32" fill="rgba(0,0,0,0.5)"/>
+                <polygon points="26,20 50,32 26,44" fill="white"/>
+              </svg>
+            </div>
+          </figure>
+          <div class="video-center__content">
+            <h3 class="video-center__title">Hastings Y Hastings</h3>
+            <button class="video-center__watch-btn" aria-label="Watch video: Hastings Y Hastings">
+              <span>Watch Video</span>
+              <img src="assets/images/icon-chevron-right.svg" alt="" aria-hidden="true" class="video-center__chevron" width="24" height="24">
+            </button>
+          </div>
+        </article>
+      </li>
+
+      <!-- Card 3 -->
+      <li class="video-center__item">
+        <article class="video-center__card"
+                 data-video-type="youtube"
+                 data-video-src="https://www.youtube.com/watch?v=41V2IEMIl0M">
+          <figure class="video-center__thumbnail">
+            <img
+              src=""
+              alt="TV spot still: Protect Yourself"
+              class="video-center__thumb-img"
+              width="405"
+              height="270"
+            >
+            <div class="video-center__thumb-overlay" aria-hidden="true">
+              <svg class="video-center__play-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="32" cy="32" r="32" fill="rgba(0,0,0,0.5)"/>
+                <polygon points="26,20 50,32 26,44" fill="white"/>
+              </svg>
+            </div>
+          </figure>
+          <div class="video-center__content">
+            <h3 class="video-center__title">Protect Yourself</h3>
+            <button class="video-center__watch-btn" aria-label="Watch video: Protect Yourself">
+              <span>Watch Video</span>
+              <img src="assets/images/icon-chevron-right.svg" alt="" aria-hidden="true" class="video-center__chevron" width="24" height="24">
+            </button>
+          </div>
+        </article>
+      </li>
+
+      <!-- Card 4 -->
+      <li class="video-center__item">
+        <article class="video-center__card"
+                 data-video-type="youtube"
+                 data-video-src="https://www.youtube.com/watch?v=cvPmr05DEkM">
+          <figure class="video-center__thumbnail">
+            <img
+              src=""
+              alt="TV spot still: T.V. Spot"
+              class="video-center__thumb-img"
+              width="405"
+              height="270"
+            >
+            <div class="video-center__thumb-overlay" aria-hidden="true">
+              <svg class="video-center__play-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="32" cy="32" r="32" fill="rgba(0,0,0,0.5)"/>
+                <polygon points="26,20 50,32 26,44" fill="white"/>
+              </svg>
+            </div>
+          </figure>
+          <div class="video-center__content">
+            <h3 class="video-center__title">T.V. Spot</h3>
+            <button class="video-center__watch-btn" aria-label="Watch video: T.V. Spot">
+              <span>Watch Video</span>
+              <img src="assets/images/icon-chevron-right.svg" alt="" aria-hidden="true" class="video-center__chevron" width="24" height="24">
+            </button>
+          </div>
+        </article>
+      </li>
+
+      <!-- Card 5 -->
+      <li class="video-center__item">
+        <article class="video-center__card"
+                 data-video-type="youtube"
+                 data-video-src="https://www.youtube.com/watch?v=3nZ4INJUxfk">
+          <figure class="video-center__thumbnail">
+            <img
+              src=""
+              alt="TV spot still: Preparing for a consultation"
+              class="video-center__thumb-img"
+              width="405"
+              height="270"
+            >
+            <div class="video-center__thumb-overlay" aria-hidden="true">
+              <svg class="video-center__play-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="32" cy="32" r="32" fill="rgba(0,0,0,0.5)"/>
+                <polygon points="26,20 50,32 26,44" fill="white"/>
+              </svg>
+            </div>
+          </figure>
+          <div class="video-center__content">
+            <h3 class="video-center__title">Preparing for a consultation</h3>
+            <button class="video-center__watch-btn" aria-label="Watch video: Preparing for a consultation">
+              <span>Watch Video</span>
+              <img src="assets/images/icon-chevron-right.svg" alt="" aria-hidden="true" class="video-center__chevron" width="24" height="24">
+            </button>
+          </div>
+        </article>
+      </li>
+
+      <!-- Card 6 -->
+      <li class="video-center__item">
+        <article class="video-center__card"
+                 data-video-type="youtube"
+                 data-video-src="https://www.youtube.com/watch?v=IUUljgeKF9A">
+          <figure class="video-center__thumbnail">
+            <img
+              src=""
+              alt="TV spot still: Community Concept"
+              class="video-center__thumb-img"
+              width="405"
+              height="270"
+            >
+            <div class="video-center__thumb-overlay" aria-hidden="true">
+              <svg class="video-center__play-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="32" cy="32" r="32" fill="rgba(0,0,0,0.5)"/>
+                <polygon points="26,20 50,32 26,44" fill="white"/>
+              </svg>
+            </div>
+          </figure>
+          <div class="video-center__content">
+            <h3 class="video-center__title">Community Concept</h3>
+            <button class="video-center__watch-btn" aria-label="Watch video: Community Concept">
+              <span>Watch Video</span>
+              <img src="assets/images/icon-chevron-right.svg" alt="" aria-hidden="true" class="video-center__chevron" width="24" height="24">
+            </button>
+          </div>
+        </article>
+      </li>
+
+    </ul>
+  </div>
+</section>
+
+<!-- Video Modal Overlay -->
+<div class="video-center__modal" id="videoCenterModal" role="dialog" aria-modal="true" aria-label="Video player" hidden>
+  <div class="video-center__modal-backdrop" id="videoCenterBackdrop"></div>
+  <div class="video-center__modal-inner">
+    <button class="video-center__modal-close" id="videoCenterClose" aria-label="Close video">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="24" height="24">
+        <line x1="18" y1="6" x2="6" y2="18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="6" y1="6" x2="18" y2="18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div class="video-center__modal-player" id="videoCenterPlayer"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var modal = document.getElementById('videoCenterModal');
+  var player = document.getElementById('videoCenterPlayer');
+  var closeBtn = document.getElementById('videoCenterClose');
+  var backdrop = document.getElementById('videoCenterBackdrop');
+
+  function extractVideoId(url) {
+    var match;
+    match = url.match(/[?&]v=([^&]+)/);
+    if (match) { return match[1]; }
+    match = url.match(/youtu\.be\/([^?&]+)/);
+    if (match) { return match[1]; }
+    match = url.match(/youtube\.com\/embed\/([^?&]+)/);
+    if (match) { return match[1]; }
+    return null;
+  }
+
+  /* Auto-populate thumbnails from YouTube on page load */
+  document.querySelectorAll('.video-center__card[data-video-type="youtube"]').forEach(function (card) {
+    var img = card.querySelector('.video-center__thumb-img');
+    if (!img) { return; }
+    var id = extractVideoId(card.dataset.videoSrc || '');
+    if (!id) { return; }
+    var hq = 'https://img.youtube.com/vi/' + id + '/hqdefault.jpg';
+    var max = 'https://img.youtube.com/vi/' + id + '/maxresdefault.jpg';
+    /* maxresdefault may not exist — probe it; fall back to hqdefault */
+    var probe = new Image();
+    probe.onload = function () {
+      img.src = (probe.naturalWidth > 120) ? max : hq;
+    };
+    probe.onerror = function () { img.src = hq; };
+    probe.src = max;
+  });
+
+  function openModal(videoType, videoSrc) {
+    player.innerHTML = '';
+
+    if (videoType === 'youtube') {
+      var videoId = extractVideoId(videoSrc);
+      if (!videoId) { return; }
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
+      iframe.setAttribute('allowfullscreen', '');
+      player.appendChild(iframe);
+    } else if (videoType === 'mp4') {
+      var video = document.createElement('video');
+      video.src = videoSrc;
+      video.controls = true;
+      video.autoplay = true;
+      video.setAttribute('playsinline', '');
+      player.appendChild(video);
+    }
+
+    modal.removeAttribute('hidden');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+
+  function closeModal() {
+    player.innerHTML = '';
+    modal.setAttribute('hidden', '');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.video-center__card').forEach(function (card) {
+    card.addEventListener('click', function (e) {
+      if (e.target.closest('.video-center__watch-btn') || e.target.closest('.video-center__thumbnail') || e.currentTarget === card) {
+        e.preventDefault();
+        var videoType = card.dataset.videoType;
+        var videoSrc = card.dataset.videoSrc;
+        if (videoSrc) { openModal(videoType, videoSrc); }
+      }
+    });
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !modal.hasAttribute('hidden')) { closeModal(); }
+  });
+})();
+</script>
+
+</body>
+</html>
