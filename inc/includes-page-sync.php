@@ -154,6 +154,96 @@ function custom_theme_decode_json_unicode_in_content( $content ) {
 }
 
 /**
+ * Encode a PHP string value using single quotes (WPCS compliant).
+ *
+ * @param string $value The value to encode.
+ * @return string PHP code representing the string.
+ */
+function custom_theme_encode_php_string( $value ) {
+	// Escape single quotes and backslashes.
+	$escaped = str_replace( array( '\\', "'" ), array( '\\\\', "\\'" ), (string) $value );
+	return "'" . $escaped . "'";
+}
+
+/**
+ * Build the PHP file content for a page pattern export.
+ *
+ * @param string $title                Title of the page.
+ * @param string $slug                 Page slug.
+ * @param string $status               Post status.
+ * @param string $excerpt              Page excerpt.
+ * @param string $parent_slug          Parent page slug.
+ * @param int    $menu_order           Menu order.
+ * @param string $template             Page template.
+ * @param string $featured_image_url   Featured image URL.
+ * @param string $featured_image_path  Featured image path.
+ * @param array  $custom_fields        Custom fields array.
+ * @param string $content              Page content.
+ * @return string Complete PHP file content.
+ */
+function custom_theme_build_pattern_file_content( $title, $slug, $status, $excerpt, $parent_slug, $menu_order, $template, $featured_image_url, $featured_image_path, $custom_fields, $content ) {
+	$file_content  = "<?php\n";
+	$file_content .= "/**\n";
+	$file_content .= " * Page Pattern: {$title}\n";
+	$file_content .= " *\n";
+	$file_content .= " * This file contains the complete page data for the '{$title}' page.\n";
+	$file_content .= " * It can be imported to create/update the page on other environments.\n";
+	$file_content .= " *\n";
+	$file_content .= " * Includes: Content, Featured Image, Status, Attributes, Custom Fields\n";
+	$file_content .= " *\n";
+	$file_content .= " * To use: Tools → Page Content Sync → Import All Pages from Files\n";
+	$file_content .= " *\n";
+	$file_content .= " * @package CustomTheme\n";
+	$file_content .= " */\n\n";
+	$file_content .= "return array(\n";
+	$file_content .= "\t'title'               => " . custom_theme_encode_php_string( $title ) . ",\n";
+	$file_content .= "\t'slug'                => " . custom_theme_encode_php_string( $slug ) . ",\n";
+	$file_content .= "\t'status'              => " . custom_theme_encode_php_string( $status ) . ",\n";
+	$file_content .= "\t'excerpt'             => " . custom_theme_encode_php_string( $excerpt ) . ",\n";
+	$file_content .= "\t'parent_slug'         => " . custom_theme_encode_php_string( $parent_slug ) . ",\n";
+	$file_content .= "\t'menu_order'          => " . absint( $menu_order ) . ",\n";
+	$file_content .= "\t'template'            => " . custom_theme_encode_php_string( $template ) . ",\n";
+	$file_content .= "\t'featured_image_url'  => " . custom_theme_encode_php_string( $featured_image_url ) . ",\n";
+	$file_content .= "\t'featured_image_path' => " . custom_theme_encode_php_string( $featured_image_path ) . ", // Theme assets path (ships via Git)\n";
+	$file_content .= "\t'custom_fields'       => " . ( empty( $custom_fields ) ? 'array()' : wp_json_encode( $custom_fields ) ) . ",\n";
+	$file_content .= "\t'content'             => <<<'EOD'\n";
+	$file_content .= $content . "\n";
+	$file_content .= "EOD\n";
+	$file_content .= "\t,\n";
+	$file_content .= ");\n";
+
+	return $file_content;
+}
+
+/**
+ * Initialize and validate pattern directory for export.
+ *
+ * @param string $pattern_dir Path to pattern directory.
+ * @throws Exception If directory cannot be created or is not writable.
+ */
+function custom_theme_ensure_pattern_directory( $pattern_dir ) {
+	global $wp_filesystem;
+
+  if ( empty( $wp_filesystem ) ) {
+      require_once ABSPATH . 'wp-admin/includes/file.php';
+      WP_Filesystem();
+  }
+
+	// Create directory if it doesn't exist.
+  if ( ! $wp_filesystem->is_dir( $pattern_dir ) ) {
+    if ( ! $wp_filesystem->mkdir( $pattern_dir, FS_CHMOD_DIR ) ) {
+        throw new Exception( sprintf( 'Failed to create directory: %s. Check file permissions.', esc_html( $pattern_dir ) ) );
+    }
+  }
+
+	// Check if directory is writable.
+	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_is_writable
+  if ( ! is_writable( $pattern_dir ) ) {
+      throw new Exception( sprintf( 'Directory is not writable: %s. Check file permissions.', esc_html( $pattern_dir ) ) );
+  }
+}
+
+/**
  * Export a page's content to a pattern file.
  *
  * @param int $page_id Page ID to export.
@@ -171,7 +261,13 @@ function custom_theme_export_page_to_pattern( $page_id ) {
       throw new Exception( sprintf( 'Post ID %d is not a page (type: %s).', absint( $page_id ), esc_html( $page->post_type ) ) );
   }
 
-	$slug       = $page->post_name;
+	$slug = $page->post_name;
+
+  if ( empty( $slug ) ) {
+      throw new Exception( sprintf( 'Page "%s" has no slug. Please set a permalink.', esc_html( $page->post_title ) ) );
+  }
+
+	// Extract page data.
 	$title      = $page->post_title;
 	$content    = custom_theme_decode_json_unicode_in_content( $page->post_content );
 	$excerpt    = $page->post_excerpt;
@@ -180,74 +276,40 @@ function custom_theme_export_page_to_pattern( $page_id ) {
 	$menu_order = $page->menu_order;
 	$template   = get_page_template_slug( $page_id );
 
-  if ( empty( $slug ) ) {
-      throw new Exception( sprintf( 'Page "%s" has no slug. Please set a permalink.', esc_html( $title ) ) );
-  }
-
-	// Get featured image data
+	// Get featured image data.
 	$image_data          = custom_theme_get_featured_image_data( $page_id );
 	$featured_image_url  = $image_data['url'];
 	$featured_image_path = $image_data['path'];
 
-	// Get filtered custom fields
+	// Get filtered custom fields.
 	$custom_fields = custom_theme_get_filtered_custom_fields( $page_id );
 
-	// Initialize WP_Filesystem.
-	global $wp_filesystem;
-  if ( empty( $wp_filesystem ) ) {
-      require_once ABSPATH . 'wp-admin/includes/file.php';
-      WP_Filesystem();
-  }
+	// Get parent slug.
+	$parent_slug = $parent > 0 ? get_post_field( 'post_name', $parent ) : '';
 
-	// Create pattern file
+	// Ensure pattern directory exists.
 	$pattern_dir = get_theme_file_path( 'template-parts/page-patterns' );
+	custom_theme_ensure_pattern_directory( $pattern_dir );
 
-	// Create directory if it doesn't exist
-  if ( ! $wp_filesystem->is_dir( $pattern_dir ) ) {
-    if ( ! $wp_filesystem->mkdir( $pattern_dir, FS_CHMOD_DIR ) ) {
-        throw new Exception( sprintf( 'Failed to create directory: %s. Check file permissions.', esc_html( $pattern_dir ) ) );
-    }
-  }
+	// Build file content.
+	$file_content = custom_theme_build_pattern_file_content(
+      $title,
+      $slug,
+      $status,
+      $excerpt,
+      $parent_slug,
+      $menu_order,
+      $template,
+      $featured_image_url,
+      $featured_image_path,
+      $custom_fields,
+      $content
+	);
 
-	// Check if directory is writable
-	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_is_writable
-  if ( ! is_writable( $pattern_dir ) ) {
-      throw new Exception( sprintf( 'Directory is not writable: %s. Check file permissions.', esc_html( $pattern_dir ) ) );
-  }
-
-	$file_content  = "<?php\n";
-	$file_content .= "/**\n";
-	$file_content .= " * Page Pattern: {$title}\n";
-	$file_content .= " * \n";
-	$file_content .= " * This file contains the complete page data for the '{$title}' page.\n";
-	$file_content .= " * It can be imported to create/update the page on other environments.\n";
-	$file_content .= " * \n";
-	$file_content .= " * Includes: Content, Featured Image, Status, Attributes, Custom Fields\n";
-	$file_content .= " * \n";
-	$file_content .= " * To use: Tools → Page Content Sync → Import All Pages from Files\n";
-	$file_content .= " * \n";
-	$file_content .= " * @package CustomTheme\n";
-	$file_content .= " */\n\n";
-	$file_content .= "return array(\n";
-	$file_content .= "\t'title'              => " . wp_json_encode( $title ) . ",\n";
-	$file_content .= "\t'slug'               => " . wp_json_encode( $slug ) . ",\n";
-	$file_content .= "\t'status'             => " . wp_json_encode( $status ) . ",\n";
-	$file_content .= "\t'excerpt'            => " . wp_json_encode( $excerpt ) . ",\n";
-	$file_content .= "\t'parent_slug'        => " . wp_json_encode( $parent > 0 ? get_post_field( 'post_name', $parent ) : '' ) . ",\n";
-	$file_content .= "\t'menu_order'         => " . absint( $menu_order ) . ",\n";
-	$file_content .= "\t'template'           => " . wp_json_encode( $template ) . ",\n";
-	$file_content .= "\t'featured_image_url' => " . wp_json_encode( $featured_image_url ) . ",\n";
-	$file_content .= "\t'featured_image_path' => " . wp_json_encode( $featured_image_path ) . ", // Theme assets path (ships via Git)\n";
-	$file_content .= "\t'custom_fields'      => " . wp_json_encode( $custom_fields ) . ",\n";
-	$file_content .= "\t'content'            => <<<'EOD'\n";
-	$file_content .= $content . "\n";
-	$file_content .= "EOD\n";
-	$file_content .= ");\n";
-
+	// Write file.
+	global $wp_filesystem;
 	$file_path = $pattern_dir . '/' . $slug . '.php';
-
-	// Write file using WP_Filesystem.
-	$written = $wp_filesystem->put_contents( $file_path, $file_content, FS_CHMOD_FILE );
+	$written   = $wp_filesystem->put_contents( $file_path, $file_content, FS_CHMOD_FILE );
 
   if ( false === $written ) {
       throw new Exception( sprintf( 'Failed to write file: %s. Check file permissions.', esc_html( $file_path ) ) );
