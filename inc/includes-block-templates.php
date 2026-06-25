@@ -28,6 +28,15 @@ function custom_theme_footer_template_slug(): string {
 }
 
 /**
+ * Slug for the global 404 Error Page Template Block Template post.
+ *
+ * @return string
+ */
+function custom_theme_404_template_slug(): string {
+  return '404-template';
+}
+
+/**
  * Register the Block Templates post type.
  *
  * @return void
@@ -52,11 +61,11 @@ function custom_theme_register_block_template_post_type(): void {
     array(
 		'labels'             => $labels,
 		'public'             => true,
-		'publicly_queryable' => true,
+		'publicly_queryable' => false,
 		'show_ui'            => true,
 		'show_in_menu'       => true,
-		'query_var'          => true,
-		'rewrite'            => array( 'slug' => 'block-template' ),
+		'query_var'          => false,
+		'rewrite'            => false,
 		'capability_type'    => 'post',
 		'has_archive'        => false,
 		'hierarchical'       => false,
@@ -132,6 +141,7 @@ function custom_theme_get_block_template_post_ids_excluded_from_template_block()
   $slugs = array(
 	  custom_theme_header_template_slug(),
 	  custom_theme_footer_template_slug(),
+	  custom_theme_404_template_slug(),
   );
 
   if ( function_exists( 'custom_theme_get_layout_template_file_slugs' ) ) {
@@ -285,6 +295,20 @@ function custom_theme_maybe_seed_default_block_templates( bool $force = false ):
     $errors[] = 'Footer Template: ' . $e->getMessage();
   }
 
+  // Import 404 Error Page Template
+  try {
+    if ( custom_theme_import_single_template(
+      custom_theme_404_template_slug(),
+      __( '404 Error Page Template', 'mbn-theme' ),
+      '404-template',
+      $force
+    ) ) {
+      ++$imported;
+    }
+  } catch ( Exception $e ) {
+    $errors[] = '404 Error Page Template: ' . $e->getMessage();
+  }
+
   // Report errors if any
   if ( ! empty( $errors ) ) {
     $error_message = implode( ' | ', array_map( 'esc_html', $errors ) );
@@ -398,6 +422,52 @@ function custom_theme_get_global_footer_template_output_html(): string {
 }
 
 /**
+ * Global 404 error page HTML from the 404 Error Page Template Block Template post (block editor content).
+ *
+ * @return string HTML fragment for 404 page hero section (run through the_content filters).
+ */
+function custom_theme_get_global_404_template_output_html(): string {
+  $post_id = custom_theme_get_block_template_id_by_slug( custom_theme_404_template_slug() );
+
+  if ( $post_id <= 0 ) {
+    // Debug: Template not found
+    if ( current_user_can( 'edit_posts' ) && WP_DEBUG ) {
+      return '<!-- 404 Error Page Template post not found (slug: ' . custom_theme_404_template_slug() . ') -->';
+    }
+    return '';
+  }
+
+  $post = get_post( $post_id );
+  if ( ! $post instanceof \WP_Post ) {
+    return '';
+  }
+
+  if ( 'publish' !== $post->post_status ) {
+    // Debug: Template not published
+    if ( current_user_can( 'edit_posts' ) && WP_DEBUG ) {
+      return '<!-- 404 Error Page Template exists but is not published (status: ' . $post->post_status . ') -->';
+    }
+    return '';
+  }
+
+  $content = $post->post_content;
+
+  // Parse blocks and render them
+  if ( has_blocks( $content ) ) {
+    $html = do_blocks( $content );
+  } else {
+    $html = apply_filters( 'the_content', $content );
+  }
+
+  // Debug: Empty content
+  if ( '' === trim( wp_strip_all_tags( $html ) ) && current_user_can( 'edit_posts' ) && WP_DEBUG ) {
+    return '<!-- 404 Error Page Template is published but has no visible content. Edit it at: ' . get_edit_post_link( $post_id ) . ' -->';
+  }
+
+  return is_string( $html ) ? $html : '';
+}
+
+/**
  * Admin list table: add Badges column for Block Templates.
  *
  * @param array<string, string> $columns Columns.
@@ -443,6 +513,12 @@ function custom_theme_block_template_posts_custom_column( string $column, int $p
   if ( custom_theme_footer_template_slug() === $slug ) {
     echo '<span class="carbon-template-badge carbon-template-badge--global">' . esc_html__( 'Global', 'mbn-theme' ) . '</span> ';
     echo '<span class="carbon-template-badge carbon-template-badge--chrome">' . esc_html__( 'Footer', 'mbn-theme' ) . '</span>';
+    return;
+  }
+
+  if ( custom_theme_404_template_slug() === $slug ) {
+    echo '<span class="carbon-template-badge carbon-template-badge--global">' . esc_html__( 'Global', 'mbn-theme' ) . '</span> ';
+    echo '<span class="carbon-template-badge carbon-template-badge--chrome">' . esc_html__( '404 Error', 'mbn-theme' ) . '</span>';
     return;
   }
 
@@ -514,6 +590,10 @@ function custom_theme_block_template_post_is_protected_from_trash( int $post_id 
   }
 
   if ( custom_theme_footer_template_slug() === $slug ) {
+    return true;
+  }
+
+  if ( custom_theme_404_template_slug() === $slug ) {
     return true;
   }
 
