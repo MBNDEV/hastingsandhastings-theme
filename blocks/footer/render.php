@@ -250,7 +250,7 @@ if ( ! function_exists( 'render_footer_menu' ) ) {
       <!-- Phone Number Button -->
       <?php if ( ! empty( $mobile_phone_number ) ) : ?>
         <a 
-          href="tel:<?php echo esc_attr( preg_replace( '/[^0-9]+/', '', $mobile_phone_number ) ); ?>" 
+          href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]+/', '', $mobile_phone_number ) ); ?>" ?>" 
           class="flex items-center justify-center w-14 h-14 rounded-full border-2 border-primary bg-text-heading text-white hover:bg-white hover:text-footer-bg transition-all duration-300"
           aria-label="<?php esc_attr_e( 'Call Us', 'mbn-theme' ); ?>"
         >
@@ -269,7 +269,7 @@ if ( ! function_exists( 'render_footer_menu' ) ) {
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
           </svg>
-          <span><?php esc_attr_e( 'Request a Quote', 'mbn-theme' ); ?></span>
+          <span><?php esc_html_e( 'Request a Quote', 'mbn-theme' ); ?></span>
         </a>
       <?php endif; ?>
     </div>
