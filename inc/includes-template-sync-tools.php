@@ -32,11 +32,12 @@ add_action( 'admin_menu', 'custom_theme_add_template_tools_page' );
  * @return array
  */
 function custom_theme_get_all_syncable_templates() {
-	$header_slug = custom_theme_header_template_slug();
-	$footer_slug = custom_theme_footer_template_slug();
+	$header_slug    = custom_theme_header_template_slug();
+	$footer_slug    = custom_theme_footer_template_slug();
+	$error_404_slug = custom_theme_404_template_slug();
 
 	$templates = array(
-		$header_slug => array(
+		$header_slug    => array(
 			'title'       => 'Header Template',
 			'type'        => 'system',
 			'source_dir'  => 'template-parts',
@@ -44,13 +45,21 @@ function custom_theme_get_all_syncable_templates() {
 			'export_dir'  => 'template-parts',
 			'export_file' => 'header-template',
 		),
-		$footer_slug => array(
+		$footer_slug    => array(
 			'title'       => 'Footer Template',
 			'type'        => 'system',
 			'source_dir'  => 'template-parts',
 			'source_file' => 'footer-template',
 			'export_dir'  => 'template-parts',
 			'export_file' => 'footer-template',
+		),
+		$error_404_slug => array(
+			'title'       => '404 Error Page Template',
+			'type'        => 'system',
+			'source_dir'  => 'template-parts',
+			'source_file' => '404-template',
+			'export_dir'  => 'template-parts',
+			'export_file' => '404-template',
 		),
 	);
 
