@@ -161,7 +161,7 @@ function custom_theme_decode_json_unicode_in_content( $content ) {
  */
 function custom_theme_encode_php_string( $value ) {
 	// Escape single quotes and backslashes.
-	$escaped = str_replace( array( '\\', "'" ), array( '\\\\', "\\'" ), $value );
+	$escaped = str_replace( array( '\\', "'" ), array( '\\\\', "\\'" ), (string) $value );
 	return "'" . $escaped . "'";
 }
 
