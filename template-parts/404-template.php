@@ -1,10 +1,10 @@
 <?php
 /**
  * 404 Error Page Template Block Template.
- * 
+ *
  * Syncs with "404 Error Page Template" Block Template post.
  * Edit in WordPress admin, then export using Block Templates → Sync Tools.
- * 
+ *
  * @package CustomTheme
  */
 

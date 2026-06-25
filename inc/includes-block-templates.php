@@ -248,6 +248,27 @@ function custom_theme_import_single_template( string $slug, string $title, strin
 }
 
 /**
+ * Try to import a single template and track success/errors.
+ *
+ * @param string $slug Template slug.
+ * @param string $title Template title.
+ * @param string $filename Template filename (without .php).
+ * @param bool   $force Force re-import.
+ * @param array  $errors Reference to errors array.
+ * @return int 1 if imported, 0 otherwise.
+ */
+function custom_theme_try_import_template( string $slug, string $title, string $filename, bool $force, array &$errors ): int {
+  try {
+    if ( custom_theme_import_single_template( $slug, $title, $filename, $force ) ) {
+      return 1;
+    }
+  } catch ( Exception $e ) {
+    $errors[] = $title . ': ' . $e->getMessage();
+  }
+  return 0;
+}
+
+/**
  * Create default Header Template and Footer Template posts from template-parts files.
  * Run once on theme activation, or manually trigger with 'Sync Templates' button.
  *
@@ -267,47 +288,30 @@ function custom_theme_maybe_seed_default_block_templates( bool $force = false ):
   $errors   = array();
   $imported = 0;
 
-  // Import Header Template
-  try {
-    if ( custom_theme_import_single_template(
-      custom_theme_header_template_slug(),
-      __( 'Header Template', 'mbn-theme' ),
-      'header-template',
-      $force
-    ) ) {
-      ++$imported;
-    }
-  } catch ( Exception $e ) {
-    $errors[] = 'Header Template: ' . $e->getMessage();
-  }
+  // Import templates
+  $imported += custom_theme_try_import_template(
+    custom_theme_header_template_slug(),
+    __( 'Header Template', 'mbn-theme' ),
+    'header-template',
+    $force,
+    $errors
+  );
 
-  // Import Footer Template
-  try {
-    if ( custom_theme_import_single_template(
-      custom_theme_footer_template_slug(),
-      __( 'Footer Template', 'mbn-theme' ),
-      'footer-template',
-      $force
-    ) ) {
-      ++$imported;
-    }
-  } catch ( Exception $e ) {
-    $errors[] = 'Footer Template: ' . $e->getMessage();
-  }
+  $imported += custom_theme_try_import_template(
+    custom_theme_footer_template_slug(),
+    __( 'Footer Template', 'mbn-theme' ),
+    'footer-template',
+    $force,
+    $errors
+  );
 
-  // Import 404 Error Page Template
-  try {
-    if ( custom_theme_import_single_template(
-      custom_theme_404_template_slug(),
-      __( '404 Error Page Template', 'mbn-theme' ),
-      '404-template',
-      $force
-    ) ) {
-      ++$imported;
-    }
-  } catch ( Exception $e ) {
-    $errors[] = '404 Error Page Template: ' . $e->getMessage();
-  }
+  $imported += custom_theme_try_import_template(
+    custom_theme_404_template_slug(),
+    __( '404 Error Page Template', 'mbn-theme' ),
+    '404-template',
+    $force,
+    $errors
+  );
 
   // Report errors if any
   if ( ! empty( $errors ) ) {
