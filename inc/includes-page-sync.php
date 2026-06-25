@@ -154,6 +154,18 @@ function custom_theme_decode_json_unicode_in_content( $content ) {
 }
 
 /**
+ * Encode a PHP string value using single quotes (WPCS compliant).
+ *
+ * @param string $value The value to encode.
+ * @return string PHP code representing the string.
+ */
+function custom_theme_encode_php_string( $value ) {
+	// Escape single quotes and backslashes.
+	$escaped = str_replace( array( '\\', "'" ), array( '\\\\', "\\'" ), $value );
+	return "'" . $escaped . "'";
+}
+
+/**
  * Export a page's content to a pattern file.
  *
  * @param int $page_id Page ID to export.
@@ -218,30 +230,31 @@ function custom_theme_export_page_to_pattern( $page_id ) {
 	$file_content  = "<?php\n";
 	$file_content .= "/**\n";
 	$file_content .= " * Page Pattern: {$title}\n";
-	$file_content .= " * \n";
+	$file_content .= " *\n";
 	$file_content .= " * This file contains the complete page data for the '{$title}' page.\n";
 	$file_content .= " * It can be imported to create/update the page on other environments.\n";
-	$file_content .= " * \n";
+	$file_content .= " *\n";
 	$file_content .= " * Includes: Content, Featured Image, Status, Attributes, Custom Fields\n";
-	$file_content .= " * \n";
+	$file_content .= " *\n";
 	$file_content .= " * To use: Tools → Page Content Sync → Import All Pages from Files\n";
-	$file_content .= " * \n";
+	$file_content .= " *\n";
 	$file_content .= " * @package CustomTheme\n";
 	$file_content .= " */\n\n";
 	$file_content .= "return array(\n";
-	$file_content .= "\t'title'              => " . wp_json_encode( $title ) . ",\n";
-	$file_content .= "\t'slug'               => " . wp_json_encode( $slug ) . ",\n";
-	$file_content .= "\t'status'             => " . wp_json_encode( $status ) . ",\n";
-	$file_content .= "\t'excerpt'            => " . wp_json_encode( $excerpt ) . ",\n";
-	$file_content .= "\t'parent_slug'        => " . wp_json_encode( $parent > 0 ? get_post_field( 'post_name', $parent ) : '' ) . ",\n";
-	$file_content .= "\t'menu_order'         => " . absint( $menu_order ) . ",\n";
-	$file_content .= "\t'template'           => " . wp_json_encode( $template ) . ",\n";
-	$file_content .= "\t'featured_image_url' => " . wp_json_encode( $featured_image_url ) . ",\n";
-	$file_content .= "\t'featured_image_path' => " . wp_json_encode( $featured_image_path ) . ", // Theme assets path (ships via Git)\n";
-	$file_content .= "\t'custom_fields'      => " . wp_json_encode( $custom_fields ) . ",\n";
-	$file_content .= "\t'content'            => <<<'EOD'\n";
+	$file_content .= "\t'title'               => " . custom_theme_encode_php_string( $title ) . ",\n";
+	$file_content .= "\t'slug'                => " . custom_theme_encode_php_string( $slug ) . ",\n";
+	$file_content .= "\t'status'              => " . custom_theme_encode_php_string( $status ) . ",\n";
+	$file_content .= "\t'excerpt'             => " . custom_theme_encode_php_string( $excerpt ) . ",\n";
+	$file_content .= "\t'parent_slug'         => " . custom_theme_encode_php_string( $parent > 0 ? get_post_field( 'post_name', $parent ) : '' ) . ",\n";
+	$file_content .= "\t'menu_order'          => " . absint( $menu_order ) . ",\n";
+	$file_content .= "\t'template'            => " . custom_theme_encode_php_string( $template ) . ",\n";
+	$file_content .= "\t'featured_image_url'  => " . custom_theme_encode_php_string( $featured_image_url ) . ",\n";
+	$file_content .= "\t'featured_image_path' => " . custom_theme_encode_php_string( $featured_image_path ) . ", // Theme assets path (ships via Git)\n";
+	$file_content .= "\t'custom_fields'       => " . ( empty( $custom_fields ) ? 'array()' : wp_json_encode( $custom_fields ) ) . ",\n";
+	$file_content .= "\t'content'             => <<<'EOD'\n";
 	$file_content .= $content . "\n";
 	$file_content .= "EOD\n";
+	$file_content .= "\t,\n";
 	$file_content .= ");\n";
 
 	$file_path = $pattern_dir . '/' . $slug . '.php';
