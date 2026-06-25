@@ -250,7 +250,7 @@ if ( ! function_exists( 'render_footer_menu' ) ) {
       <!-- Phone Number Button -->
       <?php if ( ! empty( $mobile_phone_number ) ) : ?>
         <a 
-          href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]+/', '', $mobile_phone_number ) ); ?>" ?>" 
+          href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]+/', '', $mobile_phone_number ) ); ?>" 
           class="flex items-center justify-center w-14 h-14 rounded-full border-2 border-primary bg-text-heading text-white hover:bg-white hover:text-footer-bg transition-all duration-300"
           aria-label="<?php esc_attr_e( 'Call Us', 'mbn-theme' ); ?>"
         >
