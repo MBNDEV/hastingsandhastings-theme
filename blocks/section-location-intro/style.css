@@ -18,8 +18,6 @@
 
 .ldp-why-choose > :not(.ldp-cta-card) {
   gap: 90px;
-  padding-left: var(--ldp-section-pad-h);
-  padding-right: var(--ldp-section-pad-h);
 }
 
 .ldp-why-choose__header,
@@ -333,5 +331,9 @@
   }
   .ldp-why-choose__stat{
     justify-content: center;
+  }
+  .ldp-why-choose > :not(.ldp-cta-card) {
+    padding-left: var(--ldp-section-pad-h);
+    padding-right: var(--ldp-section-pad-h);
   }
 }
