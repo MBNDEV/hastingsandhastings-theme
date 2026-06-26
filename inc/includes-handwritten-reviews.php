@@ -24,38 +24,38 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function mbn_register_review_month_cpt(): void {
 	$labels = array(
-		'name'                  => __( 'Review Months', 'mbn-theme' ),
-		'singular_name'         => __( 'Review Month', 'mbn-theme' ),
-		'add_new'               => __( 'Add New', 'mbn-theme' ),
-		'add_new_item'          => __( 'Add New Review Month', 'mbn-theme' ),
-		'edit_item'             => __( 'Edit Review Month', 'mbn-theme' ),
-		'new_item'              => __( 'New Review Month', 'mbn-theme' ),
-		'view_item'             => __( 'View Review Month', 'mbn-theme' ),
-		'search_items'          => __( 'Search Review Months', 'mbn-theme' ),
-		'not_found'             => __( 'No review months found.', 'mbn-theme' ),
-		'not_found_in_trash'    => __( 'No review months found in Trash.', 'mbn-theme' ),
-		'all_items'             => __( 'All Review Months', 'mbn-theme' ),
-		'menu_name'             => __( 'Review Months', 'mbn-theme' ),
+		'name'               => __( 'Review Months', 'mbn-theme' ),
+		'singular_name'      => __( 'Review Month', 'mbn-theme' ),
+		'add_new'            => __( 'Add New', 'mbn-theme' ),
+		'add_new_item'       => __( 'Add New Review Month', 'mbn-theme' ),
+		'edit_item'          => __( 'Edit Review Month', 'mbn-theme' ),
+		'new_item'           => __( 'New Review Month', 'mbn-theme' ),
+		'view_item'          => __( 'View Review Month', 'mbn-theme' ),
+		'search_items'       => __( 'Search Review Months', 'mbn-theme' ),
+		'not_found'          => __( 'No review months found.', 'mbn-theme' ),
+		'not_found_in_trash' => __( 'No review months found in Trash.', 'mbn-theme' ),
+		'all_items'          => __( 'All Review Months', 'mbn-theme' ),
+		'menu_name'          => __( 'Review Months', 'mbn-theme' ),
 	);
 
 	register_post_type(
-		'mbn_review_month',
-		array(
-			'labels'             => $labels,
-			'public'             => false,
-			'publicly_queryable' => false,
-			'show_ui'            => true,
-			'show_in_menu'       => true,
-			'show_in_rest'       => true,
-			'query_var'          => false,
-			'rewrite'            => false,
-			'capability_type'    => 'post',
-			'has_archive'        => false,
-			'hierarchical'       => false,
-			'menu_position'      => 25,
-			'menu_icon'          => 'dashicons-images-alt2',
-			'supports'           => array( 'title' ),
-		)
+      'mbn_review_month',
+      array(
+		  'labels'             => $labels,
+		  'public'             => false,
+		  'publicly_queryable' => false,
+		  'show_ui'            => true,
+		  'show_in_menu'       => true,
+		  'show_in_rest'       => true,
+		  'query_var'          => false,
+		  'rewrite'            => false,
+		  'capability_type'    => 'post',
+		  'has_archive'        => false,
+		  'hierarchical'       => false,
+		  'menu_position'      => 25,
+		  'menu_icon'          => 'dashicons-images-alt2',
+		  'supports'           => array( 'title' ),
+	  )
 	);
 }
 add_action( 'init', 'mbn_register_review_month_cpt' );
@@ -71,12 +71,12 @@ add_action( 'init', 'mbn_register_review_month_cpt' );
  */
 function mbn_review_month_add_meta_box(): void {
 	add_meta_box(
-		'mbn_review_images',
-		__( 'Review Images', 'mbn-theme' ),
-		'mbn_review_month_meta_box_render',
-		'mbn_review_month',
-		'normal',
-		'high'
+      'mbn_review_images',
+      __( 'Review Images', 'mbn-theme' ),
+      'mbn_review_month_meta_box_render',
+      'mbn_review_month',
+      'normal',
+      'high'
 	);
 }
 add_action( 'add_meta_boxes', 'mbn_review_month_add_meta_box' );
@@ -88,13 +88,13 @@ add_action( 'add_meta_boxes', 'mbn_review_month_add_meta_box' );
  * @return void
  */
 function mbn_review_month_enqueue_media( string $hook_suffix ): void {
-	if ( ! in_array( $hook_suffix, array( 'post.php', 'post-new.php' ), true ) ) {
-		return;
-	}
+  if ( ! in_array( $hook_suffix, array( 'post.php', 'post-new.php' ), true ) ) {
+      return;
+  }
 	$screen = get_current_screen();
-	if ( ! $screen || 'mbn_review_month' !== $screen->post_type ) {
-		return;
-	}
+  if ( ! $screen || 'mbn_review_month' !== $screen->post_type ) {
+      return;
+  }
 	wp_enqueue_media();
 }
 add_action( 'admin_enqueue_scripts', 'mbn_review_month_enqueue_media' );
@@ -109,12 +109,12 @@ function mbn_review_month_meta_box_render( WP_Post $post ): void {
 	wp_nonce_field( 'mbn_review_images_save', 'mbn_review_images_nonce' );
 
 	$image_ids = get_post_meta( $post->ID, '_mbn_review_image_ids', true );
-	if ( ! is_array( $image_ids ) ) {
-		$image_ids = array();
-	}
+  if ( ! is_array( $image_ids ) ) {
+      $image_ids = array();
+  }
 
 	$image_ids_json = esc_attr( wp_json_encode( $image_ids ) );
-	?>
+  ?>
 	<div id="mbn-review-images-wrap">
 		<input
 			type="hidden"
@@ -271,45 +271,45 @@ function mbn_review_month_meta_box_render( WP_Post $post ): void {
  */
 function mbn_review_month_save_meta( int $post_id ): void {
 	// Verify nonce.
-	if (
+  if (
 		! isset( $_POST['mbn_review_images_nonce'] ) ||
 		! wp_verify_nonce( sanitize_key( $_POST['mbn_review_images_nonce'] ), 'mbn_review_images_save' )
 	) {
-		return;
-	}
+      return;
+  }
 
 	// Skip autosave and revisions.
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-		return;
-	}
-	if ( wp_is_post_revision( $post_id ) ) {
-		return;
-	}
+  if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+      return;
+  }
+  if ( wp_is_post_revision( $post_id ) ) {
+      return;
+  }
 
 	// Capability check.
-	if ( ! current_user_can( 'edit_post', $post_id ) ) {
-		return;
-	}
+  if ( ! current_user_can( 'edit_post', $post_id ) ) {
+      return;
+  }
 
-	if ( ! isset( $_POST['mbn_review_image_ids'] ) ) {
-		return;
-	}
+  if ( ! isset( $_POST['mbn_review_image_ids'] ) ) {
+      return;
+  }
 
 	$raw = sanitize_text_field( wp_unslash( $_POST['mbn_review_image_ids'] ) );
 
 	$decoded = json_decode( $raw, true );
-	if ( ! is_array( $decoded ) ) {
-		$decoded = array();
-	}
+  if ( ! is_array( $decoded ) ) {
+      $decoded = array();
+  }
 
 	// Sanitize: keep only positive integers that correspond to real attachments.
 	$clean_ids = array();
-	foreach ( $decoded as $id ) {
-		$id = absint( $id );
-		if ( $id > 0 && 'attachment' === get_post_type( $id ) ) {
-			$clean_ids[] = $id;
-		}
-	}
+  foreach ( $decoded as $id ) {
+      $id = absint( $id );
+    if ( $id > 0 && 'attachment' === get_post_type( $id ) ) {
+        $clean_ids[] = $id;
+    }
+  }
 
 	update_post_meta( $post_id, '_mbn_review_image_ids', $clean_ids );
 }
@@ -332,13 +332,13 @@ add_action( 'save_post_mbn_review_month', 'mbn_review_month_save_meta' );
  */
 function mbn_register_review_months_endpoint(): void {
 	register_rest_route(
-		'mbn/v1',
-		'/review-months',
-		array(
-			'methods'             => WP_REST_Server::READABLE,
-			'callback'            => 'mbn_review_months_endpoint_handler',
-			'permission_callback' => '__return_true',
-		)
+      'mbn/v1',
+      '/review-months',
+      array(
+		  'methods'             => WP_REST_Server::READABLE,
+		  'callback'            => 'mbn_review_months_endpoint_handler',
+		  'permission_callback' => '__return_true',
+	  )
 	);
 }
 add_action( 'rest_api_init', 'mbn_register_review_months_endpoint' );
@@ -350,44 +350,44 @@ add_action( 'rest_api_init', 'mbn_register_review_months_endpoint' );
  */
 function mbn_review_months_endpoint_handler(): WP_REST_Response {
 	$posts = get_posts(
-		array(
-			'post_type'      => 'mbn_review_month',
-			'post_status'    => 'publish',
-			'posts_per_page' => -1,
-			'orderby'        => 'date',
-			'order'          => 'DESC',
-		)
+      array(
+		  'post_type'      => 'mbn_review_month',
+		  'post_status'    => 'publish',
+		  'posts_per_page' => -1,
+		  'orderby'        => 'date',
+		  'order'          => 'DESC',
+	  )
 	);
 
 	$data = array();
-	foreach ( $posts as $post ) {
-		$image_ids = get_post_meta( $post->ID, '_mbn_review_image_ids', true );
-		if ( ! is_array( $image_ids ) ) {
-			$image_ids = array();
-		}
+  foreach ( $posts as $post ) {
+      $image_ids = get_post_meta( $post->ID, '_mbn_review_image_ids', true );
+    if ( ! is_array( $image_ids ) ) {
+        $image_ids = array();
+    }
 
-		$images = array();
-		foreach ( $image_ids as $attachment_id ) {
-			$attachment_id = absint( $attachment_id );
-			$url           = wp_get_attachment_url( $attachment_id );
-			if ( ! $url ) {
-				continue;
-			}
-			$alt      = get_post_meta( $attachment_id, '_wp_attachment_image_alt', true );
-			$images[] = array(
-				'id'  => $attachment_id,
-				'url' => $url,
-				'alt' => (string) $alt,
-			);
-		}
+      $images = array();
+    foreach ( $image_ids as $attachment_id ) {
+        $attachment_id = absint( $attachment_id );
+        $url           = wp_get_attachment_url( $attachment_id );
+      if ( ! $url ) {
+          continue;
+      }
+        $alt      = get_post_meta( $attachment_id, '_wp_attachment_image_alt', true );
+        $images[] = array(
+            'id'  => $attachment_id,
+            'url' => $url,
+            'alt' => (string) $alt,
+        );
+    }
 
-		$data[] = array(
-			'id'     => $post->ID,
-			'title'  => get_the_title( $post ),
-			'year'   => get_the_date( 'Y', $post ),
-			'images' => $images,
-		);
-	}
+      $data[] = array(
+          'id'     => $post->ID,
+          'title'  => get_the_title( $post ),
+          'year'   => get_the_date( 'Y', $post ),
+          'images' => $images,
+      );
+  }
 
 	return new WP_REST_Response( $data, 200 );
 }
@@ -405,44 +405,44 @@ function mbn_review_months_endpoint_handler(): WP_REST_Response {
  */
 function mbn_get_review_months(): array {
 	$posts = get_posts(
-		array(
-			'post_type'      => 'mbn_review_month',
-			'post_status'    => 'publish',
-			'posts_per_page' => -1,
-			'orderby'        => 'date',
-			'order'          => 'DESC',
-		)
+      array(
+		  'post_type'      => 'mbn_review_month',
+		  'post_status'    => 'publish',
+		  'posts_per_page' => -1,
+		  'orderby'        => 'date',
+		  'order'          => 'DESC',
+	  )
 	);
 
 	$months = array();
-	foreach ( $posts as $post ) {
-		$image_ids = get_post_meta( $post->ID, '_mbn_review_image_ids', true );
-		if ( ! is_array( $image_ids ) ) {
-			$image_ids = array();
-		}
+  foreach ( $posts as $post ) {
+      $image_ids = get_post_meta( $post->ID, '_mbn_review_image_ids', true );
+    if ( ! is_array( $image_ids ) ) {
+        $image_ids = array();
+    }
 
-		$images = array();
-		foreach ( $image_ids as $attachment_id ) {
-			$attachment_id = absint( $attachment_id );
-			$url           = wp_get_attachment_url( $attachment_id );
-			if ( ! $url ) {
-				continue;
-			}
-			$alt      = get_post_meta( $attachment_id, '_wp_attachment_image_alt', true );
-			$images[] = array(
-				'id'  => $attachment_id,
-				'url' => $url,
-				'alt' => (string) $alt,
-			);
-		}
+      $images = array();
+    foreach ( $image_ids as $attachment_id ) {
+        $attachment_id = absint( $attachment_id );
+        $url           = wp_get_attachment_url( $attachment_id );
+      if ( ! $url ) {
+          continue;
+      }
+        $alt      = get_post_meta( $attachment_id, '_wp_attachment_image_alt', true );
+        $images[] = array(
+            'id'  => $attachment_id,
+            'url' => $url,
+            'alt' => (string) $alt,
+        );
+    }
 
-		$months[] = array(
-			'id'     => $post->ID,
-			'title'  => get_the_title( $post ),
-			'year'   => get_the_date( 'Y', $post ),
-			'images' => $images,
-		);
-	}
+      $months[] = array(
+          'id'     => $post->ID,
+          'title'  => get_the_title( $post ),
+          'year'   => get_the_date( 'Y', $post ),
+          'images' => $images,
+      );
+  }
 
 	return $months;
 }

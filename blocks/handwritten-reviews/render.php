@@ -11,53 +11,56 @@
  * @param   WP_Block $block      Block instance.
  */
 
-// Build accordion items from the CPT (preferred) or from block attributes (fallback).
-$cpt_months = function_exists( 'mbn_get_review_months' ) ? mbn_get_review_months() : array();
+// The block's accordionItems define which months to display (and their order).
+// For each item, images are looked up from a matching CPT post by title.
+$block_items = $attributes['accordionItems'] ?? array();
 
-if ( ! empty( $cpt_months ) ) {
-	// Map CPT data to the shape the template expects.
-	$accordion_items = array_map(
-		function ( $month ) {
-			return array(
-				'heading' => $month['title'],
-				'year'    => $month['year'],
-				'images'  => array_map(
-					function ( $img ) {
-						return array(
-							'imageUrl' => $img['url'],
-							'imageId'  => $img['id'],
-							'imageAlt' => $img['alt'],
-						);
-					},
-					$month['images']
-				),
-			);
-		},
-		$cpt_months
-	);
-} else {
-	// Backwards-compatible fallback: use block attributes.
-	$accordion_items = $attributes['accordionItems'] ?? array();
-	foreach ( $accordion_items as &$item ) {
-		$item['year'] = '';
+// Build a lookup map: lowercase title => images array, from all CPT posts.
+$cpt_image_map = array();
+if ( function_exists( 'mbn_get_review_months' ) ) {
+	foreach ( mbn_get_review_months() as $month ) {
+		$key                  = strtolower( trim( $month['title'] ) );
+		$cpt_image_map[ $key ] = array_map(
+			function ( $img ) {
+				return array(
+					'imageUrl' => $img['url'],
+					'imageId'  => $img['id'],
+					'imageAlt' => $img['alt'],
+				);
+			},
+			$month['images']
+		);
 	}
-	unset( $item );
+}
+
+// Merge: use block items for month labels/order, CPT for images.
+$accordion_items = array();
+foreach ( $block_items as $item ) {
+	$heading = $item['heading'] ?? '';
+	$key     = strtolower( trim( $heading ) );
+	$images  = $cpt_image_map[ $key ] ?? array();
+
+	$accordion_items[] = array(
+		'heading' => $heading,
+		'year'    => $item['year'] ?? '',
+		'images'  => $images,
+	);
 }
 
 // Group items by year so we can render year dividers.
 $years = array();
 foreach ( $accordion_items as $item ) {
 	$year = $item['year'] ?? '';
-	if ( ! isset( $years[ $year ] ) ) {
-		$years[ $year ] = array();
-	}
+  if ( ! isset( $years[ $year ] ) ) {
+      $years[ $year ] = array();
+  }
 	$years[ $year ][] = $item;
 }
 
 $wrapper_attributes = get_block_wrapper_attributes(
-	array(
-		'class' => 'handwritten-reviews',
-	)
+  array(
+	  'class' => 'handwritten-reviews',
+  )
 );
 
 $global_index = 0;
@@ -109,9 +112,9 @@ $global_index = 0;
                   if ( empty( $image_alt ) ) {
                       $image_alt = sprintf(
                           /* translators: 1: accordion heading title, 2: image number within the accordion item */
-                          __( 'Handwritten review - %1$s, image %2$d', 'mbn-theme' ),
-                          $heading,
-                          $img_index + 1
+                        __( 'Handwritten review - %1$s, image %2$d', 'mbn-theme' ),
+                        $heading,
+                        $img_index + 1
                       );
                   }
 
