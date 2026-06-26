@@ -8,14 +8,16 @@
  * @param WP_Block $block      Block instance
  */
 
-$heading           = $attributes['heading'] ?? '';
-$intro_paragraphs  = $attributes['introParagraphs'] ?? array();
-$list_style        = $attributes['listStyle'] ?? 'single';
-$list_items        = $attributes['listItems'] ?? array();
-$image_url         = $attributes['imageUrl'] ?? '';
-$image_id          = $attributes['imageId'] ?? 0;
-$footer_paragraphs = $attributes['footerParagraphs'] ?? array();
-$background_color  = $attributes['backgroundColor'] ?? 'bg-light-blue';
+$heading                = $attributes['heading'] ?? '';
+$intro_paragraphs       = $attributes['introParagraphs'] ?? array();
+$list_style             = $attributes['listStyle'] ?? 'single';
+$list_items             = $attributes['listItems'] ?? array();
+$image_url              = $attributes['imageUrl'] ?? '';
+$image_id               = $attributes['imageId'] ?? 0;
+$before_list_paragraphs = $attributes['beforeListParagraphs'] ?? array();
+$after_list_paragraphs  = $attributes['afterListParagraphs'] ?? array();
+$footer_paragraphs      = $attributes['footerParagraphs'] ?? array();
+$background_color       = $attributes['backgroundColor'] ?? 'bg-light-blue';
 
 // Build path for local fallback images
 $block_assets_uri = get_theme_file_uri( '/build/blocks/section-location-heading-list-image/assets/images' );
@@ -73,68 +75,94 @@ $wrapper_attributes = get_block_wrapper_attributes(
     <?php endif; ?>
 
     <!-- ── Body: list + image ─────────────────────────────── -->
-    <?php if ( ! empty( $list_items ) || ! empty( $final_image_url ) ) : ?>
+    <?php if ( ! empty( $list_items ) || ! empty( $final_image_url ) || ! empty( $before_list_paragraphs ) || ! empty( $after_list_paragraphs ) ) : ?>
       <div class="loc-hlimg__body">
-
-        <?php if ( ! empty( $list_items ) && is_array( $list_items ) ) : ?>
-          <ul class="<?php echo esc_attr( $list_class ); ?>">
-            <?php foreach ( $list_items as $item ) : ?>
-              <?php if ( 'two-column' === $list_style ) : ?>
-                <?php
-                $label = $item['label'] ?? '';
-                $url   = $item['url'] ?? '';
-                ?>
-                <?php if ( ! empty( $label ) ) : ?>
-                  <li class="loc-hlimg__list-item">
-                    <img
-                      class="loc-hlimg__item-icon"
-                      src="<?php echo esc_url( $chevron_icon ); ?>"
-                      alt=""
-                      aria-hidden="true"
-                      width="24"
-                      height="24"
-                    >
-                    <?php if ( ! empty( $url ) ) : ?>
-                      <a class="loc-hlimg__item-label" href="<?php echo esc_url( $url ); ?>">
-                        <?php echo esc_html( $label ); ?>
-                      </a>
-                    <?php else : ?>
-                      <span class="loc-hlimg__item-label">
-                        <?php echo esc_html( $label ); ?>
-                      </span>
-                    <?php endif; ?>
-                  </li>
+        <div class="loc-hlimg__content">
+          <!-- Before List Paragraphs -->
+          <?php if ( ! empty( $before_list_paragraphs ) && is_array( $before_list_paragraphs ) ) : ?>
+            <div class="loc-hlimg__before-list">
+              <?php foreach ( $before_list_paragraphs as $paragraph ) : ?>
+                <?php if ( ! empty( $paragraph ) ) : ?>
+                  <p class="loc-hlimg__before-list-para">
+                    <?php echo wp_kses_post( $paragraph ); ?>
+                  </p>
                 <?php endif; ?>
-              <?php else : ?>
-                <?php
-                $item_title       = $item['title'] ?? '';
-                $item_description = $item['description'] ?? '';
-                ?>
-                <?php if ( ! empty( $item_title ) || ! empty( $item_description ) ) : ?>
-                  <li class="loc-hlimg__list-item">
-                    <img
-                      class="loc-hlimg__item-icon"
-                      src="<?php echo esc_url( $chevron_icon ); ?>"
-                      alt=""
-                      aria-hidden="true"
-                      width="24"
-                      height="24"
-                    >
-                    <div class="loc-hlimg__item-text">
-                      <?php if ( ! empty( $item_title ) ) : ?>
-                        <strong class="loc-hlimg__item-title"><?php echo wp_kses_post( $item_title ); ?></strong>
-                      <?php endif; ?>
-                      <?php if ( ! empty( $item_description ) ) : ?>
-                        <span class="loc-hlimg__item-desc"><?php echo wp_kses_post( $item_description ); ?></span>
-                      <?php endif; ?>
-                    </div>
-                  </li>
-                <?php endif; ?>
-              <?php endif; ?>
-            <?php endforeach; ?>
-          </ul>
-        <?php endif; ?>
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
 
+          <?php if ( ! empty( $list_items ) && is_array( $list_items ) ) : ?>
+            <ul class="<?php echo esc_attr( $list_class ); ?>">
+              <?php foreach ( $list_items as $item ) : ?>
+                <?php if ( 'two-column' === $list_style ) : ?>
+                  <?php
+                  $label = $item['label'] ?? '';
+                  $url   = $item['url'] ?? '';
+                  ?>
+                  <?php if ( ! empty( $label ) ) : ?>
+                    <li class="loc-hlimg__list-item">
+                      <img
+                        class="loc-hlimg__item-icon"
+                        src="<?php echo esc_url( $chevron_icon ); ?>"
+                        alt=""
+                        aria-hidden="true"
+                        width="24"
+                        height="24"
+                      >
+                      <?php if ( ! empty( $url ) ) : ?>
+                        <a class="loc-hlimg__item-label" href="<?php echo esc_url( $url ); ?>">
+                          <?php echo esc_html( $label ); ?>
+                        </a>
+                      <?php else : ?>
+                        <span class="loc-hlimg__item-label">
+                          <?php echo esc_html( $label ); ?>
+                        </span>
+                      <?php endif; ?>
+                    </li>
+                  <?php endif; ?>
+                <?php else : ?>
+                  <?php
+                  $item_title       = $item['title'] ?? '';
+                  $item_description = $item['description'] ?? '';
+                  ?>
+                  <?php if ( ! empty( $item_title ) || ! empty( $item_description ) ) : ?>
+                    <li class="loc-hlimg__list-item">
+                      <img
+                        class="loc-hlimg__item-icon"
+                        src="<?php echo esc_url( $chevron_icon ); ?>"
+                        alt=""
+                        aria-hidden="true"
+                        width="24"
+                        height="24"
+                      >
+                      <div class="loc-hlimg__item-text">
+                        <?php if ( ! empty( $item_title ) ) : ?>
+                          <strong class="loc-hlimg__item-title"><?php echo wp_kses_post( $item_title ); ?></strong>
+                        <?php endif; ?>
+                        <?php if ( ! empty( $item_description ) ) : ?>
+                          <span class="loc-hlimg__item-desc"><?php echo wp_kses_post( $item_description ); ?></span>
+                        <?php endif; ?>
+                      </div>
+                    </li>
+                  <?php endif; ?>
+                <?php endif; ?>
+              <?php endforeach; ?>
+            </ul>
+          <?php endif; ?>
+
+          <!-- After List Paragraphs -->
+          <?php if ( ! empty( $after_list_paragraphs ) && is_array( $after_list_paragraphs ) ) : ?>
+            <div class="loc-hlimg__after-list">
+              <?php foreach ( $after_list_paragraphs as $paragraph ) : ?>
+                <?php if ( ! empty( $paragraph ) ) : ?>
+                  <p class="loc-hlimg__after-list-para">
+                    <?php echo wp_kses_post( $paragraph ); ?>
+                  </p>
+                <?php endif; ?>
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
+        </div>
         <?php if ( ! empty( $final_image_url ) ) : ?>
           <figure class="loc-hlimg__image-wrap">
             <img

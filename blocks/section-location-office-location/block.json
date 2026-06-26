@@ -1,0 +1,64 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-location-office-location",
+  "title": "Section: Location – Office Location",
+  "category": "mbn-blocks",
+  "icon": "location",
+  "description": "Office locations grid with map embed",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "locationsHeading": {
+      "type": "string",
+      "default": "Office Locations"
+    },
+    "officeLocations": {
+      "type": "array",
+      "default": [
+        {
+          "name": "Central Phoenix Office",
+          "address": "1221 E. Osborn Rd. Suite A202 Phoenix 85014",
+          "addressUrl": "",
+          "phoneNumber": "(602) 433-2323",
+          "phoneUrl": "tel:6024332323",
+          "byAppointmentOnly": false
+        },
+        {
+          "name": "Northwest Peoria",
+          "address": "16165 N 83rd Ave Suite 200, Peoria, AZ 85382",
+          "addressUrl": "",
+          "phoneNumber": "(480) 706-1100",
+          "phoneUrl": "tel:4807061100",
+          "byAppointmentOnly": false
+        },
+        {
+          "name": "Mesa",
+          "address": "1830 S. Alma School Rd. Suite 129 Mesa 85210",
+          "addressUrl": "",
+          "phoneNumber": "(480) 649-1800",
+          "phoneUrl": "tel:4806491800",
+          "byAppointmentOnly": false
+        }
+      ]
+    },
+    "mapIframeUrl": {
+      "type": "string",
+      "default": "https://www.google.com/maps/d/embed?mid=1BU_B90ZoJAEWzUgMy_fXd-KdC5y5WdXm&ehbc=2E312F"
+    },
+    "mapTitle": {
+      "type": "string",
+      "default": "Map showing Hastings & Hastings office locations across Arizona"
+    }
+  }
+}

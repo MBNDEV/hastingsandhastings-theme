@@ -1,4 +1,4 @@
-import { useBlockProps, InspectorControls, MediaUpload } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls, RichText, MediaUpload } from '@wordpress/block-editor';
 import { PanelBody, TextControl, TextareaControl, Button, Icon } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
@@ -265,12 +265,25 @@ export default function Edit({ attributes, setAttributes }) {
             value={ctaTitle}
             onChange={(value) => setAttributes({ ctaTitle: value })}
           />
-          <TextareaControl
-            label={__('Description', 'mbn-theme')}
-            value={ctaDescription}
-            onChange={(value) => setAttributes({ ctaDescription: value })}
-            rows={4}
-          />
+          <div style={{ marginBottom: '15px' }}>
+            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', fontSize: '13px' }}>
+              {__('Description', 'mbn-theme')}
+            </label>
+            <RichText
+              tagName="div"
+              value={ctaDescription}
+              onChange={(value) => setAttributes({ ctaDescription: value })}
+              placeholder={__('Enter CTA description...', 'mbn-theme')}
+              allowedFormats={['core/bold', 'core/italic', 'core/link', 'core/strikethrough', 'core/underline']}
+              style={{
+                border: '1px solid #ddd',
+                borderRadius: '4px',
+                padding: '8px 12px',
+                minHeight: '80px',
+                backgroundColor: '#fff'
+              }}
+            />
+          </div>
           <TextControl
             label={__('Button Text', 'mbn-theme')}
             value={ctaButtonText}

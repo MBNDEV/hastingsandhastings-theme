@@ -24,6 +24,8 @@ export default function Edit( { attributes, setAttributes } ) {
     listItems,
     imageUrl,
     imageId,
+    beforeListParagraphs,
+    afterListParagraphs,
     footerParagraphs,
     backgroundColor,
   } = attributes;
@@ -75,6 +77,40 @@ export default function Edit( { attributes, setAttributes } ) {
   // Remove list item
   const removeListItem = ( index ) => {
     setAttributes( { listItems: listItems.filter( ( _, i ) => i !== index ) } );
+  };
+
+  // Update a specific before list paragraph
+  const updateBeforeListParagraph = ( index, value ) => {
+    const newParagraphs = [ ...beforeListParagraphs ];
+    newParagraphs[ index ] = value;
+    setAttributes( { beforeListParagraphs: newParagraphs } );
+  };
+
+  // Add before list paragraph
+  const addBeforeListParagraph = () => {
+    setAttributes( { beforeListParagraphs: [ ...beforeListParagraphs, '' ] } );
+  };
+
+  // Remove before list paragraph
+  const removeBeforeListParagraph = ( index ) => {
+    setAttributes( { beforeListParagraphs: beforeListParagraphs.filter( ( _, i ) => i !== index ) } );
+  };
+
+  // Update a specific after list paragraph
+  const updateAfterListParagraph = ( index, value ) => {
+    const newParagraphs = [ ...afterListParagraphs ];
+    newParagraphs[ index ] = value;
+    setAttributes( { afterListParagraphs: newParagraphs } );
+  };
+
+  // Add after list paragraph
+  const addAfterListParagraph = () => {
+    setAttributes( { afterListParagraphs: [ ...afterListParagraphs, '' ] } );
+  };
+
+  // Remove after list paragraph
+  const removeAfterListParagraph = ( index ) => {
+    setAttributes( { afterListParagraphs: afterListParagraphs.filter( ( _, i ) => i !== index ) } );
   };
 
   // Update a specific footer paragraph
@@ -237,6 +273,130 @@ export default function Edit( { attributes, setAttributes } ) {
               style={ { marginTop: '8px' } }
             >
               { __( '+ Add List Item', 'mbn-theme' ) }
+            </Button>
+          </div>
+        </PanelBody>
+
+        {/* Before List Paragraphs */}
+        <PanelBody
+          title={ __( 'Before List Paragraphs (Optional)', 'mbn-theme' ) }
+          initialOpen={ false }
+        >
+          <div>
+            <strong>{ __( 'Paragraphs Before List', 'mbn-theme' ) }</strong>
+            { beforeListParagraphs && beforeListParagraphs.map( ( paragraph, index ) => (
+              <div
+                key={ index }
+                style={ {
+                  border: '1px solid #ddd',
+                  padding: '12px',
+                  marginTop: '8px',
+                  borderRadius: '4px',
+                } }
+              >
+                <label
+                  style={ {
+                    display: 'block',
+                    marginBottom: '8px',
+                    fontWeight: '600',
+                    fontSize: '13px',
+                  } }
+                >
+                  { `${ __( 'Paragraph', 'mbn-theme' ) } ${ index + 1 }` }
+                </label>
+                <RichText
+                  tagName="div"
+                  value={ paragraph }
+                  onChange={ ( value ) => updateBeforeListParagraph( index, value ) }
+                  placeholder={ __( 'Enter paragraph...', 'mbn-theme' ) }
+                  allowedFormats={ [ 'core/bold', 'core/italic', 'core/link', 'core/strikethrough', 'core/underline' ] }
+                  style={ {
+                    border: '1px solid #ddd',
+                    borderRadius: '4px',
+                    padding: '8px 12px',
+                    minHeight: '60px',
+                    backgroundColor: '#fff',
+                  } }
+                />
+                <Button
+                  isDestructive
+                  isSmall
+                  onClick={ () => removeBeforeListParagraph( index ) }
+                  style={ { marginTop: '8px' } }
+                >
+                  { __( 'Remove Paragraph', 'mbn-theme' ) }
+                </Button>
+              </div>
+            ) ) }
+            <Button
+              isSecondary
+              isSmall
+              onClick={ addBeforeListParagraph }
+              style={ { marginTop: '8px' } }
+            >
+              { __( '+ Add Before List Paragraph', 'mbn-theme' ) }
+            </Button>
+          </div>
+        </PanelBody>
+
+        {/* After List Paragraphs */}
+        <PanelBody
+          title={ __( 'After List Paragraphs (Optional)', 'mbn-theme' ) }
+          initialOpen={ false }
+        >
+          <div>
+            <strong>{ __( 'Paragraphs After List', 'mbn-theme' ) }</strong>
+            { afterListParagraphs && afterListParagraphs.map( ( paragraph, index ) => (
+              <div
+                key={ index }
+                style={ {
+                  border: '1px solid #ddd',
+                  padding: '12px',
+                  marginTop: '8px',
+                  borderRadius: '4px',
+                } }
+              >
+                <label
+                  style={ {
+                    display: 'block',
+                    marginBottom: '8px',
+                    fontWeight: '600',
+                    fontSize: '13px',
+                  } }
+                >
+                  { `${ __( 'Paragraph', 'mbn-theme' ) } ${ index + 1 }` }
+                </label>
+                <RichText
+                  tagName="div"
+                  value={ paragraph }
+                  onChange={ ( value ) => updateAfterListParagraph( index, value ) }
+                  placeholder={ __( 'Enter paragraph...', 'mbn-theme' ) }
+                  allowedFormats={ [ 'core/bold', 'core/italic', 'core/link', 'core/strikethrough', 'core/underline' ] }
+                  style={ {
+                    border: '1px solid #ddd',
+                    borderRadius: '4px',
+                    padding: '8px 12px',
+                    minHeight: '60px',
+                    backgroundColor: '#fff',
+                  } }
+                />
+                <Button
+                  isDestructive
+                  isSmall
+                  onClick={ () => removeAfterListParagraph( index ) }
+                  style={ { marginTop: '8px' } }
+                >
+                  { __( 'Remove Paragraph', 'mbn-theme' ) }
+                </Button>
+              </div>
+            ) ) }
+            <Button
+              isSecondary
+              isSmall
+              onClick={ addAfterListParagraph }
+              style={ { marginTop: '8px' } }
+            >
+              { __( '+ Add After List Paragraph', 'mbn-theme' ) }
             </Button>
           </div>
         </PanelBody>
