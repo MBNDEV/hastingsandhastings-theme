@@ -95,6 +95,7 @@ require_once get_theme_file_path( 'inc/includes-gravity-forms-api.php' );      /
 require_once get_theme_file_path( 'inc/includes-attorney-cpt.php' );            // Attorney custom post type.
 require_once get_theme_file_path( 'inc/includes-attorney-fields.php' );         // Attorney ACF field groups.
 require_once get_theme_file_path( 'inc/includes-case-results.php' );            // Case Results custom post type and fields.
+require_once get_theme_file_path( 'inc/includes-handwritten-reviews.php' );     // Handwritten Reviews CPT, meta box, and REST endpoint.
 
 /**
  * Enqueue scroll animation assets (frontend only).

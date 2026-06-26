@@ -2,87 +2,146 @@
 /**
  * Handwritten Reviews Block - Dynamic Render
  *
+ * Pulls accordion data from the `handwritten_review_month` CPT when available.
+ * Falls back to the block's `accordionItems` attribute for backwards compatibility.
+ *
  * @package MBN_Theme
  * @param   array    $attributes Block attributes.
  * @param   string   $content    Block default content.
  * @param   WP_Block $block      Block instance.
  */
 
-$accordion_items = $attributes['accordionItems'] ?? array();
+// Build accordion items from the CPT (preferred) or from block attributes (fallback).
+$cpt_months = function_exists( 'mbn_get_review_months' ) ? mbn_get_review_months() : array();
+
+if ( ! empty( $cpt_months ) ) {
+	// Map CPT data to the shape the template expects.
+	$accordion_items = array_map(
+		function ( $month ) {
+			return array(
+				'heading' => $month['title'],
+				'year'    => $month['year'],
+				'images'  => array_map(
+					function ( $img ) {
+						return array(
+							'imageUrl' => $img['url'],
+							'imageId'  => $img['id'],
+							'imageAlt' => $img['alt'],
+						);
+					},
+					$month['images']
+				),
+			);
+		},
+		$cpt_months
+	);
+} else {
+	// Backwards-compatible fallback: use block attributes.
+	$accordion_items = $attributes['accordionItems'] ?? array();
+	foreach ( $accordion_items as &$item ) {
+		$item['year'] = '';
+	}
+	unset( $item );
+}
+
+// Group items by year so we can render year dividers.
+$years = array();
+foreach ( $accordion_items as $item ) {
+	$year = $item['year'] ?? '';
+	if ( ! isset( $years[ $year ] ) ) {
+		$years[ $year ] = array();
+	}
+	$years[ $year ][] = $item;
+}
 
 $wrapper_attributes = get_block_wrapper_attributes(
-  array(
-	  'class' => 'handwritten-reviews',
-  )
+	array(
+		'class' => 'handwritten-reviews',
+	)
 );
+
+$global_index = 0;
 ?>
 
 <section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
   <div class="handwritten-reviews__container">
     <div class="handwritten-reviews__accordion">
-      <?php foreach ( $accordion_items as $index => $item ) : ?>
-        <?php
-        $heading = $item['heading'] ?? '';
-        $images  = $item['images'] ?? array();
-        $item_id = 'accordion-panel-' . esc_attr( $index );
-        ?>
-        <article class="handwritten-reviews__item">
-          <button
-            class="handwritten-reviews__toggle"
-            aria-expanded="false"
-            aria-controls="<?php echo esc_attr( $item_id ); ?>"
-          >
-            <h3 class="handwritten-reviews__heading"><?php echo esc_html( $heading ); ?></h3>
-            <span class="handwritten-reviews__chevron" aria-hidden="true">
-            </span>
-          </button>
-
-          <div
-            class="handwritten-reviews__panel"
-            id="<?php echo esc_attr( $item_id ); ?>"
-            hidden
-          >
-            <ul class="handwritten-reviews__gallery">
-              <?php foreach ( $images as $img_index => $image ) : ?>
-                <?php
-                $image_url = $image['imageUrl'] ?? '';
-                $image_id  = $image['imageId'] ?? 0;
-                $image_alt = ! empty( $image_id ) ? get_post_meta( $image_id, '_wp_attachment_image_alt', true ) : '';
-                if ( empty( $image_alt ) ) {
-					$image_alt = sprintf(
-						/* translators: 1: accordion heading title, 2: image number within the accordion item */
-                      __( 'Handwritten review - %1$s, image %2$d', 'mbn-theme' ),
-                      $heading,
-                      $img_index + 1
-					);
-                }
-
-                if ( empty( $image_url ) ) {
-					continue;
-                }
-
-				/* translators: %s: image alt text description */
-				$aria_label = sprintf( __( 'View full size: %s', 'mbn-theme' ), $image_alt );
-                ?>
-                <li class="handwritten-reviews__gallery-item">
-                  <figure class="handwritten-reviews__figure">
-                    <a
-                      href="<?php echo esc_url( $image_url ); ?>"
-                      class="handwritten-reviews__lightbox-trigger"
-                      aria-label="<?php echo esc_attr( $aria_label ); ?>"
-                    >
-                      <img
-                        src="<?php echo esc_url( $image_url ); ?>"
-                        alt="<?php echo esc_attr( $image_alt ); ?>"
-                        loading="lazy"
-                      >
-                    </a>
-                  </figure>
-                </li>
-              <?php endforeach; ?>
-            </ul>
+      <?php foreach ( $years as $year => $items ) : ?>
+        <?php if ( ! empty( $year ) ) : ?>
+          <div class="handwritten-reviews__year-group">
+            <h2 class="handwritten-reviews__year-heading"><?php echo esc_html( $year ); ?></h2>
           </div>
-        </article>
+        <?php endif; ?>
+
+        <?php foreach ( $items as $item ) : ?>
+          <?php
+          $heading = $item['heading'] ?? '';
+          $images  = $item['images'] ?? array();
+          $item_id = 'accordion-panel-' . esc_attr( $global_index );
+          ++$global_index;
+          ?>
+          <article class="handwritten-reviews__item">
+            <button
+              class="handwritten-reviews__toggle"
+              aria-expanded="false"
+              aria-controls="<?php echo esc_attr( $item_id ); ?>"
+            >
+              <h3 class="handwritten-reviews__heading"><?php echo esc_html( $heading ); ?></h3>
+              <span class="handwritten-reviews__chevron" aria-hidden="true">
+              </span>
+            </button>
+
+            <div
+              class="handwritten-reviews__panel"
+              id="<?php echo esc_attr( $item_id ); ?>"
+              hidden
+            >
+              <ul class="handwritten-reviews__gallery">
+                <?php foreach ( $images as $img_index => $image ) : ?>
+                  <?php
+                  $image_url = $image['imageUrl'] ?? '';
+                  $image_id  = $image['imageId'] ?? 0;
+                  $image_alt = $image['imageAlt'] ?? '';
+
+                  if ( empty( $image_alt ) && ! empty( $image_id ) ) {
+                      $image_alt = get_post_meta( (int) $image_id, '_wp_attachment_image_alt', true );
+                  }
+                  if ( empty( $image_alt ) ) {
+                      $image_alt = sprintf(
+                          /* translators: 1: accordion heading title, 2: image number within the accordion item */
+                          __( 'Handwritten review - %1$s, image %2$d', 'mbn-theme' ),
+                          $heading,
+                          $img_index + 1
+                      );
+                  }
+
+                  if ( empty( $image_url ) ) {
+                      continue;
+                  }
+
+                  /* translators: %s: image alt text description */
+                  $aria_label = sprintf( __( 'View full size: %s', 'mbn-theme' ), $image_alt );
+                  ?>
+                  <li class="handwritten-reviews__gallery-item">
+                    <figure class="handwritten-reviews__figure">
+                      <a
+                        href="<?php echo esc_url( $image_url ); ?>"
+                        class="handwritten-reviews__lightbox-trigger"
+                        aria-label="<?php echo esc_attr( $aria_label ); ?>"
+                      >
+                        <img
+                          src="<?php echo esc_url( $image_url ); ?>"
+                          alt="<?php echo esc_attr( $image_alt ); ?>"
+                          loading="lazy"
+                        >
+                      </a>
+                    </figure>
+                  </li>
+                <?php endforeach; ?>
+              </ul>
+            </div>
+          </article>
+        <?php endforeach; ?>
       <?php endforeach; ?>
     </div>
   </div>

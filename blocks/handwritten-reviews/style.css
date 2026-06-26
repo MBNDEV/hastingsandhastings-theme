@@ -26,6 +26,18 @@
   gap: 12px;
 }
 
+.handwritten-reviews__year-group {
+  padding: 8px 0 4px;
+}
+
+.handwritten-reviews__year-heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  padding: 12px 0 8px;
+  border-bottom: 2px solid var(--hr-border);
+}
+
 .handwritten-reviews__item {
   border: 1px solid var(--hr-border);
   border-radius: var(--hr-radius);
