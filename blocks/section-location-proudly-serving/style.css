@@ -1,0 +1,140 @@
+/**
+ * Section Location - Proudly Serving Block Styles
+ * 
+ * @package MBN_Theme
+ */
+
+.ldp-section-subtitle a,
+.ldp-section-subtitle--center a {
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* === PROUDLY SERVING SECTION === */
+.ldp-serving {
+  padding: var(--ldp-section-pad-v) 0;
+  background-color: var(--ldp-white);
+}
+
+.ldp-serving__header {
+  text-align: center;
+  margin-bottom: 48px;
+  max-width: 540px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ldp-serving__title {
+  font-family: var(--ldp-font-primary);
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 1.33;
+  color: var(--ldp-text-heading);
+  margin: 0;
+}
+
+.ldp-serving__columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+}
+
+.ldp-serving__col {
+  /* No background, borders, or padding - clean column layout */
+}
+
+.ldp-serving__col-title {
+  font-family: var(--ldp-font-primary);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.45;
+  color: var(--ldp-blue-600);
+  margin: 0 0 16px;
+}
+
+.ldp-serving__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ldp-serving__links li {
+  margin-bottom: 8px;
+}
+
+.ldp-serving__links li:last-child {
+  margin-bottom: 0;
+}
+
+.ldp-serving__links li a {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px 2px 0;
+  font-family: var(--ldp-font-secondary);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: normal;
+  color: var(--ldp-text-link);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.ldp-serving__links li a:hover {
+  padding-left: 0.35rem;
+}
+.ldp-serving__links li a img {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1199px) {
+  .ldp-serving__columns {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ldp-serving {
+    padding: 60px 0;
+  }
+
+  .ldp-serving__header {
+    margin-bottom: 40px;
+  }
+
+  .ldp-serving__title {
+    font-size: 28px;
+  }
+
+  .ldp-serving__columns {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .ldp-serving__col-title {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .ldp-serving__links a {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ldp-serving {
+    padding: 48px 0;
+  }
+
+  .ldp-serving__title {
+    font-size: 24px;
+  }
+
+  .ldp-serving__links li {
+    margin-bottom: 6px;
+  }
+}

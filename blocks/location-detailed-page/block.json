@@ -543,6 +543,7 @@
     "file:./script.js"
   ],
   "style": [
+    "hastingsandhastings-location-blocks-shared",
     "file:./assets/vendor/swiper-bundle.min.css",
     "file:./style.css"
   ],
