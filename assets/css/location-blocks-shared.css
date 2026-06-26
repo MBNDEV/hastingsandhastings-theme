@@ -280,3 +280,16 @@
   text-decoration: underline;
   font-weight: 700;
 }
+
+
+@media screen and (max-width: 479px){
+  .ldp-btn {
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    text-wrap: auto;
+    width: 100%;
+  }
+  .ldp-cta-card {
+    padding: 2rem 1.5rem;
+  }
+}

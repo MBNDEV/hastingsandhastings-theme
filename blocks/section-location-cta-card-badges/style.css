@@ -8,8 +8,8 @@
   background-color: #f8f8f8;
 }
 
-.ldp-container {
-  max-width: 1200px;
+.ldp-cta-card-badges-wrapper .ldp-container {
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 1rem;
 }
@@ -43,7 +43,6 @@
 .ldp-cta-card__logo {
   position: relative;
   z-index: 2;
-  margin-bottom: 2rem;
   text-align: center;
 }
 
@@ -83,17 +82,6 @@
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
-}
-
-.ldp-btn--yellow {
-  background: linear-gradient(135deg, #ffd700 0%, #ffb900 100%);
-  color: #1a1a1a;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.ldp-btn--yellow:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .ldp-cta-card__phone {

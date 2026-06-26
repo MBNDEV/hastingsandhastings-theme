@@ -29,7 +29,8 @@
 .ldp-why-choose > :not(.ldp-cta-card) {
   gap: 90px;
 }
-.ldp-why-choose__header {
+.ldp-why-choose__header,
+.ldp-why-choose__subheader {
   text-align: center;
   max-width: 780px;
   margin-inline: auto;
@@ -38,7 +39,8 @@
   gap: 16px;
 }
 
-.ldp-why-choose__title {
+.ldp-why-choose__title,
+.ldp-why-choose__subtitle {
   font-family: var(--ldp-font-primary);
   font-weight: 600;
   font-size: 40px;
@@ -1170,7 +1172,8 @@
   }
 
   /* Why Choose */
-  .ldp-why-choose__title {
+  .ldp-why-choose__title,
+  .ldp-why-choose__subtitle {
     font-size: 32px;
   }
 
@@ -1318,7 +1321,8 @@
   }
 
   /* Why Choose */
-  .ldp-why-choose__title {
+  .ldp-why-choose__title,
+  .ldp-why-choose__subtitle {
     font-size: 26px;
     line-height: 1.3;
   }
