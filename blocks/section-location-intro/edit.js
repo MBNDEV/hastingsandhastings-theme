@@ -16,6 +16,7 @@ export default function Edit({ attributes, setAttributes }) {
     ctaTitle,
     ctaDescription,
     ctaButtonText,
+    ctaButtonUrl,
     ctaPhoneNumber,
   } = attributes;
 
@@ -524,6 +525,13 @@ export default function Edit({ attributes, setAttributes }) {
             label={__('Button Text', 'mbn-theme')}
             value={ctaButtonText}
             onChange={(value) => setAttributes({ ctaButtonText: value })}
+          />
+
+          <TextControl
+            label={__('Button URL', 'mbn-theme')}
+            value={ctaButtonUrl}
+            onChange={(value) => setAttributes({ ctaButtonUrl: value })}
+            help={__('Link destination (e.g., #contact, /contact-us/)', 'mbn-theme')}
           />
 
           <TextControl

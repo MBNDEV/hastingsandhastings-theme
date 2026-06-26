@@ -98,7 +98,7 @@ function SortableColumn({ column, columnIndex, updateColumn, removeColumn, dupli
   const handleLinkDragEnd = (event) => {
     const { active, over } = event;
 
-    if (active.id !== over.id) {
+    if (over && active.id !== over.id) {
       const oldIndex = column.links.findIndex(link => link.id === active.id);
       const newIndex = column.links.findIndex(link => link.id === over.id);
       
@@ -263,7 +263,7 @@ export default function Edit({ attributes, setAttributes }) {
   const handleColumnDragEnd = (event) => {
     const { active, over } = event;
 
-    if (active.id !== over.id) {
+    if (over && active.id !== over.id) {
       const oldIndex = servingColumns.findIndex(col => col.id === active.id);
       const newIndex = servingColumns.findIndex(col => col.id === over.id);
       

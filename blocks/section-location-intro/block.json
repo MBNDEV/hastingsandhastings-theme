@@ -99,6 +99,10 @@
       "type": "string",
       "default": "Start your free consultation now!"
     },
+    "ctaButtonUrl": {
+      "type": "string",
+      "default": "#contact"
+    },
     "ctaPhoneNumber": {
       "type": "string",
       "default": "(480) 480-2929"

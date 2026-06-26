@@ -11,6 +11,7 @@ $block_assets_uri = get_theme_file_uri( '/build/blocks/section-location-cta-card
 $cta_title                     = $attributes['ctaTitle'] ?? 'Start Your Free Consultation';
 $cta_description               = $attributes['ctaDescription'] ?? '';
 $cta_button_text               = $attributes['ctaButtonText'] ?? 'CONTACT US TODAY';
+$cta_button_url                = $attributes['ctaButtonUrl'] ?? '#contact';
 $cta_phone_label               = $attributes['ctaPhoneLabel'] ?? 'CALL TODAY';
 $cta_phone_text                = $attributes['ctaPhoneText'] ?? '(480) 605-3939';
 $cta_phone_url                 = $attributes['ctaPhoneUrl'] ?? 'tel:4806053939';
@@ -55,7 +56,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
           <?php endif; ?>
         </div>
         <div class="ldp-cta-card__actions">
-          <button class="ldp-btn ldp-btn--yellow" type="button"><?php echo esc_html( $cta_button_text ); ?></button>
+          <a class="ldp-btn ldp-btn--yellow" href="<?php echo esc_url( $cta_button_url ); ?>"><?php echo esc_html( $cta_button_text ); ?></a>
           <p class="ldp-cta-card__phone">
             <?php echo esc_html( $cta_phone_label ); ?>
             <a href="<?php echo esc_url( $cta_phone_url ); ?>"><?php echo esc_html( $cta_phone_text ); ?></a>

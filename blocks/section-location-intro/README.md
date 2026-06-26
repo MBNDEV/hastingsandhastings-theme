@@ -63,6 +63,7 @@ Each section has a `type` field and type-specific fields:
 - `ctaTitle` (string)
 - `ctaDescription` (string)
 - `ctaButtonText` (string)
+- `ctaButtonUrl` (string) - Link destination (default: '#contact')
 - `ctaPhoneNumber` (string)
 
 ## Assets

@@ -26,6 +26,10 @@
       "type": "string",
       "default": "CONTACT US TODAY"
     },
+    "ctaButtonUrl": {
+      "type": "string",
+      "default": "#contact"
+    },
     "ctaPhoneLabel": {
       "type": "string",
       "default": "CALL TODAY"

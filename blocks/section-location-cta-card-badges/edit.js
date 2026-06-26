@@ -142,6 +142,7 @@ export default function Edit({ attributes, setAttributes }) {
     ctaTitle,
     ctaDescription,
     ctaButtonText,
+    ctaButtonUrl,
     ctaPhoneLabel,
     ctaPhoneText,
     ctaPhoneUrl,
@@ -196,7 +197,7 @@ export default function Edit({ attributes, setAttributes }) {
 
   const handleParagraphDragEnd = (event) => {
     const { active, over } = event;
-    if (active.id !== over.id) {
+    if (over && active.id !== over.id) {
       const oldIndex = badgesTextParagraphs.findIndex(p => p.id === active.id);
       const newIndex = badgesTextParagraphs.findIndex(p => p.id === over.id);
       setAttributes({
@@ -246,7 +247,7 @@ export default function Edit({ attributes, setAttributes }) {
 
   const handleBadgeDragEnd = (event) => {
     const { active, over } = event;
-    if (active.id !== over.id) {
+    if (over && active.id !== over.id) {
       const oldIndex = badgesItems.findIndex(b => b.id === active.id);
       const newIndex = badgesItems.findIndex(b => b.id === over.id);
       setAttributes({
@@ -274,6 +275,12 @@ export default function Edit({ attributes, setAttributes }) {
             label={__('Button Text', 'mbn-theme')}
             value={ctaButtonText}
             onChange={(value) => setAttributes({ ctaButtonText: value })}
+          />
+          <TextControl
+            label={__('Button URL', 'mbn-theme')}
+            value={ctaButtonUrl}
+            onChange={(value) => setAttributes({ ctaButtonUrl: value })}
+            help={__('Link destination (e.g., #contact, /contact-us/)', 'mbn-theme')}
           />
         </PanelBody>
 

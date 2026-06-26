@@ -130,7 +130,7 @@
   background: linear-gradient(180deg, #FFF24C 0%, #FDE212 50%, #E5C700 100%);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
   transform: translateY(-2px);
-  color: #13263E;
+  color: var(--ldp-blue-950);
 }
 
 .ldp-btn--yellow:active {

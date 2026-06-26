@@ -19,6 +19,7 @@ $cta_logo_id      = $attributes['ctaLogoId'] ?? 0;
 $cta_title        = $attributes['ctaTitle'] ?? '';
 $cta_description  = $attributes['ctaDescription'] ?? '';
 $cta_button_text  = $attributes['ctaButtonText'] ?? '';
+$cta_button_url   = $attributes['ctaButtonUrl'] ?? '#contact';
 $cta_phone_number = $attributes['ctaPhoneNumber'] ?? '';
 
 // Build path for local fallback assets
@@ -229,14 +230,14 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
       <div class="ldp-cta-card__actions">
         <?php if ( ! empty( $cta_button_text ) ) : ?>
-          <button class="ldp-btn ldp-btn--yellow ldp-btn" type="button">
+          <a class="ldp-btn ldp-btn--yellow ldp-btn" href="<?php echo esc_url( $cta_button_url ); ?>">
             <?php echo esc_html( $cta_button_text ); ?>
-          </button>
+          </a>
         <?php endif; ?>
 
         <?php if ( ! empty( $cta_phone_number ) ) : ?>
           <p class="ldp-cta-card__phone">
-            Call Today <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $cta_phone_number ) ); ?>">
+            <?php esc_html_e( 'Call Today', 'mbn-theme' ); ?>  <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $cta_phone_number ) ); ?>">
               <?php echo esc_html( $cta_phone_number ); ?>
             </a>
           </p>
