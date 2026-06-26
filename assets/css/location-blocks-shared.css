@@ -232,7 +232,7 @@
 
 .ldp-cta-card__text {
   flex: 0 0 auto;
-  width: clamp(280px, 65%, 100%);
+  width: clamp(280px, 60%, 100%);
   display: flex;
   flex-direction: column;
   gap: 8px;

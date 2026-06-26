@@ -36,11 +36,11 @@
     },
     "ctaPhoneText": {
       "type": "string",
-      "default": "(480) 605-3939"
+      "default": "(480) 480-2929"
     },
     "ctaPhoneUrl": {
       "type": "string",
-      "default": "tel:4806053939"
+      "default": "tel:4804802929"
     },
     "ctaBackgroundImageUrl": {
       "type": "string",

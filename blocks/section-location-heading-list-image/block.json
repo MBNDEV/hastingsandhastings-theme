@@ -71,6 +71,14 @@
       "type": "number",
       "default": 0
     },
+    "beforeListParagraphs": {
+      "type": "array",
+      "default": []
+    },
+    "afterListParagraphs": {
+      "type": "array",
+      "default": []
+    },
     "footerParagraphs": {
       "type": "array",
       "default": [

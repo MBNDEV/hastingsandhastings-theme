@@ -5,7 +5,6 @@
  */
 .ldp-cta-card-badges-wrapper {
   padding: 4rem 0;
-  background-color: #f8f8f8;
 }
 
 .ldp-cta-card-badges-wrapper .ldp-container {
@@ -68,7 +67,11 @@
   font-size: 1.125rem;
   line-height: 1.6;
   margin: 0;
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--ldp-grey-300);
+}
+.ldp-cta-card__desc a{
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .ldp-btn {
