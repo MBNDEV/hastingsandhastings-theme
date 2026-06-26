@@ -13,6 +13,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Register shared styles used by the location detailed-page block set.
+ *
+ * @return void
+ */
+function hastingsandhastings_register_location_block_shared_styles() {
+	$shared_style_relative_path = 'assets/css/location-blocks-shared.css';
+	$shared_style_file_path     = get_theme_file_path( $shared_style_relative_path );
+
+  if ( ! file_exists( $shared_style_file_path ) ) {
+      return;
+  }
+
+	wp_register_style(
+      'hastingsandhastings-location-blocks-shared',
+      get_theme_file_uri( $shared_style_relative_path ),
+      array(),
+      (string) filemtime( $shared_style_file_path )
+	);
+}
+add_action( 'init', 'hastingsandhastings_register_location_block_shared_styles', 5 );
+
+/**
  * Auto-discover and register all native Gutenberg blocks.
  *
  * Scans the build/blocks/ directory for subdirectories containing block.json files

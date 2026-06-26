@@ -4,81 +4,8 @@
  * @package MBN_Theme
  */
 
-/* === DESIGN TOKENS === */
-:root {
-  --ldp-blue-950:    #13263e;
-  --ldp-blue-800:    #1d456f;
-  --ldp-blue-600:    #286fb7;
-  --ldp-blue-500:    #3480c3;
-  --ldp-blue-50:     #f3f7fc;
-  --ldp-yellow-700:  #a37005;
-  --ldp-yellow-500:  #ecc806;
-  --ldp-yellow-400:  #fde212;
-  --ldp-secondary-800: #86570d;
-  --ldp-grey-800:    #646b73;
-  --ldp-grey-300:    #d5dadd;
-  --ldp-grey-200:    #e8eaec;
-  --ldp-grey-50:     #f8f9fa;
-  --ldp-text-heading: #13263e;
-  --ldp-text-body:   #53585f;
-  --ldp-text-link:   #363b3f;
-  --ldp-white:       #ffffff;
-  --ldp-font-primary:   'Noto Serif', Georgia, serif;
-  --ldp-font-secondary: 'Heebo', Arial, sans-serif;
-  --ldp-max-width: 1440px;
-  --ldp-content-width: 1366px;
-  --ldp-section-pad-v: 80px;
-  --ldp-section-pad-h: clamp(24px, 4vw, 170px);
-}
-
-/* === BASE RESETS (scoped) === */
-.ldp-serving {
-  box-sizing: border-box;
-  font-family: var(--ldp-font-secondary);
-  color: var(--ldp-text-body);
-  font-size: 18px;
-  line-height: 1.556;
-}
-
-/* === CONTAINER === */
-.ldp-container {
-  max-width: var(--ldp-content-width);
-  margin-inline: auto;
-  padding-inline: var(--ldp-section-pad-h);
-  width: 100%;
-}
-
-/* === SHARED TYPOGRAPHY === */
-.ldp-section-title {
-  font-family: var(--ldp-font-primary);
-  font-weight: 600;
-  font-size: 28px;
-  line-height: 1.43;
-  color: var(--ldp-text-heading);
-  margin: 0;
-}
-
-.ldp-section-title--center {
-  text-align: center;
-}
-
-.ldp-section-subtitle {
-  font-family: var(--ldp-font-secondary);
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 1.556;
-  color: var(--ldp-text-body);
-  margin: 0;
-}
-
-.ldp-section-subtitle--center {
-  text-align: center;
-}
-
 .ldp-section-subtitle a,
 .ldp-section-subtitle--center a {
-  color: var(--ldp-text-body);
-  text-decoration: underline;
   margin: 0 auto;
   padding: 0 1rem;
 }

@@ -9,7 +9,10 @@
   "textdomain": "mbn-theme",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./editor.css",
-  "style": "file:./style.css",
+  "style": [
+    "hastingsandhastings-location-blocks-shared",
+    "file:./style.css"
+  ],
   "render": "file:./render.php",
   "attributes": {
     "servingTitle": {

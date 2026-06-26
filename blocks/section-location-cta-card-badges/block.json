@@ -8,7 +8,10 @@
   "description": "CTA card with background, logo, phone, button and badge images",
   "textdomain": "mbn-theme",
   "editorScript": "file:./index.js",
-  "style": "file:./style.css",
+  "style": [
+    "hastingsandhastings-location-blocks-shared",
+    "file:./style.css"
+  ],
   "render": "file:./render.php",
   "attributes": {
     "ctaTitle": {
