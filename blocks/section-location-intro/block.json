@@ -1,0 +1,111 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-location-intro",
+  "title": "Section: Location – Intro (Why Choose)",
+  "category": "mbn-blocks",
+  "icon": "star-filled",
+  "description": "Intro section with title, optional subsections (track record/fee structure/attorneys), subheader, and CTA card.",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "style": [
+    "hastingsandhastings-location-blocks-shared",
+    "file:./style.css"
+  ],
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "title": {
+      "type": "string",
+      "default": "Why Choose Hastings and Hastings As Your Mesa Personal Injury Lawyer?"
+    },
+    "introParagraph": {
+      "type": "string",
+      "default": "Hastings and Hastings is a Phoenix and Mesa personal injury law firm with the experience and knowledge to effectively advocate for you and your family. We've been serving Arizona accident victims and their families for more than 40 years, and our Mesa injury lawyers have almost 100 years of combined experience handling personal injury lawsuits, <a href=\"https://www.hastingsandhastings.com/mesa-truck-accident-lawyer/\" target=\"_blank\" rel=\"noopener\">including truck accident cases</a>."
+    },
+    "sections": {
+      "type": "array",
+      "default": [
+        {
+          "type": "track-record",
+          "columnPosition": "text-left",
+          "subtitle": "Proven Track Record from Real Clients",
+          "paragraph": "Our track record is evident not only through the cases that we've won but in the reviews and referrals that we receive from our clients. We have more than 600 real, handwritten reviews and more than 500 five-star Google reviews from verified, actual past clients. In this business, we hope that we don't see our clients more than once – as accidents are an unwelcome occurrence to anyone – but most of our business comes from word of mouth, through referrals from past clients who have been satisfied with our team's work and our representation.",
+          "stats": [
+            {
+              "number": "600+",
+              "label": "Real, Handwritten Reviews"
+            },
+            {
+              "number": "500+",
+              "label": "Five-star Google reviews from verified, actual past clients."
+            }
+          ]
+        },
+        {
+          "type": "fee-structure",
+          "columnPosition": "badge-left",
+          "badgeImageUrl": "",
+          "badgeImageId": 0,
+          "subtitle": "Innovative Discount Fee Structure",
+          "paragraph": "Otherwise, our fee structure sets Hastings and Hastings apart from other personal injury law firms. Usually, a personal injury lawyer charges clients a flat percentage rate of one-third, regardless of the amount of compensation their clients receive. At Hastings and Hastings, we realized that this traditional arrangement benefits lawyers more than it benefits clients, and so we pioneered Discount Fees for our clients. Under our <a href=\"https://www.hastingsandhastings.com/discount/\" target=\"_blank\" rel=\"noopener\">Discount Fee arrangement</a>, we prioritize putting the most amount of money possible back into our clients' pockets – not our own."
+        },
+        {
+          "type": "attorneys",
+          "columnPosition": "text-left",
+          "subtitle": "Licensed Arizona Personal Injury Attorneys Handling Your Case",
+          "paragraph": "Hastings and Hastings also prioritizes getting our clients face-to-face with an actual, licensed Arizona attorney from the very start of our representation. At some personal injury law firms, prospective clients may not speak to a licensed attorney until after their representation has begun. But at Hastings and Hastings, we guarantee that you will speak to a licensed attorney at your free initial consultation – at the very first contact you have with our law firm. These initial consultations with our attorneys are always offered at no cost and with absolutely no risk to our prospective clients.",
+          "teamImageUrl": "",
+          "teamImageId": 0
+        }
+      ]
+    },
+    "subheaderTitle": {
+      "type": "string",
+      "default": "Our accolades and extensive experience make us the top choice for personal injury cases in Buckeye, AZ."
+    },
+    "ctaBackgroundImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaBackgroundImageId": {
+      "type": "number",
+      "default": 0
+    },
+    "ctaLogoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaLogoId": {
+      "type": "number",
+      "default": 0
+    },
+    "ctaTitle": {
+      "type": "string",
+      "default": "Start Your Free Consultation"
+    },
+    "ctaDescription": {
+      "type": "string",
+      "default": "Our Mesa personal injury attorneys are ready to listen to your story, be honest with you about whether you may be able to recover compensation for your injuries, and if we're able, work hard to represent you and your family."
+    },
+    "ctaButtonText": {
+      "type": "string",
+      "default": "Start your free consultation now!"
+    },
+    "ctaButtonUrl": {
+      "type": "string",
+      "default": "#contact"
+    },
+    "ctaPhoneNumber": {
+      "type": "string",
+      "default": "(480) 480-2929"
+    }
+  }
+}

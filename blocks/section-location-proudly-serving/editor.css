@@ -1,0 +1,78 @@
+/**
+ * Section Location - Proudly Serving Block Editor Styles
+ * 
+ * @package MBN_Theme
+ */
+
+/* Editor-specific styles to match frontend */
+.wp-block-mbn-theme-section-location-proudly-serving .ldp-serving {
+  padding: 40px 0;
+  background-color: #ffffff;
+}
+
+.wp-block-mbn-theme-section-location-proudly-serving .ldp-serving__header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.wp-block-mbn-theme-section-location-proudly-serving .ldp-serving__title {
+  font-family: 'Noto Serif', Georgia, serif;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.33;
+  color: #13263e;
+  margin: 0;
+}
+
+.wp-block-mbn-theme-section-location-proudly-serving .ldp-serving__columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 32px;
+}
+
+.wp-block-mbn-theme-section-location-proudly-serving .ldp-serving__col {
+  /* Clean column layout */
+}
+
+.wp-block-mbn-theme-section-location-proudly-serving .ldp-serving__col-title {
+  font-family: 'Noto Serif', Georgia, serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.4;
+  color: #286fb7;
+  margin: 0 0 12px 0;
+}
+
+.wp-block-mbn-theme-section-location-proudly-serving .ldp-serving__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.wp-block-mbn-theme-section-location-proudly-serving .ldp-serving__links li {
+  margin-bottom: 6px;
+}
+
+.wp-block-mbn-theme-section-location-proudly-serving .ldp-serving__links li:last-child {
+  margin-bottom: 0;
+}
+
+.wp-block-mbn-theme-section-location-proudly-serving .ldp-serving__links a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #53585f;
+  text-decoration: none;
+  font-family: 'Heebo', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5;
+  cursor: default;
+}
+
+.wp-block-mbn-theme-section-location-proudly-serving .ldp-serving__links a svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: #286fb7;
+}

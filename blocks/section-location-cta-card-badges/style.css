@@ -1,0 +1,228 @@
+/**
+ * Section Location - CTA Card with Badges Block Styles
+ * 
+ * @package MBN_Theme
+ */
+.ldp-cta-card-badges-wrapper {
+  padding: 4rem 0;
+  background-color: #f8f8f8;
+}
+
+.ldp-cta-card-badges-wrapper .ldp-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* CTA Card Styles */
+.ldp-cta-card {
+  position: relative;
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 3rem;
+  background-color: #1a1a1a;
+}
+
+.ldp-cta-card--faq {
+  background-color: #0073aa;
+}
+
+.ldp-cta-card__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.3;
+  z-index: 1;
+}
+
+.ldp-cta-card__logo {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.ldp-cta-card__logo-left {
+  max-width: 150px;
+  height: auto;
+}
+
+.ldp-cta-card__body {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+}
+
+.ldp-cta-card__title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0 0 1rem 0;
+  color: #fff;
+}
+
+.ldp-cta-card__desc {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.ldp-btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ldp-cta-card__phone {
+  font-size: 1.125rem;
+  color: #fff;
+  margin: 0;
+}
+
+.ldp-cta-card__phone a {
+  color: #ffd700;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.ldp-cta-card__phone a:hover {
+  color: #ffed4e;
+  text-decoration: underline;
+}
+
+/* Badges Section */
+.ldp-faq__badges {
+  margin-top: 3rem;
+}
+
+.ldp-faq__badges-text {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #4a4a4a;
+  margin: 0 0 1rem 0;
+}
+
+.ldp-faq__badges-text:last-child {
+  margin-bottom: 0;
+}
+
+.ldp-faq__badge {
+  margin: 0;
+}
+
+
+
+/* FAQ CTA card */
+.ldp-cta-card--faq {
+  width: 100%;
+}
+
+/* FAQ badges */
+.ldp-faq__badges {
+  display: grid;
+  grid-template-columns: 410px auto;
+  gap: 32px;
+  align-items: center;
+}
+
+.ldp-faq__badges-text {
+  font-size: 18px;
+  line-height: 1.556;
+  color: var(--ldp-text-body);
+  margin: 0;
+}
+.ldp-faq__badges-row-text {
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.ldp-faq__badges-row {
+  display: flex;
+  justify-content: flex-end;
+  gap : 40px;
+}
+
+.ldp-faq__badge {
+  margin: 0;
+  flex-shrink: 0;
+  max-width: 300px;
+  width: 100%;
+}
+
+.ldp-faq__badge img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media screen and (max-width: 1199px) {
+  
+  .ldp-faq__badge {
+    max-width: 250px;
+  }
+
+}
+/* =============================================
+   === TABLET: 768px to 1023px ===
+   ============================================= */
+@media screen and (max-width: 1023px) {
+  /* FAQ badges */
+  .ldp-faq__badges {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .ldp-faq__badges-row {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+  }
+
+  .ldp-faq__badge {
+    width: 200px;
+  }
+  /* CTA card */
+  .ldp-cta-card__body {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .ldp-cta-card__text {
+    width: 100%;
+  }
+
+  .ldp-cta-card__actions {
+    width: 100%;
+  }
+  .ldp-faq__badges-row-text {
+    max-width: 100%;
+  }
+}
+
+/* =============================================
+   === MOBILE: below 768px ===
+   ============================================= */
+@media screen and (max-width: 767px) {
+
+  .ldp-faq__badges-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+}

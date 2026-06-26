@@ -1,0 +1,295 @@
+/* Shared styles for location detailed section blocks. */
+
+/* === DESIGN TOKENS === */
+:root {
+  --ldp-blue-950:    #13263e;
+  --ldp-blue-800:    #1d456f;
+  --ldp-blue-600:    #286fb7;
+  --ldp-blue-500:    #3480c3;
+  --ldp-blue-50:     #f3f7fc;
+  --ldp-yellow-700:  #a37005;
+  --ldp-yellow-500:  #ecc806;
+  --ldp-yellow-400:  #fde212;
+  --ldp-secondary-800: #86570d;
+  --ldp-grey-800:    #646b73;
+  --ldp-grey-300:    #d5dadd;
+  --ldp-grey-200:    #e8eaec;
+  --ldp-grey-50:     #f8f9fa;
+  --ldp-text-heading: #13263e;
+  --ldp-text-body:   #53585f;
+  --ldp-text-link:   #363b3f;
+  --ldp-white:       #ffffff;
+  --ldp-font-primary:   'Noto Serif', Georgia, serif;
+  --ldp-font-secondary: 'Heebo', Arial, sans-serif;
+  --ldp-max-width: 1440px;
+  --ldp-content-width: 1366px;
+  --ldp-section-pad-v: 80px;
+  --ldp-section-pad-h: clamp(24px, 4vw, 170px);
+}
+
+/* === BASE RESETS (scoped) === */
+.ldp-why-choose,
+.ldp-case-results,
+.ldp-testimonial,
+.ldp-how-we-help,
+.ldp-cases-handle,
+.ldp-fault,
+.ldp-faq,
+.ldp-serving {
+  box-sizing: border-box;
+  font-family: var(--ldp-font-secondary);
+  color: var(--ldp-text-body);
+  font-size: 18px;
+  line-height: 1.556;
+}
+
+.ldp-why-choose *,
+.ldp-case-results *,
+.ldp-testimonial *,
+.ldp-how-we-help *,
+.ldp-cases-handle *,
+.ldp-fault *,
+.ldp-faq *,
+.ldp-serving * {
+  box-sizing: border-box;
+}
+
+/* === CONTAINER === */
+.ldp-container {
+  max-width: var(--ldp-content-width);
+  margin-inline: auto;
+  padding-inline: var(--ldp-section-pad-h);
+  width: 100%;
+}
+
+/* === SHARED TYPOGRAPHY === */
+.ldp-section-title {
+  font-family: var(--ldp-font-primary);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.43;
+  color: var(--ldp-text-heading);
+  margin: 0;
+}
+
+.ldp-section-title--center {
+  text-align: center;
+}
+
+.ldp-section-subtitle {
+  font-family: var(--ldp-font-secondary);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.556;
+  color: var(--ldp-text-body);
+  margin: 0;
+}
+
+.ldp-section-subtitle--center {
+  text-align: center;
+}
+
+.ldp-section-subtitle a,
+.ldp-section-subtitle--center a {
+  color: var(--ldp-text-body);
+  text-decoration: underline;
+}
+
+/* === SHARED BUTTON === */
+.ldp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 88px;
+  font-family: var(--ldp-font-secondary);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.56px;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+}
+
+.ldp-btn--yellow {
+  background: linear-gradient(189deg, var(--ldp-yellow-400) 2.47%, var(--ldp-yellow-500) 35.13%, var(--ldp-yellow-700) 100%);
+  border: 1px solid var(--ldp-yellow-500);
+  color: var(--ldp-white);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.16);
+  white-space: nowrap;
+}
+
+.ldp-btn--outline {
+  background: transparent;
+  border: 1px solid rgba(19, 38, 62, 0.24);
+  color: var(--ldp-blue-950);
+}
+
+.ldp-btn--yellow:hover {
+  background: linear-gradient(180deg, #FFF24C 0%, #FDE212 50%, #E5C700 100%);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+  color: var(--ldp-blue-950);
+}
+
+.ldp-btn--yellow:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* === SHARED LINK GRID (chevron lists) === */
+.ldp-link-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+}
+
+.ldp-link-grid li a {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px 2px 0;
+  font-family: var(--ldp-font-secondary);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ldp-text-link);
+  text-decoration: none;
+}
+
+.ldp-link-grid li a img {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.ldp-link-grid li a:hover {
+  text-decoration: underline;
+}
+
+/* === CTA CARD (shared) === */
+.ldp-cta-card {
+  position: relative;
+  border: 1px solid var(--ldp-blue-600);
+  border-radius: 16px;
+  padding: 24px 32px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px var(--ldp-blue-800), 0 4px 28px rgba(52, 128, 195, 0.8);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ldp-cta-card__bg {
+  position: absolute !important;
+  inset: 0;
+  border-radius: 16px;
+  background: linear-gradient(-48deg, var(--ldp-blue-600) 37.56%, var(--ldp-blue-950) 100%);
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: multiply;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.ldp-cta-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: linear-gradient(-48deg, var(--ldp-blue-600) 37.56%, var(--ldp-blue-950) 100%);
+  z-index: 0;
+}
+
+.ldp-cta-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ldp-cta-card__logo {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  width: 56px;
+  height: 47px;
+  flex-shrink: 0;
+}
+
+.ldp-cta-card__logo img {
+  width: 100%;
+}
+
+.ldp-cta-card__body {
+  display: flex;
+  gap: 24px;
+  align-items: flex-end;
+}
+
+.ldp-cta-card__text {
+  flex: 0 0 auto;
+  width: clamp(280px, 65%, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ldp-cta-card__title {
+  font-family: var(--ldp-font-primary);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.45;
+  color: var(--ldp-white);
+  margin: 0;
+}
+
+.ldp-cta-card__desc {
+  font-family: var(--ldp-font-secondary);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ldp-grey-300);
+  margin: 0;
+}
+
+.ldp-cta-card__actions {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.ldp-cta-card__phone {
+  font-family: var(--ldp-font-secondary);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.56px;
+  text-transform: uppercase;
+  color: var(--ldp-white);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.ldp-cta-card__phone a {
+  color: var(--ldp-yellow-400);
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+
+@media screen and (max-width: 479px){
+  .ldp-btn {
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    text-wrap: auto;
+    width: 100%;
+  }
+  .ldp-cta-card {
+    padding: 2rem 1.5rem;
+  }
+}

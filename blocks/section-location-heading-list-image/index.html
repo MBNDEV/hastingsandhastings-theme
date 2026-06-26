@@ -1,0 +1,293 @@
+<!--
+Asset Manifest:
+- heading-list-image-photo.jpg: Section photo (e.g. medical/injury scene, hospital care)
+- chevron-right.svg: Blue chevron arrow icon used before each list item title
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section Location – Heading List with Image</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Heebo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<!-- =============================================
+     SECTION: Location – Heading List with Image
+     Dynamic fields:
+       .loc-hlimg__intro        — repeat <p> for multiple intro paragraphs
+       .loc-hlimg__list-item    — repeat <li> for more list items
+       .loc-hlimg__footer-para  — repeat <p> for multiple footer paragraphs
+
+     List variants (add modifier to <ul>):
+       (default)                — single column, chevron + bold title + description
+       loc-hlimg__list--two-col — 2-column grid, chevron + plain single-line label
+     ============================================= -->
+
+<section class="loc-hlimg">
+  <div class="loc-hlimg__container">
+
+    <!-- ── Header (centered) ──────────────────────────────── -->
+    <header class="loc-hlimg__header">
+      <h3 class="loc-hlimg__heading">
+        Compensation for a Personal Injury
+      </h3>
+
+      <!-- Optional: repeat this <p> for multiple intro paragraphs -->
+      <p class="loc-hlimg__intro">
+        Personal injury claimants in Arizona can recover various types of compensation, including:
+      </p>
+    </header>
+
+    <!-- ── Body: list + image ─────────────────────────────── -->
+    <div class="loc-hlimg__body">
+
+      <ul class="loc-hlimg__list">
+
+        <!-- Optional: repeat this <li> for each list item -->
+        <li class="loc-hlimg__list-item">
+          <img
+            class="loc-hlimg__item-icon"
+            src="assets/images/chevron-right.svg"
+            alt=""
+            aria-hidden="true"
+            width="24"
+            height="24"
+          >
+          <div class="loc-hlimg__item-text">
+            <strong class="loc-hlimg__item-title">Economic Damages</strong>
+            <span class="loc-hlimg__item-desc">To cover quantifiable losses such as medical expenses, lost wages, and property damage.</span>
+          </div>
+        </li>
+
+        <li class="loc-hlimg__list-item">
+          <img
+            class="loc-hlimg__item-icon"
+            src="assets/images/chevron-right.svg"
+            alt=""
+            aria-hidden="true"
+            width="24"
+            height="24"
+          >
+          <div class="loc-hlimg__item-text">
+            <strong class="loc-hlimg__item-title">Non-economic Damages</strong>
+            <span class="loc-hlimg__item-desc">To compensate for subjective, non-monetary losses like pain, suffering, and emotional distress.</span>
+          </div>
+        </li>
+
+        <li class="loc-hlimg__list-item">
+          <img
+            class="loc-hlimg__item-icon"
+            src="assets/images/chevron-right.svg"
+            alt=""
+            aria-hidden="true"
+            width="24"
+            height="24"
+          >
+          <div class="loc-hlimg__item-text">
+            <strong class="loc-hlimg__item-title">Punitive Damages</strong>
+            <span class="loc-hlimg__item-desc">In some cases, a court may award you punitive damages if the at-fault party's conduct was particularly egregious, serving as a punishment and deterrent for such behavior.</span>
+          </div>
+        </li>
+
+      </ul>
+
+      <figure class="loc-hlimg__image-wrap">
+        <img
+          class="loc-hlimg__image"
+          src="assets/images/heading-list-image-photo.jpg"
+          alt="Medical professional providing care to a patient"
+        >
+      </figure>
+
+    </div>
+    <!-- ── /Body ───────────────────────────────────────────── -->
+
+    <!-- ══════════════════════════════════════════════════════
+         ALTERNATE BODY: Two-column list variant
+         Replace <ul class="loc-hlimg__list"> above with
+         <ul class="loc-hlimg__list loc-hlimg__list--two-col">
+         and use <a class="loc-hlimg__item-label" href="#"> per item
+         (no title/desc split).
+         ══════════════════════════════════════════════════════ -->
+    <div class="loc-hlimg__body">
+
+      <ul class="loc-hlimg__list loc-hlimg__list--two-col">
+
+        <!-- Optional: repeat this <li> for each list item -->
+        <li class="loc-hlimg__list-item">
+          <img
+            class="loc-hlimg__item-icon"
+            src="assets/images/chevron-right.svg"
+            alt=""
+            aria-hidden="true"
+            width="24"
+            height="24"
+          >
+          <a class="loc-hlimg__item-label" href="#">Car Accident Injuries</a>
+        </li>
+
+        <li class="loc-hlimg__list-item">
+          <img
+            class="loc-hlimg__item-icon"
+            src="assets/images/chevron-right.svg"
+            alt=""
+            aria-hidden="true"
+            width="24"
+            height="24"
+          >
+          <a class="loc-hlimg__item-label" href="#">Motorcycle Accidents</a>
+        </li>
+
+        <li class="loc-hlimg__list-item">
+          <img
+            class="loc-hlimg__item-icon"
+            src="assets/images/chevron-right.svg"
+            alt=""
+            aria-hidden="true"
+            width="24"
+            height="24"
+          >
+          <a class="loc-hlimg__item-label" href="#">Burn Accidents</a>
+        </li>
+
+        <li class="loc-hlimg__list-item">
+          <img
+            class="loc-hlimg__item-icon"
+            src="assets/images/chevron-right.svg"
+            alt=""
+            aria-hidden="true"
+            width="24"
+            height="24"
+          >
+          <a class="loc-hlimg__item-label" href="#">Pedestrian Accidents</a>
+        </li>
+
+        <li class="loc-hlimg__list-item">
+          <img
+            class="loc-hlimg__item-icon"
+            src="assets/images/chevron-right.svg"
+            alt=""
+            aria-hidden="true"
+            width="24"
+            height="24"
+          >
+          <a class="loc-hlimg__item-label" href="#">Bicycle Accidents</a>
+        </li>
+
+        <li class="loc-hlimg__list-item">
+          <img
+            class="loc-hlimg__item-icon"
+            src="assets/images/chevron-right.svg"
+            alt=""
+            aria-hidden="true"
+            width="24"
+            height="24"
+          >
+          <a class="loc-hlimg__item-label" href="#">Premises Liability Claims</a>
+        </li>
+
+        <li class="loc-hlimg__list-item">
+          <img
+            class="loc-hlimg__item-icon"
+            src="assets/images/chevron-right.svg"
+            alt=""
+            aria-hidden="true"
+            width="24"
+            height="24"
+          >
+          <a class="loc-hlimg__item-label" href="#">Catastrophic Injury</a>
+        </li>
+
+        <li class="loc-hlimg__list-item">
+          <img
+            class="loc-hlimg__item-icon"
+            src="assets/images/chevron-right.svg"
+            alt=""
+            aria-hidden="true"
+            width="24"
+            height="24"
+          >
+          <a class="loc-hlimg__item-label" href="#">Truck Accidents</a>
+        </li>
+
+        <li class="loc-hlimg__list-item">
+          <img
+            class="loc-hlimg__item-icon"
+            src="assets/images/chevron-right.svg"
+            alt=""
+            aria-hidden="true"
+            width="24"
+            height="24"
+          >
+          <a class="loc-hlimg__item-label" href="#">Construction Accidents</a>
+        </li>
+
+        <li class="loc-hlimg__list-item">
+          <img
+            class="loc-hlimg__item-icon"
+            src="assets/images/chevron-right.svg"
+            alt=""
+            aria-hidden="true"
+            width="24"
+            height="24"
+          >
+          <a class="loc-hlimg__item-label" href="#">Slip and Fall Accidents</a>
+        </li>
+
+        <li class="loc-hlimg__list-item">
+          <img
+            class="loc-hlimg__item-icon"
+            src="assets/images/chevron-right.svg"
+            alt=""
+            aria-hidden="true"
+            width="24"
+            height="24"
+          >
+          <a class="loc-hlimg__item-label" href="#">Dog Bites and Attacks</a>
+        </li>
+
+        <li class="loc-hlimg__list-item">
+          <img
+            class="loc-hlimg__item-icon"
+            src="assets/images/chevron-right.svg"
+            alt=""
+            aria-hidden="true"
+            width="24"
+            height="24"
+          >
+          <a class="loc-hlimg__item-label" href="#">Wrongful Death Claims</a>
+        </li>
+
+      </ul>
+
+      <figure class="loc-hlimg__image-wrap">
+        <img
+          class="loc-hlimg__image"
+          src="assets/images/heading-list-image-photo.jpg"
+          alt="Medical professional providing care to a patient"
+        >
+      </figure>
+
+    </div>
+    <!-- ── /Alternate Body ────────────────────────────────── -->
+
+    <!-- ── Footer paragraphs (centered) ──────────────────── -->
+    <footer class="loc-hlimg__footer">
+
+      <!-- Optional: repeat this <p> for multiple footer paragraphs -->
+      <p class="loc-hlimg__footer-para">
+        Also, Arizona follows a comparative negligence rule (<a href="https://www.azleg.gov/ars/12/02505.htm" target="_blank" rel="noopener">A.R.S. § 12-2505</a>), meaning you can still recover damages even if you are partially at fault. However, the amount may be reduced by your percentage of fault.
+      </p>
+
+    </footer>
+
+  </div>
+</section>
+
+</body>
+</html>
