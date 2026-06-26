@@ -6,7 +6,7 @@ import { Fragment } from '@wordpress/element';
 export default function Edit({ attributes, setAttributes }) {
 	const {
 		locationsHeading,
-		officeLocations,
+		officeLocations = [],
 		mapIframeUrl,
 		mapTitle
 	} = attributes;

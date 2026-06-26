@@ -31,7 +31,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
     <?php endif; ?>
 
     <!-- ===== OFFICE LOCATIONS GRID ===== -->
-    <?php if ( ! empty( $office_locations ) ) : ?>
+    <?php if ( ! empty( $office_locations ) && is_array( $office_locations ) ) : ?>
       <div class="contact-locations__offices-grid">
         <?php
         // Split locations into 3 columns
@@ -69,7 +69,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
                   <?php if ( ! empty( $office['phoneNumber'] ) ) : ?>
                     <li class="contact-locations__office-link contact-locations__office-link--phone">
                       <img src="<?php echo esc_url( $block_assets_uri . '/icon-phone-chevron.svg' ); ?>" alt="" width="24" height="24" aria-hidden="true">
-                      <a href="<?php echo esc_url( $office['phoneUrl'] ); ?>"><?php echo esc_html( $office['phoneNumber'] ); ?></a>
+                      <a href="<?php echo esc_url( $office['phoneUrl'] ?? '' ); ?>"><?php echo esc_html( $office['phoneNumber'] ); ?></a>
                     </li>
                   <?php endif; ?>
                 </ul>
