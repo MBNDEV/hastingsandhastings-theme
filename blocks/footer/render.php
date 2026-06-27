@@ -17,6 +17,7 @@ $locations_button_url       = $attributes['locationsButtonUrl'] ?? '#';
 $practice_areas_button_text = $attributes['practiceAreasButtonText'] ?? 'VIEW ALL PRACTICE AREAS';
 $practice_areas_button_url  = $attributes['practiceAreasButtonUrl'] ?? '#';
 $footer_logo_url            = $attributes['footerLogoUrl'] ?? '';
+$footer_logo_link_url       = $attributes['footerLogoLinkUrl'] ?? '/';
 $footer_tagline             = $attributes['footerTagline'] ?? '';
 $social_media               = $attributes['socialMedia'] ?? array();
 $copyright_text             = $attributes['copyrightText'] ?? '';
@@ -191,11 +192,13 @@ if ( ! function_exists( 'render_footer_menu' ) ) {
         <div class="max-w-[430px]">
           <?php if ( $footer_logo_url ) : ?>
             <div class="mb-6">
-              <img 
-                src="<?php echo esc_url( $footer_logo_url ); ?>" 
-                alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>"
-                class="w-full h-auto"
-              />
+              <a href="<?php echo esc_url( $footer_logo_link_url ); ?>">
+                <img 
+                  src="<?php echo esc_url( $footer_logo_url ); ?>" 
+                  alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>"
+                  class="w-full h-auto"
+                />
+              </a>
             </div>
           <?php endif; ?>
           

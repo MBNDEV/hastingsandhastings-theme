@@ -90,7 +90,7 @@ function SortableSocialItem({ item, index, updateItem, removeItem, duplicateItem
 }
 
 export default function Edit({ attributes, setAttributes }) {
-  const { locationsMenuId, practiceAreasMenuId, mainFooterMenuId, locationsButtonText, locationsButtonUrl, practiceAreasButtonText, practiceAreasButtonUrl, footerLogoUrl, footerLogoId, footerTagline, socialMedia, copyrightText, mobileContactUrl, mobilePhoneNumber } = attributes;
+  const { locationsMenuId, practiceAreasMenuId, mainFooterMenuId, locationsButtonText, locationsButtonUrl, practiceAreasButtonText, practiceAreasButtonUrl, footerLogoUrl, footerLogoId, footerLogoLinkUrl, footerTagline, socialMedia, copyrightText, mobileContactUrl, mobilePhoneNumber } = attributes;
   
   const [menus, setMenus] = useState([]);
 
@@ -243,6 +243,15 @@ export default function Edit({ attributes, setAttributes }) {
                 )}
               </div>
             )}
+          />
+
+          <TextControl
+            label={__('Logo Link URL', 'mbn-theme')}
+            value={footerLogoLinkUrl}
+            onChange={(value) => setAttributes({ footerLogoLinkUrl: value })}
+            placeholder="/"
+            type="url"
+            style={{ marginTop: '15px' }}
           />
 
           <TextareaControl
