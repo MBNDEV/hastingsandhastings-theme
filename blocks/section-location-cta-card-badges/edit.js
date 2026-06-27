@@ -1,7 +1,12 @@
 import { useBlockProps, InspectorControls, RichText, MediaUpload } from '@wordpress/block-editor';
 import { PanelBody, TextControl, TextareaControl, Button } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
+import { Fragment, useEffect } from '@wordpress/element';
+
+// Generate unique ID
+const generateUniqueId = () => {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2);
+};
 
 export default function Edit({ attributes, setAttributes }) {
   const {
@@ -22,6 +27,34 @@ export default function Edit({ attributes, setAttributes }) {
 
   const blockProps = useBlockProps();
 
+  // Ensure all items have unique IDs
+  useEffect(() => {
+    let needsUpdate = false;
+    
+    const updatedParagraphs = badgesTextParagraphs.map(p => {
+      if (!p.id) {
+        needsUpdate = true;
+        return { ...p, id: generateUniqueId() };
+      }
+      return p;
+    });
+    
+    const updatedBadges = badgesItems.map(b => {
+      if (!b.id) {
+        needsUpdate = true;
+        return { ...b, id: generateUniqueId() };
+      }
+      return b;
+    });
+    
+    if (needsUpdate) {
+      setAttributes({
+        badgesTextParagraphs: updatedParagraphs,
+        badgesItems: updatedBadges
+      });
+    }
+  }, [badgesTextParagraphs, badgesItems, setAttributes]);
+
   // Helper to update paragraph
   const updateParagraph = (index, updates) => {
     const updated = [...badgesTextParagraphs];
@@ -32,7 +65,7 @@ export default function Edit({ attributes, setAttributes }) {
   // Helper to add paragraph
   const addParagraph = () => {
     setAttributes({
-      badgesTextParagraphs: [...badgesTextParagraphs, { text: '' }]
+      badgesTextParagraphs: [...badgesTextParagraphs, { id: generateUniqueId(), text: '' }]
     });
   };
 
@@ -53,6 +86,7 @@ export default function Edit({ attributes, setAttributes }) {
   const addBadge = () => {
     setAttributes({
       badgesItems: [...badgesItems, {
+        id: generateUniqueId(),
         imageUrl: '',
         imageId: 0,
         imageFallback: '',
@@ -164,7 +198,7 @@ export default function Edit({ attributes, setAttributes }) {
         {/* Badges Text Paragraphs */}
         <PanelBody title={__('Badges Text Paragraphs', 'mbn-theme')} initialOpen={false}>
           {badgesTextParagraphs.map((paragraph, index) => (
-            <div key={index} style={{ marginBottom: '15px', padding: '12px', border: '1px solid #ddd', borderRadius: '4px' }}>
+            <div key={paragraph.id || index} style={{ marginBottom: '15px', padding: '12px', border: '1px solid #ddd', borderRadius: '4px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                 <strong>{__('Paragraph', 'mbn-theme')} {index + 1}</strong>
                 <Button
@@ -190,7 +224,7 @@ export default function Edit({ attributes, setAttributes }) {
         {/* Badge Images */}
         <PanelBody title={__('Badge Images', 'mbn-theme')} initialOpen={false}>
           {badgesItems.map((badge, index) => (
-            <div key={index} style={{ marginBottom: '15px', padding: '12px', border: '1px solid #ddd', borderRadius: '4px' }}>
+            <div key={badge.id || index} style={{ marginBottom: '15px', padding: '12px', border: '1px solid #ddd', borderRadius: '4px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                 <strong>{__('Badge', 'mbn-theme')} {index + 1}</strong>
                 <Button

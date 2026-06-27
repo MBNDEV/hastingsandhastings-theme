@@ -240,7 +240,7 @@ function SortableRow( { row, index, updateRow, removeRow, duplicateRow, updatePa
             { __( 'Drag and drop to reorder items', 'mbn-theme' ) }
           </p>
 
-          { row.listItems && row.listItems.length > 0 && row.listItems.every( ( item ) => typeof item === 'object' && item.id ) && (
+          { row.listItems && row.listItems.length > 0 && row.listItems.every( ( item ) => item && typeof item === 'object' && item.id ) && (
             <DndContext
               sensors={ sensors }
               collisionDetection={ closestCenter }
@@ -427,7 +427,7 @@ export default function Edit( { attributes, setAttributes } ) {
         };
       }
       // If item is object but missing id, add it
-      if ( ! item.id ) {
+      if ( item && typeof item === 'object' && ! item.id ) {
         return { ...item, id: generateUniqueId() };
       }
       return item;
@@ -455,7 +455,7 @@ export default function Edit( { attributes, setAttributes } ) {
       // Migrate and ensure list items have IDs
       if ( row.listItems && row.listItems.length > 0 ) {
         const hasStringItems = row.listItems.some( ( item ) => typeof item === 'string' );
-        const hasMissingIds = row.listItems.some( ( item ) => typeof item === 'object' && ! item.id );
+        const hasMissingIds = row.listItems.some( ( item ) => item && typeof item === 'object' && ! item.id );
         
         if ( hasStringItems || hasMissingIds ) {
           updates.listItems = ensureListItemIds( row.listItems, row.listStyle || 'single' );
