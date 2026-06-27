@@ -192,7 +192,7 @@ if ( ! function_exists( 'render_footer_menu' ) ) {
         <div class="max-w-[430px]">
           <?php if ( $footer_logo_url ) : ?>
             <div class="mb-6">
-              <a href="<?php echo esc_url( $footer_logo_link_url ); ?>" aria-label="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
+              <a href="<?php echo esc_url( $footer_logo_link_url ); ?>">
                 <img 
                   src="<?php echo esc_url( $footer_logo_url ); ?>" 
                   alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>"
