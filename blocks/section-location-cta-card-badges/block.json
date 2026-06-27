@@ -13,7 +13,15 @@
     "file:./style.css"
   ],
   "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
   "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
     "ctaTitle": {
       "type": "string",
       "default": "Start Your Free Consultation"

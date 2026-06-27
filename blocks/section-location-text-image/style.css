@@ -93,10 +93,100 @@
   color: var(--ldp-text-heading, #13263e);
 }
 
+/* ── List with chevron icons ─────────────────────────────── */
+
+.section-loc-text-image__list--single-col,
+.section-loc-text-image__list--two-col {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.section-loc-text-image__list--two-col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+}
+
+.section-loc-text-image__list--single-col .section-loc-text-image__list-item,
+.section-loc-text-image__list--two-col .section-loc-text-image__list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 2px 8px 2px 0;
+}
+
+.section-loc-text-image__list--two-col .section-loc-text-image__list-item {
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.section-loc-text-image__list--two-col .section-loc-text-image__list-item:hover {
+  padding-left: 0.35rem;
+}
+
+.section-loc-text-image__item-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.section-loc-text-image__item-text {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  word-break: break-word;
+}
+
+.section-loc-text-image__item-title {
+  display: block;
+  color: #1a1a1a;
+  font-family: var(--ldp-font-secondary, 'Heebo', sans-serif);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.section-loc-text-image__item-desc {
+  display: block;
+  color: #363b3f;
+  font-family: var(--ldp-font-secondary, 'Heebo', sans-serif);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.section-loc-text-image__item-desc a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.section-loc-text-image__item-label {
+  color: #363b3f;
+  font-family: var(--ldp-font-secondary, 'Heebo', sans-serif);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.section-loc-text-image__item-label:hover {
+  color: var(--ldp-text-heading, #13263e);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ── Original bullet list (for backward compatibility) ───── */
+
 .section-loc-text-image__list {
   list-style: disc;
   margin: 0;
-  padding-left: 21px;
   color: var(--ldp-text-body, #53585f);
   font-family: var(--ldp-font-secondary, 'Heebo', sans-serif);
   font-weight: 400;

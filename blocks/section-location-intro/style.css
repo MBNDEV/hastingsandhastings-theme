@@ -12,12 +12,13 @@
 .ldp-why-choose .ldp-container {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding-bottom: 24px;
+  gap: 90px;
+  padding-bottom: 80px;
 }
 
-.ldp-why-choose > :not(.ldp-cta-card) {
-  gap: 90px;
+.ldp-why-choose > .ldp-container.ldp-cta-card {
+  padding-bottom: 48px;
+  gap: 24px;
 }
 
 .ldp-why-choose__header,
@@ -187,7 +188,6 @@
   grid-template-columns: 2fr 2fr;
   gap: 60px;
   align-items: center;
-  margin-bottom: 64px;
 }
 
 .ldp-why-choose__attorneys--reversed {

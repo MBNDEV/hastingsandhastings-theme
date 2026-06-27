@@ -55,7 +55,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
     <!-- ── Header (centered) ──────────────────────────────── -->
     <?php if ( ! empty( $heading ) || ! empty( $intro_paragraphs ) ) : ?>
-      <header class="loc-hlimg__header">
+      <div class="loc-hlimg__header">
         <?php if ( ! empty( $heading ) ) : ?>
           <h3 class="loc-hlimg__heading">
             <?php echo wp_kses_post( $heading ); ?>
@@ -71,7 +71,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
             <?php endif; ?>
           <?php endforeach; ?>
         <?php endif; ?>
-      </header>
+      </div>
     <?php endif; ?>
 
     <!-- ── Body: list + image ─────────────────────────────── -->
@@ -178,7 +178,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
     <!-- ── Footer paragraphs (centered) ──────────────────── -->
     <?php if ( ! empty( $footer_paragraphs ) && is_array( $footer_paragraphs ) ) : ?>
-      <footer class="loc-hlimg__footer">
+      <div class="loc-hlimg__footer">
         <?php foreach ( $footer_paragraphs as $paragraph ) : ?>
           <?php if ( ! empty( $paragraph ) ) : ?>
             <p class="loc-hlimg__footer-para">
@@ -186,7 +186,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
             </p>
           <?php endif; ?>
         <?php endforeach; ?>
-      </footer>
+      </div>
     <?php endif; ?>
 
   </div>

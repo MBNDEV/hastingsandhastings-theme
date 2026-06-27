@@ -8,6 +8,7 @@
 
 $block_assets_uri = get_theme_file_uri( '/build/blocks/section-location-cta-card-badges/assets/images' );
 
+$align                         = $attributes['align'] ?? 'full';
 $cta_title                     = $attributes['ctaTitle'] ?? 'Start Your Free Consultation';
 $cta_description               = $attributes['ctaDescription'] ?? '';
 $cta_button_text               = $attributes['ctaButtonText'] ?? 'CONTACT US TODAY';
@@ -36,7 +37,7 @@ $cta_logo = ! empty( $cta_logo_image_url )
 
 $wrapper_attributes = get_block_wrapper_attributes(
   array(
-	  'class' => 'ldp-cta-card-badges-wrapper',
+	  'class' => 'ldp-cta-card-badges-wrapper' . ( ! empty( $align ) ? ' align' . $align : '' ),
   )
 );
 ?>
