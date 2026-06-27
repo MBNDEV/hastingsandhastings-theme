@@ -47,6 +47,13 @@
   order: 2;
 }
 
+/* No image */
+@media screen and (min-width: 1024px) {
+  .section-loc-text-image__row--no-image {
+    margin-top: -80px;
+  }
+}
+
 /* ── Text column ──────────────────────────────────────────── */
 
 .section-loc-text-image__text {
