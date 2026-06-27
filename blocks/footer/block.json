@@ -47,6 +47,10 @@
       "type": "number",
       "default": 0
     },
+    "footerLogoLinkUrl": {
+      "type": "string",
+      "default": "/"
+    },
     "footerTagline": {
       "type": "string",
       "default": "Serving Arizona injury victims since 1979 with trusted experience, local support, and a lower 25% fee."
