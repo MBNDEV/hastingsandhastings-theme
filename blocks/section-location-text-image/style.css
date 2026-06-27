@@ -47,6 +47,11 @@
   order: 2;
 }
 
+/* No image */
+.section-loc-text-image__row--no-image {
+  margin-top: -80px;
+}
+
 /* ── Text column ──────────────────────────────────────────── */
 
 .section-loc-text-image__text {

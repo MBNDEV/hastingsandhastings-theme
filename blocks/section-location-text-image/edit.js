@@ -11,17 +11,282 @@ import {
   SelectControl,
   TextareaControl,
   ToggleControl,
+  Icon,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Fragment, useState } from '@wordpress/element';
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+
+// Sortable Row Component
+function SortableRow( { row, index, updateRow, removeRow, duplicateRow, updateParagraph, addParagraph, removeParagraph, updateListItem, addListItem, removeListItem, updateParagraphAfterList, addParagraphAfterList, removeParagraphAfterList } ) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable( { id: row.id } );
+
+  const style = {
+    transform: CSS.Transform.toString( transform ),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  return (
+    <div ref={ setNodeRef } style={ style }>
+      <PanelBody
+        title={
+          <div style={ { display: 'flex', alignItems: 'center', gap: '10px' } }>
+            <div { ...attributes } { ...listeners } style={ { cursor: 'grab', padding: '5px', display: 'flex', alignItems: 'center' } }>
+              <Icon icon="menu" />
+            </div>
+            <span>{ `${ __( 'Row', 'mbn-theme' ) } ${ index + 1 }` }</span>
+          </div>
+        }
+        initialOpen={ false }
+      >
+        <div style={ { display: 'flex', gap: '8px', marginBottom: '16px' } }>
+          <Button
+            icon="admin-page"
+            label={ __( 'Duplicate', 'mbn-theme' ) }
+            onClick={ () => duplicateRow( index ) }
+          />
+          <Button
+            icon="trash"
+            label={ __( 'Remove', 'mbn-theme' ) }
+            isDestructive
+            onClick={ () => {
+              if ( window.confirm( __( 'Are you sure you want to remove this row?', 'mbn-theme' ) ) ) {
+                removeRow( index );
+              }
+            } }
+          />
+        </div>
+
+        {/* Heading */}
+        <TextareaControl
+          label={ __( 'Heading', 'mbn-theme' ) }
+          value={ row.heading }
+          onChange={ ( value ) => updateRow( index, { heading: value } ) }
+          help={ __( 'Leave empty to hide the heading.', 'mbn-theme' ) }
+          rows={ 2 }
+        />
+
+        {/* Paragraphs */}
+        <div style={ { marginTop: '16px' } }>
+          <strong>{ __( 'Paragraphs', 'mbn-theme' ) }</strong>
+          { row.paragraphs && row.paragraphs.map( ( paragraph, pIndex ) => (
+            <div
+              key={ pIndex }
+              style={ {
+                border: '1px solid #ddd',
+                padding: '12px',
+                marginTop: '8px',
+                borderRadius: '4px',
+              } }
+            >
+              <TextareaControl
+                label={ `${ __( 'Paragraph', 'mbn-theme' ) } ${ pIndex + 1 }` }
+                value={ paragraph }
+                onChange={ ( value ) => updateParagraph( index, pIndex, value ) }
+                rows={ 3 }
+              />
+              <Button
+                isDestructive
+                isSmall
+                onClick={ () => removeParagraph( index, pIndex ) }
+                style={ { marginTop: '8px' } }
+              >
+                { __( 'Remove Paragraph', 'mbn-theme' ) }
+              </Button>
+            </div>
+          ) ) }
+          <Button
+            isSecondary
+            isSmall
+            onClick={ () => addParagraph( index ) }
+            style={ { marginTop: '8px' } }
+          >
+            { __( '+ Add Paragraph', 'mbn-theme' ) }
+          </Button>
+        </div>
+
+        {/* List Items */}
+        <div style={ { marginTop: '16px' } }>
+          <strong>{ __( 'List Items (Optional)', 'mbn-theme' ) }</strong>
+          { row.listItems && row.listItems.map( ( item, lIndex ) => (
+            <div
+              key={ lIndex }
+              style={ {
+                border: '1px solid #ddd',
+                padding: '12px',
+                marginTop: '8px',
+                borderRadius: '4px',
+              } }
+            >
+              <TextareaControl
+                label={ `${ __( 'Item', 'mbn-theme' ) } ${ lIndex + 1 }` }
+                value={ item }
+                onChange={ ( value ) => updateListItem( index, lIndex, value ) }
+                rows={ 2 }
+              />
+              <Button
+                isDestructive
+                isSmall
+                onClick={ () => removeListItem( index, lIndex ) }
+                style={ { marginTop: '8px' } }
+              >
+                { __( 'Remove Item', 'mbn-theme' ) }
+              </Button>
+            </div>
+          ) ) }
+          <Button
+            isSecondary
+            isSmall
+            onClick={ () => addListItem( index ) }
+            style={ { marginTop: '8px' } }
+          >
+            { __( '+ Add List Item', 'mbn-theme' ) }
+          </Button>
+        </div>
+
+        {/* Paragraphs After List */}
+        <div style={ { marginTop: '16px' } }>
+          <strong>{ __( 'Paragraphs After List (Optional)', 'mbn-theme' ) }</strong>
+          <p style={ { fontSize: '12px', color: '#757575', marginTop: '4px' } }>
+            { __( 'Add paragraphs that appear after the list items.', 'mbn-theme' ) }
+          </p>
+          { row.paragraphsAfterList && row.paragraphsAfterList.map( ( paragraph, paIndex ) => (
+            <div
+              key={ paIndex }
+              style={ {
+                border: '1px solid #ddd',
+                padding: '12px',
+                marginTop: '8px',
+                borderRadius: '4px',
+              } }
+            >
+              <TextareaControl
+                label={ `${ __( 'Paragraph', 'mbn-theme' ) } ${ paIndex + 1 }` }
+                value={ paragraph }
+                onChange={ ( value ) => updateParagraphAfterList( index, paIndex, value ) }
+                rows={ 3 }
+              />
+              <Button
+                isDestructive
+                isSmall
+                onClick={ () => removeParagraphAfterList( index, paIndex ) }
+                style={ { marginTop: '8px' } }
+              >
+                { __( 'Remove Paragraph', 'mbn-theme' ) }
+              </Button>
+            </div>
+          ) ) }
+          <Button
+            isSecondary
+            isSmall
+            onClick={ () => addParagraphAfterList( index ) }
+            style={ { marginTop: '8px' } }
+          >
+            { __( '+ Add Paragraph After List', 'mbn-theme' ) }
+          </Button>
+        </div>
+
+        {/* Image Position */}
+        <SelectControl
+          label={ __( 'Image Position', 'mbn-theme' ) }
+          value={ row.imagePosition }
+          options={ [
+            { label: __( 'Right', 'mbn-theme' ), value: 'right' },
+            { label: __( 'Left', 'mbn-theme' ), value: 'left' },
+          ] }
+          onChange={ ( value ) => updateRow( index, { imagePosition: value } ) }
+          help={ __( 'On mobile, images always appear above text.', 'mbn-theme' ) }
+        />
+
+        {/* Image Upload */}
+        <div style={ { marginTop: '16px' } }>
+          <strong>{ __( 'Image', 'mbn-theme' ) }</strong>
+          <MediaUploadCheck>
+            <MediaUpload
+              onSelect={ ( media ) =>
+                updateRow( index, { imageUrl: media.url, imageId: media.id } )
+              }
+              allowedTypes={ [ 'image' ] }
+              value={ row.imageId }
+              render={ ( { open } ) => (
+                <div style={ { marginTop: '8px' } }>
+                  <div style={ { display: 'flex', gap: '8px' } }>
+                    <Button onClick={ open } variant="secondary">
+                      { row.imageUrl
+                        ? __( 'Replace Image', 'mbn-theme' )
+                        : __( 'Select Image', 'mbn-theme' ) }
+                    </Button>
+                    { row.imageUrl && (
+                      <Button
+                        icon="trash"
+                        label={ __( 'Remove Image', 'mbn-theme' ) }
+                        isDestructive
+                        onClick={ () => updateRow( index, { imageUrl: '', imageId: 0 } ) }
+                      />
+                    ) }
+                  </div>
+                  { row.imageUrl && (
+                    <img
+                      src={ row.imageUrl }
+                      alt=""
+                      style={ {
+                        marginTop: '10px',
+                        maxWidth: '100%',
+                        height: 'auto',
+                        borderRadius: '8px',
+                      } }
+                    />
+                  ) }
+                </div>
+              ) }
+            />
+          </MediaUploadCheck>
+        </div>
+      </PanelBody>
+    </div>
+  );
+}
 
 export default function Edit( { attributes, setAttributes } ) {
   const { rows } = attributes;
   const [ activeRowIndex, setActiveRowIndex ] = useState( 0 );
 
+  const sensors = useSensors(
+    useSensor( PointerSensor ),
+    useSensor( KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    } )
+  );
+
   const blockProps = useBlockProps( {
     className: 'section-loc-text-image',
   } );
+
+  // Ensure all rows have unique IDs
+  const ensureRowIds = ( rowsArray ) => {
+    return rowsArray.map( ( row ) => {
+      if ( ! row.id ) {
+        return { ...row, id: Date.now().toString( 36 ) + Math.random().toString( 36 ).slice( 2 ) };
+      }
+      return row;
+    } );
+  };
+
+  // Initialize rows with IDs if they don't have them
+  if ( rows.length > 0 && ! rows[ 0 ].id ) {
+    const rowsWithIds = ensureRowIds( rows );
+    setAttributes( { rows: rowsWithIds } );
+  }
 
   // Update a specific row
   const updateRow = ( index, updates ) => {
@@ -33,6 +298,7 @@ export default function Edit( { attributes, setAttributes } ) {
   // Add a new row
   const addRow = () => {
     const newRow = {
+      id: Date.now().toString( 36 ) + Math.random().toString( 36 ).slice( 2 ),
       heading: 'New Section Heading',
       paragraphs: [ 'Enter paragraph text here.' ],
       listItems: [],
@@ -51,6 +317,31 @@ export default function Edit( { attributes, setAttributes } ) {
     setAttributes( { rows: newRows } );
     if ( activeRowIndex >= newRows.length ) {
       setActiveRowIndex( Math.max( 0, newRows.length - 1 ) );
+    }
+  };
+
+  // Duplicate a row
+  const duplicateRow = ( index ) => {
+    const rowToDuplicate = { ...rows[ index ], id: Date.now().toString( 36 ) + Math.random().toString( 36 ).slice( 2 ) };
+    const newRows = [
+      ...rows.slice( 0, index + 1 ),
+      rowToDuplicate,
+      ...rows.slice( index + 1 ),
+    ];
+    setAttributes( { rows: newRows } );
+  };
+
+  // Handle drag end
+  const handleDragEnd = ( event ) => {
+    const { active, over } = event;
+
+    if ( active.id !== over.id ) {
+      const oldIndex = rows.findIndex( ( row ) => row.id === active.id );
+      const newIndex = rows.findIndex( ( row ) => row.id === over.id );
+
+      setAttributes( {
+        rows: arrayMove( rows, oldIndex, newIndex ),
+      } );
     }
   };
 
@@ -145,218 +436,45 @@ export default function Edit( { attributes, setAttributes } ) {
     <Fragment>
       <InspectorControls>
         <PanelBody title={ __( 'Rows', 'mbn-theme' ) } initialOpen={ true }>
-          <p style={ { marginBottom: '12px', fontSize: '13px', color: '#757575' } }>
-            { __( 'Click a row in the preview to edit its content.', 'mbn-theme' ) }
+          <p style={ { marginBottom: '15px', fontSize: '13px', color: '#666' } }>
+            { __( 'Drag and drop to reorder rows', 'mbn-theme' ) }
           </p>
 
-          { rows.map( ( row, index ) => {
-            const isActive = index === activeRowIndex;
-            return (
-              <PanelBody
-                key={ index }
-                title={ `${ __( 'Row', 'mbn-theme' ) } ${ index + 1 }` }
-                initialOpen={ isActive }
-                opened={ isActive ? true : undefined }
+          { rows.length > 0 && rows[ 0 ].id && (
+            <DndContext
+              sensors={ sensors }
+              collisionDetection={ closestCenter }
+              onDragEnd={ handleDragEnd }
+            >
+              <SortableContext
+                items={ rows.map( ( row ) => row.id ) }
+                strategy={ verticalListSortingStrategy }
               >
-                {/* Heading */}
-                <TextareaControl
-                  label={ __( 'Heading', 'mbn-theme' ) }
-                  value={ row.heading }
-                  onChange={ ( value ) => updateRow( index, { heading: value } ) }
-                  help={ __( 'Leave empty to hide the heading.', 'mbn-theme' ) }
-                  rows={ 2 }
-                />
-
-                {/* Paragraphs */}
-                <div style={ { marginTop: '16px' } }>
-                  <strong>{ __( 'Paragraphs', 'mbn-theme' ) }</strong>
-                  { row.paragraphs && row.paragraphs.map( ( paragraph, pIndex ) => (
-                    <div
-                      key={ pIndex }
-                      style={ {
-                        border: '1px solid #ddd',
-                        padding: '12px',
-                        marginTop: '8px',
-                        borderRadius: '4px',
-                      } }
-                    >
-                      <TextareaControl
-                        label={ `${ __( 'Paragraph', 'mbn-theme' ) } ${ pIndex + 1 }` }
-                        value={ paragraph }
-                        onChange={ ( value ) => updateParagraph( index, pIndex, value ) }
-                        rows={ 3 }
-                      />
-                      <Button
-                        isDestructive
-                        isSmall
-                        onClick={ () => removeParagraph( index, pIndex ) }
-                        style={ { marginTop: '8px' } }
-                      >
-                        { __( 'Remove Paragraph', 'mbn-theme' ) }
-                      </Button>
-                    </div>
-                  ) ) }
-                  <Button
-                    isSecondary
-                    isSmall
-                    onClick={ () => addParagraph( index ) }
-                    style={ { marginTop: '8px' } }
-                  >
-                    { __( '+ Add Paragraph', 'mbn-theme' ) }
-                  </Button>
-                </div>
-
-                {/* List Items */}
-                <div style={ { marginTop: '16px' } }>
-                  <strong>{ __( 'List Items (Optional)', 'mbn-theme' ) }</strong>
-                  { row.listItems && row.listItems.map( ( item, lIndex ) => (
-                    <div
-                      key={ lIndex }
-                      style={ {
-                        border: '1px solid #ddd',
-                        padding: '12px',
-                        marginTop: '8px',
-                        borderRadius: '4px',
-                      } }
-                    >
-                      <TextareaControl
-                        label={ `${ __( 'Item', 'mbn-theme' ) } ${ lIndex + 1 }` }
-                        value={ item }
-                        onChange={ ( value ) => updateListItem( index, lIndex, value ) }
-                        rows={ 2 }
-                      />
-                      <Button
-                        isDestructive
-                        isSmall
-                        onClick={ () => removeListItem( index, lIndex ) }
-                        style={ { marginTop: '8px' } }
-                      >
-                        { __( 'Remove Item', 'mbn-theme' ) }
-                      </Button>
-                    </div>
-                  ) ) }
-                  <Button
-                    isSecondary
-                    isSmall
-                    onClick={ () => addListItem( index ) }
-                    style={ { marginTop: '8px' } }
-                  >
-                    { __( '+ Add List Item', 'mbn-theme' ) }
-                  </Button>
-                </div>
-
-                {/* Paragraphs After List */}
-                <div style={ { marginTop: '16px' } }>
-                  <strong>{ __( 'Paragraphs After List (Optional)', 'mbn-theme' ) }</strong>
-                  <p style={ { fontSize: '12px', color: '#757575', marginTop: '4px' } }>
-                    { __( 'Add paragraphs that appear after the list items.', 'mbn-theme' ) }
-                  </p>
-                  { row.paragraphsAfterList && row.paragraphsAfterList.map( ( paragraph, paIndex ) => (
-                    <div
-                      key={ paIndex }
-                      style={ {
-                        border: '1px solid #ddd',
-                        padding: '12px',
-                        marginTop: '8px',
-                        borderRadius: '4px',
-                      } }
-                    >
-                      <TextareaControl
-                        label={ `${ __( 'Paragraph', 'mbn-theme' ) } ${ paIndex + 1 }` }
-                        value={ paragraph }
-                        onChange={ ( value ) => updateParagraphAfterList( index, paIndex, value ) }
-                        rows={ 3 }
-                      />
-                      <Button
-                        isDestructive
-                        isSmall
-                        onClick={ () => removeParagraphAfterList( index, paIndex ) }
-                        style={ { marginTop: '8px' } }
-                      >
-                        { __( 'Remove Paragraph', 'mbn-theme' ) }
-                      </Button>
-                    </div>
-                  ) ) }
-                  <Button
-                    isSecondary
-                    isSmall
-                    onClick={ () => addParagraphAfterList( index ) }
-                    style={ { marginTop: '8px' } }
-                  >
-                    { __( '+ Add Paragraph After List', 'mbn-theme' ) }
-                  </Button>
-                </div>
-
-                {/* Image Position */}
-                <SelectControl
-                  label={ __( 'Image Position', 'mbn-theme' ) }
-                  value={ row.imagePosition }
-                  options={ [
-                    { label: __( 'Right', 'mbn-theme' ), value: 'right' },
-                    { label: __( 'Left', 'mbn-theme' ), value: 'left' },
-                  ] }
-                  onChange={ ( value ) => updateRow( index, { imagePosition: value } ) }
-                  help={ __( 'On mobile, images always appear above text.', 'mbn-theme' ) }
-                />
-
-                {/* Image Upload */}
-                <div style={ { marginTop: '16px' } }>
-                  <strong>{ __( 'Image', 'mbn-theme' ) }</strong>
-                  <MediaUploadCheck>
-                    <MediaUpload
-                      onSelect={ ( media ) =>
-                        updateRow( index, { imageUrl: media.url, imageId: media.id } )
-                      }
-                      allowedTypes={ [ 'image' ] }
-                      value={ row.imageId }
-                      render={ ( { open } ) => (
-                        <div style={ { marginTop: '8px' } }>
-                          <Button onClick={ open } variant="secondary">
-                            { row.imageUrl
-                              ? __( 'Replace Image', 'mbn-theme' )
-                              : __( 'Select Image', 'mbn-theme' ) }
-                          </Button>
-                          { row.imageUrl && (
-                            <img
-                              src={ row.imageUrl }
-                              alt=""
-                              style={ {
-                                marginTop: '10px',
-                                maxWidth: '100%',
-                                height: 'auto',
-                                borderRadius: '8px',
-                              } }
-                            />
-                          ) }
-                        </div>
-                      ) }
-                    />
-                  </MediaUploadCheck>
-                </div>
-
-                {/* Remove Row Button */}
-                <div style={ { marginTop: '16px', paddingTop: '16px', borderTop: '1px solid #ddd' } }>
-                  <Button
-                    isDestructive
-                    onClick={ () => {
-                      if (
-                        window.confirm(
-                          __( 'Are you sure you want to remove this row?', 'mbn-theme' )
-                        )
-                      ) {
-                        removeRow( index );
-                      }
-                    } }
-                  >
-                    { __( 'Remove Row', 'mbn-theme' ) }
-                  </Button>
-                </div>
-              </PanelBody>
-            );
-          } ) }
+                { rows.map( ( row, index ) => (
+                  <SortableRow
+                    key={ row.id }
+                    row={ row }
+                    index={ index }
+                    updateRow={ updateRow }
+                    removeRow={ removeRow }
+                    duplicateRow={ duplicateRow }
+                    updateParagraph={ updateParagraph }
+                    addParagraph={ addParagraph }
+                    removeParagraph={ removeParagraph }
+                    updateListItem={ updateListItem }
+                    addListItem={ addListItem }
+                    removeListItem={ removeListItem }
+                    updateParagraphAfterList={ updateParagraphAfterList }
+                    addParagraphAfterList={ addParagraphAfterList }
+                    removeParagraphAfterList={ removeParagraphAfterList }
+                  />
+                ) ) }
+              </SortableContext>
+            </DndContext>
+          ) }
 
           {/* Add Row Button */}
-          <Button isPrimary onClick={ addRow } style={ { marginTop: '12px' } }>
+          <Button isPrimary onClick={ addRow } style={ { marginTop: '15px' } }>
             { __( '+ Add New Row', 'mbn-theme' ) }
           </Button>
         </PanelBody>

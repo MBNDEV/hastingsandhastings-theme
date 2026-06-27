@@ -42,7 +42,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
       $fallback_image  = $block_assets_uri . '/' . $fallback_images[ $fallback_index ];
 
       // Use uploaded image or fallback
-      $final_image_url = ! empty( $image_url ) ? $image_url : $fallback_image;
+      $final_image_url = ! empty( $image_url ) ? $image_url : '';
 
       // Determine image alt text
       $image_alt = '';
@@ -54,6 +54,11 @@ $wrapper_attributes = get_block_wrapper_attributes(
       $row_class = 'left' === $image_position
         ? 'section-loc-text-image__row section-loc-text-image__row--image-left'
         : 'section-loc-text-image__row section-loc-text-image__row--image-right';
+
+      // Add no-image class if image is empty
+      if ( empty( $final_image_url ) ) {
+        $row_class .= ' section-loc-text-image__row--no-image';
+      }
       ?>
 
       <!-- ── ROW <?php echo esc_attr( $index + 1 ); ?> ──────────────────────────────────────── -->
@@ -96,7 +101,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
             <?php endforeach; ?>
           <?php endif; ?>
         </div>
-
+        <?php if ( ! empty( $final_image_url ) ) : ?>       
         <figure class="section-loc-text-image__image-wrap">
           <img
             class="section-loc-text-image__image"
@@ -104,7 +109,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
             alt="<?php echo esc_attr( $image_alt ); ?>"
           >
         </figure>
-
+        <?php endif; ?>
       </div>
       <!-- ── /ROW <?php echo esc_attr( $index + 1 ); ?> ──────────────────────────────────────── -->
 
