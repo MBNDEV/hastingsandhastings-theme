@@ -14,10 +14,15 @@ import {
   Icon,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment, useState, useEffect } from '@wordpress/element';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+
+// Generate unique ID for rows
+const generateUniqueId = () => {
+  return Date.now().toString( 36 ) + Math.random().toString( 36 ).slice( 2 );
+};
 
 // Sortable Row Component
 function SortableRow( { row, index, updateRow, removeRow, duplicateRow, updateParagraph, addParagraph, removeParagraph, updateListItem, addListItem, removeListItem, updateParagraphAfterList, addParagraphAfterList, removeParagraphAfterList } ) {
@@ -276,17 +281,20 @@ export default function Edit( { attributes, setAttributes } ) {
   const ensureRowIds = ( rowsArray ) => {
     return rowsArray.map( ( row ) => {
       if ( ! row.id ) {
-        return { ...row, id: Date.now().toString( 36 ) + Math.random().toString( 36 ).slice( 2 ) };
+        return { ...row, id: generateUniqueId() };
       }
       return row;
     } );
   };
 
   // Initialize rows with IDs if they don't have them
-  if ( rows.length > 0 && ! rows[ 0 ].id ) {
-    const rowsWithIds = ensureRowIds( rows );
-    setAttributes( { rows: rowsWithIds } );
-  }
+  useEffect( () => {
+    const hasMissingIds = rows.some( ( row ) => ! row.id );
+    if ( hasMissingIds ) {
+      const rowsWithIds = ensureRowIds( rows );
+      setAttributes( { rows: rowsWithIds } );
+    }
+  }, [ rows, setAttributes ] );
 
   // Update a specific row
   const updateRow = ( index, updates ) => {
@@ -298,7 +306,7 @@ export default function Edit( { attributes, setAttributes } ) {
   // Add a new row
   const addRow = () => {
     const newRow = {
-      id: Date.now().toString( 36 ) + Math.random().toString( 36 ).slice( 2 ),
+      id: generateUniqueId(),
       heading: 'New Section Heading',
       paragraphs: [ 'Enter paragraph text here.' ],
       listItems: [],
@@ -322,7 +330,7 @@ export default function Edit( { attributes, setAttributes } ) {
 
   // Duplicate a row
   const duplicateRow = ( index ) => {
-    const rowToDuplicate = { ...rows[ index ], id: Date.now().toString( 36 ) + Math.random().toString( 36 ).slice( 2 ) };
+    const rowToDuplicate = { ...rows[ index ], id: generateUniqueId() };
     const newRows = [
       ...rows.slice( 0, index + 1 ),
       rowToDuplicate,
@@ -335,7 +343,7 @@ export default function Edit( { attributes, setAttributes } ) {
   const handleDragEnd = ( event ) => {
     const { active, over } = event;
 
-    if ( active.id !== over.id ) {
+    if ( over && active.id !== over.id ) {
       const oldIndex = rows.findIndex( ( row ) => row.id === active.id );
       const newIndex = rows.findIndex( ( row ) => row.id === over.id );
 
@@ -440,7 +448,7 @@ export default function Edit( { attributes, setAttributes } ) {
             { __( 'Drag and drop to reorder rows', 'mbn-theme' ) }
           </p>
 
-          { rows.length > 0 && rows[ 0 ].id && (
+          { rows.length > 0 && rows.every( ( row ) => row.id ) && (
             <DndContext
               sensors={ sensors }
               collisionDetection={ closestCenter }

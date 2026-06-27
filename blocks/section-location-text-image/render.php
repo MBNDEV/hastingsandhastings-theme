@@ -33,14 +33,6 @@ $wrapper_attributes = get_block_wrapper_attributes(
       $image_id              = $row['imageId'] ?? 0;
       $image_position        = $row['imagePosition'] ?? 'right';
 
-      // Determine fallback image based on index
-      $fallback_images = array(
-		  'text-image-photo-01.jpg',
-		  'text-image-photo-02.jpg',
-      );
-      $fallback_index  = $index % count( $fallback_images );
-      $fallback_image  = $block_assets_uri . '/' . $fallback_images[ $fallback_index ];
-
       // Use uploaded image or fallback
       $final_image_url = ! empty( $image_url ) ? $image_url : '';
 

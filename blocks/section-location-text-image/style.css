@@ -48,8 +48,10 @@
 }
 
 /* No image */
-.section-loc-text-image__row--no-image {
-  margin-top: -80px;
+@media screen and (min-width: 1024px) {
+  .section-loc-text-image__row--no-image {
+    margin-top: -80px;
+  }
 }
 
 /* ── Text column ──────────────────────────────────────────── */
