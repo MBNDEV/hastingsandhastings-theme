@@ -10,8 +10,9 @@
 
 $rows = $attributes['rows'] ?? array();
 
-// Build path for local fallback images
+// Build path for local fallback images and icons
 $block_assets_uri = get_theme_file_uri( '/build/blocks/section-location-text-image/assets/images' );
+$chevron_icon     = $block_assets_uri . '/chevron-right.svg';
 
 $wrapper_attributes = get_block_wrapper_attributes(
   array(
@@ -27,6 +28,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
       <?php
       $heading               = $row['heading'] ?? '';
       $paragraphs            = $row['paragraphs'] ?? array();
+      $list_style            = $row['listStyle'] ?? 'single';
       $list_items            = $row['listItems'] ?? array();
       $paragraphs_after_list = $row['paragraphsAfterList'] ?? array();
       $image_url             = $row['imageUrl'] ?? '';
@@ -51,6 +53,11 @@ $wrapper_attributes = get_block_wrapper_attributes(
       if ( empty( $final_image_url ) ) {
         $row_class .= ' section-loc-text-image__row--no-image';
       }
+
+      // List class based on style
+      $list_class = 'two-column' === $list_style
+        ? 'section-loc-text-image__list section-loc-text-image__list--two-col'
+        : 'section-loc-text-image__list section-loc-text-image__list--single-col';
       ?>
 
       <!-- ── ROW <?php echo esc_attr( $index + 1 ); ?> ──────────────────────────────────────── -->
@@ -74,10 +81,67 @@ $wrapper_attributes = get_block_wrapper_attributes(
           <?php endif; ?>
 
           <?php if ( ! empty( $list_items ) && is_array( $list_items ) ) : ?>
-            <ul class="section-loc-text-image__list">
-              <?php foreach ( $list_items as $list_item ) : ?>
-                <?php if ( ! empty( $list_item ) ) : ?>
-                  <li><?php echo esc_html( $list_item ); ?></li>
+            <ul class="<?php echo esc_attr( $list_class ); ?>">
+              <?php foreach ( $list_items as $item ) : ?>
+                <?php
+                // Handle both old format (strings) and new format (objects)
+                $is_object = is_array( $item );
+
+                if ( 'two-column' === $list_style && $is_object ) :
+                  $label = $item['label'] ?? '';
+                  $url   = $item['url'] ?? '';
+                  ?>
+                  <?php if ( ! empty( $label ) ) : ?>
+                    <li class="section-loc-text-image__list-item">
+                      <img
+                        class="section-loc-text-image__item-icon"
+                        src="<?php echo esc_url( $chevron_icon ); ?>"
+                        alt=""
+                        aria-hidden="true"
+                        width="24"
+                        height="24"
+                      >
+                      <?php if ( ! empty( $url ) ) : ?>
+                        <a class="section-loc-text-image__item-label" href="<?php echo esc_url( $url ); ?>">
+                          <?php echo esc_html( $label ); ?>
+                        </a>
+                      <?php else : ?>
+                        <span class="section-loc-text-image__item-label">
+                          <?php echo esc_html( $label ); ?>
+                        </span>
+                      <?php endif; ?>
+                    </li>
+                  <?php endif; ?>
+                <?php elseif ( $is_object ) : ?>
+                  <?php
+                  $item_title       = $item['title'] ?? '';
+                  $item_description = $item['description'] ?? '';
+                  ?>
+                  <?php if ( ! empty( $item_title ) || ! empty( $item_description ) ) : ?>
+                    <li class="section-loc-text-image__list-item">
+                      <img
+                        class="section-loc-text-image__item-icon"
+                        src="<?php echo esc_url( $chevron_icon ); ?>"
+                        alt=""
+                        aria-hidden="true"
+                        width="24"
+                        height="24"
+                      >
+                      <div class="section-loc-text-image__item-text">
+                        <?php if ( ! empty( $item_title ) ) : ?>
+                          <strong class="section-loc-text-image__item-title"><?php echo wp_kses_post( $item_title ); ?></strong>
+                        <?php endif; ?>
+                        <?php if ( ! empty( $item_description ) ) : ?>
+                          <span class="section-loc-text-image__item-desc"><?php echo wp_kses_post( $item_description ); ?></span>
+                        <?php endif; ?>
+                      </div>
+                    </li>
+                  <?php endif; ?>
+                <?php else : ?>
+                  <?php // Backward compatibility for old string format ?>
+                  <?php if ( ! empty( $item ) ) : ?>
+                    <li><?php echo esc_html( $item ); ?></li>
+                  <?php endif; ?>
                 <?php endif; ?>
               <?php endforeach; ?>
             </ul>

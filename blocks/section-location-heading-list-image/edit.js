@@ -11,10 +11,138 @@ import {
   SelectControl,
   TextareaControl,
   TextControl,
+  Icon,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment, useState, useEffect } from '@wordpress/element';
 import BackgroundColorControl from '../shared/BackgroundColorControl';
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+
+// Generate unique ID for list items
+const generateUniqueId = () => {
+  return Date.now().toString( 36 ) + Math.random().toString( 36 ).slice( 2 );
+};
+
+// Sortable List Item Component
+function SortableListItem( { item, index, listStyle, updateListItem, removeListItem, duplicateListItem } ) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable( { id: item.id } );
+
+  const style = {
+    transform: CSS.Transform.toString( transform ),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    position: 'relative',
+  };
+
+  return (
+    <div
+      ref={ setNodeRef }
+      style={ style }
+    >
+      <div
+        style={ {
+          border: '1px solid #ddd',
+          padding: '12px',
+          marginTop: '8px',
+          borderRadius: '4px',
+          position: 'relative',
+        } }
+      >
+        {/* Action Buttons - Top Right Corner */}
+        <div style={ {
+          position: 'absolute',
+          top: '8px',
+          right: '8px',
+          display: 'flex',
+          gap: '4px',
+          zIndex: 10,
+        } }>
+          <div { ...attributes } { ...listeners } style={ { cursor: 'grab', padding: '4px', display: 'flex', alignItems: 'center' } }>
+            <Icon icon="menu" size={ 16 } />
+          </div>
+          <Button
+            icon="admin-page"
+            label={ __( 'Duplicate', 'mbn-theme' ) }
+            onClick={ () => duplicateListItem( index ) }
+            isSmall
+            style={ { minWidth: 'auto', padding: '4px' } }
+          />
+          <Button
+            icon="trash"
+            label={ __( 'Remove', 'mbn-theme' ) }
+            onClick={ () => removeListItem( index ) }
+            isDestructive
+            isSmall
+            style={ { minWidth: 'auto', padding: '4px' } }
+          />
+        </div>
+
+        <strong style={ { display: 'block', marginBottom: '8px', paddingRight: '80px' } }>
+          { __( 'Item', 'mbn-theme' ) } { index + 1 }
+        </strong>
+
+        { listStyle === 'two-column' ? (
+          <Fragment>
+            <TextControl
+              label={ __( 'Label', 'mbn-theme' ) }
+              value={ item.label || '' }
+              onChange={ ( value ) => updateListItem( index, { label: value } ) }
+            />
+            <TextControl
+              label={ __( 'URL (Optional)', 'mbn-theme' ) }
+              value={ item.url || '' }
+              onChange={ ( value ) => updateListItem( index, { url: value } ) }
+              help={ __( 'Leave empty for plain text', 'mbn-theme' ) }
+            />
+          </Fragment>
+        ) : (
+          <Fragment>
+            <TextControl
+              label={ __( 'Title', 'mbn-theme' ) }
+              value={ item.title || '' }
+              onChange={ ( value ) => updateListItem( index, { title: value } ) }
+            />
+            <div style={ { marginTop: '8px' } }>
+              <label
+                style={ {
+                  display: 'block',
+                  marginBottom: '8px',
+                  fontWeight: '600',
+                  fontSize: '13px',
+                } }
+              >
+                { __( 'Description', 'mbn-theme' ) }
+              </label>
+              <RichText
+                tagName="div"
+                value={ item.description || '' }
+                onChange={ ( value ) => updateListItem( index, { description: value } ) }
+                placeholder={ __( 'Enter description...', 'mbn-theme' ) }
+                allowedFormats={ [ 'core/bold', 'core/italic', 'core/link', 'core/strikethrough', 'core/underline' ] }
+                style={ {
+                  border: '1px solid #ddd',
+                  borderRadius: '4px',
+                  padding: '8px 12px',
+                  minHeight: '60px',
+                  backgroundColor: '#fff',
+                } }
+              />
+            </div>
+          </Fragment>
+        ) }
+      </div>
+    </div>
+  );
+}
 
 export default function Edit( { attributes, setAttributes } ) {
   const {
@@ -31,6 +159,32 @@ export default function Edit( { attributes, setAttributes } ) {
   } = attributes;
 
   const [ activeSection, setActiveSection ] = useState( 'header' );
+
+  const sensors = useSensors(
+    useSensor( PointerSensor ),
+    useSensor( KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    } )
+  );
+
+  // Ensure all list items have unique IDs
+  const ensureListItemIds = ( items ) => {
+    return items.map( ( item ) => {
+      if ( ! item.id ) {
+        return { ...item, id: generateUniqueId() };
+      }
+      return item;
+    } );
+  };
+
+  // Initialize list items with IDs if they don't have them
+  useEffect( () => {
+    const hasMissingIds = listItems.some( ( item ) => ! item.id );
+    if ( hasMissingIds ) {
+      const itemsWithIds = ensureListItemIds( listItems );
+      setAttributes( { listItems: itemsWithIds } );
+    }
+  }, [ listItems, setAttributes ] );
 
   // Handle background color for editor
   const isCustomColor = backgroundColor && backgroundColor.startsWith( '#' );
@@ -69,14 +223,39 @@ export default function Edit( { attributes, setAttributes } ) {
   // Add list item
   const addListItem = () => {
     const newItem = listStyle === 'two-column'
-      ? { title: '', description: '', label: 'New Item', url: '' }
-      : { title: 'New Item', description: '', label: '', url: '' };
+      ? { id: generateUniqueId(), title: '', description: '', label: 'New Item', url: '' }
+      : { id: generateUniqueId(), title: 'New Item', description: '', label: '', url: '' };
     setAttributes( { listItems: [ ...listItems, newItem ] } );
   };
 
   // Remove list item
   const removeListItem = ( index ) => {
     setAttributes( { listItems: listItems.filter( ( _, i ) => i !== index ) } );
+  };
+
+  // Duplicate list item
+  const duplicateListItem = ( index ) => {
+    const itemToDuplicate = { ...listItems[ index ], id: generateUniqueId() };
+    const newItems = [
+      ...listItems.slice( 0, index + 1 ),
+      itemToDuplicate,
+      ...listItems.slice( index + 1 ),
+    ];
+    setAttributes( { listItems: newItems } );
+  };
+
+  // Handle drag end for list items
+  const handleListDragEnd = ( event ) => {
+    const { active, over } = event;
+
+    if ( over && active.id !== over.id ) {
+      const oldIndex = listItems.findIndex( ( item ) => item.id === active.id );
+      const newIndex = listItems.findIndex( ( item ) => item.id === over.id );
+
+      setAttributes( {
+        listItems: arrayMove( listItems, oldIndex, newIndex ),
+      } );
+    }
   };
 
   // Update a specific before list paragraph
@@ -212,60 +391,35 @@ export default function Edit( { attributes, setAttributes } ) {
 
           <div style={ { marginTop: '16px' } }>
             <strong>{ __( 'Items', 'mbn-theme' ) }</strong>
-            { listItems && listItems.map( ( item, index ) => (
-              <div
-                key={ index }
-                style={ {
-                  border: '1px solid #ddd',
-                  padding: '12px',
-                  marginTop: '8px',
-                  borderRadius: '4px',
-                } }
+            <p style={ { marginBottom: '10px', fontSize: '13px', color: '#666' } }>
+              { __( 'Drag and drop to reorder items', 'mbn-theme' ) }
+            </p>
+            
+            { listItems.length > 0 && listItems.every( ( item ) => item.id ) && (
+              <DndContext
+                sensors={ sensors }
+                collisionDetection={ closestCenter }
+                onDragEnd={ handleListDragEnd }
               >
-                <strong style={ { display: 'block', marginBottom: '8px' } }>
-                  { __( 'Item', 'mbn-theme' ) } { index + 1 }
-                </strong>
-
-                { listStyle === 'two-column' ? (
-                  <Fragment>
-                    <TextControl
-                      label={ __( 'Label', 'mbn-theme' ) }
-                      value={ item.label || '' }
-                      onChange={ ( value ) => updateListItem( index, { label: value } ) }
-                    />
-                    <TextControl
-                      label={ __( 'URL (Optional)', 'mbn-theme' ) }
-                      value={ item.url || '' }
-                      onChange={ ( value ) => updateListItem( index, { url: value } ) }
-                      help={ __( 'Leave empty for plain text', 'mbn-theme' ) }
-                    />
-                  </Fragment>
-                ) : (
-                  <Fragment>
-                    <TextControl
-                      label={ __( 'Title', 'mbn-theme' ) }
-                      value={ item.title || '' }
-                      onChange={ ( value ) => updateListItem( index, { title: value } ) }
-                    />
-                    <TextareaControl
-                      label={ __( 'Description', 'mbn-theme' ) }
-                      value={ item.description || '' }
-                      onChange={ ( value ) => updateListItem( index, { description: value } ) }
-                      rows={ 2 }
-                    />
-                  </Fragment>
-                ) }
-
-                <Button
-                  isDestructive
-                  isSmall
-                  onClick={ () => removeListItem( index ) }
-                  style={ { marginTop: '8px' } }
+                <SortableContext
+                  items={ listItems.map( ( item ) => item.id ) }
+                  strategy={ verticalListSortingStrategy }
                 >
-                  { __( 'Remove Item', 'mbn-theme' ) }
-                </Button>
-              </div>
-            ) ) }
+                  { listItems.map( ( item, index ) => (
+                    <SortableListItem
+                      key={ item.id }
+                      item={ item }
+                      index={ index }
+                      listStyle={ listStyle }
+                      updateListItem={ updateListItem }
+                      removeListItem={ removeListItem }
+                      duplicateListItem={ duplicateListItem }
+                    />
+                  ) ) }
+                </SortableContext>
+              </DndContext>
+            ) }
+            
             <Button
               isPrimary
               isSmall

@@ -11,6 +11,7 @@ import {
   SelectControl,
   TextareaControl,
   ToggleControl,
+  TextControl,
   Icon,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
@@ -19,13 +20,112 @@ import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, us
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-// Generate unique ID for rows
+// Generate unique ID for rows and list items
 const generateUniqueId = () => {
   return Date.now().toString( 36 ) + Math.random().toString( 36 ).slice( 2 );
 };
 
+// Sortable List Item Component
+function SortableListItem( { rowIndex, item, index, listStyle, updateListItem, removeListItem, duplicateListItem } ) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable( { id: item.id } );
+
+  const style = {
+    transform: CSS.Transform.toString( transform ),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    position: 'relative',
+  };
+
+  return (
+    <div
+      ref={ setNodeRef }
+      style={ style }
+    >
+      <div
+        style={ {
+          border: '1px solid #ddd',
+          padding: '12px',
+          marginTop: '8px',
+          borderRadius: '4px',
+          position: 'relative',
+        } }
+      >
+        {/* Action Buttons - Top Right Corner */}
+        <div style={ {
+          position: 'absolute',
+          top: '8px',
+          right: '8px',
+          display: 'flex',
+          gap: '4px',
+          zIndex: 10,
+        } }>
+          <div { ...attributes } { ...listeners } style={ { cursor: 'grab', padding: '4px', display: 'flex', alignItems: 'center' } }>
+            <Icon icon="menu" size={ 16 } />
+          </div>
+          <Button
+            icon="admin-page"
+            label={ __( 'Duplicate', 'mbn-theme' ) }
+            onClick={ () => duplicateListItem( rowIndex, index ) }
+            isSmall
+            style={ { minWidth: 'auto', padding: '4px' } }
+          />
+          <Button
+            icon="trash"
+            label={ __( 'Remove', 'mbn-theme' ) }
+            onClick={ () => removeListItem( rowIndex, index ) }
+            isDestructive
+            isSmall
+            style={ { minWidth: 'auto', padding: '4px' } }
+          />
+        </div>
+
+        <strong style={ { display: 'block', marginBottom: '8px', paddingRight: '80px' } }>
+          { __( 'Item', 'mbn-theme' ) } { index + 1 }
+        </strong>
+
+        { listStyle === 'two-column' ? (
+          <Fragment>
+            <TextControl
+              label={ __( 'Label', 'mbn-theme' ) }
+              value={ item.label || '' }
+              onChange={ ( value ) => updateListItem( rowIndex, index, { label: value } ) }
+            />
+            <TextControl
+              label={ __( 'URL (Optional)', 'mbn-theme' ) }
+              value={ item.url || '' }
+              onChange={ ( value ) => updateListItem( rowIndex, index, { url: value } ) }
+              help={ __( 'Leave empty for plain text', 'mbn-theme' ) }
+            />
+          </Fragment>
+        ) : (
+          <Fragment>
+            <TextControl
+              label={ __( 'Title', 'mbn-theme' ) }
+              value={ item.title || '' }
+              onChange={ ( value ) => updateListItem( rowIndex, index, { title: value } ) }
+            />
+            <TextareaControl
+              label={ __( 'Description (Optional)', 'mbn-theme' ) }
+              value={ item.description || '' }
+              onChange={ ( value ) => updateListItem( rowIndex, index, { description: value } ) }
+              rows={ 2 }
+            />
+          </Fragment>
+        ) }
+      </div>
+    </div>
+  );
+}
+
 // Sortable Row Component
-function SortableRow( { row, index, updateRow, removeRow, duplicateRow, updateParagraph, addParagraph, removeParagraph, updateListItem, addListItem, removeListItem, updateParagraphAfterList, addParagraphAfterList, removeParagraphAfterList } ) {
+function SortableRow( { row, index, updateRow, removeRow, duplicateRow, updateParagraph, addParagraph, removeParagraph, updateListItem, addListItem, removeListItem, duplicateListItem, updateParagraphAfterList, addParagraphAfterList, removeParagraphAfterList, sensors } ) {
   const {
     attributes,
     listeners,
@@ -123,32 +223,58 @@ function SortableRow( { row, index, updateRow, removeRow, duplicateRow, updatePa
         {/* List Items */}
         <div style={ { marginTop: '16px' } }>
           <strong>{ __( 'List Items (Optional)', 'mbn-theme' ) }</strong>
-          { row.listItems && row.listItems.map( ( item, lIndex ) => (
-            <div
-              key={ lIndex }
-              style={ {
-                border: '1px solid #ddd',
-                padding: '12px',
-                marginTop: '8px',
-                borderRadius: '4px',
+          
+          <SelectControl
+            label={ __( 'List Style', 'mbn-theme' ) }
+            value={ row.listStyle || 'single' }
+            options={ [
+              { label: __( 'Single Column (Title + Description)', 'mbn-theme' ), value: 'single' },
+              { label: __( 'Two Column (Label/Link)', 'mbn-theme' ), value: 'two-column' },
+            ] }
+            onChange={ ( value ) => updateRow( index, { listStyle: value } ) }
+            help={ __( 'Single column shows title + description. Two column shows label + optional link.', 'mbn-theme' ) }
+            style={ { marginTop: '8px' } }
+          />
+
+          <p style={ { marginTop: '8px', marginBottom: '10px', fontSize: '13px', color: '#666' } }>
+            { __( 'Drag and drop to reorder items', 'mbn-theme' ) }
+          </p>
+
+          { row.listItems && row.listItems.length > 0 && row.listItems.every( ( item ) => item && typeof item === 'object' && item.id ) && (
+            <DndContext
+              sensors={ sensors }
+              collisionDetection={ closestCenter }
+              onDragEnd={ ( event ) => {
+                const { active, over } = event;
+                if ( over && active.id !== over.id ) {
+                  const oldIndex = row.listItems.findIndex( ( item ) => item.id === active.id );
+                  const newIndex = row.listItems.findIndex( ( item ) => item.id === over.id );
+                  const newRows = [ ...( row.listItems || [] ) ];
+                  const reorderedItems = arrayMove( newRows, oldIndex, newIndex );
+                  updateRow( index, { listItems: reorderedItems } );
+                }
               } }
             >
-              <TextareaControl
-                label={ `${ __( 'Item', 'mbn-theme' ) } ${ lIndex + 1 }` }
-                value={ item }
-                onChange={ ( value ) => updateListItem( index, lIndex, value ) }
-                rows={ 2 }
-              />
-              <Button
-                isDestructive
-                isSmall
-                onClick={ () => removeListItem( index, lIndex ) }
-                style={ { marginTop: '8px' } }
+              <SortableContext
+                items={ row.listItems.map( ( item ) => item.id ) }
+                strategy={ verticalListSortingStrategy }
               >
-                { __( 'Remove Item', 'mbn-theme' ) }
-              </Button>
-            </div>
-          ) ) }
+                { row.listItems.map( ( item, lIndex ) => (
+                  <SortableListItem
+                    key={ item.id }
+                    rowIndex={ index }
+                    item={ item }
+                    index={ lIndex }
+                    listStyle={ row.listStyle || 'single' }
+                    updateListItem={ updateListItem }
+                    removeListItem={ removeListItem }
+                    duplicateListItem={ duplicateListItem }
+                  />
+                ) ) }
+              </SortableContext>
+            </DndContext>
+          ) }
+
           <Button
             isSecondary
             isSmall
@@ -287,12 +413,61 @@ export default function Edit( { attributes, setAttributes } ) {
     } );
   };
 
-  // Initialize rows with IDs if they don't have them
+  // Ensure all list items have unique IDs and migrate old string format
+  const ensureListItemIds = ( items, listStyle ) => {
+    return items.map( ( item ) => {
+      // If item is a string (old format), convert to object
+      if ( typeof item === 'string' ) {
+        return {
+          id: generateUniqueId(),
+          title: item,
+          description: '',
+          label: '',
+          url: '',
+        };
+      }
+      // If item is object but missing id, add it
+      if ( item && typeof item === 'object' && ! item.id ) {
+        return { ...item, id: generateUniqueId() };
+      }
+      return item;
+    } );
+  };
+
+  // Initialize rows with IDs and migrate list items
   useEffect( () => {
-    const hasMissingIds = rows.some( ( row ) => ! row.id );
-    if ( hasMissingIds ) {
-      const rowsWithIds = ensureRowIds( rows );
-      setAttributes( { rows: rowsWithIds } );
+    let needsUpdate = false;
+    const updatedRows = rows.map( ( row ) => {
+      const updates = {};
+      
+      // Ensure row has ID
+      if ( ! row.id ) {
+        updates.id = generateUniqueId();
+        needsUpdate = true;
+      }
+      
+      // Ensure listStyle exists (default to 'single')
+      if ( ! row.listStyle ) {
+        updates.listStyle = 'single';
+        needsUpdate = true;
+      }
+      
+      // Migrate and ensure list items have IDs
+      if ( row.listItems && row.listItems.length > 0 ) {
+        const hasStringItems = row.listItems.some( ( item ) => typeof item === 'string' );
+        const hasMissingIds = row.listItems.some( ( item ) => item && typeof item === 'object' && ! item.id );
+        
+        if ( hasStringItems || hasMissingIds ) {
+          updates.listItems = ensureListItemIds( row.listItems, row.listStyle || 'single' );
+          needsUpdate = true;
+        }
+      }
+      
+      return Object.keys( updates ).length > 0 ? { ...row, ...updates } : row;
+    } );
+    
+    if ( needsUpdate ) {
+      setAttributes( { rows: updatedRows } );
     }
   }, [ rows, setAttributes ] );
 
@@ -309,6 +484,7 @@ export default function Edit( { attributes, setAttributes } ) {
       id: generateUniqueId(),
       heading: 'New Section Heading',
       paragraphs: [ 'Enter paragraph text here.' ],
+      listStyle: 'single',
       listItems: [],
       paragraphsAfterList: [],
       imageUrl: '',
@@ -383,10 +559,10 @@ export default function Edit( { attributes, setAttributes } ) {
   };
 
   // Update a specific list item in a row
-  const updateListItem = ( rowIndex, itemIndex, value ) => {
+  const updateListItem = ( rowIndex, itemIndex, updates ) => {
     const newRows = [ ...rows ];
     const newListItems = [ ...newRows[ rowIndex ].listItems ];
-    newListItems[ itemIndex ] = value;
+    newListItems[ itemIndex ] = { ...newListItems[ itemIndex ], ...updates };
     newRows[ rowIndex ] = { ...newRows[ rowIndex ], listItems: newListItems };
     setAttributes( { rows: newRows } );
   };
@@ -394,9 +570,13 @@ export default function Edit( { attributes, setAttributes } ) {
   // Add a list item to a row
   const addListItem = ( rowIndex ) => {
     const newRows = [ ...rows ];
+    const listStyle = newRows[ rowIndex ].listStyle || 'single';
+    const newItem = listStyle === 'two-column'
+      ? { id: generateUniqueId(), title: '', description: '', label: 'New Item', url: '' }
+      : { id: generateUniqueId(), title: 'New Item', description: '', label: '', url: '' };
     newRows[ rowIndex ] = {
       ...newRows[ rowIndex ],
-      listItems: [ ...newRows[ rowIndex ].listItems, '' ],
+      listItems: [ ...newRows[ rowIndex ].listItems, newItem ],
     };
     setAttributes( { rows: newRows } );
   };
@@ -408,6 +588,19 @@ export default function Edit( { attributes, setAttributes } ) {
       ...newRows[ rowIndex ],
       listItems: newRows[ rowIndex ].listItems.filter( ( _, i ) => i !== itemIndex ),
     };
+    setAttributes( { rows: newRows } );
+  };
+
+  // Duplicate a list item
+  const duplicateListItem = ( rowIndex, itemIndex ) => {
+    const newRows = [ ...rows ];
+    const itemToDuplicate = { ...newRows[ rowIndex ].listItems[ itemIndex ], id: generateUniqueId() };
+    const newListItems = [
+      ...newRows[ rowIndex ].listItems.slice( 0, itemIndex + 1 ),
+      itemToDuplicate,
+      ...newRows[ rowIndex ].listItems.slice( itemIndex + 1 ),
+    ];
+    newRows[ rowIndex ] = { ...newRows[ rowIndex ], listItems: newListItems };
     setAttributes( { rows: newRows } );
   };
 
@@ -472,9 +665,11 @@ export default function Edit( { attributes, setAttributes } ) {
                     updateListItem={ updateListItem }
                     addListItem={ addListItem }
                     removeListItem={ removeListItem }
+                    duplicateListItem={ duplicateListItem }
                     updateParagraphAfterList={ updateParagraphAfterList }
                     addParagraphAfterList={ addParagraphAfterList }
                     removeParagraphAfterList={ removeParagraphAfterList }
+                    sensors={ sensors }
                   />
                 ) ) }
               </SortableContext>
