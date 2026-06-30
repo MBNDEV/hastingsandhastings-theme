@@ -18,19 +18,19 @@ $block_items = $attributes['accordionItems'] ?? array();
 // Build a lookup map: lowercase title => images array, from all CPT posts.
 $cpt_image_map = array();
 if ( function_exists( 'mbn_get_review_months' ) ) {
-	foreach ( mbn_get_review_months() as $month ) {
-		$key                  = strtolower( trim( $month['title'] ) );
-		$cpt_image_map[ $key ] = array_map(
-			function ( $img ) {
-				return array(
-					'imageUrl' => $img['url'],
-					'imageId'  => $img['id'],
-					'imageAlt' => $img['alt'],
-				);
-			},
-			$month['images']
-		);
-	}
+  foreach ( mbn_get_review_months() as $month ) {
+      $key                   = strtolower( trim( $month['title'] ) );
+      $cpt_image_map[ $key ] = array_map(
+        function ( $img ) {
+            return array(
+                'imageUrl' => $img['url'],
+                'imageId'  => $img['id'],
+                'imageAlt' => $img['alt'],
+            );
+        },
+        $month['images']
+      );
+  }
 }
 
 // Merge: use block items for month labels/order, CPT for images.
@@ -50,11 +50,11 @@ foreach ( $block_items as $item ) {
 // Group items by year so we can render year dividers.
 $years = array();
 foreach ( $accordion_items as $item ) {
-	$year = $item['year'] ?? '';
-  if ( ! isset( $years[ $year ] ) ) {
-      $years[ $year ] = array();
+	$item_year = $item['year'] ?? '';
+  if ( ! isset( $years[ $item_year ] ) ) {
+      $years[ $item_year ] = array();
   }
-	$years[ $year ][] = $item;
+	$years[ $item_year ][] = $item;
 }
 
 $wrapper_attributes = get_block_wrapper_attributes(
@@ -69,10 +69,10 @@ $global_index = 0;
 <section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
   <div class="handwritten-reviews__container">
     <div class="handwritten-reviews__accordion">
-      <?php foreach ( $years as $year => $items ) : ?>
-        <?php if ( ! empty( $year ) ) : ?>
+      <?php foreach ( $years as $group_year => $items ) : ?>
+        <?php if ( ! empty( $group_year ) ) : ?>
           <div class="handwritten-reviews__year-group">
-            <h2 class="handwritten-reviews__year-heading"><?php echo esc_html( $year ); ?></h2>
+            <h2 class="handwritten-reviews__year-heading"><?php echo esc_html( $group_year ); ?></h2>
           </div>
         <?php endif; ?>
 

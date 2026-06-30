@@ -69,6 +69,14 @@ copy,
 setAttributes( { accordionItems: next } );
 };
 
+const moveItem = ( index, direction ) => {
+const next = [ ...accordionItems ];
+const target = index + direction;
+if ( target < 0 || target >= next.length ) return;
+[ next[ index ], next[ target ] ] = [ next[ target ], next[ index ] ];
+setAttributes( { accordionItems: next } );
+};
+
 const setMonthYear = ( index, month, year ) => {
 updateItem( index, { month, year, heading: month + ' ' + year } );
 };
@@ -101,6 +109,18 @@ backgroundColor: '#fff',
 <div style={ { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' } }>
 <strong>{ month } { year }</strong>
 <div style={ { display: 'flex', gap: '6px' } }>
+<Button
+icon="arrow-up-alt2"
+label={ __( 'Move Up', 'mbn-theme' ) }
+onClick={ () => moveItem( index, -1 ) }
+disabled={ index === 0 }
+/>
+<Button
+icon="arrow-down-alt2"
+label={ __( 'Move Down', 'mbn-theme' ) }
+onClick={ () => moveItem( index, 1 ) }
+disabled={ index === accordionItems.length - 1 }
+/>
 <Button
 icon="admin-page"
 label={ __( 'Duplicate', 'mbn-theme' ) }

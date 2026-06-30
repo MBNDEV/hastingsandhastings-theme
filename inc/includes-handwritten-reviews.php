@@ -120,7 +120,7 @@ function mbn_review_month_meta_box_render( WP_Post $post ): void {
 			type="hidden"
 			id="mbn_review_image_ids"
 			name="mbn_review_image_ids"
-			value="<?php echo $image_ids_json; ?>"
+			value="<?php echo esc_attr( $image_ids_json ); ?>"
 		>
 
 		<ul id="mbn-review-image-list" style="display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0 0 12px;padding:0;">
