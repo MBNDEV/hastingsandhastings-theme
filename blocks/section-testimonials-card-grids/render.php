@@ -39,7 +39,7 @@ $wrapper_attr = get_block_wrapper_attributes( array( 'class' => 'tfcards' ) );
 
 					</div>
 					<footer class="tfcards__card-footer">
-						<p class="tfcards__card-author"><?php echo esc_html( $card['author'] ?? 'Verified Client' ); ?></p>
+						<p class="tfcards__card-author"><?php echo esc_html( ! empty( $card['author'] ) ? $card['author'] : __( 'Verified Client', 'mbn-theme' ) ); ?></p>
 					</footer>
 				</article>
 			<?php endforeach; ?>

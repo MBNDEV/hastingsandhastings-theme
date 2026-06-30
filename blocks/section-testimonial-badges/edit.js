@@ -171,7 +171,7 @@ function SortableBadge({ item, index, updateItem, removeItem, duplicateItem }) {
 }
 
 export default function Edit({ attributes, setAttributes }) {
-  const { testimonials, badges, testimonialStyle, backgroundLayout } = attributes;
+  const { testimonials = [], badges = [], testimonialStyle = 'classic', backgroundLayout = 'full' } = attributes;
 
   const testimonialSensors = useSensors(
     useSensor(PointerSensor),
@@ -389,7 +389,7 @@ export default function Edit({ attributes, setAttributes }) {
                   {testimonials.slice(0, 1).map((testimonial) => (
                     <div key={testimonial.id} className="flex flex-col gap-4">
                       <div className="flex gap-1">
-                        {[...Array(testimonial.starRating)].map((_, i) => (
+                        {[...Array(parseInt(testimonial.starRating, 10) || 5)].map((_, i) => (
                           <span key={i} className="text-accent-gold text-xl">⭐</span>
                         ))}
                       </div>

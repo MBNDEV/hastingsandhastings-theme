@@ -8,14 +8,14 @@
  * @param WP_Block $block      Block instance
  */
 
-$cta_title           = $attributes['title'] ?? 'We value your feedback';
+$cta_title           = $attributes['title'] ?? __( 'We value your feedback', 'mbn-theme' );
 $body                = $attributes['body'] ?? '';
 $note                = $attributes['note'] ?? '';
 $yelp_logo_url       = $attributes['yelpLogoUrl'] ?? '';
-$yelp_button_label   = $attributes['yelpButtonLabel'] ?? 'Click Here to Review Us on Yelp';
+$yelp_button_label   = $attributes['yelpButtonLabel'] ?? __( 'Click Here to Review Us on Yelp', 'mbn-theme' );
 $yelp_button_url     = $attributes['yelpButtonUrl'] ?? '#';
 $google_logo_url     = $attributes['googleLogoUrl'] ?? '';
-$google_button_label = $attributes['googleButtonLabel'] ?? 'Click Here to Review Us on Google';
+$google_button_label = $attributes['googleButtonLabel'] ?? __( 'Click Here to Review Us on Google', 'mbn-theme' );
 $google_button_url   = $attributes['googleButtonUrl'] ?? '#';
 
 $block_assets_uri = get_theme_file_uri( '/build/blocks/section-testimonials-feedback-cta/assets/images' );

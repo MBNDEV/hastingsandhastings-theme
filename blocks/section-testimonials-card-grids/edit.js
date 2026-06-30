@@ -11,9 +11,11 @@ function generateUniqueId() {
 }
 
 function StarPreview({ count }) {
+  const parsedCount = parseInt(count, 10);
+  const starCount = !isNaN(parsedCount) ? Math.max(1, Math.min(5, parsedCount)) : 5;
   return (
     <div style={{ display: 'flex', gap: '2px', marginBottom: '4px' }}>
-      {[...Array(Math.max(1, Math.min(5, count)))].map((_, i) => (
+      {[...Array(starCount)].map((_, i) => (
         <span key={i} style={{ color: '#ecc806', fontSize: '16px' }}>★</span>
       ))}
     </div>
@@ -90,7 +92,7 @@ function SortableCard({ item, index, updateItem, removeItem, duplicateItem }) {
 }
 
 export default function Edit({ attributes, setAttributes }) {
-  const { cards } = attributes;
+  const { cards = [] } = attributes;
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -187,7 +189,7 @@ export default function Edit({ attributes, setAttributes }) {
                 {__('Add cards in the sidebar →', 'mbn-theme')}
               </p>
             )}
-            {cards.map((card) => (
+            {cards.map((card, index) => (
               <article key={card.id} className="tfcards__card">
                 <div className="tfcards__card-content">
                   <StarPreview count={card.starRating} />
@@ -196,24 +198,14 @@ export default function Edit({ attributes, setAttributes }) {
                       tagName="h2"
                       className="tfcards__card-headline"
                       value={card.headline}
-                      onChange={(value) => {
-                        const updated = cards.map((c) =>
-                          c.id === card.id ? { ...c, headline: value } : c
-                        );
-                        setAttributes({ cards: updated });
-                      }}
+                      onChange={(value) => updateCard(index, { headline: value })}
                       placeholder={__('Card headline…', 'mbn-theme')}
                     />
                     <RichText
                       tagName="p"
                       className="tfcards__card-quote"
                       value={card.quote}
-                      onChange={(value) => {
-                        const updated = cards.map((c) =>
-                          c.id === card.id ? { ...c, quote: value } : c
-                        );
-                        setAttributes({ cards: updated });
-                      }}
+                      onChange={(value) => updateCard(index, { quote: value })}
                       placeholder={__('Enter quote…', 'mbn-theme')}
                     />
                   </div>
