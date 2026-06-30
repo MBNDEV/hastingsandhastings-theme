@@ -45,6 +45,7 @@ blockDirs.forEach( ( dir ) => {
     {
       from: path.resolve( dir, 'block.json' ),
       to: path.resolve( __dirname, `build/blocks/${ blockName }/block.json` ),
+      noErrorOnMissing: true,
     },
     {
       from: path.resolve( dir, 'style.css' ),

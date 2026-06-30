@@ -20,6 +20,14 @@
       "type": "string",
       "default": "full"
     },
+    "testimonialStyle": {
+      "type": "string",
+      "default": "classic"
+    },
+    "backgroundLayout": {
+      "type": "string",
+      "default": "full"
+    },
     "testimonials": {
       "type": "array",
       "default": []

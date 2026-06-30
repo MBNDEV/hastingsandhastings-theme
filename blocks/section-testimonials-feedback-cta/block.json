@@ -1,0 +1,63 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-testimonials-feedback-cta",
+  "title": "Section: Testimonials Feedback CTA",
+  "category": "mbn-blocks",
+  "icon": "heart",
+  "description": "Feedback CTA card with Yelp and Google review buttons",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "We value your feedback"
+    },
+    "body": {
+      "type": "string",
+      "default": "If you liked our service please tell others about your experience. Every review posted online helps others find us and secure the help they need."
+    },
+    "note": {
+      "type": "string",
+      "default": "You can feel free to comment on our services without violating any confidentiality so long as you don't say your past employer's name or that you received money. But you certainly can share things like \"you were pleased with the result\" or \"happy with the outcome.\""
+    },
+    "yelpLogoId": {
+      "type": "number",
+      "default": 0
+    },
+    "yelpLogoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "yelpButtonLabel": {
+      "type": "string",
+      "default": "Click Here to Review Us on Yelp"
+    },
+    "yelpButtonUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "googleLogoId": {
+      "type": "number",
+      "default": 0
+    },
+    "googleLogoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "googleButtonLabel": {
+      "type": "string",
+      "default": "Click Here to Review Us on Google"
+    },
+    "googleButtonUrl": {
+      "type": "string",
+      "default": "#"
+    }
+  }
+}
