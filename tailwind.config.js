@@ -81,6 +81,7 @@ module.exports = {
       'text-muted': '#646B73',
       'light-blue': '#F3F7FC',
       'primary-200': '#C6DBF1',
+      'primary-300': '#93BDE6',
       
       // Footer colors
       'footer-bg': '#13263E',

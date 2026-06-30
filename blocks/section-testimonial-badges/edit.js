@@ -1,5 +1,5 @@
 import { useBlockProps, InspectorControls, RichText, MediaUpload } from '@wordpress/block-editor';
-import { PanelBody, Button, TextareaControl, Icon, RangeControl } from '@wordpress/components';
+import { PanelBody, Button, TextareaControl, Icon, RangeControl, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
@@ -71,6 +71,14 @@ function SortableTestimonial({ item, index, updateItem, removeItem, duplicateIte
         value={item.content}
         onChange={(value) => updateItem(index, { content: value })}
         rows={5}
+      />
+
+      <TextareaControl
+        label={__('Testimonial Description', 'mbn-theme')}
+        value={item.description}
+        onChange={(value) => updateItem(index, { description: value })}
+        rows={5}
+        help={__('Shown in Detailed style only', 'mbn-theme')}
       />
 
       <TextareaControl
@@ -163,7 +171,7 @@ function SortableBadge({ item, index, updateItem, removeItem, duplicateItem }) {
 }
 
 export default function Edit({ attributes, setAttributes }) {
-  const { testimonials, badges } = attributes;
+  const { testimonials, badges, testimonialStyle, backgroundLayout } = attributes;
 
   const testimonialSensors = useSensors(
     useSensor(PointerSensor),
@@ -192,6 +200,7 @@ export default function Edit({ attributes, setAttributes }) {
         id: generateUniqueId(),
         starRating: 5,
         content: '',
+        description: '',
         author: 'Verified Client'
       }]
     });
@@ -269,13 +278,34 @@ export default function Edit({ attributes, setAttributes }) {
   };
 
   const blockProps = useBlockProps({
-    className: 'testimonials-section-bg py-12 md:py-16 lg:py-20',
+    className: backgroundLayout === 'full' ? 'testimonials-section-bg py-12 md:py-16 lg:py-20' : '',
   });
 
   return (
     <Fragment>
       <InspectorControls>
+        <PanelBody title={__('Layout', 'mbn-theme')} initialOpen={true}>
+          <SelectControl
+            label={__('Background Width', 'mbn-theme')}
+            value={backgroundLayout}
+            options={[
+              { label: __('Full Width', 'mbn-theme'), value: 'full' },
+              { label: __('Contained', 'mbn-theme'), value: 'contained' },
+            ]}
+            onChange={(value) => setAttributes({ backgroundLayout: value })}
+          />
+        </PanelBody>
         <PanelBody title={__('Testimonials', 'mbn-theme')} initialOpen={true}>
+          <SelectControl
+            label={__('Testimonial Style', 'mbn-theme')}
+            value={testimonialStyle}
+            options={[
+              { label: __('Classic (Bordered)', 'mbn-theme'), value: 'classic' },
+              { label: __('Detailed', 'mbn-theme'), value: 'detailed' },
+            ]}
+            onChange={(value) => setAttributes({ testimonialStyle: value })}
+            style={{ marginBottom: '15px' }}
+          />
           <p style={{ marginBottom: '15px', fontSize: '13px', color: '#666' }}>
             {__('Drag and drop to reorder testimonials', 'mbn-theme')}
           </p>
@@ -341,13 +371,13 @@ export default function Edit({ attributes, setAttributes }) {
       </InspectorControls>
 
       <div {...blockProps}>
-        <div className="container mx-auto px-4">
+        <div className={`container mx-auto px-4 ${backgroundLayout === 'contained' ? 'testimonials-section-bg py-12 md:py-16 lg:py-20 rounded-2xl' : ''}`}>
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
             
             {/* Left Column: Testimonials Preview */}
-            <div className="lg:w-[60%] flex-shrink-0 border-l-8 border-secondary p-8">
+            <div className={`lg:w-[60%] flex-shrink-0 p-8 ${testimonialStyle === 'classic' ? 'border-l-8 border-secondary' : ''}`}>
               <p className="text-white text-lg font-bold mb-4">
-                {__('📋 Testimonials Slider', 'mbn-theme')} ({testimonials.length})
+                {__('📋 Testimonials Slider', 'mbn-theme')} ({testimonials.length}) — {testimonialStyle === 'classic' ? __('Classic', 'mbn-theme') : __('Detailed', 'mbn-theme')}
               </p>
               {testimonials.length === 0 && (
                 <p className="text-gray-300 italic">
@@ -356,17 +386,30 @@ export default function Edit({ attributes, setAttributes }) {
               )}
               {testimonials.length > 0 && (
                 <div className="space-y-4">
-                  {testimonials.slice(0, 1).map((testimonial, index) => (
+                  {testimonials.slice(0, 1).map((testimonial) => (
                     <div key={testimonial.id} className="flex flex-col gap-4">
                       <div className="flex gap-1">
                         {[...Array(testimonial.starRating)].map((_, i) => (
                           <span key={i} className="text-accent-gold text-xl">⭐</span>
                         ))}
                       </div>
-                      <blockquote className="font-heading text-2xl text-white leading-relaxed">
-                        {testimonial.content || __('Enter testimonial content...', 'mbn-theme')}
-                      </blockquote>
-                      <p className="text-secondary font-medium">
+                      {testimonialStyle === 'classic' ? (
+                        <blockquote className="font-heading text-2xl text-white leading-relaxed">
+                          {testimonial.content || __('Enter testimonial content...', 'mbn-theme')}
+                        </blockquote>
+                      ) : (
+                        <>
+                          <p className="font-heading text-3xl font-semibold text-white leading-tight">
+                            {testimonial.content || __('Enter testimonial content...', 'mbn-theme')}
+                          </p>
+                          {testimonial.description && (
+                            <p className="font-body text-base text-primary-300 leading-relaxed">
+                              {testimonial.description}
+                            </p>
+                          )}
+                        </>
+                      )}
+                      <p className={`font-medium ${testimonialStyle === 'detailed' ? 'text-secondary font-semibold' : 'text-secondary'}`}>
                         {testimonial.author}
                       </p>
                     </div>

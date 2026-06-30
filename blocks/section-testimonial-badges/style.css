@@ -15,6 +15,9 @@
   align-items: center;
   padding: 20px 40px;
 }
+.testimonial-detailed .swiper-slide {
+  padding: 20px;
+}
 
 .testimonials-slider .swiper-slide > div {
   max-width: 100%;
@@ -32,4 +35,11 @@
   width: 56px;
   height: 56px;
   flex-shrink: 0;
+}
+
+@media screen and (max-width: 1023px) {
+  .testimonials-slider .swiper-slide {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
 }

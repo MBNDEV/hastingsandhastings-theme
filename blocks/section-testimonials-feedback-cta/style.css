@@ -1,0 +1,201 @@
+/* ==============================================
+   Section Testimonials - Feedback CTA
+   Block: section-testimonials-feedback-cta
+   All styles scoped under .tfcta__*
+   ============================================== */
+
+/* === DESKTOP: 1024px and above === */
+
+:root {
+  --tfcta-color-white:       #ffffff;
+  --tfcta-color-blue-300:    #286fb7;
+  --tfcta-color-primary-300: #93bde6;
+  --tfcta-color-yellow-400:  #fde212;
+  --tfcta-color-yellow-500:  #ecc806;
+  --tfcta-color-yellow-700:  #a37005;
+
+  --tfcta-font-heading: 'Noto Serif', Georgia, serif;
+  --tfcta-font-body:    'Heebo', Arial, sans-serif;
+
+  --tfcta-gradient-btn: linear-gradient(187.25deg, #fde212 2.47%, #ecc806 35.13%, #a37005 100%);
+
+  --tfcta-max-width: 1440px;
+}
+
+/* --------------------------------------------------
+   Container
+   -------------------------------------------------- */
+
+.tfcta__container {
+  max-width: var(--tfcta-max-width);
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+/* --------------------------------------------------
+   Section wrapper
+   -------------------------------------------------- */
+
+.tfcta {
+  background-color: var(--tfcta-color-white);
+  padding-block: 80px;
+}
+
+/* --------------------------------------------------
+   Dark gradient card
+   -------------------------------------------------- */
+
+.tfcta__card {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  padding: 40px;
+  border-radius: 16px;
+  background: linear-gradient(100.73deg, #1d456f 3.55%, #13263e 56.55%);
+}
+
+/* --------------------------------------------------
+   Left: text
+   -------------------------------------------------- */
+
+.tfcta__text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tfcta__title {
+  font-family: var(--tfcta-font-heading);
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 48px;
+  color: var(--tfcta-color-yellow-500);
+  margin: 0;
+}
+
+.tfcta__body {
+  font-family: var(--tfcta-font-body);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 36px;
+  color: var(--tfcta-color-white);
+  margin: 0;
+}
+
+.tfcta__note {
+  font-family: var(--tfcta-font-body);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--tfcta-color-primary-300);
+  margin: 0;
+}
+
+/* --------------------------------------------------
+   Right: platform review blocks
+   -------------------------------------------------- */
+
+.tfcta__platforms {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 40%;
+}
+
+.tfcta__platform {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding-block: 20px;
+}
+
+/* Horizontal divider between Yelp and Google */
+.tfcta__platform--divider {
+  border-top: 1px solid var(--tfcta-color-blue-300);
+  padding-block-start: 40px;
+  margin-block-start: 20px;
+}
+
+.tfcta__logo {
+  margin: 0;
+}
+
+.tfcta__logo img {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.tfcta__btn {
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+/* === Laptop: 1024px to 1439px === */
+@media screen and (max-width: 1439px) {
+  .tfcta__platforms {
+    max-width: 45%;
+  }
+}
+/* === TABLET: 768px to 1023px === */
+@media screen and (max-width: 1023px) {
+
+  .tfcta__card {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .tfcta__title {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .tfcta__body {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .tfcta__platforms {
+    width: 100%;
+    max-width: 480px;
+    margin-inline: auto;
+  }
+}
+
+/* === MOBILE: below 768px === */
+@media screen and (max-width: 767px) {
+
+  .tfcta {
+    padding-block: 40px;
+  }
+
+  .tfcta__card {
+    padding: 24px;
+    border-radius: 12px;
+  }
+
+  .tfcta__title {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .tfcta__body {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .tfcta__note {
+    font-size: 15px;
+    line-height: 22px;
+  }
+
+  .tfcta__logo img {
+    height: 60px;
+  }
+}

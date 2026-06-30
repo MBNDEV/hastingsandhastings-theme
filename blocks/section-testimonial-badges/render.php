@@ -8,21 +8,31 @@
  * @param WP_Block $block      Block instance
  */
 
-$testimonials = $attributes['testimonials'] ?? array();
-$badges       = $attributes['badges'] ?? array();
+$testimonials      = $attributes['testimonials'] ?? array();
+$badges            = $attributes['badges'] ?? array();
+$testimonial_style = $attributes['testimonialStyle'] ?? 'classic';
+$background_layout = $attributes['backgroundLayout'] ?? 'full';
 
-$wrapper_attributes = get_block_wrapper_attributes(
-  array(
-	  'class' => 'testimonials-section-bg w-full py-12 md:py-16 lg:py-20 overflow-hidden',
-  )
-);
+$wrapper_class = 'w-full overflow-hidden';
+$inner_class   = 'max-w-[1440px] mx-auto px-4 md:px-6 lg:px-12';
+
+if ( 'full' === $background_layout ) {
+	$wrapper_class .= ' testimonials-section-bg py-12 md:py-16 lg:py-20';
+}
+
+if ( 'contained' === $background_layout ) {
+	$inner_class    = 'max-w-[1440px] mx-auto testimonials-section-bg p-6 md:p-10 lg:p-5 rounded-2xl';
+	$wrapper_class .= ' pt-12 md:pt-20 lg:pt-32';
+}
+
+$wrapper_attributes = get_block_wrapper_attributes( array( 'class' => $wrapper_class ) );
 
 // Generate unique ID for this block instance
 $slider_id = 'testimonials-slider-' . wp_unique_id();
 ?>
 
 <section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-	<div class="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-12">
+	<div class="<?php echo esc_attr( $inner_class ); ?>">
 		
 		<div class="flex flex-col lg:flex-row gap-8 lg:gap-16">
 			
@@ -30,13 +40,13 @@ $slider_id = 'testimonials-slider-' . wp_unique_id();
 			<div class="relative lg:w-[60%] flex-shrink-0">
 				
 				<?php if ( ! empty( $testimonials ) ) : ?>
-					<div class="swiper testimonials-slider border-l-8 border-secondary" id="<?php echo esc_attr( $slider_id ); ?>">
+					<div class="swiper testimonials-slider <?php echo 'classic' === $testimonial_style ? 'border-l-8 border-secondary' : 'testimonial-detailed'; ?>" id="<?php echo esc_attr( $slider_id ); ?>">
 						<div class="swiper-wrapper">
 							
 							<?php foreach ( $testimonials as $testimonial ) : ?>
 								<div class="swiper-slide">
 									<div class="flex flex-col gap-6">
-										
+
 										<!-- Star Rating -->
 										<?php if ( ! empty( $testimonial['starRating'] ) ) : ?>
 											<?php $star_count = intval( $testimonial['starRating'] ); ?>
@@ -46,21 +56,48 @@ $slider_id = 'testimonials-slider-' . wp_unique_id();
 												<?php endfor; ?>
 											</div>
 										<?php endif; ?>
-										
-										<!-- Testimonial Quote -->
-										<?php if ( ! empty( $testimonial['content'] ) ) : ?>
-											<blockquote class="font-heading text-2xl md:text-3xl lg:text-4xl font-normal text-white leading-relaxed">
-												<?php echo wp_kses_post( $testimonial['content'] ); ?>
-											</blockquote>
+
+										<?php if ( 'detailed' === $testimonial_style ) : ?>
+
+											<!-- Testimonial Quote (Detailed) -->
+											<?php if ( ! empty( $testimonial['content'] ) ) : ?>
+												<blockquote class="font-heading text-3xl md:text-4xl lg:text-5xl font-semibold text-white !leading-tight">
+													<?php echo wp_kses_post( $testimonial['content'] ); ?>
+												</blockquote>
+											<?php endif; ?>
+
+											<!-- Testimonial Description (Detailed only) -->
+											<?php if ( ! empty( $testimonial['description'] ) ) : ?>
+												<p class="font-body text-base md:text-lg text-primary-300 !leading-relaxed">
+													<?php echo wp_kses_post( $testimonial['description'] ); ?>
+												</p>
+											<?php endif; ?>
+
+											<!-- Author (Detailed) -->
+											<?php if ( ! empty( $testimonial['author'] ) ) : ?>
+												<p class="font-body text-sm md:text-base text-secondary font-semibold">
+													<?php echo esc_html( $testimonial['author'] ); ?>
+												</p>
+											<?php endif; ?>
+
+										<?php else : ?>
+
+											<!-- Testimonial Quote (Classic) -->
+											<?php if ( ! empty( $testimonial['content'] ) ) : ?>
+												<blockquote class="font-heading text-2xl md:text-3xl lg:text-4xl font-normal text-white leading-relaxed">
+													<?php echo wp_kses_post( $testimonial['content'] ); ?>
+												</blockquote>
+											<?php endif; ?>
+
+											<!-- Author (Classic) -->
+											<?php if ( ! empty( $testimonial['author'] ) ) : ?>
+												<p class="font-body text-sm md:text-base text-secondary font-medium">
+													<?php echo esc_html( $testimonial['author'] ); ?>
+												</p>
+											<?php endif; ?>
+
 										<?php endif; ?>
-										
-										<!-- Author -->
-										<?php if ( ! empty( $testimonial['author'] ) ) : ?>
-											<p class="font-body text-sm md:text-base text-secondary font-medium">
-												<?php echo esc_html( $testimonial['author'] ); ?>
-											</p>
-										<?php endif; ?>
-										
+
 									</div>
 								</div>
 							<?php endforeach; ?>
