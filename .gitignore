@@ -11,3 +11,4 @@ html_tailwind/*
 .claude/
 .github/skills/*
 blocks/section-location-cta-card-badges/edit.js.backup
+blocks/handwritten-reviews/.env.staging.example
