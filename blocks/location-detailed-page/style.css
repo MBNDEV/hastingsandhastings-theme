@@ -92,6 +92,11 @@
   margin: 0;
 }
 
+.ldp-why-choose__track-record-text p a{
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .ldp-why-choose__stats {
   display: flex;
   flex-direction: column;
