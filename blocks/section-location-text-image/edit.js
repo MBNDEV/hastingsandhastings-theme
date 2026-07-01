@@ -16,6 +16,7 @@ import {
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Fragment, useState, useEffect } from '@wordpress/element';
+import BackgroundColorControl from '../shared/BackgroundColorControl';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -194,12 +195,18 @@ function SortableRow( { row, index, updateRow, removeRow, duplicateRow, updatePa
                 borderRadius: '4px',
               } }
             >
-              <TextareaControl
-                label={ `${ __( 'Paragraph', 'mbn-theme' ) } ${ pIndex + 1 }` }
-                value={ paragraph }
-                onChange={ ( value ) => updateParagraph( index, pIndex, value ) }
-                rows={ 3 }
-              />
+              <div>
+                <label style={ { display: 'block', marginBottom: '4px', fontWeight: '500', fontSize: '11px', textTransform: 'uppercase' } }>
+                  { `${ __( 'Paragraph', 'mbn-theme' ) } ${ pIndex + 1 }` }
+                </label>
+                <RichText
+                  tagName="p"
+                  value={ paragraph }
+                  onChange={ ( value ) => updateParagraph( index, pIndex, value ) }
+                  placeholder={ __( 'Enter paragraph text…', 'mbn-theme' ) }
+                  style={ { border: '1px solid #ddd', padding: '8px', minHeight: '60px', borderRadius: '4px', margin: 0 } }
+                />
+              </div>
               <Button
                 isDestructive
                 isSmall
@@ -301,12 +308,18 @@ function SortableRow( { row, index, updateRow, removeRow, duplicateRow, updatePa
                 borderRadius: '4px',
               } }
             >
-              <TextareaControl
-                label={ `${ __( 'Paragraph', 'mbn-theme' ) } ${ paIndex + 1 }` }
-                value={ paragraph }
-                onChange={ ( value ) => updateParagraphAfterList( index, paIndex, value ) }
-                rows={ 3 }
-              />
+              <div>
+                <label style={ { display: 'block', marginBottom: '4px', fontWeight: '500', fontSize: '11px', textTransform: 'uppercase' } }>
+                  { `${ __( 'Paragraph', 'mbn-theme' ) } ${ paIndex + 1 }` }
+                </label>
+                <RichText
+                  tagName="p"
+                  value={ paragraph }
+                  onChange={ ( value ) => updateParagraphAfterList( index, paIndex, value ) }
+                  placeholder={ __( 'Enter paragraph text…', 'mbn-theme' ) }
+                  style={ { border: '1px solid #ddd', padding: '8px', minHeight: '60px', borderRadius: '4px', margin: 0 } }
+                />
+              </div>
               <Button
                 isDestructive
                 isSmall
@@ -389,7 +402,7 @@ function SortableRow( { row, index, updateRow, removeRow, duplicateRow, updatePa
 }
 
 export default function Edit( { attributes, setAttributes } ) {
-  const { rows } = attributes;
+  const { rows, backgroundColor } = attributes;
   const [ activeRowIndex, setActiveRowIndex ] = useState( 0 );
 
   const sensors = useSensors(
@@ -399,8 +412,15 @@ export default function Edit( { attributes, setAttributes } ) {
     } )
   );
 
+
+  // Handle background color for editor
+  const isCustomColor = backgroundColor && backgroundColor.startsWith( '#' );
+  const bgStyle = isCustomColor ? { backgroundColor } : {};
+  const bgClass = isCustomColor ? '' : backgroundColor;
+
   const blockProps = useBlockProps( {
-    className: 'section-loc-text-image',
+    className: `section-loc-text-image ${ bgClass }`,
+    style: bgStyle,
   } );
 
   // Ensure all rows have unique IDs
@@ -636,6 +656,14 @@ export default function Edit( { attributes, setAttributes } ) {
   return (
     <Fragment>
       <InspectorControls>
+        <PanelBody title={ __( 'Background Color', 'mbn-theme' ) } initialOpen={ false }>
+          <BackgroundColorControl
+            value={ backgroundColor }
+            onChange={ ( value ) => setAttributes( { backgroundColor: value } ) }
+            defaultValue="bg-white"
+            label={ __( 'Section Background', 'mbn-theme' ) }
+          />
+        </PanelBody>
         <PanelBody title={ __( 'Rows', 'mbn-theme' ) } initialOpen={ true }>
           <p style={ { marginBottom: '15px', fontSize: '13px', color: '#666' } }>
             { __( 'Drag and drop to reorder rows', 'mbn-theme' ) }

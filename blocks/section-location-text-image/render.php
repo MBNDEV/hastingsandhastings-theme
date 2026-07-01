@@ -8,15 +8,22 @@
  * @param WP_Block $block      Block instance
  */
 
-$rows = $attributes['rows'] ?? array();
+$rows             = $attributes['rows'] ?? array();
+$background_color = $attributes['backgroundColor'] ?? 'bg-white';
 
 // Build path for local fallback images and icons
 $block_assets_uri = get_theme_file_uri( '/build/blocks/section-location-text-image/assets/images' );
 $chevron_icon     = $block_assets_uri . '/chevron-right.svg';
 
+// Handle background color: Tailwind class or custom hex
+$is_custom_color = strpos( $background_color, '#' ) === 0;
+$bg_class        = $is_custom_color ? '' : $background_color;
+$bg_style        = $is_custom_color ? 'background-color: ' . esc_attr( $background_color ) . ';' : '';
+
 $wrapper_attributes = get_block_wrapper_attributes(
   array(
-	  'class' => 'section-loc-text-image',
+	  'class' => 'section-loc-text-image ' . esc_attr( $bg_class ),
+	  'style' => $bg_style,
   )
 );
 ?>

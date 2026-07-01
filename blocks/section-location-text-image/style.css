@@ -6,10 +6,13 @@
 /* === DESKTOP: 1024px and above === */
 
 .section-loc-text-image {
-  background-color: #ffffff;
   width: 100%;
   padding: 100px 40px;
   box-sizing: border-box;
+}
+
+.section-loc-text-image.pt-40{
+  padding-top: 40px;
 }
 
 .section-loc-text-image__container {

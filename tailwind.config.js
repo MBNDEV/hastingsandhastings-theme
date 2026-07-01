@@ -40,6 +40,7 @@ module.exports = {
     'bg-primary',
     'bg-secondary',
     'bg-light-blue',
+    'bg-light-blue-100',
     'bg-accent-gold',
     'bg-accent-blue',
     'bg-gray-50',
@@ -80,6 +81,7 @@ module.exports = {
       'accent-gold-500': '#ECC806',
       'text-muted': '#646B73',
       'light-blue': '#F3F7FC',
+      'light-blue-100': '#E5EEF9',
       'primary-200': '#C6DBF1',
       'primary-300': '#93BDE6',
       
