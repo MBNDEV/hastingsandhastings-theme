@@ -51,6 +51,10 @@
   line-height: 28px;
   margin: 0;
 }
+.loc-hlimg__intro a{
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 
 /* ── Body: list + image ───────────────────────────────────── */
 

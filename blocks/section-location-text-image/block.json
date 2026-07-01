@@ -22,6 +22,10 @@
       "type": "string",
       "default": "full"
     },
+    "backgroundColor": {
+      "type": "string",
+      "default": "bg-white"
+    },
     "rows": {
       "type": "array",
       "default": [
