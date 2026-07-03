@@ -1,0 +1,68 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-location-text-image",
+  "title": "Section: Location – Text and Image",
+  "category": "mbn-blocks",
+  "icon": "align-pull-left",
+  "description": "Alternating text-and-image rows for location pages. Supports headings, paragraphs, lists, and image positioning.",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "style": [
+    "file:./style.css",
+    "hastingsandhastings-location-blocks-shared"
+  ],
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "bg-white"
+    },
+    "rows": {
+      "type": "array",
+      "default": [
+        {
+          "heading": "The Statute of Limitations for Personal Injury Claims in Arizona",
+          "paragraphs": [
+            "In Arizona, a personal injury claim must be filed within two years from the date of the injury (<a href=\"https://www.azleg.gov/ars/12/02505.htm\" target=\"_blank\" rel=\"noopener\">A.R.S. § 12-542</a>). This timeframe can be shortened or extended based on specific circumstances, such as when the injured party is a minor, or the defendant is a government entity.",
+            "It is essential to consult with a knowledgeable attorney to protect your right to bring a lawsuit. Your attorney can also help you initiate an insurance claim to address your immediate needs and negotiate a settlement before a lawsuit needs to be filed."
+          ],
+          "listStyle": "single",
+          "listItems": [],
+          "paragraphsAfterList": [],
+          "imageUrl": "",
+          "imageId": 0,
+          "imagePosition": "right"
+        },
+        {
+          "heading": "How Hastings & Hastings Can Help",
+          "paragraphs": [
+            "Hastings & Hastings offers comprehensive legal support for personal injury cases in Buckeye, AZ. Our services include:"
+          ],
+          "listStyle": "single",
+          "listItems": [
+            "A thorough case evaluation",
+            "Assistance with gathering evidence",
+            "Negotiation with the liable insurance companies",
+            "Representation in court, if necessary",
+            "A discounted fee structure, meaning more compensation for you."
+          ],
+          "paragraphsAfterList": [
+            "Hiring our experienced attorneys increases your chances of receiving maximum compensation."
+          ],
+          "imageUrl": "",
+          "imageId": 0,
+          "imagePosition": "left"
+        }
+      ]
+    }
+  }
+}

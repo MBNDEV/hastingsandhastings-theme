@@ -1,0 +1,25 @@
+/* Section 3 Column Badge with CTA Bar - Frontend Styles */
+
+/* Badge hover effects */
+.section-3col-badge-item {
+  transition: transform 0.3s ease;
+}
+
+.section-3col-badge-item:hover {
+  transform: translateY(-8px);
+}
+
+/* CTA Bar styles */
+.cta-bar-gradient {
+  background: linear-gradient(90deg, #1D456F 0%, #13263E 100%);
+}
+
+/* Button hover states */
+.btn-cta-primary {
+  transition: all 0.3s ease;
+}
+
+.btn-cta-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}

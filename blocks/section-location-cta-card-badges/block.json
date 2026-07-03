@@ -1,0 +1,101 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-location-cta-card-badges",
+  "title": "Section Location - CTA Card with Badges",
+  "category": "mbn-blocks",
+  "icon": "awards",
+  "description": "CTA card with background, logo, phone, button and badge images",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "style": [
+    "hastingsandhastings-location-blocks-shared",
+    "file:./style.css"
+  ],
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "ctaTitle": {
+      "type": "string",
+      "default": "Start Your Free Consultation"
+    },
+    "ctaDescription": {
+      "type": "string",
+      "default": "If you are unsure where to start or how to manage these different payment options, talking with an experienced personal injury attorney can help you determine the best path forward."
+    },
+    "ctaButtonText": {
+      "type": "string",
+      "default": "CONTACT US TODAY"
+    },
+    "ctaButtonUrl": {
+      "type": "string",
+      "default": "#contact"
+    },
+    "ctaPhoneLabel": {
+      "type": "string",
+      "default": "CALL TODAY"
+    },
+    "ctaPhoneText": {
+      "type": "string",
+      "default": "(480) 480-2929"
+    },
+    "ctaPhoneUrl": {
+      "type": "string",
+      "default": "tel:4804802929"
+    },
+    "ctaBackgroundImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaBackgroundImageId": {
+      "type": "number",
+      "default": 0
+    },
+    "ctaBackgroundImageFallback": {
+      "type": "string",
+      "default": "column-bg-faq.jpg"
+    },
+    "ctaLogoImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaLogoImageId": {
+      "type": "number",
+      "default": 0
+    },
+    "ctaLogoImageFallback": {
+      "type": "string",
+      "default": "logo-hh.svg"
+    },
+    "badgesTextParagraphs": {
+      "type": "array",
+      "default": [
+        {
+          "id": 1,
+          "text": "Our personal injury law firm has been recognized by leading legal organizations."
+        }
+      ]
+    },
+    "badgesItems": {
+      "type": "array",
+      "default": [
+        {
+          "id": 1,
+          "imageUrl": "",
+          "imageId": 0,
+          "imageFallback": "",
+          "imageAlt": "Legal badge",
+          "imageWidth": 303,
+          "imageHeight": 303
+        }
+      ]
+    }
+  }
+}

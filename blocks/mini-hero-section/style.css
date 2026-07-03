@@ -1,0 +1,98 @@
+/* Mini-Hero Video Container */
+.mini-hero-video-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Video Background */
+.mini-hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  object-fit: cover;
+}
+
+/* Overlay Image */
+.mini-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Mini-Hero Content Layer */
+.mini-hero-content {
+  position: relative;
+  z-index: 3;
+}
+
+/* CTA Button - Custom Gradient */
+.btn-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 14px 24px;
+  font-family: 'Heebo', sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 88px;
+  border: 1px solid #ECC806;
+  background: linear-gradient(234deg, #FDE212 -2.47%, #ECC806 35.13%, #A37005 100%);
+  color: #FFF;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-cta:hover {
+  background: linear-gradient(180deg, #FFF24C 0%, #FDE212 50%, #E5C700 100%);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+  color: #13263E;
+}
+
+.btn-cta:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Badge Animation */
+.mini-hero-badge {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* CTA Bar - Custom Gradient and Shadow */
+.cta-bar {
+  background: linear-gradient(228deg, rgba(40, 111, 183, 0.70) -2.25%, rgba(19, 38, 62, 0.70) 43.53%);
+  box-shadow: 0 2px 60px 0 rgba(0, 0, 0, 0.60);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}

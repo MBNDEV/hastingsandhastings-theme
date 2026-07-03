@@ -1,0 +1,136 @@
+/* Stacking Cards Container */
+.cards-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Testimonial Card Stacking */
+.testimonial-card {
+  position: sticky;
+  background: white;
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Progressive stacking with scale effect - First card at back, last card on top */
+.testimonial-card:nth-child(1) {
+  top: 100px;
+  z-index: 7;
+}
+
+.testimonial-card:nth-child(2) {
+  top: 120px;
+  z-index: 8;
+}
+
+.testimonial-card:nth-child(3) {
+  top: 140px;
+  z-index: 9;
+}
+
+.testimonial-card:nth-child(4) {
+  top: 160px;
+  z-index: 10;
+}
+
+.testimonial-card:nth-child(5) {
+  top: 180px;
+  z-index: 11;
+}
+
+.testimonial-card:nth-child(6) {
+  top: 200px;
+  z-index: 12;
+}
+
+/* Stars container */
+.stars {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+.star-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Card hover effect */
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Left column sticky positioning */
+.sticky-content {
+  position: sticky;
+  top: 100px;
+  align-self: flex-start;
+}
+
+/* Responsive adjustments - Swiper on mobile/tablet */
+@media (max-width: 1023px) {
+  .cards-container {
+    position: relative;
+    min-height: auto;
+  }
+  
+  .sticky-content {
+    position: static;
+  }
+  
+  /* Swiper Mobile */
+  .testimonials-swiper-container {
+    width: 100%;
+    padding: 0 16px 60px 16px;
+  }
+  
+  .testimonials-swiper-container .swiper-wrapper {
+    padding: 20px 0;
+  }
+  
+  .testimonials-swiper-container .testimonial-card {
+    position: relative !important;
+    top: auto !important;
+    margin: 5px 5px 20px;
+    height: auto;
+  }
+  
+  /* Pagination Dots */
+  .testimonials-pagination {
+    bottom: 0px !important;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .testimonials-pagination .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background: #D1D5DB;
+    opacity: 1;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+  
+  .testimonials-pagination .swiper-pagination-bullet-active {
+    background: #FFF24C; /* Primary color */
+    width: 32px;
+    border-radius: 6px;
+  }
+}
+
+/* Desktop: Keep stacking animation */
+@media (min-width: 1024px) {
+  .cards-container {
+    min-height: 100vh;
+  }
+}
+
+@media(max-width: 639px) {
+  .testimonials-swiper-container .testimonial-card {
+    padding: 20px;
+  }
+}

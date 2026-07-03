@@ -1,0 +1,160 @@
+/* ==============================================
+   Section Testimonials - Card Grid
+   Block: section-testimonials-card-grids
+   All styles scoped under .tfcards__*
+   ============================================== */
+
+/* === DESKTOP: 1024px and above === */
+
+:root {
+  --tfcards-color-white:     #ffffff;
+  --tfcards-color-border:    rgba(1, 3, 5, 0.15);
+  --tfcards-color-text-body: #53585f;
+  --tfcards-color-text-head: #13263e;
+
+  --tfcards-font-heading: 'Noto Serif', Georgia, serif;
+  --tfcards-font-body:    'Heebo', Arial, sans-serif;
+
+  --tfcards-max-width: 1440px;
+}
+
+/* --------------------------------------------------
+   Container
+   -------------------------------------------------- */
+
+.tfcards__container {
+  max-width: var(--tfcards-max-width);
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+/* --------------------------------------------------
+   Section wrapper
+   -------------------------------------------------- */
+
+.tfcards {
+  background-color: var(--tfcards-color-white);
+  padding-block: 80px;
+}
+
+/* --------------------------------------------------
+   2-column grid
+   -------------------------------------------------- */
+
+.tfcards__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+/* --------------------------------------------------
+   Card
+   -------------------------------------------------- */
+
+.tfcards__card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px;
+  background-color: var(--tfcards-color-white);
+  border: 1px solid var(--tfcards-color-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tfcards__card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex: 1;
+}
+
+/* --------------------------------------------------
+   Stars
+   -------------------------------------------------- */
+
+.tfcards__stars {
+  display: flex;
+  gap: 2px;
+}
+
+.tfcards__stars img {
+  height: 19px;
+  width: auto;
+  display: block;
+}
+
+/* --------------------------------------------------
+   Card text
+   -------------------------------------------------- */
+
+.tfcards__card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tfcards__card-headline {
+  font-family: var(--tfcards-font-heading);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 32px;
+  color: var(--tfcards-color-text-head);
+  margin: 0;
+}
+
+.tfcards__card-quote {
+  font-family: var(--tfcards-font-body);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--tfcards-color-text-body);
+  margin: 0;
+}
+
+/* --------------------------------------------------
+   Card footer
+   -------------------------------------------------- */
+
+.tfcards__card-footer {
+  margin-top: auto;
+}
+
+.tfcards__card-author {
+  font-family: var(--tfcards-font-body);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #010305;
+  margin: 0;
+}
+
+/* === TABLET: 768px to 1023px === */
+@media screen and (max-width: 1023px) {
+
+  .tfcards__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* === MOBILE: below 768px === */
+@media screen and (max-width: 767px) {
+
+  .tfcards {
+    padding-block: 40px;
+  }
+
+  .tfcards__card {
+    padding: 24px;
+  }
+
+  .tfcards__card-headline {
+    font-size: 18px;
+    line-height: 26px;
+  }
+
+  .tfcards__card-quote {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}

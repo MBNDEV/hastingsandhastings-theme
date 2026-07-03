@@ -1,0 +1,335 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/locations-directory",
+  "title": "Locations Directory",
+  "category": "mbn-blocks",
+  "icon": "location-alt",
+  "description": "Arizona office locations directory with map and region listings.",
+  "textdomain": "mbn-theme",
+  "attributes": {
+    "iconChevronId": {
+      "type": "number",
+      "default": 0
+    },
+    "iconChevronUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "iconMapPinId": {
+      "type": "number",
+      "default": 0
+    },
+    "iconMapPinUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "iconPhoneId": {
+      "type": "number",
+      "default": 0
+    },
+    "iconPhoneUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "mapTitle": {
+      "type": "string",
+      "default": "Hastings & Hastings office locations across Arizona"
+    },
+    "mapEmbedUrl": {
+      "type": "string",
+      "default": "https://www.google.com/maps/d/embed?mid=1BU_B90ZoJAEWzUgMy_fXd-KdC5y5WdXm&ehbc=2E312F"
+    },
+    "regions": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Phoenix Area",
+          "description": "Locations serving central Phoenix, Paradise Valley, and nearby communities.",
+          "links": [
+            {
+              "label": "Phoenix",
+              "url": "#"
+            },
+            {
+              "label": "Paradise Valley",
+              "url": "#"
+            },
+            {
+              "label": "Scottsdale",
+              "url": "#"
+            }
+          ],
+          "cards": [
+            {
+              "title": "Central Phoenix",
+              "imageId": 0,
+              "imageUrl": "",
+              "imageAlt": "Central Phoenix office building",
+              "imageFallback": "office-central-phoenix.jpg",
+              "address": "1221 E. Osborn Rd., Ste. A202, Phoenix, AZ 85014",
+              "addressUrl": "https://maps.app.goo.gl/JjUqpXEe2X8UFAhp7",
+              "phone": "(602) 433-2323",
+              "phoneUrl": "tel:+16024332323"
+            },
+            {
+              "title": "Phoenix & Paradise Valley",
+              "imageId": 0,
+              "imageUrl": "",
+              "imageAlt": "Phoenix and Paradise Valley office building",
+              "imageFallback": "office-phoenix-paradise-valley.jpg",
+              "address": "3420 E. Shea Blvd, #200, Phoenix, AZ 85028",
+              "addressUrl": "https://goo.gl/maps/JXyFqkFFWQF1PdGp9",
+              "phone": "(602) 433-2323",
+              "phoneUrl": "tel:+16024332323"
+            },
+            {
+              "title": "Scottsdale",
+              "imageId": 0,
+              "imageUrl": "",
+              "imageAlt": "Scottsdale office building",
+              "imageFallback": "office-scottsdale.jpg",
+              "address": "7150 E. Camelback Rd, #444, Scottsdale, AZ 85251",
+              "addressUrl": "https://maps.app.goo.gl/p2veWpCXffNNtTX66",
+              "phone": "(480) 706-1100",
+              "phoneUrl": "tel:+14807061100"
+            }
+          ]
+        },
+        {
+          "title": "East Valley",
+          "description": "Office locations across Mesa, Chandler, Gilbert, Ahwatukee, Tempe, and Queen Creek.",
+          "links": [
+            {
+              "label": "Mesa",
+              "url": "#"
+            },
+            {
+              "label": "Ahwatukee",
+              "url": "#"
+            },
+            {
+              "label": "Chandler",
+              "url": "#"
+            },
+            {
+              "label": "Tempe",
+              "url": "#"
+            },
+            {
+              "label": "Gilbert",
+              "url": "#"
+            },
+            {
+              "label": "Queen Creek",
+              "url": "#"
+            }
+          ],
+          "cards": [
+            {
+              "title": "Mesa",
+              "imageId": 0,
+              "imageUrl": "",
+              "imageAlt": "Mesa office building",
+              "imageFallback": "office-mesa.jpg",
+              "address": "1830 S. Alma School Rd., Suite 129, Mesa, AZ 85210",
+              "addressUrl": "https://goo.gl/maps/313bUsiaJQYEctwTA",
+              "phone": "(480) 649-1800",
+              "phoneUrl": "tel:+14806491800"
+            },
+            {
+              "title": "Chandler, Gilbert, Ahwatukee",
+              "imageId": 0,
+              "imageUrl": "",
+              "imageAlt": "Chandler, Gilbert, and Ahwatukee area office building",
+              "imageFallback": "office-chandler.jpg",
+              "address": "5505 W. Chandler Blvd, Suite 15, Chandler, AZ 85226",
+              "addressUrl": "https://maps.app.goo.gl/cPGEfvEFZeEwhvNE8",
+              "phone": "(480) 706-1100",
+              "phoneUrl": "tel:+14807061100"
+            },
+            {
+              "title": "Tempe",
+              "imageId": 0,
+              "imageUrl": "",
+              "imageAlt": "Tempe office building",
+              "imageFallback": "office-tempe.jpg",
+              "address": "64 E. Broadway, Suite 200, Tempe, AZ 85282",
+              "addressUrl": "https://maps.app.goo.gl/Eb2cLYgQahJqaqu39",
+              "phone": "(480) 706-1100",
+              "phoneUrl": "tel:+14807061100"
+            },
+            {
+              "title": "East Mesa, Gilbert",
+              "imageId": 0,
+              "imageUrl": "",
+              "imageAlt": "East Mesa and Gilbert area office building",
+              "imageFallback": "office-east-mesa-gilbert.jpg",
+              "address": "4135 S. Power Rd, Suite 111, Mesa, AZ 85212",
+              "addressUrl": "https://maps.app.goo.gl/X7qXFYJLyYv9CwGP8",
+              "phone": "(480) 706-1100",
+              "phoneUrl": "tel:+14807061100"
+            }
+          ]
+        },
+        {
+          "title": "West Valley",
+          "description": "Convenient legal support for clients in Glendale, Peoria, Surprise, and Buckeye.",
+          "links": [
+            {
+              "label": "Buckeye",
+              "url": "#"
+            },
+            {
+              "label": "Peoria",
+              "url": "#"
+            },
+            {
+              "label": "Glendale",
+              "url": "#"
+            },
+            {
+              "label": "Surprise",
+              "url": "#"
+            }
+          ],
+          "cards": [
+            {
+              "title": "West Valley",
+              "imageId": 0,
+              "imageUrl": "",
+              "imageAlt": "West Valley office building",
+              "imageFallback": "office-west-valley.jpg",
+              "address": "9150 W. Indian School Rd, Suite 103, Phoenix, AZ 85037",
+              "addressUrl": "https://maps.app.goo.gl/2xkuTVmyxWdzK6ob7",
+              "phone": "(623) 845-1345",
+              "phoneUrl": "tel:+16238451345"
+            },
+            {
+              "title": "Northwest Valley",
+              "imageId": 0,
+              "imageUrl": "",
+              "imageAlt": "Northwest Valley office building in Glendale",
+              "imageFallback": "office-northwest-valley.jpg",
+              "address": "18205 N 51st Avenue, Suite 119, Glendale, AZ 85308",
+              "addressUrl": "https://maps.app.goo.gl/3LBwoc7RqKgeFUyF7",
+              "phone": "(602) 283-1500",
+              "phoneUrl": "tel:+16022831500"
+            }
+          ]
+        },
+        {
+          "title": "Southern Arizona",
+          "description": "Serving injury victims in Casa Grande and surrounding areas.",
+          "links": [
+            {
+              "label": "Casa Grande",
+              "url": "#"
+            }
+          ],
+          "cards": [
+            {
+              "title": "Casa Grande",
+              "imageId": 0,
+              "imageUrl": "",
+              "imageAlt": "Casa Grande office building",
+              "imageFallback": "office-mesa.jpg",
+              "address": "251 E. Cottonwood Lane, Ste. 251D, Casa Grande, AZ 85122",
+              "addressUrl": "https://maps.app.goo.gl/fRdDxSwMkshBsPqB8",
+              "phone": "(480) 649-1800",
+              "phoneUrl": "tel:+14806491800"
+            }
+          ]
+        }
+      ]
+    },
+    "mapAreas": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Phoenix Area",
+          "description": "Locations serving central Phoenix, Paradise Valley, and nearby communities.",
+          "links": [
+            {
+              "label": "Phoenix",
+              "url": "#"
+            },
+            {
+              "label": "Paradise Valley",
+              "url": "#"
+            },
+            {
+              "label": "Scottsdale",
+              "url": "#"
+            }
+          ]
+        },
+        {
+          "title": "East Valley",
+          "description": "Office locations across Mesa, Chandler, Gilbert, Ahwatukee, Tempe, and Queen Creek.",
+          "links": [
+            {
+              "label": "Mesa",
+              "url": "#"
+            },
+            {
+              "label": "Ahwatukee",
+              "url": "#"
+            },
+            {
+              "label": "Chandler",
+              "url": "#"
+            },
+            {
+              "label": "Tempe",
+              "url": "#"
+            },
+            {
+              "label": "Gilbert",
+              "url": "#"
+            },
+            {
+              "label": "Queen Creek",
+              "url": "#"
+            }
+          ]
+        },
+        {
+          "title": "West Valley",
+          "description": "Convenient legal support for clients in Glendale, Peoria, Surprise, and Buckeye.",
+          "links": [
+            {
+              "label": "Buckeye",
+              "url": "#"
+            },
+            {
+              "label": "Peoria",
+              "url": "#"
+            },
+            {
+              "label": "Glendale",
+              "url": "#"
+            },
+            {
+              "label": "Surprise",
+              "url": "#"
+            }
+          ]
+        },
+        {
+          "title": "Southern Arizona",
+          "description": "Serving injury victims in Casa Grande and surrounding areas.",
+          "links": [
+            {
+              "label": "Casa Grande",
+              "url": "#"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

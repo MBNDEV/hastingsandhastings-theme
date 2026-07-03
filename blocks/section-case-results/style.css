@@ -1,0 +1,34 @@
+/* Case Results Section - Frontend Styles */
+
+/* Card overlay positioning */
+.case-card-overlay-left {
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .case-card-overlay-left {
+    margin-left: -7rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .case-card-overlay-left {
+    margin-left: -11rem;
+  }
+}
+
+.case-card-overlay-right {
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .case-card-overlay-right {
+    margin-right: -7rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .case-card-overlay-right {
+    margin-right: -11rem;
+  }
+}

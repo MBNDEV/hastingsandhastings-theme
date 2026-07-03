@@ -28,6 +28,15 @@ function custom_theme_footer_template_slug(): string {
 }
 
 /**
+ * Slug for the global 404 Error Page Template Block Template post.
+ *
+ * @return string
+ */
+function custom_theme_404_template_slug(): string {
+  return '404-template';
+}
+
+/**
  * Register the Block Templates post type.
  *
  * @return void
@@ -50,20 +59,22 @@ function custom_theme_register_block_template_post_type(): void {
   register_post_type(
     'mbn_block_template',
     array(
-		'labels'             => $labels,
-		'public'             => true,
-		'publicly_queryable' => true,
-		'show_ui'            => true,
-		'show_in_menu'       => true,
-		'query_var'          => true,
-		'rewrite'            => array( 'slug' => 'block-template' ),
-		'capability_type'    => 'post',
-		'has_archive'        => false,
-		'hierarchical'       => false,
-		'show_in_rest'       => true,
-		'menu_position'      => 21,
-		'menu_icon'          => 'dashicons-layout',
-		'supports'           => array( 'title', 'editor', 'revisions' ),
+		'labels'              => $labels,
+		'public'              => true,
+		'publicly_queryable'  => false,
+		'exclude_from_search' => true,
+		'show_in_nav_menus'   => false,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'query_var'           => false,
+		'rewrite'             => false,
+		'capability_type'     => 'post',
+		'has_archive'         => false,
+		'hierarchical'        => false,
+		'show_in_rest'        => true,
+		'menu_position'       => 21,
+		'menu_icon'           => 'dashicons-layout',
+		'supports'            => array( 'title', 'editor', 'revisions' ),
     )
   );
 }
@@ -132,6 +143,7 @@ function custom_theme_get_block_template_post_ids_excluded_from_template_block()
   $slugs = array(
 	  custom_theme_header_template_slug(),
 	  custom_theme_footer_template_slug(),
+	  custom_theme_404_template_slug(),
   );
 
   if ( function_exists( 'custom_theme_get_layout_template_file_slugs' ) ) {
@@ -238,6 +250,27 @@ function custom_theme_import_single_template( string $slug, string $title, strin
 }
 
 /**
+ * Try to import a single template and track success/errors.
+ *
+ * @param string $slug Template slug.
+ * @param string $title Template title.
+ * @param string $filename Template filename (without .php).
+ * @param bool   $force Force re-import.
+ * @param array  $errors Reference to errors array.
+ * @return int 1 if imported, 0 otherwise.
+ */
+function custom_theme_try_import_template( string $slug, string $title, string $filename, bool $force, array &$errors ): int {
+  try {
+    if ( custom_theme_import_single_template( $slug, $title, $filename, $force ) ) {
+      return 1;
+    }
+  } catch ( Exception $e ) {
+    $errors[] = $title . ': ' . $e->getMessage();
+  }
+  return 0;
+}
+
+/**
  * Create default Header Template and Footer Template posts from template-parts files.
  * Run once on theme activation, or manually trigger with 'Sync Templates' button.
  *
@@ -257,33 +290,30 @@ function custom_theme_maybe_seed_default_block_templates( bool $force = false ):
   $errors   = array();
   $imported = 0;
 
-  // Import Header Template
-  try {
-    if ( custom_theme_import_single_template(
-      custom_theme_header_template_slug(),
-      __( 'Header Template', 'mbn-theme' ),
-      'header-template',
-      $force
-    ) ) {
-      ++$imported;
-    }
-  } catch ( Exception $e ) {
-    $errors[] = 'Header Template: ' . $e->getMessage();
-  }
+  // Import templates
+  $imported += custom_theme_try_import_template(
+    custom_theme_header_template_slug(),
+    __( 'Header Template', 'mbn-theme' ),
+    'header-template',
+    $force,
+    $errors
+  );
 
-  // Import Footer Template
-  try {
-    if ( custom_theme_import_single_template(
-      custom_theme_footer_template_slug(),
-      __( 'Footer Template', 'mbn-theme' ),
-      'footer-template',
-      $force
-    ) ) {
-      ++$imported;
-    }
-  } catch ( Exception $e ) {
-    $errors[] = 'Footer Template: ' . $e->getMessage();
-  }
+  $imported += custom_theme_try_import_template(
+    custom_theme_footer_template_slug(),
+    __( 'Footer Template', 'mbn-theme' ),
+    'footer-template',
+    $force,
+    $errors
+  );
+
+  $imported += custom_theme_try_import_template(
+    custom_theme_404_template_slug(),
+    __( '404 Error Page Template', 'mbn-theme' ),
+    '404-template',
+    $force,
+    $errors
+  );
 
   // Report errors if any
   if ( ! empty( $errors ) ) {
@@ -398,6 +428,52 @@ function custom_theme_get_global_footer_template_output_html(): string {
 }
 
 /**
+ * Global 404 error page HTML from the 404 Error Page Template Block Template post (block editor content).
+ *
+ * @return string HTML fragment for 404 page hero section (run through the_content filters).
+ */
+function custom_theme_get_global_404_template_output_html(): string {
+  $post_id = custom_theme_get_block_template_id_by_slug( custom_theme_404_template_slug() );
+
+  if ( $post_id <= 0 ) {
+    // Debug: Template not found
+    if ( current_user_can( 'edit_posts' ) && WP_DEBUG ) {
+      return '<!-- 404 Error Page Template post not found (slug: ' . custom_theme_404_template_slug() . ') -->';
+    }
+    return '';
+  }
+
+  $post = get_post( $post_id );
+  if ( ! $post instanceof \WP_Post ) {
+    return '';
+  }
+
+  if ( 'publish' !== $post->post_status ) {
+    // Debug: Template not published
+    if ( current_user_can( 'edit_posts' ) && WP_DEBUG ) {
+      return '<!-- 404 Error Page Template exists but is not published (status: ' . $post->post_status . ') -->';
+    }
+    return '';
+  }
+
+  $content = $post->post_content;
+
+  // Parse blocks and render them
+  if ( has_blocks( $content ) ) {
+    $html = do_blocks( $content );
+  } else {
+    $html = apply_filters( 'the_content', $content );
+  }
+
+  // Debug: Empty content
+  if ( '' === trim( wp_strip_all_tags( $html ) ) && current_user_can( 'edit_posts' ) && WP_DEBUG ) {
+    return '<!-- 404 Error Page Template is published but has no visible content. Edit it at: ' . get_edit_post_link( $post_id ) . ' -->';
+  }
+
+  return is_string( $html ) ? $html : '';
+}
+
+/**
  * Admin list table: add Badges column for Block Templates.
  *
  * @param array<string, string> $columns Columns.
@@ -443,6 +519,12 @@ function custom_theme_block_template_posts_custom_column( string $column, int $p
   if ( custom_theme_footer_template_slug() === $slug ) {
     echo '<span class="carbon-template-badge carbon-template-badge--global">' . esc_html__( 'Global', 'mbn-theme' ) . '</span> ';
     echo '<span class="carbon-template-badge carbon-template-badge--chrome">' . esc_html__( 'Footer', 'mbn-theme' ) . '</span>';
+    return;
+  }
+
+  if ( custom_theme_404_template_slug() === $slug ) {
+    echo '<span class="carbon-template-badge carbon-template-badge--global">' . esc_html__( 'Global', 'mbn-theme' ) . '</span> ';
+    echo '<span class="carbon-template-badge carbon-template-badge--chrome">' . esc_html__( '404 Error', 'mbn-theme' ) . '</span>';
     return;
   }
 
@@ -514,6 +596,10 @@ function custom_theme_block_template_post_is_protected_from_trash( int $post_id 
   }
 
   if ( custom_theme_footer_template_slug() === $slug ) {
+    return true;
+  }
+
+  if ( custom_theme_404_template_slug() === $slug ) {
     return true;
   }
 

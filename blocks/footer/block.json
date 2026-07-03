@@ -1,0 +1,78 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/footer",
+  "title": "Site Footer",
+  "category": "mbn-blocks",
+  "icon": "editor-table",
+  "description": "Complete site footer with locations, practice areas, and social media",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "locationsMenuId": {
+      "type": "number",
+      "default": 0
+    },
+    "practiceAreasMenuId": {
+      "type": "number",
+      "default": 0
+    },
+    "mainFooterMenuId": {
+      "type": "number",
+      "default": 0
+    },
+    "locationsButtonText": {
+      "type": "string",
+      "default": "VIEW ALL LOCATIONS"
+    },
+    "locationsButtonUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "practiceAreasButtonText": {
+      "type": "string",
+      "default": "VIEW ALL PRACTICE AREAS"
+    },
+    "practiceAreasButtonUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "footerLogoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "footerLogoId": {
+      "type": "number",
+      "default": 0
+    },
+    "footerLogoLinkUrl": {
+      "type": "string",
+      "default": "/"
+    },
+    "footerTagline": {
+      "type": "string",
+      "default": "Serving Arizona injury victims since 1979 with trusted experience, local support, and a lower 25% fee."
+    },
+    "socialMedia": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object"
+      }
+    },
+    "copyrightText": {
+      "type": "string",
+      "default": "© 2026 Hastings & Hastings. All rights reserved."
+    },
+    "mobileContactUrl": {
+      "type": "string",
+      "default": "/contact-us/"
+    },
+    "mobilePhoneNumber": {
+      "type": "string",
+      "default": "(480) 418-2483"
+    }
+  }
+}

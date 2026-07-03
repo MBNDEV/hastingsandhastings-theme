@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/two-column-text-and-image",
+  "title": "2 column - Text and Image",
+  "category": "mbn-blocks",
+  "icon": "align-pull-right",
+  "description": "Two-column section with text and edge-stretching image.",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "eyebrowText": {
+      "type": "string",
+      "default": "What Sets Our Firm Apart"
+    },
+    "mainHeading": {
+      "type": "string",
+      "default": "Experienced legal help for injury victims across Arizona"
+    },
+    "subheading": {
+      "type": "string",
+      "default": "For nearly 50 years, Hastings & Hastings has helped injury victims across the Phoenix Valley move forward after serious accidents. We've built our reputation by delivering experienced legal support, clear guidance, and a fee structure that helps clients keep more of what they recover."
+    },
+    "backgroundImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "backgroundImageId": {
+      "type": "number"
+    },
+    "swapColumns": {
+      "type": "boolean",
+      "default": false
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "bg-white"
+    }
+  }
+}

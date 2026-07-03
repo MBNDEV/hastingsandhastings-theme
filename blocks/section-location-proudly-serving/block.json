@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-location-proudly-serving",
+  "title": "Section Location - Proudly Serving",
+  "category": "mbn-blocks",
+  "icon": "location-alt",
+  "description": "Display service areas with multiple columns of location links",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": [
+    "hastingsandhastings-location-blocks-shared",
+    "file:./style.css"
+  ],
+  "render": "file:./render.php",
+  "attributes": {
+    "servingTitle": {
+      "type": "string",
+      "default": "Proudly Serving Mesa, AZ and the Phoenix Area"
+    },
+    "servingColumns": {
+      "type": "array",
+      "default": [
+        {
+          "id": 1,
+          "title": "Mesa Neighborhoods",
+          "links": [
+            { "id": 1, "label": "Downtown Mesa", "url": "#" },
+            { "id": 2, "label": "East Mesa", "url": "#" },
+            { "id": 3, "label": "West Mesa", "url": "#" }
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Nearby Cities",
+          "links": [
+            { "id": 4, "label": "Phoenix", "url": "#" },
+            { "id": 5, "label": "Tempe", "url": "#" },
+            { "id": 6, "label": "Chandler", "url": "#" }
+          ]
+        }
+      ]
+    }
+  }
+}

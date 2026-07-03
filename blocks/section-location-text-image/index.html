@@ -1,0 +1,107 @@
+<!--
+Asset Manifest:
+- text-image-photo-01.jpg: Photo for the first text+image row (e.g. attorneys shaking hands)
+- text-image-photo-02.jpg: Photo for the second text+image row (e.g. team group photo)
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section Location – Text and Image</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Heebo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<!-- =============================================
+     SECTION: Location – Text and Image
+     Modifier classes:
+       --image-right  (default) image appears on the right
+       --image-left              image appears on the left
+     Optional elements (remove any not needed per row):
+       .section-loc-text-image__heading  — h3 heading
+       .section-loc-text-image__para     — paragraph (repeat for multiple)
+       .section-loc-text-image__list     — unordered list
+     ============================================= -->
+
+<section class="section-loc-text-image">
+  <div class="section-loc-text-image__container">
+
+    <!-- ── ROW 1: Image Right (default) ──────────────────── -->
+    <div class="section-loc-text-image__row section-loc-text-image__row--image-right">
+
+      <div class="section-loc-text-image__text">
+        <!-- Optional: remove this element if no heading is needed -->
+        <h3 class="section-loc-text-image__heading">
+          The Statute of Limitations for Personal Injury Claims in Arizona
+        </h3>
+
+        <!-- Optional: repeat this element for each paragraph -->
+        <p class="section-loc-text-image__para">
+          In Arizona, a personal injury claim must be filed within two years from the date of the injury (<a href="https://www.azleg.gov/ars/12/02505.htm" target="_blank" rel="noopener">A.R.S. § 12-542</a>). This timeframe can be shortened or extended based on specific circumstances, such as when the injured party is a minor, or the defendant is a government entity.
+        </p>
+
+        <p class="section-loc-text-image__para">
+          It is essential to consult with a knowledgeable attorney to protect your right to bring a lawsuit. Your attorney can also help you initiate an insurance claim to address your immediate needs and negotiate a settlement before a lawsuit needs to be filed.
+        </p>
+      </div>
+
+      <figure class="section-loc-text-image__image-wrap">
+        <img
+          class="section-loc-text-image__image"
+          src="assets/images/text-image-photo-01.jpg"
+          alt="Attorneys reviewing a personal injury case"
+        >
+      </figure>
+
+    </div>
+    <!-- ── /ROW 1 ──────────────────────────────────────── -->
+
+    <!-- ── ROW 2: Image Left ──────────────────────────── -->
+    <div class="section-loc-text-image__row section-loc-text-image__row--image-left">
+
+      <figure class="section-loc-text-image__image-wrap">
+        <img
+          class="section-loc-text-image__image"
+          src="assets/images/text-image-photo-02.jpg"
+          alt="Hastings and Hastings legal team"
+        >
+      </figure>
+
+      <div class="section-loc-text-image__text">
+        <!-- Optional: remove this element if no heading is needed -->
+        <h3 class="section-loc-text-image__heading">
+          How Hastings &amp; Hastings Can Help
+        </h3>
+
+        <!-- Optional: repeat this element for each paragraph -->
+        <p class="section-loc-text-image__para">
+          Hastings &amp; Hastings offers comprehensive legal support for personal injury cases in Buckeye, AZ. Our services include:
+        </p>
+
+        <!-- Optional: remove this element if no list is needed -->
+        <ul class="section-loc-text-image__list">
+          <li>A thorough case evaluation</li>
+          <li>Assistance with gathering evidence</li>
+          <li>Negotiation with the liable insurance companies</li>
+          <li>Representation in court, if necessary</li>
+          <li>A discounted fee structure, meaning more compensation for you.</li>
+        </ul>
+
+        <!-- Optional: repeat this element for each paragraph -->
+        <p class="section-loc-text-image__para">
+          Hiring our experienced attorneys increases your chances of receiving maximum compensation.
+        </p>
+      </div>
+
+    </div>
+    <!-- ── /ROW 2 ──────────────────────────────────────── -->
+
+  </div>
+</section>
+
+</body>
+</html>

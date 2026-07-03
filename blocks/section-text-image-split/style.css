@@ -1,0 +1,15 @@
+/* Section: Text & Image Split - Frontend Styles */
+
+/* Ensure the image column never overflows on small viewports */
+.section-text-image-split__image {
+  display: block;
+  max-width: 100%;
+}
+
+/* On mobile, center-align inline text elements inside the text column */
+@media ( max-width: 1023px ) {
+  .section-text-image-split__heading,
+  .section-text-image-split__paragraph {
+    text-align: center;
+  }
+}

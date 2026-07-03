@@ -45,6 +45,7 @@ blockDirs.forEach( ( dir ) => {
     {
       from: path.resolve( dir, 'block.json' ),
       to: path.resolve( __dirname, `build/blocks/${ blockName }/block.json` ),
+      noErrorOnMissing: true,
     },
     {
       from: path.resolve( dir, 'style.css' ),
@@ -60,9 +61,23 @@ blockDirs.forEach( ( dir ) => {
       from: path.resolve( dir, 'script.js' ),
       to: path.resolve( __dirname, `build/blocks/${ blockName }/script.js` ),
       noErrorOnMissing: true,
+    },
+    {
+      from: path.resolve( dir, 'assets' ),
+      to: path.resolve( __dirname, `build/blocks/${ blockName }/assets` ),
+      noErrorOnMissing: true,
     }
   );
 } );
+
+// Copy assets/icons directory to build
+copyPatterns.push(
+  {
+    from: path.resolve( __dirname, 'assets/icons' ),
+    to: path.resolve( __dirname, 'build/assets/icons' ),
+    noErrorOnMissing: true,
+  }
+);
 
 // Debug: Log copy patterns
 if ( copyPatterns.length > 0 ) {

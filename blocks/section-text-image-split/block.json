@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-text-image-split",
+  "title": "Section: Text & Image Split",
+  "category": "mbn-blocks",
+  "icon": "align-pull-right",
+  "description": "35/65 two-column layout with heading, paragraph and image. Supports column swap.",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "bg-white"
+    },
+    "heading": {
+      "type": "string",
+      "default": ""
+    },
+    "paragraph": {
+      "type": "string",
+      "default": ""
+    },
+    "imageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "imageId": {
+      "type": "number"
+    },
+    "swapColumns": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

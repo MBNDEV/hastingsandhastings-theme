@@ -59,6 +59,8 @@ function mbn_theme_setup() {
   register_nav_menus(
     array(
 		'primary-menu'  => __( 'Primary Menu', 'mbn-theme' ),
+		'main-menu'     => __( 'Main Menu', 'mbn-theme' ),
+		'contact-menu'  => __( 'Contact Menu', 'mbn-theme' ),
 		'footer-menu'   => __( 'Footer Menu', 'mbn-theme' ),
 		'footer-menu-1' => __( 'Footer Menu Column 1', 'mbn-theme' ),
 		'footer-menu-2' => __( 'Footer Menu Column 2', 'mbn-theme' ),
@@ -89,6 +91,11 @@ require_once get_theme_file_path( 'inc/includes-template-sync-tools.php' );    /
 require_once get_theme_file_path( 'inc/includes-page-sync.php' );              // Page content sync (optional).
 require_once get_theme_file_path( 'inc/includes-nav-menu-sync.php' );          // Nav menu export/import via Git.
 require_once get_theme_file_path( 'inc/includes-animation-helpers.php' );      // Animation data-attribute helpers.
+require_once get_theme_file_path( 'inc/includes-gravity-forms-api.php' );      // Gravity Forms REST API endpoint.
+require_once get_theme_file_path( 'inc/includes-attorney-cpt.php' );            // Attorney custom post type.
+require_once get_theme_file_path( 'inc/includes-attorney-fields.php' );         // Attorney ACF field groups.
+require_once get_theme_file_path( 'inc/includes-case-results.php' );            // Case Results custom post type and fields.
+require_once get_theme_file_path( 'inc/includes-handwritten-reviews.php' );     // Handwritten Reviews CPT, meta box, and REST endpoint.
 
 /**
  * Enqueue scroll animation assets (frontend only).
@@ -201,3 +208,102 @@ function hastingsandhastings_validate_donation_amount( $result, $value, $form, $
 	return $result;
 }
 add_filter( 'gform_field_validation', 'hastingsandhastings_validate_donation_amount', 10, 4 );
+
+if ( ! function_exists( 'hastingsandhastings_get_first_image_from_content' ) ) {
+	/**
+	 * Extract first image URL from HTML content.
+	 *
+	 * @param string $content HTML content.
+	 * @return string
+	 */
+  function hastingsandhastings_get_first_image_from_content( $content ) {
+    if ( ! is_string( $content ) || '' === trim( $content ) ) {
+        return '';
+    }
+
+    if ( preg_match( '/<img[^>]+src=["\']([^"\']+)["\']/i', $content, $matches ) ) {
+        return isset( $matches[1] ) ? (string) $matches[1] : '';
+    }
+
+      return '';
+  }
+}
+
+if ( ! function_exists( 'hastingsandhastings_get_recent_article_image_url' ) ) {
+	/**
+	 * Get recent article image URL with fallback chain.
+	 *
+	 * Priority: featured image -> first image in content -> placeholder image.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return string
+	 */
+  function hastingsandhastings_get_recent_article_image_url( $post_id ) {
+      $post_id = (int) $post_id;
+
+    if ( $post_id > 0 && has_post_thumbnail( $post_id ) ) {
+        $featured = get_the_post_thumbnail_url( $post_id, 'large' );
+      if ( is_string( $featured ) && '' !== $featured ) {
+        return $featured;
+      }
+    }
+
+      $content_image = hastingsandhastings_get_first_image_from_content( (string) get_post_field( 'post_content', $post_id ) );
+    if ( '' !== $content_image ) {
+        return $content_image;
+    }
+
+      return get_theme_file_uri( '/assets/images/bg-placeholder.jpg' );
+  }
+}
+
+/**
+ * Enqueue dedicated assets for single blog post template.
+ *
+ * @return void
+ */
+function hastingsandhastings_enqueue_single_blog_assets() {
+  if ( ! is_single() || 'post' !== get_post_type() ) {
+    return;
+  }
+
+  $single_blog_style_path  = get_theme_file_path( 'assets/css/single-blog.css' );
+  $single_blog_script_path = get_theme_file_path( 'assets/js/single-blog-theme.js' );
+
+  wp_enqueue_style(
+    'hastingsandhastings-single-blog',
+    get_theme_file_uri( 'assets/css/single-blog.css' ),
+    array(),
+    file_exists( $single_blog_style_path ) ? (string) filemtime( $single_blog_style_path ) : null
+  );
+
+  wp_enqueue_script(
+    'hastingsandhastings-single-blog-theme',
+    get_theme_file_uri( 'assets/js/single-blog-theme.js' ),
+    array(),
+    file_exists( $single_blog_script_path ) ? (string) filemtime( $single_blog_script_path ) : null,
+    false
+  );
+}
+add_action( 'wp_enqueue_scripts', 'hastingsandhastings_enqueue_single_blog_assets', 20 );
+
+/**
+ * Enqueue dedicated assets for single attorney template.
+ *
+ * @return void
+ */
+function hastingsandhastings_enqueue_single_attorney_assets() {
+  if ( ! is_singular( 'attorney' ) ) {
+      return;
+  }
+
+	$single_attorney_style_path = get_theme_file_path( 'assets/css/single-attorney.css' );
+
+	wp_enqueue_style(
+      'hastingsandhastings-single-attorney',
+      get_theme_file_uri( 'assets/css/single-attorney.css' ),
+      array(),
+      file_exists( $single_attorney_style_path ) ? (string) filemtime( $single_attorney_style_path ) : null
+	);
+}
+add_action( 'wp_enqueue_scripts', 'hastingsandhastings_enqueue_single_attorney_assets', 20 );

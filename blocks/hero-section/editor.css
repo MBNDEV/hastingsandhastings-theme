@@ -1,0 +1,69 @@
+/* Hero Section - Editor Styles */
+
+/* Ensure full-width display in editor */
+.wp-block-mbn-theme-hero-section {
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Full-width alignment */
+.wp-block-mbn-theme-hero-section.alignfull {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(-1 * var(--wp--custom--layout--content-size, 840px) / 2 + 50vw) !important;
+  margin-right: calc(-1 * var(--wp--custom--layout--content-size, 840px) / 2 + 50vw) !important;
+}
+
+/* Ensure proper spacing in editor */
+.editor-styles-wrapper .wp-block-mbn-theme-hero-section {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Background color support in editor */
+.wp-block-mbn-theme-hero-section[class*="bg-"] {
+  background-color: inherit;
+}
+
+/* Ensure content is properly positioned over background */
+.wp-block-mbn-theme-hero-section > div {
+  position: relative;
+  z-index: 10;
+}
+
+/* Editor preview: ensure overlay and background images are visible */
+.wp-block-mbn-theme-hero-section .absolute {
+  position: absolute;
+}
+
+/* Editor preview: maintain aspect ratio for hero section */
+.wp-block-mbn-theme-hero-section {
+  min-height: 500px;
+}
+
+/* Editor preview: ensure RichText placeholders are visible */
+.wp-block-mbn-theme-hero-section .rich-text[data-is-placeholder-visible="true"]::before {
+  opacity: 0.6;
+}
+
+/* Editor preview: CTA bar styling */
+.wp-block-mbn-theme-hero-section .bg-gradient-to-b {
+  backdrop-filter: blur(10px);
+}
+
+/* Editor preview: ensure proper text contrast */
+.wp-block-mbn-theme-hero-section h1,
+.wp-block-mbn-theme-hero-section p {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Editor preview: responsive padding helpers */
+@media (max-width: 782px) {
+  .wp-block-mbn-theme-hero-section {
+    min-height: 400px;
+  }
+}
+

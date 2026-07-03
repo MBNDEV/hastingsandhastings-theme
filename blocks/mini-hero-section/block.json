@@ -1,0 +1,119 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/mini-hero-section",
+  "title": "Mini-Hero Section",
+  "category": "mbn-blocks",
+  "icon": "cover-image",
+  "description": "Mini-hero section with video background, heading, and CTA bar",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "bg-white"
+    },
+    "eyebrowText": {
+      "type": "string",
+      "default": "GET STARTED TODAY"
+    },
+    "mainHeading": {
+      "type": "string",
+      "default": "Talk to a Phoenix accident lawyer. Keep more with our 29% fee"
+    },
+    "subheading": {
+      "type": "string",
+      "default": "If you've been injured in an accident, Hastings & Hastings is ready to help you understand your options and take the next step."
+    },
+    "badgeImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "badgeImageId": {
+      "type": "number"
+    },
+    "videoMp4Url": {
+      "type": "string",
+      "default": ""
+    },
+    "videoMp4Id": {
+      "type": "number"
+    },
+    "videoWebmUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "videoWebmId": {
+      "type": "number"
+    },
+    "posterImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "posterImageId": {
+      "type": "number"
+    },
+    "overlayImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "overlayImageId": {
+      "type": "number"
+    },
+    "showCtaBar": {
+      "type": "boolean",
+      "default": true
+    },
+    "ctaButtonText": {
+      "type": "string",
+      "default": "REQUEST A FREE CONSULTATION"
+    },
+    "ctaButtonUrl": {
+      "type": "string",
+      "default": "#contact"
+    },
+    "phoneNumber": {
+      "type": "string",
+      "default": "(480) 480-2929"
+    },
+    "phoneNumberUrl": {
+      "type": "string",
+      "default": "tel:4804802929"
+    },
+    "settlementFeesNumber": {
+      "type": "string",
+      "default": "29"
+    },
+    "settlementFeesLabel": {
+      "type": "string",
+      "default": "Settlement Fees"
+    },
+    "outOfPocketNumber": {
+      "type": "string",
+      "default": "$0"
+    },
+    "outOfPocketLabel": {
+      "type": "string",
+      "default": "Out-of-Pocket"
+    },
+    "feeUntilWinNumber": {
+      "type": "string",
+      "default": "NO"
+    },
+    "feeUntilWinLabel": {
+      "type": "string",
+      "default": "Fee Until We Win"
+    }
+  }
+}

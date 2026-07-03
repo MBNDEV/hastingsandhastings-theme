@@ -1,0 +1,22 @@
+/* Mini-Hero Section - Editor Styles */
+
+/* Ensure full-width display in editor */
+.wp-block-mbn-theme-mini-hero-section {
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Full-width alignment */
+.wp-block-mbn-theme-mini-hero-section.alignfull {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(-1 * var(--wp--custom--layout--content-size, 840px) / 2 + 50vw) !important;
+  margin-right: calc(-1 * var(--wp--custom--layout--content-size, 840px) / 2 + 50vw) !important;
+}
+
+/* Ensure proper spacing in editor */
+.editor-styles-wrapper .wp-block-mbn-theme-mini-hero-section {
+  margin-top: 0;
+  margin-bottom: 0;
+}

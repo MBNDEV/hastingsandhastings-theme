@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/awards-and-accolades-section",
+  "title": "Awards and Accolades Section",
+  "category": "mbn-blocks",
+  "icon": "awards",
+  "description": "Standalone awards and accolades slider section.",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "viewScript": "file:./script.js",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "awardsLabel": {
+      "type": "string",
+      "default": "Awards & Accolades"
+    },
+    "awards": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

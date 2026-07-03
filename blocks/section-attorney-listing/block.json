@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-attorney-listing",
+  "title": "Section: Attorney Listing",
+  "category": "mbn-blocks",
+  "icon": "groups",
+  "description": "Displays active attorneys in responsive cards with profile and call actions.",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Our Attorneys"
+    },
+    "description": {
+      "type": "string",
+      "default": "Meet the attorneys ready to fight for your case."
+    }
+  }
+}

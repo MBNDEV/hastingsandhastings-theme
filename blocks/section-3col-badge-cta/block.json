@@ -1,0 +1,125 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-3col-badge-cta",
+  "title": "Section: 3 Column Badge with CTA Bar",
+  "category": "mbn-blocks",
+  "icon": "awards",
+  "description": "3 column badges section with CTA bar",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "bg-white"
+    },
+    "eyebrowText": {
+      "type": "string",
+      "default": "MORE OF YOUR SETTLEMENT STAYS WITH YOU"
+    },
+    "mainHeading": {
+      "type": "string",
+      "default": "A more affordable way to get trusted legal help"
+    },
+    "subHeading": {
+      "type": "string",
+      "default": ""
+    },
+    "mainContent": {
+      "type": "string",
+      "default": ""
+    },
+    "backgroundImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "backgroundImageId": {
+      "type": "number"
+    },
+    "videoMp4Url": {
+      "type": "string",
+      "default": ""
+    },
+    "videoMp4Id": {
+      "type": "number"
+    },
+    "videoWebmUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "videoWebmId": {
+      "type": "number"
+    },
+    "posterImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "posterImageId": {
+      "type": "number"
+    },
+    "overlayImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "overlayImageId": {
+      "type": "number"
+    },
+    "showOverlay": {
+      "type": "boolean",
+      "default": true
+    },
+    "overlayFallbackStyle": {
+      "type": "string",
+      "default": "gradient",
+      "enum": ["gradient", "transparent"]
+    },
+    "badges": {
+      "type": "array",
+      "default": []
+    },
+    "showCtaBar": {
+      "type": "boolean",
+      "default": true
+    },
+    "ctaHeading": {
+      "type": "string",
+      "default": "Get trusted legal help with a lower fee"
+    },
+    "ctaText": {
+      "type": "string",
+      "default": "If you were hurt in an accident, Hastings & Hastings offers experienced legal help with a 29% settlement fee designed to help clients keep more of their recovery."
+    },
+    "badgeTextColor": {
+      "type": "string",
+      "default": "text-gray-200",
+      "enum": ["text-gray-200", "text-body"]
+    },
+    "ctaButtonText": {
+      "type": "string",
+      "default": "REQUEST A FREE CONSULTATION"
+    },
+    "ctaButtonUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "phoneNumber": {
+      "type": "string",
+      "default": "(480) 480-2929"
+    },
+    "phoneNumberUrl": {
+      "type": "string",
+      "default": "tel:4804802929"
+    }
+  }
+}

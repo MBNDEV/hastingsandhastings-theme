@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/header-navigation",
+  "title": "Header Navigation",
+  "category": "mbn-blocks",
+  "icon": "menu",
+  "description": "Sticky header with navigation menus, mobile menu, dynamic logos and CTA button",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "viewScript": "file:./script.js",
+  "render": "file:./render.php",
+  "attributes": {
+    "mainMenuId": {
+      "type": "number",
+      "default": 0
+    },
+    "contactMenuId": {
+      "type": "number",
+      "default": 0
+    },
+    "mobileMenuId": {
+      "type": "number",
+      "default": 0
+    },
+    "logoFullUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "logoFullId": {
+      "type": "number",
+      "default": 0
+    },
+    "logoMarkUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "logoMarkId": {
+      "type": "number",
+      "default": 0
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "REQUEST A FREE CONSULTATION"
+    },
+    "buttonUrl": {
+      "type": "string",
+      "default": "#"
+    }
+  }
+}

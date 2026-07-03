@@ -920,12 +920,17 @@ function custom_theme_render_nav_menu_sync_page(): void {
 
 		<?php settings_errors( 'custom_theme_nav_sync' ); ?>
 
-		<!-- Registered menus status table -->
-		<div class="card" style="max-width:860px;">
-			<h2><?php esc_html_e( 'Current Menus', 'mbn-theme' ); ?></h2>
-			<?php if ( empty( $menus ) ) : ?>
-				<p><em><?php esc_html_e( 'No menus found. Create menus via Appearance > Menus first.', 'mbn-theme' ); ?></em></p>
-			<?php else : ?>
+		<!-- Export form starts here to wrap checkboxes and submit button -->
+		<form method="post">
+			<?php wp_nonce_field( 'custom_theme_nav_sync', 'custom_theme_nav_sync_nonce' ); ?>
+			<input type="hidden" name="custom_theme_nav_sync_action" value="export_menus">
+
+			<!-- Registered menus status table -->
+			<div class="card" style="max-width:860px;">
+				<h2><?php esc_html_e( 'Current Menus', 'mbn-theme' ); ?></h2>
+				<?php if ( empty( $menus ) ) : ?>
+					<p><em><?php esc_html_e( 'No menus found. Create menus via Appearance > Menus first.', 'mbn-theme' ); ?></em></p>
+				<?php else : ?>
 				<table class="widefat striped" style="margin-top:10px;">
 					<thead>
 						<tr>
@@ -951,9 +956,9 @@ function custom_theme_render_nav_menu_sync_page(): void {
 				} );
 				</script>
 			<?php endif; ?>
-		</div>
+			</div>
 
-		<!-- Export card -->
+			<!-- Export card -->
 		<div class="card" style="max-width:860px;margin-top:20px;">
 			<h2>&#x1F4E4; <?php esc_html_e( 'Export Menus to Files', 'mbn-theme' ); ?></h2>
 			<p>
@@ -978,15 +983,14 @@ function custom_theme_render_nav_menu_sync_page(): void {
 						<?php esc_html_e( 'Use relative URLs (e.g. /contact, /about) for custom links so they work on every environment without editing.', 'mbn-theme' ); ?>
 					</p>
 				</div>
-				<form method="post" style="margin-top:15px;">
-					<?php wp_nonce_field( 'custom_theme_nav_sync', 'custom_theme_nav_sync_nonce' ); ?>
-					<input type="hidden" name="custom_theme_nav_sync_action" value="export_menus">
+				<div style="margin-top:15px;">
 					<button type="submit" class="button button-secondary">
 						&#x1F4E4; <?php esc_html_e( 'Export Selected Menus to Files', 'mbn-theme' ); ?>
 					</button>
-				</form>
+				</div>
 			<?php endif; ?>
-		</div>
+			</div>
+		</form>
 
 		<!-- Import card -->
 		<div class="card" style="max-width:860px;margin-top:20px;">

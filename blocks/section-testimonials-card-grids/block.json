@@ -1,0 +1,59 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-testimonials-card-grids",
+  "title": "Section: Testimonials Card Grid",
+  "category": "mbn-blocks",
+  "icon": "grid-view",
+  "description": "Testimonial review cards in a 2-column grid with editable star ratings",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "cards": {
+      "type": "array",
+      "default": [
+        {
+          "id": "card-1",
+          "starRating": 5,
+          "headline": "Anthony is my first choice to go to.",
+          "quote": "Anthony handled my injury case out of the office off the 101 & Indian School. I've never been hurt before. Anthony explained everything step by step for me and I appreciate all his help. I'm hoping to never get hurt again, but if it happens Anthony is my first choice to go to.",
+          "author": "Verified Client"
+        },
+        {
+          "id": "card-2",
+          "starRating": 5,
+          "headline": "I was very happy with the result!",
+          "quote": "Hastings and Hastings handled my claim after I had tried to deal with insurance company myself. Erwin explained the whole process to me at the initial consultation and I was very happy with the result!",
+          "author": "Verified Client"
+        },
+        {
+          "id": "card-3",
+          "starRating": 5,
+          "headline": "It was great to not have to worry about anything.",
+          "quote": "Hastings and Hastings is the best! Thank you so much for all the hard work you did but most of all, for just being there when I had questions. I used a different firm in my last accident (2006) and never thought I would use an attorney again. At Hastings, Sean Hennick handled my case and was awesome. Ask for him if you can… I was so scared after my accident but after meeting him, I could tell he knew what I was going through and was going to help. After that, their office handled pretty much everything …I could focus on getting my life back to normal. It was great to not have to worry about anything…thank you. I would recommend them and specifically Sean to anyone.",
+          "author": "Verified Client"
+        },
+        {
+          "id": "card-4",
+          "starRating": 5,
+          "headline": "They are responsive to emails and follow up.",
+          "quote": "They are great! They do preliminary questions to make sure that you aren't wasting your time (or theirs). They stand up for you and do what is right for you. Can't say enough positive comments on how they handled my case. They are responsive to emails and follow up. They only take legitimate cases and don't subscribe to \"frivolous\" lawsuits.",
+          "author": "Verified Client"
+        },
+        {
+          "id": "card-5",
+          "starRating": 5,
+          "headline": "I'm so pleased with my experience with them",
+          "quote": "I can't say how happy I am with Hastings & Hastings right now. I came to them about 9 months ago after my accident and today I received my settlement. Everyone there was very nice and helpful. My attorney's paralegal always responded to my emails quickly which really impressed me. I'm so pleased with my experience with them that I had to write a review!",
+          "author": "Verified Client"
+        }
+      ]
+    }
+  }
+}

@@ -7,3 +7,9 @@ build/
 *.hot-update.json
 .DS_Store
 html_tailwind/*
+.github/copilot-instructions.md
+.claude/
+.github/skills/*
+blocks/section-location-cta-card-badges/edit.js.backup
+blocks/handwritten-reviews/.env.staging.example
+blocks/handwritten-reviews/.env.staging

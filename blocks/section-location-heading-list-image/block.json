@@ -1,0 +1,89 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/section-location-heading-list-image",
+  "title": "Section: Location – Heading List with Image",
+  "category": "mbn-blocks",
+  "icon": "list-view",
+  "description": "Centered heading with intro paragraphs, list items (single or two-column), image, and footer paragraphs.",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "style": [
+    "file:./style.css",
+    "hastingsandhastings-location-blocks-shared"
+  ],
+  "render": "file:./render.php",
+  "supports": {
+    "align": ["wide", "full"],
+    "alignWide": true
+  },
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "bg-light-blue"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Compensation for a Personal Injury"
+    },
+    "introParagraphs": {
+      "type": "array",
+      "default": [
+        "Personal injury claimants in Arizona can recover various types of compensation, including:"
+      ]
+    },
+    "listStyle": {
+      "type": "string",
+      "default": "single"
+    },
+    "listItems": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Economic Damages",
+          "description": "To cover quantifiable losses such as medical expenses, lost wages, and property damage.",
+          "label": "",
+          "url": ""
+        },
+        {
+          "title": "Non-economic Damages",
+          "description": "To compensate for subjective, non-monetary losses like pain, suffering, and emotional distress.",
+          "label": "",
+          "url": ""
+        },
+        {
+          "title": "Punitive Damages",
+          "description": "In some cases, a court may award you punitive damages if the at-fault party's conduct was particularly egregious, serving as a punishment and deterrent for such behavior.",
+          "label": "",
+          "url": ""
+        }
+      ]
+    },
+    "imageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "imageId": {
+      "type": "number",
+      "default": 0
+    },
+    "beforeListParagraphs": {
+      "type": "array",
+      "default": []
+    },
+    "afterListParagraphs": {
+      "type": "array",
+      "default": []
+    },
+    "footerParagraphs": {
+      "type": "array",
+      "default": [
+        "Also, Arizona follows a comparative negligence rule (<a href=\"https://www.azleg.gov/ars/12/02505.htm\" target=\"_blank\" rel=\"noopener\">A.R.S. § 12-2505</a>), meaning you can still recover damages even if you are partially at fault. However, the amount may be reduced by your percentage of fault."
+      ]
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mbn-theme/handwritten-reviews",
+  "title": "Handwritten Reviews",
+  "category": "mbn-blocks",
+  "icon": "star-filled",
+  "description": "Accordion-based handwritten review gallery with lightbox",
+  "textdomain": "mbn-theme",
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "script": "file:./script.js",
+  "render": "file:./render.php",
+  "attributes": {
+    "accordionItems": {
+      "type": "array",
+      "default": []
+    }
+  }
+}

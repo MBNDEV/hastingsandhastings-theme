@@ -9,30 +9,105 @@ module.exports = {
     './template-parts/**/*.php',
     './resources/**/*.css',
   ],
+  safelist: [
+    // Hero Section dynamic classes rendered via PHP attributes.
+    'md:pt-0',
+    'md:pt-20',
+    'md:pt-28',
+    'md:pt-36',
+    'md:pt-48',
+    'md:pt-64',
+    'md:pb-0',
+    'md:pb-12',
+    'md:pb-16',
+    'md:pb-20',
+    'md:pb-32',
+    'md:pb-48',
+    'md:justify-start',
+    'md:justify-center',
+    'md:justify-end',
+    'md:justify-between',
+    'items-start',
+    'items-center',
+    'items-end',
+    'max-w-xl',
+    'max-w-2xl',
+    'max-w-3xl',
+    'max-w-4xl',
+    'max-w-5xl',
+    'max-w-full',
+    'bg-white',
+    'bg-primary',
+    'bg-secondary',
+    'bg-light-blue',
+    'bg-light-blue-100',
+    'bg-accent-gold',
+    'bg-accent-blue',
+    'bg-gray-50',
+    'bg-gray-100',
+    'bg-gray-200',
+    'bg-text-heading',
+    'bg-transparent',
+  ],
   theme: {
-    extend: {
-      colors: {
-        cream: '#F9F5EE',
-        'cream-light': '#FFF6E5',
-        'gold-light': '#FCE5B0',
-        gold: '#B89352',
-        'gold-dark': '#6B4502',
-        'dark-text': '#25272B',
-        'footer-bg': '#191919',
-        'paragraph-gray': '#B2B2B2',
-        'card-cream': '#F5F1E8',
-        'card-gold': '#FFF4D9',
-        'card-beige': '#F8F5F0',
-        'check-green': '#7CAA6D',
-        'divider-gold': '#CEB270',
-        'card-label': '#3A3A3A',
-        'intro-bg': '#EFEBE3',
-        'mission-text': 'rgba(0, 0, 0, 0.20)',
+    colors: {
+      // Primary brand colors
+      primary: '#FFF24C',
+      secondary: '#3480C3',
+      
+      // Text colors
+      'text-heading': '#13263E',
+      'text-body': '#53585F',
+      
+      // Gray scale
+      gray: {
+        50: '#f9fafb',
+        100: '#f3f4f6',
+        200: '#E8EAEC',
+        300: '#d1d5db',
+        400: '#9ca3af',
+        500: '#6b7280',
+        600: '#4b5563',
+        700: '#374151',
+        800: '#1f2937',
+        900: '#111827',
+        'light': '#D5DADD',
       },
-      fontFamily: {
-        sofia: ['"Sofia Sans"', 'sans-serif'],
-        poppins: ['"Poppins"', 'sans-serif'],
-        inter: ['"Inter"', 'sans-serif'],
+      
+      // Additional colors
+      'accent-blue': '#286FB7',
+      'accent-yellow': '#FFE066',
+      'accent-gold': '#FDE212',
+      'accent-gold-500': '#ECC806',
+      'text-muted': '#646B73',
+      'light-blue': '#F3F7FC',
+      'light-blue-100': '#E5EEF9',
+      'primary-200': '#C6DBF1',
+      'primary-300': '#93BDE6',
+      
+      // Footer colors
+      'footer-bg': '#13263E',
+      'footer-text': '#FFFFFF',
+      'footer-link-blue': '#599BD7',
+      
+      // Essential colors (white, black, transparent)
+      white: '#ffffff',
+      black: '#000000',
+      transparent: 'transparent',
+    },
+    fontFamily: {
+      heading: ['"Noto Serif"', 'serif'],
+      body: ['"Heebo"', 'sans-serif'],
+    },
+    extend: {
+      fontSize: {
+        // Heading sizes calculated from H1 (56px) and H2 (40px) using ~71.4% ratio
+        'h1': '56px',     // 3.5rem
+        'h2': '40px',     // 2.5rem
+        'h3': '28px',     // 1.75rem
+        'h4': '20px',     // 1.25rem
+        'h5': '16px',     // 1rem
+        'h6': '14px',     // 0.875rem
       },
       letterSpacing: {
         'hero': '-0.74px',        // For h1 hero headings

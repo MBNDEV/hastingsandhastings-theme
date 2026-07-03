@@ -1,0 +1,341 @@
+/* ============================================================
+   SECTION: LOCATION – INTRO (WHY CHOOSE)
+   Block: section-location-intro
+   ============================================================ */
+
+.ldp-why-choose {
+  background: var(--ldp-white);
+  padding-top: var(--ldp-section-pad-v);
+  padding-bottom: 0;
+}
+
+.ldp-why-choose .ldp-container {
+  display: flex;
+  flex-direction: column;
+  gap: 90px;
+  padding-bottom: 80px;
+}
+
+.ldp-why-choose > .ldp-container.ldp-cta-card {
+  padding-bottom: 48px;
+  gap: 24px;
+}
+
+.ldp-why-choose__header,
+.ldp-why-choose__subheader {
+  text-align: center;
+  max-width: 780px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.ldp-why-choose__subheader{
+  margin-bottom: 60px;
+}
+.ldp-why-choose__title,
+.ldp-why-choose__subtitle {
+  font-family: var(--ldp-font-primary);
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1.5;
+  color: var(--ldp-text-heading);
+  margin: 0;
+}
+
+.ldp-why-choose__intro {
+  font-family: var(--ldp-font-secondary);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.556;
+  color: var(--ldp-text-body);
+  margin: 0;
+}
+
+.ldp-why-choose__intro a {
+  color: var(--ldp-text-body);
+  text-decoration: underline;
+}
+
+/* ── Track Record Section ────────────────────────────────── */
+.ldp-why-choose__track-record {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.ldp-why-choose__track-record--reversed {
+  grid-template-columns: 2fr 2fr;
+}
+
+.ldp-why-choose__track-record--reversed .ldp-why-choose__track-record-text {
+  order: 2;
+}
+
+.ldp-why-choose__track-record--reversed .ldp-why-choose__stats {
+  order: 1;
+}
+
+.ldp-why-choose__track-record-text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ldp-why-choose__subtitle {
+  font-family: var(--ldp-font-primary);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.43;
+  color: var(--ldp-text-heading);
+  margin: 0 0 16px;
+}
+
+.ldp-why-choose__track-record-text p {
+  font-size: 18px;
+  line-height: 1.556;
+  color: var(--ldp-text-body);
+  margin: 0;
+}
+
+.ldp-why-choose__stats {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding-top: 8px;
+}
+
+.ldp-why-choose__stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ldp-why-choose__stat-number {
+  font-family: var(--ldp-font-primary);
+  font-weight: 700;
+  font-size: 80px;
+  line-height: 1;
+  color: var(--ldp-blue-500);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.ldp-why-choose__stat-label {
+  font-family: var(--ldp-font-primary);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--ldp-blue-950);
+}
+
+/* ── Fee Structure Section ───────────────────────────────── */
+.ldp-why-choose__fee-structure {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.ldp-why-choose__fee-structure--reversed {
+  grid-template-columns: 2fr 2fr;
+}
+
+.ldp-why-choose__fee-structure--reversed .ldp-why-choose__badge {
+  order: 2;
+}
+
+.ldp-why-choose__fee-structure--reversed .ldp-why-choose__fee-text {
+  order: 1;
+}
+
+.ldp-why-choose__badge {
+  margin: 0;
+  flex-shrink: 0;
+  width: 303px;
+  margin: 0 auto;
+}
+
+.ldp-why-choose__badge img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.ldp-why-choose__fee-text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ldp-why-choose__fee-text p {
+  font-size: 18px;
+  line-height: 1.556;
+  color: var(--ldp-text-body);
+  margin: 0;
+}
+
+.ldp-why-choose__fee-text a {
+  color: var(--ldp-text-body);
+  text-decoration: underline;
+}
+
+/* ── Attorneys Section ───────────────────────────────────── */
+.ldp-why-choose__attorneys {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.ldp-why-choose__attorneys--reversed {
+  grid-template-columns: 690px 2fr;
+}
+
+.ldp-why-choose__attorneys--reversed .ldp-why-choose__attorneys-text {
+  order: 2;
+}
+
+.ldp-why-choose__attorneys--reversed .ldp-why-choose__attorneys-img {
+  order: 1;
+}
+
+.ldp-why-choose__attorneys-text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ldp-why-choose__attorneys-text p {
+  font-size: 18px;
+  line-height: 1.556;
+  color: var(--ldp-text-body);
+  margin: 0;
+}
+
+.ldp-why-choose__attorneys-img {
+  margin: 0;
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  height: 420px;
+}
+
+.ldp-why-choose__img-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.ldp-why-choose__img-wall {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  object-fit: cover;
+  object-position: bottom;
+}
+
+.ldp-why-choose__img-team {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 16px;
+}
+
+/* ── CTA Card (Within Section) ───────────────────────────── */
+.ldp-why-choose > .ldp-cta-card {
+  max-width: var(--ldp-content-width);
+  margin-inline: auto;
+  margin-top: 0;
+  width: calc(100% - 2 * var(--ldp-section-pad-h));
+  margin-bottom: var(--ldp-section-pad-v);
+}
+
+/* ── Editor Preview ──────────────────────────────────────── */
+.ldp-why-choose.editor-preview {
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+
+@media screen and (max-width: 1365px) {
+  
+  .ldp-cta-card__text {
+    width: clamp(280px, 53%, 100%);
+  }
+}
+
+
+/* ── Responsive: Below 1024px ────────────────────────────── */
+@media screen and (max-width: 1023px) {
+  /* Track Record Section - Stack columns */
+  .ldp-why-choose__track-record,
+  .ldp-why-choose__track-record--reversed {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .ldp-why-choose__track-record--reversed .ldp-why-choose__track-record-text,
+  .ldp-why-choose__track-record--reversed .ldp-why-choose__stats {
+    order: unset;
+  }
+
+  /* Fee Structure Section - Stack columns */
+  .ldp-why-choose__fee-structure,
+  .ldp-why-choose__fee-structure--reversed {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .ldp-why-choose__fee-structure--reversed .ldp-why-choose__badge,
+  .ldp-why-choose__fee-structure--reversed .ldp-why-choose__fee-text {
+    order: unset;
+  }
+
+  .ldp-why-choose__badge {
+    width: 100%;
+    max-width: 303px;
+  }
+
+  /* Attorneys Section - Stack columns */
+  .ldp-why-choose__attorneys,
+  .ldp-why-choose__attorneys--reversed {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .ldp-why-choose__attorneys--reversed .ldp-why-choose__attorneys-text,
+  .ldp-why-choose__attorneys--reversed .ldp-why-choose__attorneys-img {
+    order: unset;
+  }
+
+  .ldp-why-choose__attorneys-img {
+    height: 350px;
+  }
+  
+  .ldp-cta-card__text {
+    width: 100%;
+  }
+  .ldp-why-choose__fee-text,
+  .ldp-why-choose__track-record-text,
+  .ldp-why-choose__attorneys-text {
+    text-align: center;
+  }
+  .ldp-why-choose__stat{
+    justify-content: center;
+  }
+  .ldp-why-choose > :not(.ldp-cta-card) {
+    padding-left: var(--ldp-section-pad-h);
+    padding-right: var(--ldp-section-pad-h);
+  }
+}
