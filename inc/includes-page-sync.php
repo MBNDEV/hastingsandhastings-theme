@@ -166,6 +166,54 @@ function custom_theme_encode_php_string( $value ) {
 }
 
 /**
+ * Encode a PHP array value as a WPCS-compliant array literal.
+ *
+ * Emits tab-indented, single-quoted, arrow-aligned code so exported pattern
+ * files pass phpcs without a follow-up phpcbf run. Handles nested arrays.
+ *
+ * @param array $data         The array to encode.
+ * @param int   $indent_level Tab depth of the line the array opens on.
+ * @return string PHP code representing the array.
+ */
+function custom_theme_encode_php_array( $data, $indent_level = 1 ) {
+  if ( empty( $data ) ) {
+      return 'array()';
+  }
+
+	$base    = str_repeat( "\t", $indent_level );
+	$is_list = array_keys( $data ) === range( 0, count( $data ) - 1 );
+
+	// Widest key token, for aligning the => operators in associative arrays.
+	$max_key = 0;
+  if ( ! $is_list ) {
+    foreach ( array_keys( $data ) as $key ) {
+        $max_key = max( $max_key, strlen( custom_theme_encode_php_string( $key ) ) );
+    }
+  }
+
+	$lines = array();
+  foreach ( $data as $key => $value ) {
+    if ( is_array( $value ) ) {
+        $encoded = custom_theme_encode_php_array( $value, $indent_level + 1 );
+    } elseif ( is_int( $value ) || is_float( $value ) ) {
+        $encoded = (string) $value;
+    } else {
+        $encoded = custom_theme_encode_php_string( $value );
+    }
+
+    if ( $is_list ) {
+        $lines[] = $base . "\t" . $encoded . ',';
+    } else {
+        $key_token = custom_theme_encode_php_string( $key );
+        $pad       = str_repeat( ' ', $max_key - strlen( $key_token ) );
+        $lines[]   = $base . "\t" . $key_token . $pad . ' => ' . $encoded . ',';
+    }
+  }
+
+	return "array(\n" . implode( "\n", $lines ) . "\n" . $base . ')';
+}
+
+/**
  * Build the PHP file content for a page pattern export.
  *
  * @param string $title                Title of the page.
@@ -205,7 +253,7 @@ function custom_theme_build_pattern_file_content( $title, $slug, $status, $excer
 	$file_content .= "\t'template'            => " . custom_theme_encode_php_string( $template ) . ",\n";
 	$file_content .= "\t'featured_image_url'  => " . custom_theme_encode_php_string( $featured_image_url ) . ",\n";
 	$file_content .= "\t'featured_image_path' => " . custom_theme_encode_php_string( $featured_image_path ) . ", // Theme assets path (ships via Git)\n";
-	$file_content .= "\t'custom_fields'       => " . ( empty( $custom_fields ) ? 'array()' : wp_json_encode( $custom_fields ) ) . ",\n";
+	$file_content .= "\t'custom_fields'       => " . custom_theme_encode_php_array( $custom_fields, 1 ) . ",\n";
 	$file_content .= "\t'content'             => <<<'EOD'\n";
 	$file_content .= $content . "\n";
 	$file_content .= "EOD\n";

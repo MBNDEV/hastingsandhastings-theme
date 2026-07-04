@@ -21,11 +21,11 @@ return array(
 	'menu_order'          => 0,
 	'template'            => 'page-templates/template-blank.php',
 	'featured_image_url'  => '',
-	'featured_image_path' => '', // Theme assets path (ships via Git) 
+	'featured_image_path' => '', // Theme assets path (ships via Git)
 	'custom_fields'       => array(
 		'_wp_page_template' => 'page-templates/template-blank.php',
 		'translate_parts'   => '0',
-	), 
+	),
 	'content'             => <<<'EOD'
 <!-- wp:mbn-theme/hero-section {"eyebrowText":"Locations","mainHeading":"Gilbert Personal Injury Lawyer","subheading":"If you or a family member has been injured through the fault of someone else, the Phoenix personal injury attorneys at Hastings & Hastings PC of Gilbert are here to advocate for the best possible compensation for you.  Our team has successfully helped many clients include motorcycle drivers that were injured from other drivers. Call our Gilbert office today to schedule a free case evaluation.","badgeImageUrl":"https://hastingsandhastings.dev.local/wp-content/uploads/2026/06/badge-90-plus-combined-legal-experience.svg","badgeImageId":9897,"videoMp4Url":"https://hastingsandhastings.dev.local/wp-content/uploads/2026/06/vid-section-more-affordable-way.mp4","videoMp4Id":417,"videoWebmUrl":"https://hastingsandhastings.dev.local/wp-content/uploads/2026/06/vid-section-more-affordable-way.webm","videoWebmId":416,"overlayImageUrl":"https://hastingsandhastings.dev.local/wp-content/uploads/2026/06/img-fg-video-overlay.webp","overlayImageId":8556,"showCtaBar":false,"contentJustify":"justify-between","textMaxWidth":"max-w-3xl"} /-->
 
