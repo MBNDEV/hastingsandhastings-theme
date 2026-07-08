@@ -48,7 +48,7 @@ function emptyData(type) {
     case 'insurance':
       return { heading: '', text: '', photoUrl: '', photoId: 0 };
     case 'liability':
-      return { heading: '', subtitle: '', introHeading: '', introText: '', backgroundColor: 'bg-white', paddingTop: '', paddingBottom: '', items: [] };
+      return { heading: '', subtitle: '', introHeading: '', introText: '', backgroundColor: 'bg-white', paddingTop: '', paddingBottom: '', afterText: '', items: [] };
     case 'compensation':
       return { heading: '', subtitle: '', afterText: '', items: [] };
     case 'documentation':
@@ -449,6 +449,7 @@ function LiabilityEditor({ data, setData, sensors }) {
       <TextareaControl label={__('Intro Text (HTML)', 'mbn-theme')} value={data.introText || ''} onChange={(v) => setData({ introText: v })} rows={3} />
       <h4 style={{ marginTop: '20px' }}>{__('Liability Items', 'mbn-theme')}</h4>
       <Repeater field={items} sensors={sensors} ItemComponent={SortableLiability} addLabel={__('+ Add Liability Item', 'mbn-theme')} newItem={{ term: '', description: '' }} />
+      <TextareaControl label={__('Text After List (HTML)', 'mbn-theme')} value={data.afterText || ''} onChange={(v) => setData({ afterText: v })} rows={4} help={__('Optional paragraph(s) shown below the liability list. Leave empty to hide.', 'mbn-theme')} style={{ marginTop: '20px' }} />
     </Fragment>
   );
 }

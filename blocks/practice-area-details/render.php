@@ -291,23 +291,27 @@ if ( ! function_exists( 'mbn_pad_render_after_accident' ) ) {
 
 if ( ! function_exists( 'mbn_pad_render_steps_question' ) ) {
   /**
-   * Render the ordered/unordered question label of a Steps accordion item.
+   * Render the question label of a Steps accordion item.
+   *
+   * Uses phrasing-content spans (never list elements) so the markup is valid
+   * inside the accordion <button>. When the list type is 'ol' the step number
+   * is rendered as text; 'ul' shows the question with no number.
    *
    * @param string $question    Question text.
-   * @param string $list_type   List element type: 'ol' or 'ul'.
-   * @param int    $step_number 1-based step number (used for the ol start attribute).
+   * @param string $list_type   List style: 'ol' (numbered) or 'ul' (no marker).
+   * @param int    $step_number 1-based step number, shown when numbered.
    */
   function mbn_pad_render_steps_question( $question, $list_type, $step_number ) {
     if ( 'ul' === $list_type ) {
       printf(
-        '<ul class="pad-steps__ol"><li>%s</li></ul>',
+        '<span class="pad-steps__question-label"><span class="pad-steps__question-text">%s</span></span>',
         esc_html( $question )
       );
       return;
     }
     printf(
-      '<ol class="pad-steps__ol" start="%s"><li>%s</li></ol>',
-      esc_attr( $step_number ),
+      '<span class="pad-steps__question-label"><span class="pad-steps__question-number">%s.</span><span class="pad-steps__question-text">%s</span></span>',
+      esc_html( $step_number ),
       esc_html( $question )
     );
   }
@@ -517,6 +521,13 @@ if ( ! function_exists( 'mbn_pad_render_liability' ) ) {
       </li>
       <?php endforeach; ?>
     </ul>
+
+    <?php if ( ! empty( $data['afterText'] ) ) : ?>
+    <div class="pad-liability__after">
+      <?php echo wp_kses_post( $data['afterText'] ); ?>
+    </div>
+    <?php endif; ?>
+
   </div>
 </section>
     <?php
@@ -536,7 +547,7 @@ if ( ! function_exists( 'mbn_pad_render_compensation' ) ) {
   <div class="pad-container">
     <div class="pad-section-header pad-section-header--center">
       <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
-      <p class="pad-section-subtitle"><?php echo esc_html( $data['subtitle'] ?? '' ); ?></p>
+      <p class="pad-section-subtitle"><?php echo wp_kses_post( $data['subtitle'] ?? '' ); ?></p>
     </div>
 
     <div class="pad-compensation__grid">
