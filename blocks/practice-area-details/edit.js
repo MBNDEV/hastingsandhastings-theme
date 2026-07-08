@@ -42,7 +42,7 @@ function emptyData(type) {
     case 'afterAccident':
       return { heading: '', splits: [] };
     case 'steps':
-      return { heading: '', introText: '', chevronIconUrl: '', chevronIconId: 0, accordion: [] };
+      return { heading: '', introText: '', chevronIconUrl: '', chevronIconId: 0, listType: 'ol', accordion: [] };
     case 'timeLimit':
       return { heading: '', subtitle: '', text: '', photoUrl: '', photoId: 0 };
     case 'insurance':
@@ -391,6 +391,7 @@ function StepsEditor({ data, setData, sensors }) {
       <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} />
       <TextareaControl label={__('Intro Text (HTML)', 'mbn-theme')} value={data.introText || ''} onChange={(v) => setData({ introText: v })} rows={3} />
       <ImageField label={__('Chevron Icon', 'mbn-theme')} url={data.chevronIconUrl} id={data.chevronIconId} onSelect={(m) => setData({ chevronIconUrl: m.url, chevronIconId: m.id })} onRemove={() => setData({ chevronIconUrl: '', chevronIconId: 0 })} maxWidth="50px" />
+      <ToggleControl label={__('Use ordered list (numbered)', 'mbn-theme')} help={(data.listType || 'ol') === 'ol' ? __('Steps are numbered (ol).', 'mbn-theme') : __('Steps have no marker (ul).', 'mbn-theme')} checked={(data.listType || 'ol') === 'ol'} onChange={(v) => setData({ listType: v ? 'ol' : 'ul' })} />
       <h4 style={{ marginTop: '20px' }}>{__('Steps', 'mbn-theme')}</h4>
       <Repeater field={steps} sensors={sensors} ItemComponent={SortableStep} addLabel={__('+ Add Step', 'mbn-theme')} newItem={{ question: '', answer: '' }} />
     </Fragment>
