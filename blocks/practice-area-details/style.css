@@ -838,9 +838,9 @@ ul.pad-steps__ol {
   color: var(--pad-text-body);
   margin: 0;
 }
-.pad-compensation__item a{
+.pad-compensation__item a {
   text-decoration: underline;
-  text-decoration-offset: 2px;
+  text-underline-offset: 2px;
   color: inherit;
 }
 
