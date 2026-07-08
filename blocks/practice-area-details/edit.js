@@ -28,6 +28,7 @@ const SECTION_TYPES = {
   thirdParty: { label: 'Third-Party Liability' },
   commonCauses: { label: 'Common Causes' },
   testimonials: { label: 'Testimonials' },
+  accidentList: { label: 'Lists of Accidents' },
 };
 
 // Empty data payload for a newly added section of the given type.
@@ -61,6 +62,8 @@ function emptyData(type) {
       return { heading: '', text: '', photoUrl: '', photoId: 0, items: [] };
     case 'testimonials':
       return { eyebrow: '', heading: '', subtitle: '', starsIconUrl: '', starsIconId: 0, items: [] };
+    case 'accidentList':
+      return { heading: '', backgroundColor: 'bg-light-blue', items: [] };
     default:
       return {};
   }
@@ -249,6 +252,17 @@ function SortableTextItem({ item, index, updateItem, removeItem, duplicateItem }
     <div ref={setNodeRef} style={itemStyle(transform, transition, isDragging)}>
       <ItemHeader attributes={attributes} listeners={listeners} label={__('Item', 'mbn-theme')} index={index} onDuplicate={() => duplicateItem(index)} onRemove={() => removeItem(index)} />
       <TextareaControl label={__('Text (HTML allowed)', 'mbn-theme')} value={item.text} onChange={(v) => updateItem(index, { text: v })} rows={3} />
+    </div>
+  );
+}
+
+function SortableAccident({ item, index, updateItem, removeItem, duplicateItem }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
+  return (
+    <div ref={setNodeRef} style={itemStyle(transform, transition, isDragging)}>
+      <ItemHeader attributes={attributes} listeners={listeners} label={__('Accident', 'mbn-theme')} index={index} onDuplicate={() => duplicateItem(index)} onRemove={() => removeItem(index)} />
+      <TextControl label={__('Label', 'mbn-theme')} value={item.label} onChange={(v) => updateItem(index, { label: v })} />
+      <TextControl label={__('URL', 'mbn-theme')} value={item.url} onChange={(v) => updateItem(index, { url: v })} />
     </div>
   );
 }
@@ -533,6 +547,18 @@ function TestimonialsEditor({ data, setData, sensors }) {
   );
 }
 
+function AccidentListEditor({ data, setData, sensors }) {
+  const items = makeArrayField(data, setData, 'items');
+  return (
+    <Fragment>
+      <BackgroundColorControl value={data.backgroundColor || 'bg-light-blue'} onChange={(v) => setData({ backgroundColor: v })} defaultValue="bg-light-blue" label={__('Section Background', 'mbn-theme')} />
+      <TextControl label={__('List Heading', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} help={__('Shown above the list, e.g. “Examples of personal injury in Arizona include:”', 'mbn-theme')} />
+      <h4 style={{ marginTop: '20px' }}>{__('Accidents', 'mbn-theme')}</h4>
+      <Repeater field={items} sensors={sensors} ItemComponent={SortableAccident} addLabel={__('+ Add Accident', 'mbn-theme')} newItem={{ label: '', url: '' }} />
+    </Fragment>
+  );
+}
+
 // Dispatch to the correct editor for a section type.
 function SectionEditor({ type, data, setData, sensors }) {
   switch (type) {
@@ -564,6 +590,8 @@ function SectionEditor({ type, data, setData, sensors }) {
       return <CommonCausesEditor data={data} setData={setData} sensors={sensors} />;
     case 'testimonials':
       return <TestimonialsEditor data={data} setData={setData} sensors={sensors} />;
+    case 'accidentList':
+      return <AccidentListEditor data={data} setData={setData} sensors={sensors} />;
     default:
       return null;
   }

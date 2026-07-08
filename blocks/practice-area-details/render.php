@@ -291,23 +291,27 @@ if ( ! function_exists( 'mbn_pad_render_after_accident' ) ) {
 
 if ( ! function_exists( 'mbn_pad_render_steps_question' ) ) {
   /**
-   * Render the ordered/unordered question label of a Steps accordion item.
+   * Render the question label of a Steps accordion item.
+   *
+   * Uses phrasing-content spans (never list elements) so the markup is valid
+   * inside the accordion <button>. When the list type is 'ol' the step number
+   * is rendered as text; 'ul' shows the question with no number.
    *
    * @param string $question    Question text.
-   * @param string $list_type   List element type: 'ol' or 'ul'.
-   * @param int    $step_number 1-based step number (used for the ol start attribute).
+   * @param string $list_type   List style: 'ol' (numbered) or 'ul' (no marker).
+   * @param int    $step_number 1-based step number, shown when numbered.
    */
   function mbn_pad_render_steps_question( $question, $list_type, $step_number ) {
     if ( 'ul' === $list_type ) {
       printf(
-        '<ul class="pad-steps__ol"><li>%s</li></ul>',
+        '<span class="pad-steps__question-label"><span class="pad-steps__question-text">%s</span></span>',
         esc_html( $question )
       );
       return;
     }
     printf(
-      '<ol class="pad-steps__ol" start="%s"><li>%s</li></ol>',
-      esc_attr( $step_number ),
+      '<span class="pad-steps__question-label"><span class="pad-steps__question-number">%s.</span><span class="pad-steps__question-text">%s</span></span>',
+      esc_html( $step_number ),
       esc_html( $question )
     );
   }
@@ -760,6 +764,50 @@ if ( ! function_exists( 'mbn_pad_render_testimonials' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_render_accident_list' ) ) {
+  /**
+   * Render a Lists of Accidents section: a heading above a sortable grid of links.
+   *
+   * @param array $data Section data: heading, backgroundColor, items[{label,url}].
+   */
+  function mbn_pad_render_accident_list( $data ) {
+    $items = $data['items'] ?? array();
+    if ( empty( $data['heading'] ) && empty( $items ) ) {
+      return;
+    }
+    $section = mbn_pad_section_style( $data );
+    ?>
+<section class="pad-accident-list <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
+  <div class="pad-container">
+    <?php if ( ! empty( $data['heading'] ) ) : ?>
+    <h3 class="pad-accident-list__heading"><?php echo wp_kses_post( $data['heading'] ); ?></h3>
+    <?php endif; ?>
+    <?php if ( ! empty( $items ) ) : ?>
+    <ul class="pad-accident-list__grid">
+      <?php
+      foreach ( $items as $item ) :
+        $label = $item['label'] ?? '';
+        $url   = $item['url'] ?? '';
+        if ( '' === $label ) {
+          continue;
+        }
+        ?>
+      <li class="pad-accident-list__item">
+        <?php if ( '' !== $url ) : ?>
+        <a class="pad-accident-list__link" href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a>
+        <?php else : ?>
+        <span class="pad-accident-list__link"><?php echo esc_html( $label ); ?></span>
+        <?php endif; ?>
+      </li>
+      <?php endforeach; ?>
+    </ul>
+    <?php endif; ?>
+  </div>
+</section>
+    <?php
+  }
+}
+
 // Map section types to their renderer callbacks.
 $renderers = array(
 	'whyHire'       => 'mbn_pad_render_why_hire',
@@ -776,6 +824,7 @@ $renderers = array(
 	'thirdParty'    => 'mbn_pad_render_third_party',
 	'commonCauses'  => 'mbn_pad_render_common_causes',
 	'testimonials'  => 'mbn_pad_render_testimonials',
+	'accidentList'  => 'mbn_pad_render_accident_list',
 );
 
 $wrapper_attributes = get_block_wrapper_attributes();
