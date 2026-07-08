@@ -358,10 +358,10 @@
   color: var(--pad-text-body);
   margin: 0;
 }
-.pad-why-hire__feature p a{
+.pad-why-hire__feature p a {
   text-decoration: underline;
-  color:inherit;
-  text-decoration-inset: 2px;
+  color: inherit;
+  text-underline-offset: 2px;
 }
 .pad-why-hire .pad-section-subtitle{
   max-width: 680px;
