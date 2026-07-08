@@ -1141,9 +1141,7 @@
     max-width: 640px;
     margin-inline: auto;
   }
-  .pad-common-causes__image {
-    flex: none;
-  }
+  
   .pad-common-causes__list {
     margin-top: 0;
   }
@@ -1410,6 +1408,10 @@
   .pad-common-causes__list li {
     font-size: 16px;
     padding: 16px 0;
+  }
+  .pad-common-causes__image {
+    flex: none;
+    height: 280px;
   }
 
   /* Testimonials */
