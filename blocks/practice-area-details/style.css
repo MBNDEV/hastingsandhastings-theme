@@ -1142,7 +1142,6 @@
     margin-inline: auto;
   }
   .pad-common-causes__image {
-    aspect-ratio: 16 / 9;
     flex: none;
   }
   .pad-common-causes__list {
