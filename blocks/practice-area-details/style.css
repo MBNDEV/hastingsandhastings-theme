@@ -149,7 +149,7 @@
   line-height: 1.556;
   color: var(--pad-text-body);
 }
-.pad-split__text p a{
+.pad-split__text p a {
   color: inherit;
   text-decoration: underline;
   text-decoration-inset: 2px;
@@ -363,14 +363,14 @@
   color: inherit;
   text-underline-offset: 2px;
 }
-.pad-why-hire .pad-section-subtitle{
+.pad-why-hire .pad-section-subtitle {
   max-width: 680px;
 }
-.pad-why-hire .pad-badge{
+.pad-why-hire .pad-badge {
   width: 100%;
   max-width: 300px;
 }
-.pad-why-hire .pad-badge img{
+.pad-why-hire .pad-badge img {
   width: 100%;
   height: auto;
   display: block;
@@ -940,6 +940,44 @@
   text-decoration: underline;
 }
 
+/* ============================================================
+   Lists of Accidents
+   ============================================================ */
+.pad-accident-list {
+  padding-block: var(--pad-section-pad-v);
+}
+.pad-accident-list__heading {
+  font-family: var(--pad-font-secondary);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--pad-text-heading);
+  margin: 0 0 24px;
+}
+.pad-accident-list__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 48px;
+}
+.pad-accident-list__item {
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 20px 0;
+}
+.pad-accident-list__link {
+  font-family: var(--pad-font-primary);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--pad-blue-600);
+  text-decoration: none;
+}
+a.pad-accident-list__link:hover {
+  text-decoration: underline;
+}
+
 @media screen and (max-width: 1366px) {
   .pad-attorneys__photo-col {
     margin-left: -140px;
@@ -1135,6 +1173,12 @@
     font-size: 32px;
   }
 
+  /* Lists of Accidents */
+  .pad-accident-list__grid {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 32px;
+  }
+
   /* Split layout */
   .pad-split--text-left,
   .pad-split--image-left {
@@ -1165,7 +1209,7 @@
     max-width: 640px;
     margin-inline: auto;
   }
-  
+
   .pad-common-causes__list {
     margin-top: 0;
   }
@@ -1295,6 +1339,19 @@
   }
   .pad-section-subtitle {
     font-size: 16px;
+  }
+
+  /* Lists of Accidents */
+  .pad-accident-list__grid {
+    grid-template-columns: 1fr;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  }
+
+  .pad-accident-list__item {
+    padding: 16px 0;
+  }
+  .pad-accident-list__link {
+    font-size: 18px;
   }
 
   .pad-split {
@@ -1452,4 +1509,9 @@
   .pad-testimonials__card blockquote p {
     font-size: 16px;
   }
+}
+
+ul.pad-steps__ol {
+  list-style: none;
+  padding-left: 0;
 }

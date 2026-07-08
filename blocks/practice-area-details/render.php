@@ -764,6 +764,50 @@ if ( ! function_exists( 'mbn_pad_render_testimonials' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_render_accident_list' ) ) {
+  /**
+   * Render a Lists of Accidents section: a heading above a sortable grid of links.
+   *
+   * @param array $data Section data: heading, backgroundColor, items[{label,url}].
+   */
+  function mbn_pad_render_accident_list( $data ) {
+    $items = $data['items'] ?? array();
+    if ( empty( $data['heading'] ) && empty( $items ) ) {
+      return;
+    }
+    $section = mbn_pad_section_style( $data );
+    ?>
+<section class="pad-accident-list <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
+  <div class="pad-container">
+    <?php if ( ! empty( $data['heading'] ) ) : ?>
+    <h3 class="pad-accident-list__heading"><?php echo wp_kses_post( $data['heading'] ); ?></h3>
+    <?php endif; ?>
+    <?php if ( ! empty( $items ) ) : ?>
+    <ul class="pad-accident-list__grid">
+      <?php
+      foreach ( $items as $item ) :
+        $label = $item['label'] ?? '';
+        $url   = $item['url'] ?? '';
+        if ( '' === $label ) {
+          continue;
+        }
+        ?>
+      <li class="pad-accident-list__item">
+        <?php if ( '' !== $url ) : ?>
+        <a class="pad-accident-list__link" href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a>
+        <?php else : ?>
+        <span class="pad-accident-list__link"><?php echo esc_html( $label ); ?></span>
+        <?php endif; ?>
+      </li>
+      <?php endforeach; ?>
+    </ul>
+    <?php endif; ?>
+  </div>
+</section>
+    <?php
+  }
+}
+
 // Map section types to their renderer callbacks.
 $renderers = array(
 	'whyHire'       => 'mbn_pad_render_why_hire',
@@ -780,6 +824,7 @@ $renderers = array(
 	'thirdParty'    => 'mbn_pad_render_third_party',
 	'commonCauses'  => 'mbn_pad_render_common_causes',
 	'testimonials'  => 'mbn_pad_render_testimonials',
+	'accidentList'  => 'mbn_pad_render_accident_list',
 );
 
 $wrapper_attributes = get_block_wrapper_attributes();
