@@ -194,6 +194,11 @@
           "data": {
             "heading": "<span class=\"pad-text-blue\">Who is Liable</span> For My Phoenix Car Accident?",
             "subtitle": "If you've been in a car accident, you may be wondering who is liable for the damages. The answer to this question depends on many factors. The following are some of the parties that could be liable for a car accident:",
+            "introHeading": "",
+            "introText": "",
+            "backgroundColor": "bg-white",
+            "paddingTop": "",
+            "paddingBottom": "",
             "items": [
               {
                 "id": "liability1",
@@ -220,6 +225,7 @@
           "data": {
             "heading": "<span class=\"pad-text-blue\">Recovering Compensation</span> For My Injury",
             "subtitle": "Here are some of the most common types of compensation you may be entitled to after a car accident:",
+            "afterText": "",
             "items": [
               {
                 "id": "comp1",
@@ -283,6 +289,67 @@
                 "imageId": 0,
                 "description": "Compared to firms that charge 33%, our lower fee structure gives Hastings & Hastings a meaningful cost advantage."
               }
+            ]
+          }
+        },
+        {
+          "id": "thirdParty-default",
+          "type": "thirdParty",
+          "title": { "heading": "", "paragraphs": [], "backgroundColor": "bg-light-blue" },
+          "data": {
+            "text": "<p>The evidence listed above is just an example of the ways you can prove your injury was work-related. Each claim is different and may require additional types of evidence not mentioned. Always work with a lawyer as soon as possible.</p><p>However, this is only one of your options. You may also have the option to <a href=\"https://www.hastingsandhastings.com/\">file a claim for personal injury</a> against third parties who may also be liable for your injuries. A third party may include but may not be limited to:</p>",
+            "items": [
+              { "id": "thirdParty1", "text": "The general contractor" },
+              { "id": "thirdParty2", "text": "Equipment suppliers" },
+              { "id": "thirdParty3", "text": "A <a href=\"https://www.insureon.com/blog/contractor-vs-subcontractor-whats-the-difference\">sub-contractor</a>" },
+              { "id": "thirdParty4", "text": "Guests" },
+              { "id": "thirdParty5", "text": "The construction site owner" },
+              { "id": "thirdParty6", "text": "Trespassers" },
+              { "id": "thirdParty7", "text": "Equipment manufacturers" },
+              { "id": "thirdParty8", "text": "The architects" },
+              { "id": "thirdParty9", "text": "Machinery manufacturers" },
+              { "id": "thirdParty10", "text": "The engineers" }
+            ],
+            "chevronIconUrl": "",
+            "chevronIconId": 0,
+            "photoUrl": "",
+            "photoId": 0
+          }
+        },
+        {
+          "id": "commonCauses-default",
+          "type": "commonCauses",
+          "title": { "heading": "", "paragraphs": [], "backgroundColor": "bg-light-blue" },
+          "data": {
+            "heading": "<span class=\"pad-text-blue\">What Are the Most Common Causes</span> of Phoenix Construction Accidents?",
+            "text": "<p>Construction sites are dangerous and filled with potential safety hazards. Even if workers and visitors do their best to manage and improve the safety conditions of the site, accidents still occur. The most common causes of Phoenix construction accidents include:</p>",
+            "photoUrl": "",
+            "photoId": 0,
+            "items": [
+              { "id": "cause1", "text": "Inexperienced or distracted equipment drivers of trucks, bulldozers, or other pieces of equipment or heavy machinery or smaller construction vehicles such as forklifts. Our legal team handles all types of <a href=\"/practice-areas/truck-accident-lawyer/\">truck accident cases</a> and beyond." },
+              { "id": "cause2", "text": "Employees or contractors falling from platforms, scaffolding, beams, lifts, roofs, or ladders<br>Gas lines, gasoline, and other flammable or explosive materials" },
+              { "id": "cause3", "text": "Heavy objects and materials such as tools, bricks, stones, and concrete blocks can cause serious and even deadly injuries if they fall onto employees, contractors, visitors, or <a href=\"/practice-areas/phoenix-pedestrian-accident-attorney/\">pedestrians</a>" },
+              { "id": "cause4", "text": "Workers or contractors who handle electrical systems and wiring" },
+              { "id": "cause5", "text": "<a href=\"/practice-areas/slip-falls/\">Slips and falls</a> due to various reasons such as equipment left on the ground, spills, holes, and uneven pavement" },
+              { "id": "cause6", "text": "Scaffolding and crane collapses" },
+              { "id": "cause7", "text": "Unguarded edges" }
+            ]
+          }
+        },
+        {
+          "id": "testimonials-default",
+          "type": "testimonials",
+          "title": { "heading": "", "paragraphs": [], "backgroundColor": "bg-light-blue" },
+          "data": {
+            "eyebrow": "Client experiences",
+            "heading": "<span class=\"pad-text-blue\">Trusted by injury victims</span><br>across Arizona",
+            "subtitle": "When people are dealing with the aftermath of an accident, trust matters. Our clients consistently speak to the care, clarity, and support they received throughout the process.",
+            "starsIconUrl": "",
+            "starsIconId": 0,
+            "items": [
+              { "id": "testimonial1", "quote": "I would highly recommend Hastings and Hastings to anyone I know.", "name": "Verified Client", "role": "Car Accident Victim" },
+              { "id": "testimonial2", "quote": "I was very happy with the result!", "name": "Verified Client", "role": "" },
+              { "id": "testimonial3", "quote": "I’m so pleased with my experience with them.", "name": "Verified Client", "role": "" }
             ]
           }
         }

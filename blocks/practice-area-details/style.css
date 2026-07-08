@@ -149,6 +149,11 @@
   line-height: 1.556;
   color: var(--pad-text-body);
 }
+.pad-split__text p a{
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-inset: 2px;
+}
 .pad-split__text strong {
   color: var(--pad-text-heading);
   font-weight: 400;
@@ -324,7 +329,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 64px;
   align-items: start;
-  margin-top: 56px;
+  margin-top: 130px;
 }
 
 .pad-why-hire__features {
@@ -353,6 +358,23 @@
   color: var(--pad-text-body);
   margin: 0;
 }
+.pad-why-hire__feature p a {
+  text-decoration: underline;
+  color: inherit;
+  text-underline-offset: 2px;
+}
+.pad-why-hire .pad-section-subtitle{
+  max-width: 680px;
+}
+.pad-why-hire .pad-badge{
+  width: 100%;
+  max-width: 300px;
+}
+.pad-why-hire .pad-badge img{
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
 /* Visual column */
 .pad-why-hire__visual {
@@ -366,6 +388,8 @@
   position: relative;
   width: 100%;
   margin-bottom: 60px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 /* Map background strip */
@@ -582,7 +606,6 @@
 
 .pad-steps__ol {
   flex: 1;
-  list-style-type: decimal;
   padding-left: 30px;
   margin: 0;
   font-family: var(--pad-font-primary);
@@ -590,6 +613,13 @@
   font-size: 20px;
   line-height: 1.4;
   color: var(--pad-blue-600);
+}
+ol.pad-steps__ol {
+  list-style-type: decimal;
+}
+ul.pad-steps__ol {
+  list-style-type: none;
+  padding-left: 0;
 }
 .pad-steps__item--open .pad-steps__ol {
   color: var(--pad-blue-950);
@@ -661,7 +691,36 @@
   padding-block: var(--pad-section-pad-v);
 }
 .pad-liability .pad-section-header {
+  max-width: 920px;
+  width: 100%;
+  margin: 0 auto 48px;
+}
+
+.pad-liability__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   margin-bottom: 48px;
+}
+.pad-liability__intro-heading {
+  font-family: var(--pad-font-primary);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.428;
+  color: #000000;
+  margin: 0;
+}
+.pad-liability__intro-text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.pad-liability__intro-text p {
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--pad-text-body);
+  margin: 0;
 }
 
 .pad-liability__list {
@@ -707,12 +766,17 @@
   flex-direction: column;
   gap: 16px;
 }
-.pad-liability__desc p {
+.pad-liability__desc p,
+.pad-liability__desc ol {
   font-family: var(--pad-font-secondary);
   font-size: 18px;
   line-height: 1.5;
   color: var(--pad-text-body);
   margin: 0;
+}
+.pad-liability__desc ol {
+  list-style: decimal;
+  padding-left: 15px;
 }
 
 /* ============================================================
@@ -720,11 +784,13 @@
    ============================================================ */
 .pad-compensation {
   padding-block: var(--pad-section-pad-v);
-  background: var(--pad-grey-50);
+  background: var(--pad-white);
 }
 .pad-compensation .pad-section-header {
-  margin-bottom: 56px;
   gap: 0;
+  max-width: 920px;
+  width: 100%;
+  margin: 0 auto 56px;
 }
 
 .pad-compensation__grid {
@@ -752,6 +818,20 @@
   margin: 0;
 }
 .pad-compensation__item p {
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--pad-text-body);
+  margin: 0;
+}
+
+.pad-compensation__after {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 64px;
+}
+.pad-compensation__after p {
   font-family: var(--pad-font-secondary);
   font-size: 18px;
   line-height: 1.5;
@@ -853,6 +933,178 @@
     margin-left: -180px;
   }
 }
+
+/* ============================================================
+   SECTION 10 · Third-Party Liability
+   ============================================================ */
+.pad-third-party {
+  padding-block: var(--pad-section-pad-v);
+  background: var(--pad-white);
+}
+.pad-third-party__list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2px;
+}
+.pad-third-party__item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px 2px 0;
+  font-family: var(--pad-font-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+  color: #363b3f;
+}
+.pad-third-party__item img {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.pad-third-party__item a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* ============================================================
+   SECTION 11 · Most Common Causes of Construction Accidents
+   ============================================================ */
+.pad-common-causes {
+  padding-block: var(--pad-section-pad-v);
+  background: var(--pad-white);
+}
+.pad-common-causes__layout {
+  display: grid;
+  grid-template-columns: 510px 1fr;
+  gap: 80px;
+  align-items: stretch;
+}
+.pad-common-causes__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.pad-common-causes__intro h2 {
+  margin: 0;
+}
+.pad-common-causes__intro p {
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.556;
+  color: var(--pad-text-body);
+  margin: 0;
+}
+.pad-common-causes__image {
+  margin: 24px 0 0;
+  border-radius: 16px;
+  overflow: hidden;
+  flex: 1;
+  min-height: 280px;
+}
+.pad-common-causes__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pad-common-causes__list {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+}
+.pad-common-causes__list li {
+  padding: 20px 0;
+  border-top: 1px solid #000000;
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--pad-text-body);
+}
+.pad-common-causes__list li:last-child {
+  border-bottom: 1px solid #000000;
+}
+.pad-common-causes__list a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* ============================================================
+   SECTION 12 · Client Experiences (Testimonials)
+   ============================================================ */
+.pad-testimonials {
+  padding-block: var(--pad-section-pad-v);
+  background: var(--pad-white);
+}
+.pad-testimonials__header {
+  max-width: 760px;
+  margin: 0 auto 80px;
+}
+.pad-testimonials__eyebrow {
+  font-family: var(--pad-font-secondary);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 27px;
+  letter-spacing: 1.12px;
+  text-transform: uppercase;
+  color: var(--pad-blue-600);
+  margin: 0;
+}
+.pad-testimonials__header .pad-section-heading {
+  margin-bottom: 0;
+}
+.pad-testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  align-items: stretch;
+}
+.pad-testimonials__card {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px;
+  background: var(--pad-white);
+  border: 1px solid rgba(1, 3, 5, 0.15);
+  border-radius: 8px;
+}
+.pad-testimonials__stars {
+  width: 116px;
+  height: 19px;
+  display: block;
+}
+.pad-testimonials__card blockquote {
+  margin: 0;
+}
+.pad-testimonials__card blockquote p {
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.556;
+  color: var(--pad-text-body);
+  margin: 0;
+}
+.pad-testimonials__attribution {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+}
+.pad-testimonials__name {
+  font-family: var(--pad-font-secondary);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #010305;
+}
+.pad-testimonials__role {
+  font-family: var(--pad-font-secondary);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--pad-grey-800);
+}
+
 /* ============================================================
    TABLET: 768px to 1023px
    ============================================================ */
@@ -877,6 +1129,27 @@
   .pad-split--image-left {
     display: flex;
     flex-direction: column;
+  }
+
+  /* Common Causes */
+  .pad-common-causes__layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  /* Testimonials */
+  .pad-testimonials__header {
+    margin-bottom: 48px;
+  }
+  .pad-testimonials__grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+  
+  .pad-common-causes__list {
+    margin-top: 0;
   }
   .pad-split__image img {
     height: 280px;
@@ -955,6 +1228,9 @@
   .pad-compensation__grid {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+  .pad-compensation__after {
+    margin-top: 40px;
   }
 
   /* Badges */
@@ -1087,12 +1363,24 @@
   .pad-liability__desc p {
     font-size: 16px;
   }
+  .pad-liability__intro {
+    margin-bottom: 32px;
+  }
+  .pad-liability__intro-heading {
+    font-size: 22px;
+  }
+  .pad-liability__intro-text p {
+    font-size: 16px;
+  }
 
   /* Compensation */
   .pad-compensation__item h3 {
     font-size: 22px;
   }
   .pad-compensation__item p {
+    font-size: 16px;
+  }
+  .pad-compensation__after p {
     font-size: 16px;
   }
 
@@ -1114,6 +1402,33 @@
     padding: 24px 16px;
   }
   .pad-attorneys__text-col p {
+    font-size: 16px;
+  }
+
+  /* Third-Party Liability */
+  .pad-third-party__list {
+    grid-template-columns: 1fr;
+  }
+
+  /* Common Causes */
+  .pad-common-causes__list li {
+    font-size: 16px;
+    padding: 16px 0;
+  }
+  .pad-common-causes__image {
+    flex: none;
+    height: 280px;
+  }
+
+  /* Testimonials */
+  .pad-testimonials__header {
+    margin-bottom: 32px;
+  }
+  .pad-testimonials__card {
+    padding: 24px;
+    gap: 16px;
+  }
+  .pad-testimonials__card blockquote p {
     font-size: 16px;
   }
 }

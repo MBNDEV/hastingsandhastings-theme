@@ -1,5 +1,5 @@
 import { useBlockProps, InspectorControls, MediaUpload } from '@wordpress/block-editor';
-import { PanelBody, TextControl, TextareaControl, Button, Icon, SelectControl, ToggleControl } from '@wordpress/components';
+import { PanelBody, TextControl, TextareaControl, Button, Icon, SelectControl, ToggleControl, RangeControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Fragment, useState } from '@wordpress/element';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
@@ -25,6 +25,9 @@ const SECTION_TYPES = {
   compensation: { label: 'Compensation' },
   documentation: { label: 'Documentation' },
   attorneys: { label: 'Attorneys' },
+  thirdParty: { label: 'Third-Party Liability' },
+  commonCauses: { label: 'Common Causes' },
+  testimonials: { label: 'Testimonials' },
 };
 
 // Empty data payload for a newly added section of the given type.
@@ -39,19 +42,25 @@ function emptyData(type) {
     case 'afterAccident':
       return { heading: '', splits: [] };
     case 'steps':
-      return { heading: '', introText: '', chevronIconUrl: '', chevronIconId: 0, accordion: [] };
+      return { heading: '', introText: '', chevronIconUrl: '', chevronIconId: 0, listType: 'ol', accordion: [] };
     case 'timeLimit':
       return { heading: '', subtitle: '', text: '', photoUrl: '', photoId: 0 };
     case 'insurance':
       return { heading: '', text: '', photoUrl: '', photoId: 0 };
     case 'liability':
-      return { heading: '', subtitle: '', items: [] };
+      return { heading: '', subtitle: '', introHeading: '', introText: '', backgroundColor: 'bg-white', paddingTop: '', paddingBottom: '', items: [] };
     case 'compensation':
-      return { heading: '', subtitle: '', items: [] };
+      return { heading: '', subtitle: '', afterText: '', items: [] };
     case 'documentation':
       return { heading: '', text: '', photoUrl: '', photoId: 0 };
     case 'attorneys':
       return { heading: '', text: '', photoUrl: '', photoId: 0, badgeCards: [] };
+    case 'thirdParty':
+      return { text: '', items: [], chevronIconUrl: '', chevronIconId: 0, photoUrl: '', photoId: 0 };
+    case 'commonCauses':
+      return { heading: '', text: '', photoUrl: '', photoId: 0, items: [] };
+    case 'testimonials':
+      return { eyebrow: '', heading: '', subtitle: '', starsIconUrl: '', starsIconId: 0, items: [] };
     default:
       return {};
   }
@@ -234,6 +243,28 @@ function SortableBadge({ item, index, updateItem, removeItem, duplicateItem }) {
   );
 }
 
+function SortableTextItem({ item, index, updateItem, removeItem, duplicateItem }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
+  return (
+    <div ref={setNodeRef} style={itemStyle(transform, transition, isDragging)}>
+      <ItemHeader attributes={attributes} listeners={listeners} label={__('Item', 'mbn-theme')} index={index} onDuplicate={() => duplicateItem(index)} onRemove={() => removeItem(index)} />
+      <TextareaControl label={__('Text (HTML allowed)', 'mbn-theme')} value={item.text} onChange={(v) => updateItem(index, { text: v })} rows={3} />
+    </div>
+  );
+}
+
+function SortableTestimonial({ item, index, updateItem, removeItem, duplicateItem }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
+  return (
+    <div ref={setNodeRef} style={itemStyle(transform, transition, isDragging)}>
+      <ItemHeader attributes={attributes} listeners={listeners} label={__('Testimonial', 'mbn-theme')} index={index} onDuplicate={() => duplicateItem(index)} onRemove={() => removeItem(index)} />
+      <TextareaControl label={__('Quote', 'mbn-theme')} value={item.quote} onChange={(v) => updateItem(index, { quote: v })} rows={3} />
+      <TextControl label={__('Name', 'mbn-theme')} value={item.name} onChange={(v) => updateItem(index, { name: v })} />
+      <TextControl label={__('Role (optional)', 'mbn-theme')} value={item.role} onChange={(v) => updateItem(index, { role: v })} />
+    </div>
+  );
+}
+
 // Renders a repeater (DnD list + add button) for a data array.
 function Repeater({ field, sensors, ItemComponent, addLabel, newItem }) {
   return (
@@ -360,6 +391,7 @@ function StepsEditor({ data, setData, sensors }) {
       <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} />
       <TextareaControl label={__('Intro Text (HTML)', 'mbn-theme')} value={data.introText || ''} onChange={(v) => setData({ introText: v })} rows={3} />
       <ImageField label={__('Chevron Icon', 'mbn-theme')} url={data.chevronIconUrl} id={data.chevronIconId} onSelect={(m) => setData({ chevronIconUrl: m.url, chevronIconId: m.id })} onRemove={() => setData({ chevronIconUrl: '', chevronIconId: 0 })} maxWidth="50px" />
+      <ToggleControl label={__('Use ordered list (numbered)', 'mbn-theme')} help={(data.listType || 'ol') === 'ol' ? __('Steps are numbered (ol).', 'mbn-theme') : __('Steps have no marker (ul).', 'mbn-theme')} checked={(data.listType || 'ol') === 'ol'} onChange={(v) => setData({ listType: v ? 'ol' : 'ul' })} />
       <h4 style={{ marginTop: '20px' }}>{__('Steps', 'mbn-theme')}</h4>
       <Repeater field={steps} sensors={sensors} ItemComponent={SortableStep} addLabel={__('+ Add Step', 'mbn-theme')} newItem={{ question: '', answer: '' }} />
     </Fragment>
@@ -391,8 +423,30 @@ function LiabilityEditor({ data, setData, sensors }) {
   const items = makeArrayField(data, setData, 'items');
   return (
     <Fragment>
+      <BackgroundColorControl value={data.backgroundColor || 'bg-white'} onChange={(v) => setData({ backgroundColor: v })} defaultValue="bg-white" label={__('Section Background', 'mbn-theme')} />
+      <RangeControl
+        label={__('Top Padding (px)', 'mbn-theme')}
+        value={data.paddingTop === '' || data.paddingTop === undefined ? undefined : Number(data.paddingTop)}
+        onChange={(v) => setData({ paddingTop: v === undefined ? '' : v })}
+        min={0}
+        max={200}
+        allowReset
+        help={__('Reset to use the theme default (80px desktop / 56px tablet / 40px mobile).', 'mbn-theme')}
+      />
+      <RangeControl
+        label={__('Bottom Padding (px)', 'mbn-theme')}
+        value={data.paddingBottom === '' || data.paddingBottom === undefined ? undefined : Number(data.paddingBottom)}
+        onChange={(v) => setData({ paddingBottom: v === undefined ? '' : v })}
+        min={0}
+        max={200}
+        allowReset
+        help={__('Reset to use the theme default (80px desktop / 56px tablet / 40px mobile).', 'mbn-theme')}
+      />
       <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} />
       <TextareaControl label={__('Subtitle', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={2} />
+      <h4 style={{ marginTop: '20px' }}>{__('Intro (optional)', 'mbn-theme')}</h4>
+      <TextControl label={__('Intro Heading', 'mbn-theme')} value={data.introHeading || ''} onChange={(v) => setData({ introHeading: v })} help={__('Leave empty to hide the intro block.', 'mbn-theme')} />
+      <TextareaControl label={__('Intro Text (HTML)', 'mbn-theme')} value={data.introText || ''} onChange={(v) => setData({ introText: v })} rows={3} />
       <h4 style={{ marginTop: '20px' }}>{__('Liability Items', 'mbn-theme')}</h4>
       <Repeater field={items} sensors={sensors} ItemComponent={SortableLiability} addLabel={__('+ Add Liability Item', 'mbn-theme')} newItem={{ term: '', description: '' }} />
     </Fragment>
@@ -407,6 +461,7 @@ function CompensationEditor({ data, setData, sensors }) {
       <TextareaControl label={__('Subtitle', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={2} />
       <h4 style={{ marginTop: '20px' }}>{__('Compensation Items', 'mbn-theme')}</h4>
       <Repeater field={items} sensors={sensors} ItemComponent={SortableCompensation} addLabel={__('+ Add Compensation Item', 'mbn-theme')} newItem={{ title: '', description: '', featured: false }} />
+      <TextareaControl label={__('Text After Grid (HTML)', 'mbn-theme')} value={data.afterText || ''} onChange={(v) => setData({ afterText: v })} rows={4} help={__('Optional paragraph(s) shown below the compensation grid. Leave empty to hide.', 'mbn-theme')} style={{ marginTop: '20px' }} />
     </Fragment>
   );
 }
@@ -436,6 +491,47 @@ function AttorneysEditor({ data, setData, sensors }) {
   );
 }
 
+function ThirdPartyEditor({ data, setData, sensors }) {
+  const items = makeArrayField(data, setData, 'items');
+  return (
+    <Fragment>
+      <TextareaControl label={__('Text (HTML)', 'mbn-theme')} value={data.text || ''} onChange={(v) => setData({ text: v })} rows={6} />
+      <h4 style={{ marginTop: '20px' }}>{__('Third-Party List', 'mbn-theme')}</h4>
+      <Repeater field={items} sensors={sensors} ItemComponent={SortableTextItem} addLabel={__('+ Add List Item', 'mbn-theme')} newItem={{ text: '' }} />
+      <hr style={{ margin: '20px 0' }} />
+      <ImageField label={__('Chevron Icon', 'mbn-theme')} url={data.chevronIconUrl} id={data.chevronIconId} onSelect={(m) => setData({ chevronIconUrl: m.url, chevronIconId: m.id })} onRemove={() => setData({ chevronIconUrl: '', chevronIconId: 0 })} maxWidth="50px" />
+      <ImageField label={__('Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} />
+    </Fragment>
+  );
+}
+
+function CommonCausesEditor({ data, setData, sensors }) {
+  const items = makeArrayField(data, setData, 'items');
+  return (
+    <Fragment>
+      <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} />
+      <TextareaControl label={__('Intro Text (HTML)', 'mbn-theme')} value={data.text || ''} onChange={(v) => setData({ text: v })} rows={4} />
+      <ImageField label={__('Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} />
+      <h4 style={{ marginTop: '20px' }}>{__('Causes', 'mbn-theme')}</h4>
+      <Repeater field={items} sensors={sensors} ItemComponent={SortableTextItem} addLabel={__('+ Add Cause', 'mbn-theme')} newItem={{ text: '' }} />
+    </Fragment>
+  );
+}
+
+function TestimonialsEditor({ data, setData, sensors }) {
+  const items = makeArrayField(data, setData, 'items');
+  return (
+    <Fragment>
+      <TextControl label={__('Eyebrow', 'mbn-theme')} value={data.eyebrow || ''} onChange={(v) => setData({ eyebrow: v })} />
+      <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} />
+      <TextareaControl label={__('Subtitle', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={3} />
+      <ImageField label={__('Stars Icon', 'mbn-theme')} url={data.starsIconUrl} id={data.starsIconId} onSelect={(m) => setData({ starsIconUrl: m.url, starsIconId: m.id })} onRemove={() => setData({ starsIconUrl: '', starsIconId: 0 })} maxWidth="150px" />
+      <h4 style={{ marginTop: '20px' }}>{__('Testimonials', 'mbn-theme')}</h4>
+      <Repeater field={items} sensors={sensors} ItemComponent={SortableTestimonial} addLabel={__('+ Add Testimonial', 'mbn-theme')} newItem={{ quote: '', name: '', role: '' }} />
+    </Fragment>
+  );
+}
+
 // Dispatch to the correct editor for a section type.
 function SectionEditor({ type, data, setData, sensors }) {
   switch (type) {
@@ -461,6 +557,12 @@ function SectionEditor({ type, data, setData, sensors }) {
       return <DocumentationEditor data={data} setData={setData} />;
     case 'attorneys':
       return <AttorneysEditor data={data} setData={setData} sensors={sensors} />;
+    case 'thirdParty':
+      return <ThirdPartyEditor data={data} setData={setData} sensors={sensors} />;
+    case 'commonCauses':
+      return <CommonCausesEditor data={data} setData={setData} sensors={sensors} />;
+    case 'testimonials':
+      return <TestimonialsEditor data={data} setData={setData} sensors={sensors} />;
     default:
       return null;
   }

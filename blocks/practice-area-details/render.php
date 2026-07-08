@@ -139,11 +139,12 @@ if ( ! function_exists( 'mbn_pad_render_why_hire' ) ) {
           <?php echo wp_kses_post( $d['freeEvaluationsDescription'] ); ?>
         </article>
       </div>
-
+      <?php if ( ! empty( $d['millionsRecoveredTitle'] ) || ! empty( $d['millionsRecoveredDescription'] ) ) : ?>
       <div class="pad-why-hire__millions">
         <h3><?php echo esc_html( $d['millionsRecoveredTitle'] ); ?></h3>
         <?php echo wp_kses_post( $d['millionsRecoveredDescription'] ); ?>
       </div>
+      <?php endif; ?>
     </div>
   </div>
 </section>
@@ -288,6 +289,30 @@ if ( ! function_exists( 'mbn_pad_render_after_accident' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_render_steps_question' ) ) {
+  /**
+   * Render the ordered/unordered question label of a Steps accordion item.
+   *
+   * @param string $question    Question text.
+   * @param string $list_type   List element type: 'ol' or 'ul'.
+   * @param int    $step_number 1-based step number (used for the ol start attribute).
+   */
+  function mbn_pad_render_steps_question( $question, $list_type, $step_number ) {
+    if ( 'ul' === $list_type ) {
+      printf(
+        '<ul class="pad-steps__ol"><li>%s</li></ul>',
+        esc_html( $question )
+      );
+      return;
+    }
+    printf(
+      '<ol class="pad-steps__ol" start="%s"><li>%s</li></ol>',
+      esc_attr( $step_number ),
+      esc_html( $question )
+    );
+  }
+}
+
 if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
   /**
    * Render a Steps Accordion section.
@@ -300,6 +325,7 @@ if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
       array(
 		  'heading'   => '',
 		  'introText' => '',
+		  'listType'  => 'ol',
       ),
       (array) $data
     );
@@ -322,7 +348,7 @@ if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
           ?>
         <div class="pad-steps__item <?php echo $is_open ? 'pad-steps__item--open' : ''; ?>" role="listitem">
           <button class="pad-steps__question" aria-expanded="<?php echo $is_open ? 'true' : 'false'; ?>" aria-controls="<?php echo esc_attr( $step_id ); ?>">
-            <ol class="pad-steps__ol" start="<?php echo esc_attr( $step_index + 1 ); ?>"><li><?php echo esc_html( $step['question'] ?? '' ); ?></li></ol>
+            <?php mbn_pad_render_steps_question( $step['question'] ?? '', $d['listType'], $step_index + 1 ); ?>
             <img src="<?php echo esc_url( $chevron ); ?>" alt="" aria-hidden="true" class="pad-steps__icon">
           </button>
           <div class="pad-steps__answer <?php echo $is_open ? '' : 'pad-steps__answer--hidden'; ?>" id="<?php echo esc_attr( $step_id ); ?>">
@@ -398,6 +424,65 @@ if ( ! function_exists( 'mbn_pad_render_insurance' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_section_style' ) ) {
+  /**
+   * Build the class / inline-style pair for a section's background and padding overrides.
+   *
+   * @param array $data Section data: backgroundColor, paddingTop, paddingBottom.
+   * @return array { class: string, style: string }
+   */
+  function mbn_pad_section_style( $data ) {
+    $bg_color = $data['backgroundColor'] ?? '';
+    $bg_class = '';
+    $style    = '';
+    if ( ! empty( $bg_color ) ) {
+      if ( strpos( (string) $bg_color, '#' ) === 0 ) {
+        $style = 'background-color: ' . $bg_color . ';';
+      } else {
+        $bg_class = $bg_color;
+      }
+    }
+    foreach ( array(
+		'paddingTop'    => 'padding-top',
+		'paddingBottom' => 'padding-bottom',
+    ) as $key => $property ) {
+      $value = $data[ $key ] ?? '';
+      if ( '' !== $value && null !== $value ) {
+        $style .= $property . ': ' . intval( $value ) . 'px;';
+      }
+    }
+    return array(
+		'class' => $bg_class,
+		'style' => $style,
+    );
+  }
+}
+
+if ( ! function_exists( 'mbn_pad_render_liability_intro' ) ) {
+  /**
+   * Render the optional intro block of a Liability section.
+   *
+   * @param array $data Section data: introHeading, introText.
+   */
+  function mbn_pad_render_liability_intro( $data ) {
+    $heading = $data['introHeading'] ?? '';
+    $text    = $data['introText'] ?? '';
+    if ( empty( $heading ) && empty( $text ) ) {
+      return;
+    }
+    ?>
+    <div class="pad-liability__intro">
+      <?php if ( ! empty( $heading ) ) : ?>
+      <h3 class="pad-liability__intro-heading"><?php echo wp_kses_post( $heading ); ?></h3>
+      <?php endif; ?>
+      <?php if ( ! empty( $text ) ) : ?>
+      <div class="pad-liability__intro-text"><?php echo wp_kses_post( $text ); ?></div>
+      <?php endif; ?>
+    </div>
+    <?php
+  }
+}
+
 if ( ! function_exists( 'mbn_pad_render_liability' ) ) {
   /**
    * Render a Liability section.
@@ -405,14 +490,19 @@ if ( ! function_exists( 'mbn_pad_render_liability' ) ) {
    * @param array $data Section data.
    */
   function mbn_pad_render_liability( $data ) {
-    $items = $data['items'] ?? array();
+    $items   = $data['items'] ?? array();
+    $section = mbn_pad_section_style( $data );
     ?>
-<section class="pad-liability">
+<section class="pad-liability <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
+    <?php if ( ! empty( $data['heading'] ) || ! empty( $data['subtitle'] ) ) : ?>
     <div class="pad-section-header pad-section-header--center">
       <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
-      <p class="pad-section-subtitle"><?php echo esc_html( $data['subtitle'] ?? '' ); ?></p>
+      <p class="pad-section-subtitle"><?php echo wp_kses_post( $data['subtitle'] ?? '' ); ?></p>
     </div>
+    <?php endif; ?>
+
+    <?php mbn_pad_render_liability_intro( $data ); ?>
 
     <ul class="pad-liability__list">
       <?php foreach ( $items as $item ) : ?>
@@ -458,6 +548,13 @@ if ( ! function_exists( 'mbn_pad_render_compensation' ) ) {
       </article>
       <?php endforeach; ?>
     </div>
+
+    <?php if ( ! empty( $data['afterText'] ) ) : ?>
+    <div class="pad-compensation__after">
+      <?php echo wp_kses_post( $data['afterText'] ); ?>
+    </div>
+    <?php endif; ?>
+
   </div>
 </section>
     <?php
@@ -540,6 +637,122 @@ if ( ! function_exists( 'mbn_pad_render_attorneys' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_render_third_party' ) ) {
+  /**
+   * Render a Third-Party Liability section.
+   *
+   * @param array  $data   Section data.
+   * @param string $assets Block assets URI.
+   */
+  function mbn_pad_render_third_party( $data, $assets ) {
+    $photo   = ! empty( $data['photoUrl'] ) ? $data['photoUrl'] : $assets . '/photo-third-party-claim.jpg';
+    $alt     = mbn_pad_alt_text( $data['photoId'] ?? 0, __( 'Claim documents being handed across a desk during a legal consultation', 'mbn-theme' ) );
+    $chevron = ! empty( $data['chevronIconUrl'] ) ? $data['chevronIconUrl'] : $assets . '/icon-chevron-right.svg';
+    $items   = $data['items'] ?? array();
+    ?>
+<section class="pad-third-party">
+  <div class="pad-container">
+    <div class="pad-split pad-split--text-left">
+      <div class="pad-split__text">
+        <?php echo wp_kses_post( $data['text'] ?? '' ); ?>
+        <?php if ( ! empty( $items ) ) : ?>
+        <ul class="pad-third-party__list">
+          <?php foreach ( $items as $item ) : ?>
+          <li class="pad-third-party__item"><img src="<?php echo esc_url( $chevron ); ?>" alt="" aria-hidden="true"><span><?php echo wp_kses_post( $item['text'] ?? '' ); ?></span></li>
+          <?php endforeach; ?>
+        </ul>
+        <?php endif; ?>
+      </div>
+      <figure class="pad-split__image">
+        <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $alt ); ?>" loading="lazy">
+      </figure>
+    </div>
+  </div>
+</section>
+    <?php
+  }
+}
+
+if ( ! function_exists( 'mbn_pad_render_common_causes' ) ) {
+  /**
+   * Render a Common Causes section.
+   *
+   * @param array  $data   Section data.
+   * @param string $assets Block assets URI.
+   */
+  function mbn_pad_render_common_causes( $data, $assets ) {
+    $photo = ! empty( $data['photoUrl'] ) ? $data['photoUrl'] : $assets . '/photo-construction-excavator.jpg';
+    $alt   = mbn_pad_alt_text( $data['photoId'] ?? 0, __( 'Excavator working on a construction site', 'mbn-theme' ) );
+    $items = $data['items'] ?? array();
+    ?>
+<section class="pad-common-causes">
+  <div class="pad-container">
+    <div class="pad-common-causes__layout">
+      <div class="pad-common-causes__intro">
+        <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
+        <?php echo wp_kses_post( $data['text'] ?? '' ); ?>
+        <figure class="pad-common-causes__image">
+          <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $alt ); ?>" loading="lazy">
+        </figure>
+      </div>
+
+      <ul class="pad-common-causes__list">
+        <?php foreach ( $items as $item ) : ?>
+        <li><?php echo wp_kses_post( $item['text'] ?? '' ); ?></li>
+        <?php endforeach; ?>
+      </ul>
+    </div>
+  </div>
+</section>
+    <?php
+  }
+}
+
+if ( ! function_exists( 'mbn_pad_render_testimonials' ) ) {
+  /**
+   * Render a Testimonials section.
+   *
+   * @param array  $data   Section data.
+   * @param string $assets Block assets URI.
+   */
+  function mbn_pad_render_testimonials( $data, $assets ) {
+    $stars = ! empty( $data['starsIconUrl'] ) ? $data['starsIconUrl'] : $assets . '/icon-stars-five.svg';
+    $items = $data['items'] ?? array();
+    ?>
+<section class="pad-testimonials">
+  <div class="pad-container">
+    <div class="pad-section-header pad-section-header--center pad-testimonials__header">
+      <?php if ( ! empty( $data['eyebrow'] ) ) : ?>
+      <p class="pad-testimonials__eyebrow"><?php echo esc_html( $data['eyebrow'] ); ?></p>
+      <?php endif; ?>
+      <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
+      <?php if ( ! empty( $data['subtitle'] ) ) : ?>
+      <p class="pad-section-subtitle"><?php echo esc_html( $data['subtitle'] ); ?></p>
+      <?php endif; ?>
+    </div>
+
+    <div class="pad-testimonials__grid">
+      <?php foreach ( $items as $item ) : ?>
+      <figure class="pad-testimonials__card">
+        <img src="<?php echo esc_url( $stars ); ?>" alt="<?php esc_attr_e( 'Rated five out of five stars', 'mbn-theme' ); ?>" class="pad-testimonials__stars">
+        <blockquote>
+          <p><?php echo esc_html( $item['quote'] ?? '' ); ?></p>
+        </blockquote>
+        <figcaption class="pad-testimonials__attribution">
+          <span class="pad-testimonials__name"><?php echo esc_html( $item['name'] ?? '' ); ?></span>
+          <?php if ( ! empty( $item['role'] ) ) : ?>
+          <span class="pad-testimonials__role"><?php echo esc_html( $item['role'] ); ?></span>
+          <?php endif; ?>
+        </figcaption>
+      </figure>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+    <?php
+  }
+}
+
 // Map section types to their renderer callbacks.
 $renderers = array(
 	'whyHire'       => 'mbn_pad_render_why_hire',
@@ -553,6 +766,9 @@ $renderers = array(
 	'compensation'  => 'mbn_pad_render_compensation',
 	'documentation' => 'mbn_pad_render_documentation',
 	'attorneys'     => 'mbn_pad_render_attorneys',
+	'thirdParty'    => 'mbn_pad_render_third_party',
+	'commonCauses'  => 'mbn_pad_render_common_causes',
+	'testimonials'  => 'mbn_pad_render_testimonials',
 );
 
 $wrapper_attributes = get_block_wrapper_attributes();
