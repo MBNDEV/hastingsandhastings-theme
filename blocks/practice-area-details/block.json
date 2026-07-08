@@ -199,6 +199,7 @@
             "backgroundColor": "bg-white",
             "paddingTop": "",
             "paddingBottom": "",
+            "afterText": "",
             "items": [
               {
                 "id": "liability1",

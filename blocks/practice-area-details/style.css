@@ -732,6 +732,20 @@ ul.pad-steps__ol {
   gap: 48px;
 }
 
+.pad-liability__after {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 48px;
+}
+.pad-liability__after p {
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--pad-text-body);
+  margin: 0;
+}
+
 .pad-liability__item {
   display: flex;
   flex-direction: column;
@@ -823,6 +837,11 @@ ul.pad-steps__ol {
   line-height: 1.5;
   color: var(--pad-text-body);
   margin: 0;
+}
+.pad-compensation__item a{
+  text-decoration: underline;
+  text-decoration-offset: 2px;
+  color: inherit;
 }
 
 .pad-compensation__after {
@@ -1370,6 +1389,12 @@ ul.pad-steps__ol {
     font-size: 22px;
   }
   .pad-liability__intro-text p {
+    font-size: 16px;
+  }
+  .pad-liability__after {
+    margin-top: 32px;
+  }
+  .pad-liability__after p {
     font-size: 16px;
   }
 
