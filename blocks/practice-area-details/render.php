@@ -517,6 +517,13 @@ if ( ! function_exists( 'mbn_pad_render_liability' ) ) {
       </li>
       <?php endforeach; ?>
     </ul>
+
+    <?php if ( ! empty( $data['afterText'] ) ) : ?>
+    <div class="pad-liability__after">
+      <?php echo wp_kses_post( $data['afterText'] ); ?>
+    </div>
+    <?php endif; ?>
+
   </div>
 </section>
     <?php
@@ -536,7 +543,7 @@ if ( ! function_exists( 'mbn_pad_render_compensation' ) ) {
   <div class="pad-container">
     <div class="pad-section-header pad-section-header--center">
       <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
-      <p class="pad-section-subtitle"><?php echo esc_html( $data['subtitle'] ?? '' ); ?></p>
+      <p class="pad-section-subtitle"><?php echo wp_kses_post( $data['subtitle'] ?? '' ); ?></p>
     </div>
 
     <div class="pad-compensation__grid">
