@@ -606,7 +606,6 @@
 
 .pad-steps__ol {
   flex: 1;
-  list-style-type: decimal;
   padding-left: 30px;
   margin: 0;
   font-family: var(--pad-font-primary);
@@ -614,6 +613,13 @@
   font-size: 20px;
   line-height: 1.4;
   color: var(--pad-blue-600);
+}
+ol.pad-steps__ol {
+  list-style-type: decimal;
+}
+ul.pad-steps__ol {
+  list-style-type: none;
+  padding-left: 0;
 }
 .pad-steps__item--open .pad-steps__ol {
   color: var(--pad-blue-950);

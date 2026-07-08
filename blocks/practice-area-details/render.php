@@ -289,6 +289,30 @@ if ( ! function_exists( 'mbn_pad_render_after_accident' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_render_steps_question' ) ) {
+  /**
+   * Render the ordered/unordered question label of a Steps accordion item.
+   *
+   * @param string $question    Question text.
+   * @param string $list_type   List element type: 'ol' or 'ul'.
+   * @param int    $step_number 1-based step number (used for the ol start attribute).
+   */
+  function mbn_pad_render_steps_question( $question, $list_type, $step_number ) {
+    if ( 'ul' === $list_type ) {
+      printf(
+        '<ul class="pad-steps__ol"><li>%s</li></ul>',
+        esc_html( $question )
+      );
+      return;
+    }
+    printf(
+      '<ol class="pad-steps__ol" start="%s"><li>%s</li></ol>',
+      esc_attr( $step_number ),
+      esc_html( $question )
+    );
+  }
+}
+
 if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
   /**
    * Render a Steps Accordion section.
@@ -301,6 +325,7 @@ if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
       array(
 		  'heading'   => '',
 		  'introText' => '',
+		  'listType'  => 'ol',
       ),
       (array) $data
     );
@@ -323,7 +348,7 @@ if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
           ?>
         <div class="pad-steps__item <?php echo $is_open ? 'pad-steps__item--open' : ''; ?>" role="listitem">
           <button class="pad-steps__question" aria-expanded="<?php echo $is_open ? 'true' : 'false'; ?>" aria-controls="<?php echo esc_attr( $step_id ); ?>">
-            <ol class="pad-steps__ol" start="<?php echo esc_attr( $step_index + 1 ); ?>"><li><?php echo esc_html( $step['question'] ?? '' ); ?></li></ol>
+            <?php mbn_pad_render_steps_question( $step['question'] ?? '', $d['listType'], $step_index + 1 ); ?>
             <img src="<?php echo esc_url( $chevron ); ?>" alt="" aria-hidden="true" class="pad-steps__icon">
           </button>
           <div class="pad-steps__answer <?php echo $is_open ? '' : 'pad-steps__answer--hidden'; ?>" id="<?php echo esc_attr( $step_id ); ?>">
