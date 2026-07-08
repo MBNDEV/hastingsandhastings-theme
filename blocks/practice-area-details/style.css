@@ -604,24 +604,21 @@
   text-align: left;
 }
 
-.pad-steps__ol {
+.pad-steps__question-label {
   flex: 1;
-  padding-left: 30px;
-  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
   font-family: var(--pad-font-primary);
   font-weight: 700;
   font-size: 20px;
   line-height: 1.4;
   color: var(--pad-blue-600);
 }
-ol.pad-steps__ol {
-  list-style-type: decimal;
+.pad-steps__question-number {
+  flex-shrink: 0;
 }
-ul.pad-steps__ol {
-  list-style-type: none;
-  padding-left: 0;
-}
-.pad-steps__item--open .pad-steps__ol {
+.pad-steps__item--open .pad-steps__question-label {
   color: var(--pad-blue-950);
 }
 
@@ -1367,7 +1364,7 @@ ul.pad-steps__ol {
   }
 
   /* Steps */
-  .pad-steps__ol {
+  .pad-steps__question-label {
     font-size: 16px;
   }
   .pad-steps__answer p {
