@@ -735,6 +735,8 @@ ul.pad-steps__ol {
 .pad-liability__after {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 16px;
   margin-top: 48px;
 }
@@ -1307,9 +1309,6 @@ ul.pad-steps__ol {
   }
 
   /* Why Hire */
-  .pad-why-hire__photo-stack {
-    aspect-ratio: 1;
-  }
   .pad-why-hire__feature h3 {
     font-size: 22px;
   }
