@@ -225,6 +225,7 @@
           "data": {
             "heading": "<span class=\"pad-text-blue\">Recovering Compensation</span> For My Injury",
             "subtitle": "Here are some of the most common types of compensation you may be entitled to after a car accident:",
+            "afterText": "",
             "items": [
               {
                 "id": "comp1",

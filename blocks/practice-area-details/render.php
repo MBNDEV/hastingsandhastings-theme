@@ -523,6 +523,13 @@ if ( ! function_exists( 'mbn_pad_render_compensation' ) ) {
       </article>
       <?php endforeach; ?>
     </div>
+
+    <?php if ( ! empty( $data['afterText'] ) ) : ?>
+    <div class="pad-compensation__after">
+      <?php echo wp_kses_post( $data['afterText'] ); ?>
+    </div>
+    <?php endif; ?>
+
   </div>
 </section>
     <?php

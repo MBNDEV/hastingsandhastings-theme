@@ -358,6 +358,11 @@
   color: var(--pad-text-body);
   margin: 0;
 }
+.pad-why-hire__feature p a {
+  text-decoration: underline;
+  color: inherit;
+  text-underline-offset: 2px;
+}
 .pad-why-hire .pad-section-subtitle{
   max-width: 680px;
 }
@@ -755,12 +760,17 @@
   flex-direction: column;
   gap: 16px;
 }
-.pad-liability__desc p {
+.pad-liability__desc p,
+.pad-liability__desc ol {
   font-family: var(--pad-font-secondary);
   font-size: 18px;
   line-height: 1.5;
   color: var(--pad-text-body);
   margin: 0;
+}
+.pad-liability__desc ol {
+  list-style: decimal;
+  padding-left: 15px;
 }
 
 /* ============================================================
@@ -802,6 +812,20 @@
   margin: 0;
 }
 .pad-compensation__item p {
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--pad-text-body);
+  margin: 0;
+}
+
+.pad-compensation__after {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 64px;
+}
+.pad-compensation__after p {
   font-family: var(--pad-font-secondary);
   font-size: 18px;
   line-height: 1.5;
@@ -1202,6 +1226,9 @@
     grid-template-columns: 1fr;
     gap: 40px;
   }
+  .pad-compensation__after {
+    margin-top: 40px;
+  }
 
   /* Badges */
   .pad-attorneys__badges {
@@ -1348,6 +1375,9 @@
     font-size: 22px;
   }
   .pad-compensation__item p {
+    font-size: 16px;
+  }
+  .pad-compensation__after p {
     font-size: 16px;
   }
 

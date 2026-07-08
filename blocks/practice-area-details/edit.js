@@ -50,7 +50,7 @@ function emptyData(type) {
     case 'liability':
       return { heading: '', subtitle: '', introHeading: '', introText: '', backgroundColor: 'bg-white', paddingTop: '', paddingBottom: '', items: [] };
     case 'compensation':
-      return { heading: '', subtitle: '', items: [] };
+      return { heading: '', subtitle: '', afterText: '', items: [] };
     case 'documentation':
       return { heading: '', text: '', photoUrl: '', photoId: 0 };
     case 'attorneys':
@@ -460,6 +460,7 @@ function CompensationEditor({ data, setData, sensors }) {
       <TextareaControl label={__('Subtitle', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={2} />
       <h4 style={{ marginTop: '20px' }}>{__('Compensation Items', 'mbn-theme')}</h4>
       <Repeater field={items} sensors={sensors} ItemComponent={SortableCompensation} addLabel={__('+ Add Compensation Item', 'mbn-theme')} newItem={{ title: '', description: '', featured: false }} />
+      <TextareaControl label={__('Text After Grid (HTML)', 'mbn-theme')} value={data.afterText || ''} onChange={(v) => setData({ afterText: v })} rows={4} help={__('Optional paragraph(s) shown below the compensation grid. Leave empty to hide.', 'mbn-theme')} style={{ marginTop: '20px' }} />
     </Fragment>
   );
 }
