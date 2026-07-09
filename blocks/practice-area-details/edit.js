@@ -36,37 +36,38 @@ const SECTION_TYPES = {
 function emptyData(type) {
   switch (type) {
     case 'whyHire':
-      return { heading: '', subtitle: '', features: [], photoUrl: '', photoId: 0, badge90YearsUrl: '', badge90YearsId: 0, mapBackgroundUrl: '', mapBackgroundId: 0, badgeNoFeeUrl: '', badgeNoFeeId: 0, freeEvaluationsTitle: '', freeEvaluationsDescription: '', millionsRecoveredTitle: '', millionsRecoveredDescription: '' };
+      return { backgroundColor: '', heading: '', subtitle: '', features: [], photoUrl: '', photoId: 0, badge90YearsUrl: '', badge90YearsId: 0, mapBackgroundUrl: '', mapBackgroundId: 0, badgeNoFeeUrl: '', badgeNoFeeId: 0, freeEvaluationsTitle: '', freeEvaluationsDescription: '', millionsRecoveredTitle: '', millionsRecoveredDescription: '' };
     case 'caseResult':
-      return { tag: '', amount: '', title: '', description: '', photoUrl: '', photoId: 0 };
+      return { backgroundColor: '', tag: '', amount: '', title: '', description: '', photoUrl: '', photoId: 0 };
     case 'cta':
       return { logoUrl: '', logoId: 0, textureUrl: '', textureId: 0, heading: '', subtext: '', buttonText: '', buttonUrl: '', phoneLabel: '', phoneNumber: '' };
     case 'afterAccident':
-      return { heading: '', splits: [] };
+      return { backgroundColor: '', heading: '', splits: [] };
     case 'steps':
-      return { heading: '', introText: '', chevronIconUrl: '', chevronIconId: 0, listType: 'ol', accordion: [] };
+      return { backgroundColor: '', heading: '', introText: '', chevronIconUrl: '', chevronIconId: 0, listType: 'ol', accordion: [] };
     case 'timeLimit':
-      return { heading: '', subtitle: '', text: '', photoUrl: '', photoId: 0 };
+      return { backgroundColor: '', heading: '', subtitle: '', text: '', photoUrl: '', photoId: 0 };
     case 'insurance':
-      return { heading: '', text: '', photoUrl: '', photoId: 0 };
+      return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0 };
     case 'liability':
       return { heading: '', subtitle: '', introHeading: '', introText: '', backgroundColor: 'bg-white', paddingTop: '', paddingBottom: '', afterText: '', items: [] };
     case 'compensation':
-      return { heading: '', subtitle: '', afterText: '', items: [] };
+      return { backgroundColor: '', heading: '', subtitle: '', afterText: '', items: [] };
     case 'documentation':
-      return { heading: '', text: '', photoUrl: '', photoId: 0 };
+      return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0 };
     case 'attorneys':
-      return { heading: '', text: '', photoUrl: '', photoId: 0, badgeCards: [] };
+      return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0, badgeCards: [] };
     case 'thirdParty':
-      return { text: '', items: [], chevronIconUrl: '', chevronIconId: 0, photoUrl: '', photoId: 0 };
+      return { backgroundColor: '', text: '', items: [], chevronIconUrl: '', chevronIconId: 0, photoUrl: '', photoId: 0 };
     case 'commonCauses':
-      return { heading: '', text: '', photoUrl: '', photoId: 0, items: [] };
+      return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0, items: [] };
     case 'testimonials':
-      return { eyebrow: '', heading: '', subtitle: '', starsIconUrl: '', starsIconId: 0, items: [] };
+      return { backgroundColor: '', eyebrow: '', heading: '', subtitle: '', starsIconUrl: '', starsIconId: 0, items: [] };
     case 'accidentList':
       return { heading: '', backgroundColor: 'bg-light-blue', items: [] };
     case 'whyLawyer':
       return {
+        backgroundColor: '',
         heading: __('<span class="pad-text-blue">Why You Need a Lawyer</span> For a<br>Burn Injury Case', 'mbn-theme'),
         subtitle: __('Burn injury cases can be complex and require an experienced attorney to navigate the legal landscape. Here’s why it’s so important to work with one if you’ve experienced a burn injury:', 'mbn-theme'),
         rows: [
@@ -485,7 +486,6 @@ function LiabilityEditor({ data, setData, sensors }) {
   const items = makeArrayField(data, setData, 'items');
   return (
     <Fragment>
-      <BackgroundColorControl value={data.backgroundColor || 'bg-white'} onChange={(v) => setData({ backgroundColor: v })} defaultValue="bg-white" label={__('Section Background', 'mbn-theme')} />
       <RangeControl
         label={__('Top Padding (px)', 'mbn-theme')}
         value={data.paddingTop === '' || data.paddingTop === undefined ? undefined : Number(data.paddingTop)}
@@ -599,7 +599,6 @@ function AccidentListEditor({ data, setData, sensors }) {
   const items = makeArrayField(data, setData, 'items');
   return (
     <Fragment>
-      <BackgroundColorControl value={data.backgroundColor || 'bg-light-blue'} onChange={(v) => setData({ backgroundColor: v })} defaultValue="bg-light-blue" label={__('Section Background', 'mbn-theme')} />
       <TextControl label={__('List Heading', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} help={__('Shown above the list, e.g. “Examples of personal injury in Arizona include:”', 'mbn-theme')} />
       <h4 style={{ marginTop: '20px' }}>{__('Accidents', 'mbn-theme')}</h4>
       <Repeater field={items} sensors={sensors} ItemComponent={SortableAccident} addLabel={__('+ Add Accident', 'mbn-theme')} newItem={{ label: '', url: '' }} />
@@ -688,6 +687,15 @@ function SortableSection({ section, expanded, onToggle, onDuplicate, onRemove, u
       {expanded && (
         <div style={{ padding: '12px' }}>
           <SectionTitleControls data={section.title || {}} onChange={(updates) => updateTitle(section.id, updates)} />
+          {section.type !== 'cta' && (
+            <BackgroundColorControl
+              value={(section.data || {}).backgroundColor || ''}
+              onChange={(v) => updateData(section.id, { backgroundColor: v })}
+              defaultValue=""
+              label={__('Section Background', 'mbn-theme')}
+              help={__('Select a preset or custom color for this section’s background. Deselect to use the section default.', 'mbn-theme')}
+            />
+          )}
           <SectionEditor type={section.type} data={section.data || {}} setData={(updates) => updateData(section.id, updates)} sensors={sensors} />
         </div>
       )}
