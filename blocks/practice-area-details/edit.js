@@ -29,6 +29,7 @@ const SECTION_TYPES = {
   commonCauses: { label: 'Common Causes' },
   testimonials: { label: 'Testimonials' },
   accidentList: { label: 'Lists of Accidents' },
+  whyLawyer: { label: 'Why You Need a Lawyer' },
 };
 
 // Empty data payload for a newly added section of the given type.
@@ -64,6 +65,16 @@ function emptyData(type) {
       return { eyebrow: '', heading: '', subtitle: '', starsIconUrl: '', starsIconId: 0, items: [] };
     case 'accidentList':
       return { heading: '', backgroundColor: 'bg-light-blue', items: [] };
+    case 'whyLawyer':
+      return {
+        heading: '<span class="pad-text-blue">Why You Need a Lawyer</span> For a<br>Burn Injury Case',
+        subtitle: 'Burn injury cases can be complex and require an experienced attorney to navigate the legal landscape. Here’s why it’s so important to work with one if you’ve experienced a burn injury:',
+        rows: [
+          { id: 'whyLawyerRow1', layout: 'text-left', heading: '<span class="pad-text-blue">Burn Injury Cases</span> Are Complex', text: '<p>Burn injuries can be complex, with long-term effects that may require extensive medical treatment. A lawyer can help assess and quantify these impacts, ensuring that all current and future medical needs are addressed in your claim.</p>', imageUrl: '', imageId: 0 },
+          { id: 'whyLawyerRow2', layout: 'image-left', heading: '<span class="pad-text-blue">Determining</span> Liability', text: '<p>Establishing liability in burn injury cases can be challenging. A lawyer with experience in such cases can investigate the incident, identify responsible parties, and demonstrate their negligence to help you pursue compensation.</p>', imageUrl: '', imageId: 0 },
+          { id: 'whyLawyerRow3', layout: 'text-left', heading: '<span class="pad-text-blue">Negotiating</span> With Insurance Companies', text: '<p>Insurance companies aim to settle claims for the lowest possible amount. A lawyer can negotiate effectively on your behalf to ensure you receive fair compensation that reflects the severity of your injury and covers your necessary treatment and losses.</p>', imageUrl: '', imageId: 0 },
+        ],
+      };
     default:
       return {};
   }
@@ -279,6 +290,33 @@ function SortableTestimonial({ item, index, updateItem, removeItem, duplicateIte
   );
 }
 
+function SortableWhyLawyerRow({ item, index, updateItem, removeItem, duplicateItem }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
+  return (
+    <div ref={setNodeRef} style={itemStyle(transform, transition, isDragging)}>
+      <ItemHeader attributes={attributes} listeners={listeners} label={__('Row', 'mbn-theme')} index={index} onDuplicate={() => duplicateItem(index)} onRemove={() => removeItem(index)} />
+      <SelectControl
+        label={__('Layout', 'mbn-theme')}
+        value={item.layout}
+        options={[
+          { label: 'Text Left, Image Right', value: 'text-left' },
+          { label: 'Image Left, Text Right', value: 'image-left' },
+        ]}
+        onChange={(v) => updateItem(index, { layout: v })}
+      />
+      <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={item.heading} onChange={(v) => updateItem(index, { heading: v })} rows={2} help={__('Wrap text in <span class="pad-text-blue">…</span> to highlight it blue.', 'mbn-theme')} />
+      <TextareaControl label={__('Text (HTML)', 'mbn-theme')} value={item.text} onChange={(v) => updateItem(index, { text: v })} rows={5} style={{ marginTop: '10px' }} />
+      <ImageField
+        label={__('Image', 'mbn-theme')}
+        url={item.imageUrl}
+        id={item.imageId}
+        onSelect={(m) => updateItem(index, { imageUrl: m.url, imageId: m.id })}
+        onRemove={() => updateItem(index, { imageUrl: '', imageId: 0 })}
+      />
+    </div>
+  );
+}
+
 // Renders a repeater (DnD list + add button) for a data array.
 function Repeater({ field, sensors, ItemComponent, addLabel, newItem }) {
   return (
@@ -405,7 +443,17 @@ function StepsEditor({ data, setData, sensors }) {
       <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} />
       <TextareaControl label={__('Intro Text (HTML)', 'mbn-theme')} value={data.introText || ''} onChange={(v) => setData({ introText: v })} rows={3} />
       <ImageField label={__('Chevron Icon', 'mbn-theme')} url={data.chevronIconUrl} id={data.chevronIconId} onSelect={(m) => setData({ chevronIconUrl: m.url, chevronIconId: m.id })} onRemove={() => setData({ chevronIconUrl: '', chevronIconId: 0 })} maxWidth="50px" />
-      <ToggleControl label={__('Use ordered list (numbered)', 'mbn-theme')} help={(data.listType || 'ol') === 'ol' ? __('Steps are numbered (ol).', 'mbn-theme') : __('Steps have no marker (ul).', 'mbn-theme')} checked={(data.listType || 'ol') === 'ol'} onChange={(v) => setData({ listType: v ? 'ol' : 'ul' })} />
+      <SelectControl
+        label={__('List Type', 'mbn-theme')}
+        value={data.listType || 'ol'}
+        options={[
+          { label: __('Accordion — numbered (ol)', 'mbn-theme'), value: 'ol' },
+          { label: __('Accordion — no marker (ul)', 'mbn-theme'), value: 'ul' },
+          { label: __('Title only — no accordion', 'mbn-theme'), value: 'plain' },
+        ]}
+        onChange={(v) => setData({ listType: v })}
+        help={(data.listType || 'ol') === 'plain' ? __('Only each step’s title is shown as a simple divider list. Answers and the chevron icon are ignored.', 'mbn-theme') : undefined}
+      />
       <h4 style={{ marginTop: '20px' }}>{__('Steps', 'mbn-theme')}</h4>
       <Repeater field={steps} sensors={sensors} ItemComponent={SortableStep} addLabel={__('+ Add Step', 'mbn-theme')} newItem={{ question: '', answer: '' }} />
     </Fragment>
@@ -559,6 +607,18 @@ function AccidentListEditor({ data, setData, sensors }) {
   );
 }
 
+function WhyLawyerEditor({ data, setData, sensors }) {
+  const rows = makeArrayField(data, setData, 'rows');
+  return (
+    <Fragment>
+      <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} help={__('Wrap text in <span class="pad-text-blue">…</span> to highlight it blue.', 'mbn-theme')} />
+      <TextareaControl label={__('Subtitle (HTML)', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={3} />
+      <h4 style={{ marginTop: '20px' }}>{__('Rows', 'mbn-theme')}</h4>
+      <Repeater field={rows} sensors={sensors} ItemComponent={SortableWhyLawyerRow} addLabel={__('+ Add Row', 'mbn-theme')} newItem={{ layout: 'text-left', heading: '', text: '', imageUrl: '', imageId: 0 }} />
+    </Fragment>
+  );
+}
+
 // Dispatch to the correct editor for a section type.
 function SectionEditor({ type, data, setData, sensors }) {
   switch (type) {
@@ -592,6 +652,8 @@ function SectionEditor({ type, data, setData, sensors }) {
       return <TestimonialsEditor data={data} setData={setData} sensors={sensors} />;
     case 'accidentList':
       return <AccidentListEditor data={data} setData={setData} sensors={sensors} />;
+    case 'whyLawyer':
+      return <WhyLawyerEditor data={data} setData={setData} sensors={sensors} />;
     default:
       return null;
   }

@@ -317,6 +317,23 @@ if ( ! function_exists( 'mbn_pad_render_steps_question' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_render_steps_plain_list' ) ) {
+  /**
+   * Render a Steps list as plain title-only rows (no accordion).
+   *
+   * @param array $items Step items; only each item's question is shown.
+   */
+  function mbn_pad_render_steps_plain_list( $items ) {
+    ?>
+      <ul class="pad-steps__plain-list">
+        <?php foreach ( $items as $item ) : ?>
+        <li class="pad-steps__plain-item"><?php echo wp_kses_post( $item['question'] ?? '' ); ?></li>
+        <?php endforeach; ?>
+      </ul>
+    <?php
+  }
+}
+
 if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
   /**
    * Render a Steps Accordion section.
@@ -344,6 +361,9 @@ if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
         <?php echo wp_kses_post( $d['introText'] ); ?>
       </div>
 
+      <?php if ( 'plain' === $d['listType'] ) : ?>
+        <?php mbn_pad_render_steps_plain_list( $accordion ); ?>
+      <?php else : ?>
       <div class="pad-steps__accordion" role="list">
         <?php foreach ( $accordion as $step_index => $step ) : ?>
           <?php
@@ -361,6 +381,7 @@ if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
         </div>
         <?php endforeach; ?>
       </div>
+      <?php endif; ?>
     </div>
   </div>
 </section>
@@ -808,6 +829,63 @@ if ( ! function_exists( 'mbn_pad_render_accident_list' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_render_why_lawyer_row' ) ) {
+  /**
+   * Render a single row of a Why You Need a Lawyer section.
+   *
+   * @param array  $row       Row data: layout, heading, text, imageUrl, imageId.
+   * @param int    $row_index Row position, used to pick a fallback image.
+   * @param string $assets    Block assets URI.
+   */
+  function mbn_pad_render_why_lawyer_row( $row, $row_index, $assets ) {
+    $defaults     = array( 'photo-burn-injury.jpg', 'photo-evidence-review.png', 'photo-insurance-negotiation.png' );
+    $layout_class = 'image-left' === ( $row['layout'] ?? 'text-left' ) ? ' pad-why-lawyer__row--image-left' : '';
+    $image_url    = ! empty( $row['imageUrl'] ) ? $row['imageUrl'] : $assets . '/' . $defaults[ $row_index % count( $defaults ) ];
+    $alt_text     = mbn_pad_alt_text( $row['imageId'] ?? 0, __( 'Why you need a lawyer', 'mbn-theme' ) );
+    ?>
+      <div class="pad-why-lawyer__row<?php echo esc_attr( $layout_class ); ?>">
+        <div class="pad-why-lawyer__text">
+          <h3 class="pad-why-lawyer__row-heading"><?php echo wp_kses_post( $row['heading'] ?? '' ); ?></h3>
+          <?php echo wp_kses_post( $row['text'] ?? '' ); ?>
+        </div>
+        <figure class="pad-why-lawyer__image">
+          <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $alt_text ); ?>" loading="lazy">
+        </figure>
+      </div>
+    <?php
+  }
+}
+
+if ( ! function_exists( 'mbn_pad_render_why_lawyer' ) ) {
+  /**
+   * Render a Why You Need a Lawyer section.
+   *
+   * @param array  $data   Section data.
+   * @param string $assets Block assets URI.
+   */
+  function mbn_pad_render_why_lawyer( $data, $assets ) {
+    $rows = $data['rows'] ?? array();
+    ?>
+<section class="pad-why-lawyer">
+  <div class="pad-container">
+    <?php if ( ! empty( $data['heading'] ) || ! empty( $data['subtitle'] ) ) : ?>
+    <div class="pad-section-header pad-section-header--center pad-why-lawyer__header">
+      <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
+      <p class="pad-section-subtitle"><?php echo wp_kses_post( $data['subtitle'] ?? '' ); ?></p>
+    </div>
+    <?php endif; ?>
+
+    <div class="pad-why-lawyer__rows">
+      <?php foreach ( $rows as $row_index => $row ) : ?>
+        <?php mbn_pad_render_why_lawyer_row( (array) $row, $row_index, $assets ); ?>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+    <?php
+  }
+}
+
 // Map section types to their renderer callbacks.
 $renderers = array(
 	'whyHire'       => 'mbn_pad_render_why_hire',
@@ -825,6 +903,7 @@ $renderers = array(
 	'commonCauses'  => 'mbn_pad_render_common_causes',
 	'testimonials'  => 'mbn_pad_render_testimonials',
 	'accidentList'  => 'mbn_pad_render_accident_list',
+	'whyLawyer'     => 'mbn_pad_render_why_lawyer',
 );
 
 $wrapper_attributes = get_block_wrapper_attributes();
