@@ -324,6 +324,9 @@ if ( ! function_exists( 'mbn_pad_render_steps_plain_list' ) ) {
    * @param array $items Step items; only each item's question is shown.
    */
   function mbn_pad_render_steps_plain_list( $items ) {
+    if ( ! is_array( $items ) ) {
+      return;
+    }
     ?>
       <ul class="pad-steps__plain-list">
         <?php foreach ( $items as $item ) : ?>
@@ -838,6 +841,9 @@ if ( ! function_exists( 'mbn_pad_render_why_lawyer_row' ) ) {
    * @param string $assets    Block assets URI.
    */
   function mbn_pad_render_why_lawyer_row( $row, $row_index, $assets ) {
+    if ( ! is_array( $row ) ) {
+      return;
+    }
     $defaults     = array( 'photo-burn-injury.jpg', 'photo-evidence-review.png', 'photo-insurance-negotiation.png' );
     $layout_class = 'image-left' === ( $row['layout'] ?? 'text-left' ) ? ' pad-why-lawyer__row--image-left' : '';
     $image_url    = ! empty( $row['imageUrl'] ) ? $row['imageUrl'] : $assets . '/' . $defaults[ $row_index % count( $defaults ) ];
@@ -864,7 +870,10 @@ if ( ! function_exists( 'mbn_pad_render_why_lawyer' ) ) {
    * @param string $assets Block assets URI.
    */
   function mbn_pad_render_why_lawyer( $data, $assets ) {
-    $rows = $data['rows'] ?? array();
+    if ( ! is_array( $data ) ) {
+      return;
+    }
+    $rows = isset( $data['rows'] ) && is_array( $data['rows'] ) ? $data['rows'] : array();
     ?>
 <section class="pad-why-lawyer">
   <div class="pad-container">

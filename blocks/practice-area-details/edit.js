@@ -67,12 +67,12 @@ function emptyData(type) {
       return { heading: '', backgroundColor: 'bg-light-blue', items: [] };
     case 'whyLawyer':
       return {
-        heading: '<span class="pad-text-blue">Why You Need a Lawyer</span> For a<br>Burn Injury Case',
-        subtitle: 'Burn injury cases can be complex and require an experienced attorney to navigate the legal landscape. Here’s why it’s so important to work with one if you’ve experienced a burn injury:',
+        heading: __('<span class="pad-text-blue">Why You Need a Lawyer</span> For a<br>Burn Injury Case', 'mbn-theme'),
+        subtitle: __('Burn injury cases can be complex and require an experienced attorney to navigate the legal landscape. Here’s why it’s so important to work with one if you’ve experienced a burn injury:', 'mbn-theme'),
         rows: [
-          { id: 'whyLawyerRow1', layout: 'text-left', heading: '<span class="pad-text-blue">Burn Injury Cases</span> Are Complex', text: '<p>Burn injuries can be complex, with long-term effects that may require extensive medical treatment. A lawyer can help assess and quantify these impacts, ensuring that all current and future medical needs are addressed in your claim.</p>', imageUrl: '', imageId: 0 },
-          { id: 'whyLawyerRow2', layout: 'image-left', heading: '<span class="pad-text-blue">Determining</span> Liability', text: '<p>Establishing liability in burn injury cases can be challenging. A lawyer with experience in such cases can investigate the incident, identify responsible parties, and demonstrate their negligence to help you pursue compensation.</p>', imageUrl: '', imageId: 0 },
-          { id: 'whyLawyerRow3', layout: 'text-left', heading: '<span class="pad-text-blue">Negotiating</span> With Insurance Companies', text: '<p>Insurance companies aim to settle claims for the lowest possible amount. A lawyer can negotiate effectively on your behalf to ensure you receive fair compensation that reflects the severity of your injury and covers your necessary treatment and losses.</p>', imageUrl: '', imageId: 0 },
+          { id: 'whyLawyerRow1', layout: 'text-left', heading: __('<span class="pad-text-blue">Burn Injury Cases</span> Are Complex', 'mbn-theme'), text: __('<p>Burn injuries can be complex, with long-term effects that may require extensive medical treatment. A lawyer can help assess and quantify these impacts, ensuring that all current and future medical needs are addressed in your claim.</p>', 'mbn-theme'), imageUrl: '', imageId: 0 },
+          { id: 'whyLawyerRow2', layout: 'image-left', heading: __('<span class="pad-text-blue">Determining</span> Liability', 'mbn-theme'), text: __('<p>Establishing liability in burn injury cases can be challenging. A lawyer with experience in such cases can investigate the incident, identify responsible parties, and demonstrate their negligence to help you pursue compensation.</p>', 'mbn-theme'), imageUrl: '', imageId: 0 },
+          { id: 'whyLawyerRow3', layout: 'text-left', heading: __('<span class="pad-text-blue">Negotiating</span> With Insurance Companies', 'mbn-theme'), text: __('<p>Insurance companies aim to settle claims for the lowest possible amount. A lawyer can negotiate effectively on your behalf to ensure you receive fair compensation that reflects the severity of your injury and covers your necessary treatment and losses.</p>', 'mbn-theme'), imageUrl: '', imageId: 0 },
         ],
       };
     default:
@@ -299,8 +299,8 @@ function SortableWhyLawyerRow({ item, index, updateItem, removeItem, duplicateIt
         label={__('Layout', 'mbn-theme')}
         value={item.layout}
         options={[
-          { label: 'Text Left, Image Right', value: 'text-left' },
-          { label: 'Image Left, Text Right', value: 'image-left' },
+          { label: __('Text Left, Image Right', 'mbn-theme'), value: 'text-left' },
+          { label: __('Image Left, Text Right', 'mbn-theme'), value: 'image-left' },
         ]}
         onChange={(v) => updateItem(index, { layout: v })}
       />
