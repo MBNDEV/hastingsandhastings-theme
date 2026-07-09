@@ -170,18 +170,20 @@ if ( ! function_exists( 'mbn_pad_render_case_result' ) ) {
     $tag     = $data['tag'] ?? '';
     $section = mbn_pad_section_style( $data );
     ?>
-<div class="pad-case-result pad-container <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
+<section class="<?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
+  <div class="pad-case-result pad-container">
     <?php if ( $has_photo ) : ?>
-  <figure class="pad-case-result__photo">
-    <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $tag . ' case result' ); ?>">
-  </figure>
-  <?php endif; ?>
+    <figure class="pad-case-result__photo">
+      <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $tag . ' case result' ); ?>">
+    </figure>
+    <?php endif; ?>
     <?php
     if ( $has_card ) {
       mbn_pad_render_case_result_card( $data );
     }
     ?>
-</div>
+  </div>
+</section>
     <?php
   }
 }

@@ -691,7 +691,7 @@ function SortableSection({ section, expanded, onToggle, onDuplicate, onRemove, u
             <BackgroundColorControl
               value={(section.data || {}).backgroundColor || ''}
               onChange={(v) => updateData(section.id, { backgroundColor: v })}
-              defaultValue=""
+              defaultValue={section.type === 'liability' ? 'bg-white' : (section.type === 'accidentList' ? 'bg-light-blue' : '')}
               label={__('Section Background', 'mbn-theme')}
               help={__('Select a preset or custom color for this section’s background. Deselect to use the section default.', 'mbn-theme')}
             />
