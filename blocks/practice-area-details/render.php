@@ -274,7 +274,7 @@ if ( ! function_exists( 'mbn_pad_render_case_result_amounts' ) ) {
    * @param array $results List of { amount, description } items.
    */
   function mbn_pad_render_case_result_amounts( $results ) {
-    if ( empty( $results ) ) {
+    if ( empty( $results ) || ! is_array( $results ) ) {
       return;
     }
     $single = ( count( $results ) <= 1 ) ? ' pad-case-result__results--single' : '';
@@ -1032,6 +1032,10 @@ if ( ! function_exists( 'mbn_pad_render_list_injuries_item' ) ) {
    * @param array $item Item data: label, url.
    */
   function mbn_pad_render_list_injuries_item( $item ) {
+
+    if ( ! is_array( $item ) ) {
+      return;
+    }
     $label = $item['label'] ?? '';
     $url   = $item['url'] ?? '';
     if ( '' === $label ) {
@@ -1057,7 +1061,7 @@ if ( ! function_exists( 'mbn_pad_render_list_injuries_list' ) ) {
    * @param string $list_type List style: 'ol', 'ul', or 'none'.
    */
   function mbn_pad_render_list_injuries_list( $items, $list_type ) {
-    if ( empty( $items ) ) {
+    if ( empty( $items ) || ! is_array( $items ) ) {
       return;
     }
     $tag    = ( 'ol' === $list_type ) ? 'ol' : 'ul';
@@ -1078,6 +1082,9 @@ if ( ! function_exists( 'mbn_pad_render_list_injuries' ) ) {
    * @param array $data Section data: title, description, listType, backgroundColor, items[{label,url}].
    */
   function mbn_pad_render_list_injuries( $data ) {
+    if ( ! is_array( $data ) ) {
+      return;
+    }
     $items       = $data['items'] ?? array();
     $title       = $data['title'] ?? '';
     $description = $data['description'] ?? '';
