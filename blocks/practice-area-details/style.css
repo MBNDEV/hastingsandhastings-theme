@@ -527,14 +527,46 @@
   align-self: flex-start;
 }
 
+.pad-case-result__results {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.pad-case-result__results--single {
+  grid-template-columns: 1fr;
+}
+/* Bordered cards only when there are two or more amounts. */
+.pad-case-result__results:not(.pad-case-result__results--single) .pad-case-result__result {
+  border: 1px solid var(--pad-blue-600);
+  border-radius: 16px;
+  padding: 24px;
+}
+
 .pad-case-result__amount {
   font-family: var(--pad-font-primary);
   font-weight: 700;
-  font-size: clamp(60px, 8vw, 96px);
-  line-height: 1;
-  color: var(--pad-text-heading);
-  margin: 0;
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 1.05;
+  color: var(--pad-blue-600);
+  margin: 0 0 8px;
+  letter-spacing: -1px;
+}
+.pad-case-result__results--single .pad-case-result__amount {
+  font-size: clamp(48px, 7vw, 88px);
   letter-spacing: -2px;
+}
+.pad-case-result__result-desc {
+  font-family: var(--pad-font-secondary);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--pad-text-body);
+  margin: 0;
+}
+.pad-case-result__result-desc p {
+  margin: 0;
+}
+.pad-case-result__result-desc strong {
+  color: var(--pad-text-heading);
 }
 
 .pad-case-result__title {
@@ -829,7 +861,6 @@
    ============================================================ */
 .pad-compensation {
   padding-block: var(--pad-section-pad-v);
-  background: var(--pad-white);
 }
 .pad-compensation .pad-section-header {
   gap: 0;
@@ -976,7 +1007,7 @@
    Lists of Accidents
    ============================================================ */
 .pad-accident-list {
-  padding-block: var(--pad-section-pad-v);
+  padding-bottom: var(--pad-section-pad-v);
 }
 .pad-accident-list__heading {
   font-family: var(--pad-font-secondary);
@@ -1008,6 +1039,55 @@
 }
 a.pad-accident-list__link:hover {
   text-decoration: underline;
+}
+
+/* ============================================================
+   List Injuries
+   ============================================================ */
+.pad-list-injuries {
+  padding-block: var(--pad-section-pad-v);
+}
+.pad-list-injuries__header {
+  max-width: 871px;
+  margin-inline: auto;
+  margin-bottom: 40px;
+}
+.pad-list-injuries__list {
+  margin: 0;
+  padding: 0;
+  column-count: 2;
+  column-gap: 64px;
+}
+.pad-list-injuries__list li {
+  break-inside: avoid;
+  margin-bottom: 20px;
+  padding-left: 8px;
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.556;
+  color: var(--pad-text-body);
+}
+ul.pad-list-injuries__list {
+  list-style: disc;
+  list-style-position: inside;
+}
+ol.pad-list-injuries__list {
+  list-style: decimal;
+  list-style-position: inside;
+}
+.pad-list-injuries__list--none {
+  list-style: none;
+}
+.pad-list-injuries__list--none li {
+  padding-left: 0;
+}
+.pad-list-injuries__item a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.pad-list-injuries__item a:hover {
+  color: var(--pad-blue-600);
 }
 
 @media screen and (max-width: 1366px) {
@@ -1378,9 +1458,6 @@ a.pad-accident-list__link:hover {
   .pad-case-result__card {
     margin: 0;
   }
-  .pad-case-result__amount {
-    font-size: 64px;
-  }
   .pad-btn {
     white-space: normal;
     text-align: center;
@@ -1475,6 +1552,14 @@ a.pad-accident-list__link:hover {
     font-size: 18px;
   }
 
+  /* List Injuries */
+  .pad-list-injuries__list {
+    column-count: 1;
+  }
+  .pad-list-injuries__list li {
+    font-size: 16px;
+  }
+
   .pad-split {
     gap: 24px;
     margin-bottom: 40px;
@@ -1503,8 +1588,8 @@ a.pad-accident-list__link:hover {
   }
 
   /* Case result */
-  .pad-case-result__amount {
-    font-size: 48px;
+  .pad-case-result__results {
+    grid-template-columns: 1fr;
   }
   .pad-case-result__card {
     padding: 20px 24px;

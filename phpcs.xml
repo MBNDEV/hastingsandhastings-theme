@@ -65,6 +65,15 @@
         <severity>0</severity>
     </rule>
 
+    <!-- Custom output-escaping helpers (treated as safe by the EscapeOutput sniff) -->
+    <rule ref="WordPress.Security.EscapeOutput">
+        <properties>
+            <property name="customEscapingFunctions" type="array">
+                <element value="mbn_pad_kses"/>
+            </property>
+        </properties>
+    </rule>
+
     <!-- Nested paths: plain vendor/* does not exclude vendor/pkg/file.php -->
     <exclude-pattern>*/vendor/*</exclude-pattern>
     <exclude-pattern>*/node_modules/*</exclude-pattern>
