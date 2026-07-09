@@ -683,6 +683,11 @@
   line-height: 1.556;
   color: var(--pad-text-body);
 }
+.pad-steps__plain-item a{
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 
 /* ============================================================
    SECTION 4 · Time Limit
@@ -782,7 +787,7 @@
 .pad-liability__divider {
   width: 100%;
   border: none;
-  border-top: 1px solid var(--pad-grey-300);
+  border-top: 1px solid #000000;
   margin: 0;
 }
 

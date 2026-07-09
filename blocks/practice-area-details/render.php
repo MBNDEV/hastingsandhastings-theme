@@ -95,8 +95,9 @@ if ( ! function_exists( 'mbn_pad_render_why_hire' ) ) {
     $badge90   = ! empty( $data['badge90YearsUrl'] ) ? $data['badge90YearsUrl'] : $assets . '/badge-90-plus-combined-legal-experience-blck.svg';
     $map_bg    = ! empty( $data['mapBackgroundUrl'] ) ? $data['mapBackgroundUrl'] : $assets . '/hero-map-bg.jpg';
     $badge_fee = ! empty( $data['badgeNoFeeUrl'] ) ? $data['badgeNoFeeUrl'] : $assets . '/badge-no-fee-until-win.svg';
+    $section   = mbn_pad_section_style( $data );
     ?>
-<section class="pad-why-hire">
+<section class="pad-why-hire <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <div class="pad-section-header pad-section-header--center">
       <h2 class="pad-section-heading"><?php echo wp_kses_post( $d['heading'] ); ?></h2>
@@ -165,21 +166,24 @@ if ( ! function_exists( 'mbn_pad_render_case_result' ) ) {
     if ( ! $has_photo && ! $has_card ) {
       return;
     }
-    $photo = $has_photo ? $data['photoUrl'] : $assets . '/case-result-photo.jpg';
-    $tag   = $data['tag'] ?? '';
+    $photo   = $has_photo ? $data['photoUrl'] : $assets . '/case-result-photo.jpg';
+    $tag     = $data['tag'] ?? '';
+    $section = mbn_pad_section_style( $data );
     ?>
-<div class="pad-case-result pad-container">
+<section class="<?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
+  <div class="pad-case-result pad-container">
     <?php if ( $has_photo ) : ?>
-  <figure class="pad-case-result__photo">
-    <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $tag . ' case result' ); ?>">
-  </figure>
-  <?php endif; ?>
+    <figure class="pad-case-result__photo">
+      <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $tag . ' case result' ); ?>">
+    </figure>
+    <?php endif; ?>
     <?php
     if ( $has_card ) {
       mbn_pad_render_case_result_card( $data );
     }
     ?>
-</div>
+  </div>
+</section>
     <?php
   }
 }
@@ -262,8 +266,9 @@ if ( ! function_exists( 'mbn_pad_render_after_accident' ) ) {
     $heading  = $data['heading'] ?? '';
     $splits   = $data['splits'] ?? array();
     $defaults = array( 'photo-accident-scene.jpg', 'photo-police-scene.jpg', 'photo-legal-meeting.jpg' );
+    $section  = mbn_pad_section_style( $data );
     ?>
-<section class="pad-after-accident">
+<section class="pad-after-accident <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <?php foreach ( $splits as $index => $split ) : ?>
       <?php
@@ -355,8 +360,9 @@ if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
     );
     $accordion = $d['accordion'] ?? array();
     $chevron   = ! empty( $d['chevronIconUrl'] ) ? $d['chevronIconUrl'] : $assets . '/icon-chevron-up.svg';
+    $section   = mbn_pad_section_style( $data );
     ?>
-<section class="pad-steps">
+<section class="pad-steps <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <div class="pad-steps__layout">
       <div class="pad-steps__intro">
@@ -400,10 +406,11 @@ if ( ! function_exists( 'mbn_pad_render_time_limit' ) ) {
    * @param string $assets Block assets URI.
    */
   function mbn_pad_render_time_limit( $data, $assets ) {
-    $photo = ! empty( $data['photoUrl'] ) ? $data['photoUrl'] : $assets . '/photo-time-limit.jpg';
-    $alt   = mbn_pad_alt_text( $data['photoId'] ?? 0, __( 'Person signing legal documents', 'mbn-theme' ) );
+    $photo   = ! empty( $data['photoUrl'] ) ? $data['photoUrl'] : $assets . '/photo-time-limit.jpg';
+    $alt     = mbn_pad_alt_text( $data['photoId'] ?? 0, __( 'Person signing legal documents', 'mbn-theme' ) );
+    $section = mbn_pad_section_style( $data );
     ?>
-<section class="pad-time-limit">
+<section class="pad-time-limit <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <div class="pad-section-header pad-section-header--center">
       <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
@@ -432,10 +439,11 @@ if ( ! function_exists( 'mbn_pad_render_insurance' ) ) {
    * @param string $assets Block assets URI.
    */
   function mbn_pad_render_insurance( $data, $assets ) {
-    $photo = ! empty( $data['photoUrl'] ) ? $data['photoUrl'] : $assets . '/photo-insurance-meeting.jpg';
-    $alt   = mbn_pad_alt_text( $data['photoId'] ?? 0, __( 'Attorney meeting with client about insurance claim', 'mbn-theme' ) );
+    $photo   = ! empty( $data['photoUrl'] ) ? $data['photoUrl'] : $assets . '/photo-insurance-meeting.jpg';
+    $alt     = mbn_pad_alt_text( $data['photoId'] ?? 0, __( 'Attorney meeting with client about insurance claim', 'mbn-theme' ) );
+    $section = mbn_pad_section_style( $data );
     ?>
-<section class="pad-insurance">
+<section class="pad-insurance <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <div class="pad-split pad-split--text-left">
       <div class="pad-split__text">
@@ -565,9 +573,10 @@ if ( ! function_exists( 'mbn_pad_render_compensation' ) ) {
    * @param array $data Section data.
    */
   function mbn_pad_render_compensation( $data ) {
-    $items = $data['items'] ?? array();
+    $items   = $data['items'] ?? array();
+    $section = mbn_pad_section_style( $data );
     ?>
-<section class="pad-compensation">
+<section class="pad-compensation <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <div class="pad-section-header pad-section-header--center">
       <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
@@ -604,10 +613,11 @@ if ( ! function_exists( 'mbn_pad_render_documentation' ) ) {
    * @param string $assets Block assets URI.
    */
   function mbn_pad_render_documentation( $data, $assets ) {
-    $photo = ! empty( $data['photoUrl'] ) ? $data['photoUrl'] : $assets . '/photo-documentation.jpg';
-    $alt   = mbn_pad_alt_text( $data['photoId'] ?? 0, __( 'Smartphone displaying online medical records', 'mbn-theme' ) );
+    $photo   = ! empty( $data['photoUrl'] ) ? $data['photoUrl'] : $assets . '/photo-documentation.jpg';
+    $alt     = mbn_pad_alt_text( $data['photoId'] ?? 0, __( 'Smartphone displaying online medical records', 'mbn-theme' ) );
+    $section = mbn_pad_section_style( $data );
     ?>
-<section class="pad-documentation">
+<section class="pad-documentation <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <div class="pad-split pad-split--text-left">
       <div class="pad-split__text">
@@ -642,8 +652,9 @@ if ( ! function_exists( 'mbn_pad_render_attorneys' ) ) {
     $badges   = $d['badgeCards'] ?? array();
     $photo    = ! empty( $d['photoUrl'] ) ? $d['photoUrl'] : $assets . '/img-hastings-with-logo.png';
     $defaults = array( 'badge-no-fee-until-win.svg', 'badge-29-percent-discount.svg', 'badge-14-percent.svg' );
+    $section  = mbn_pad_section_style( $data );
     ?>
-<section class="pad-attorneys">
+<section class="pad-attorneys <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <div class="pad-attorneys__badges">
       <?php foreach ( $badges as $badge_index => $badge ) : ?>
@@ -684,8 +695,9 @@ if ( ! function_exists( 'mbn_pad_render_third_party' ) ) {
     $alt     = mbn_pad_alt_text( $data['photoId'] ?? 0, __( 'Claim documents being handed across a desk during a legal consultation', 'mbn-theme' ) );
     $chevron = ! empty( $data['chevronIconUrl'] ) ? $data['chevronIconUrl'] : $assets . '/icon-chevron-right.svg';
     $items   = $data['items'] ?? array();
+    $section = mbn_pad_section_style( $data );
     ?>
-<section class="pad-third-party">
+<section class="pad-third-party <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <div class="pad-split pad-split--text-left">
       <div class="pad-split__text">
@@ -716,11 +728,12 @@ if ( ! function_exists( 'mbn_pad_render_common_causes' ) ) {
    * @param string $assets Block assets URI.
    */
   function mbn_pad_render_common_causes( $data, $assets ) {
-    $photo = ! empty( $data['photoUrl'] ) ? $data['photoUrl'] : $assets . '/photo-construction-excavator.jpg';
-    $alt   = mbn_pad_alt_text( $data['photoId'] ?? 0, __( 'Excavator working on a construction site', 'mbn-theme' ) );
-    $items = $data['items'] ?? array();
+    $photo   = ! empty( $data['photoUrl'] ) ? $data['photoUrl'] : $assets . '/photo-construction-excavator.jpg';
+    $alt     = mbn_pad_alt_text( $data['photoId'] ?? 0, __( 'Excavator working on a construction site', 'mbn-theme' ) );
+    $items   = $data['items'] ?? array();
+    $section = mbn_pad_section_style( $data );
     ?>
-<section class="pad-common-causes">
+<section class="pad-common-causes <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <div class="pad-common-causes__layout">
       <div class="pad-common-causes__intro">
@@ -751,10 +764,11 @@ if ( ! function_exists( 'mbn_pad_render_testimonials' ) ) {
    * @param string $assets Block assets URI.
    */
   function mbn_pad_render_testimonials( $data, $assets ) {
-    $stars = ! empty( $data['starsIconUrl'] ) ? $data['starsIconUrl'] : $assets . '/icon-stars-five.svg';
-    $items = $data['items'] ?? array();
+    $stars   = ! empty( $data['starsIconUrl'] ) ? $data['starsIconUrl'] : $assets . '/icon-stars-five.svg';
+    $items   = $data['items'] ?? array();
+    $section = mbn_pad_section_style( $data );
     ?>
-<section class="pad-testimonials">
+<section class="pad-testimonials <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <div class="pad-section-header pad-section-header--center pad-testimonials__header">
       <?php if ( ! empty( $data['eyebrow'] ) ) : ?>
@@ -873,9 +887,10 @@ if ( ! function_exists( 'mbn_pad_render_why_lawyer' ) ) {
     if ( ! is_array( $data ) ) {
       return;
     }
-    $rows = isset( $data['rows'] ) && is_array( $data['rows'] ) ? $data['rows'] : array();
+    $rows    = isset( $data['rows'] ) && is_array( $data['rows'] ) ? $data['rows'] : array();
+    $section = mbn_pad_section_style( $data );
     ?>
-<section class="pad-why-lawyer">
+<section class="pad-why-lawyer <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <?php if ( ! empty( $data['heading'] ) || ! empty( $data['subtitle'] ) ) : ?>
     <div class="pad-section-header pad-section-header--center pad-why-lawyer__header">
