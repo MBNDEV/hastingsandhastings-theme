@@ -665,6 +665,25 @@
   margin: 0;
 }
 
+/* Plain list variant (title only, no accordion) */
+.pad-steps__plain-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--pad-grey-300);
+  margin-left: 20%;
+}
+.pad-steps__plain-item {
+  border-top: 1px solid var(--pad-grey-300);
+  padding: 8px 0;
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.556;
+  color: var(--pad-text-body);
+}
+
 /* ============================================================
    SECTION 4 · Time Limit
    ============================================================ */
@@ -673,6 +692,9 @@
 }
 .pad-time-limit .pad-section-header {
   margin-bottom: 48px;
+}
+.pad-time-limit .pad-section-subtitle{
+  max-width: 920px;
 }
 .pad-time-limit a {
   color: var(--pad-blue-600);
@@ -1168,6 +1190,78 @@ a.pad-accident-list__link:hover {
 }
 
 /* ============================================================
+   SECTION 13 · Why You Need a Lawyer
+   ============================================================ */
+.pad-why-lawyer {
+  padding-block: var(--pad-section-pad-v);
+  background: var(--pad-blue-50);
+}
+.pad-why-lawyer__header {
+  max-width: 912px;
+  margin: 0 auto 80px;
+}
+.pad-why-lawyer__header .pad-section-heading {
+  margin-bottom: 0;
+}
+.pad-why-lawyer__rows {
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+.pad-why-lawyer__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+.pad-why-lawyer__row--image-left .pad-why-lawyer__image {
+  order: -1;
+}
+.pad-why-lawyer__text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.pad-why-lawyer__row-heading {
+  font-family: var(--pad-font-primary);
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1.5;
+  color: var(--pad-text-heading);
+  margin: 0;
+}
+.pad-why-lawyer__text p {
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.556;
+  color: var(--pad-text-body);
+  margin: 0;
+}
+.pad-why-lawyer__image {
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.pad-why-lawyer__image img {
+  width: 100%;
+  height: 369px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ============================================================
+   Small Desktop: below 1200px
+   ============================================================ */
+@media screen and (max-width: 1199px) {
+  
+  .pad-steps__plain-list {
+    margin-left: 0;
+  }
+
+}
+
+/* ============================================================
    TABLET: 768px to 1023px
    ============================================================ */
 @media screen and (max-width: 1023px) {
@@ -1214,6 +1308,24 @@ a.pad-accident-list__link:hover {
     gap: 24px;
     max-width: 640px;
     margin-inline: auto;
+  }
+
+  /* Why You Need a Lawyer */
+  .pad-why-lawyer__header {
+    margin-bottom: 48px;
+  }
+  .pad-why-lawyer__rows {
+    gap: 48px;
+  }
+  .pad-why-lawyer__row {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .pad-why-lawyer__row--image-left .pad-why-lawyer__image {
+    order: 0;
+  }
+  .pad-why-lawyer__row-heading {
+    font-size: 32px;
   }
 
   .pad-common-causes__list {
@@ -1433,6 +1545,9 @@ a.pad-accident-list__link:hover {
   .pad-steps__answer p {
     font-size: 16px;
   }
+  .pad-steps__plain-item {
+    font-size: 16px;
+  }
 
   /* Liability */
   .pad-liability__term {
@@ -1514,6 +1629,21 @@ a.pad-accident-list__link:hover {
   }
   .pad-testimonials__card blockquote p {
     font-size: 16px;
+  }
+
+  /* Why You Need a Lawyer */
+  .pad-why-lawyer__rows {
+    gap: 40px;
+  }
+  .pad-why-lawyer__row-heading {
+    font-size: 26px;
+    line-height: 1.3;
+  }
+  .pad-why-lawyer__text p {
+    font-size: 16px;
+  }
+  .pad-why-lawyer__image img {
+    height: 240px;
   }
 }
 
