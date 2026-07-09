@@ -566,7 +566,6 @@
    ============================================================ */
 .pad-steps {
   padding-block: var(--pad-section-pad-v);
-  background: var(--pad-grey-50);
 }
 
 .pad-steps__layout {
@@ -1199,7 +1198,6 @@ a.pad-accident-list__link:hover {
    ============================================================ */
 .pad-why-lawyer {
   padding-block: var(--pad-section-pad-v);
-  background: var(--pad-blue-50);
 }
 .pad-why-lawyer__header {
   max-width: 912px;
