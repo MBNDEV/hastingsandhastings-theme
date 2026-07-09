@@ -30,15 +30,16 @@ const SECTION_TYPES = {
   testimonials: { label: 'Testimonials' },
   accidentList: { label: 'Lists of Accidents' },
   whyLawyer: { label: 'Why You Need a Lawyer' },
+  listInjuries: { label: 'List Injuries' },
 };
 
 // Empty data payload for a newly added section of the given type.
 function emptyData(type) {
   switch (type) {
     case 'whyHire':
-      return { backgroundColor: '', heading: '', subtitle: '', features: [], photoUrl: '', photoId: 0, badge90YearsUrl: '', badge90YearsId: 0, mapBackgroundUrl: '', mapBackgroundId: 0, badgeNoFeeUrl: '', badgeNoFeeId: 0, freeEvaluationsTitle: '', freeEvaluationsDescription: '', millionsRecoveredTitle: '', millionsRecoveredDescription: '' };
+      return { backgroundColor: '', heading: '', subtitle: '', features: [], photoUrl: '', photoId: 0, photoHidden: false, badge90YearsUrl: '', badge90YearsId: 0, badge90YearsHidden: false, mapBackgroundUrl: '', mapBackgroundId: 0, mapBackgroundHidden: false, badgeNoFeeUrl: '', badgeNoFeeId: 0, badgeNoFeeHidden: false, freeEvaluationsTitle: '', freeEvaluationsDescription: '', millionsRecoveredTitle: '', millionsRecoveredDescription: '' };
     case 'caseResult':
-      return { backgroundColor: '', tag: '', amount: '', title: '', description: '', photoUrl: '', photoId: 0 };
+      return { backgroundColor: '', tag: '', results: [], title: '', description: '', photoUrl: '', photoId: 0 };
     case 'cta':
       return { logoUrl: '', logoId: 0, textureUrl: '', textureId: 0, heading: '', subtext: '', buttonText: '', buttonUrl: '', phoneLabel: '', phoneNumber: '' };
     case 'afterAccident':
@@ -76,6 +77,8 @@ function emptyData(type) {
           { id: 'whyLawyerRow3', layout: 'text-left', heading: __('<span class="pad-text-blue">Negotiating</span> With Insurance Companies', 'mbn-theme'), text: __('<p>Insurance companies aim to settle claims for the lowest possible amount. A lawyer can negotiate effectively on your behalf to ensure you receive fair compensation that reflects the severity of your injury and covers your necessary treatment and losses.</p>', 'mbn-theme'), imageUrl: '', imageId: 0 },
         ],
       };
+    case 'listInjuries':
+      return { title: '', description: '', listType: 'ul', backgroundColor: '', items: [] };
     default:
       return {};
   }
@@ -108,8 +111,9 @@ function makeArrayField(data, setData, key) {
   };
 }
 
-// Reusable image picker with Select / Replace / Remove.
-function ImageField({ label, url, id, onSelect, onRemove, maxWidth = '100%' }) {
+// Reusable image picker with Select / Replace / Remove, and an optional
+// "Hide image" toggle (rendered only when onToggleHide is provided).
+function ImageField({ label, url, id, onSelect, onRemove, maxWidth = '100%', hidden, onToggleHide }) {
   return (
     <MediaUpload
       onSelect={onSelect}
@@ -125,7 +129,15 @@ function ImageField({ label, url, id, onSelect, onRemove, maxWidth = '100%' }) {
               {__('Remove', 'mbn-theme')}
             </Button>
           )}
-          {url && <img src={url} alt="" style={{ display: 'block', marginTop: '10px', maxWidth, height: 'auto', borderRadius: '4px' }} />}
+          {url && <img src={url} alt="" style={{ display: 'block', marginTop: '10px', maxWidth, height: 'auto', borderRadius: '4px', opacity: hidden ? 0.4 : 1 }} />}
+          {onToggleHide && (
+            <ToggleControl
+              label={__('Hide image', 'mbn-theme')}
+              help={hidden ? __('Image is hidden on the front end.', 'mbn-theme') : __('Image is shown on the front end.', 'mbn-theme')}
+              checked={!!hidden}
+              onChange={onToggleHide}
+            />
+          )}
         </div>
       )}
     />
@@ -279,6 +291,28 @@ function SortableAccident({ item, index, updateItem, removeItem, duplicateItem }
   );
 }
 
+function SortableCaseAmount({ item, index, updateItem, removeItem, duplicateItem }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
+  return (
+    <div ref={setNodeRef} style={itemStyle(transform, transition, isDragging)}>
+      <ItemHeader attributes={attributes} listeners={listeners} label={__('Amount', 'mbn-theme')} index={index} onDuplicate={() => duplicateItem(index)} onRemove={() => removeItem(index)} />
+      <TextareaControl label={__('Amount (HTML allowed)', 'mbn-theme')} value={item.amount} onChange={(v) => updateItem(index, { amount: v })} rows={2} />
+      <TextareaControl label={__('Description (HTML allowed)', 'mbn-theme')} value={item.description} onChange={(v) => updateItem(index, { description: v })} rows={3} style={{ marginTop: '10px' }} />
+    </div>
+  );
+}
+
+function SortableInjury({ item, index, updateItem, removeItem, duplicateItem }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
+  return (
+    <div ref={setNodeRef} style={itemStyle(transform, transition, isDragging)}>
+      <ItemHeader attributes={attributes} listeners={listeners} label={__('Injury', 'mbn-theme')} index={index} onDuplicate={() => duplicateItem(index)} onRemove={() => removeItem(index)} />
+      <TextControl label={__('Label', 'mbn-theme')} value={item.label} onChange={(v) => updateItem(index, { label: v })} />
+      <TextControl label={__('URL (optional)', 'mbn-theme')} value={item.url} onChange={(v) => updateItem(index, { url: v })} help={__('Leave empty to render as plain text (no link).', 'mbn-theme')} />
+    </div>
+  );
+}
+
 function SortableTestimonial({ item, index, updateItem, removeItem, duplicateItem }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
   return (
@@ -384,10 +418,10 @@ function WhyHireEditor({ data, setData, sensors }) {
       <Repeater field={features} sensors={sensors} ItemComponent={SortableFeature} addLabel={__('+ Add Feature', 'mbn-theme')} newItem={{ title: '', description: '' }} />
       <hr style={{ margin: '20px 0' }} />
       <h4>{__('Images', 'mbn-theme')}</h4>
-      <ImageField label={__('Attorney Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} />
-      <ImageField label={__('90+ Years Badge', 'mbn-theme')} url={data.badge90YearsUrl} id={data.badge90YearsId} onSelect={(m) => setData({ badge90YearsUrl: m.url, badge90YearsId: m.id })} onRemove={() => setData({ badge90YearsUrl: '', badge90YearsId: 0 })} maxWidth="150px" />
-      <ImageField label={__('Map Background', 'mbn-theme')} url={data.mapBackgroundUrl} id={data.mapBackgroundId} onSelect={(m) => setData({ mapBackgroundUrl: m.url, mapBackgroundId: m.id })} onRemove={() => setData({ mapBackgroundUrl: '', mapBackgroundId: 0 })} />
-      <ImageField label={__('No Fee Badge', 'mbn-theme')} url={data.badgeNoFeeUrl} id={data.badgeNoFeeId} onSelect={(m) => setData({ badgeNoFeeUrl: m.url, badgeNoFeeId: m.id })} onRemove={() => setData({ badgeNoFeeUrl: '', badgeNoFeeId: 0 })} maxWidth="150px" />
+      <ImageField label={__('Attorney Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} hidden={data.photoHidden} onToggleHide={(v) => setData({ photoHidden: v })} />
+      <ImageField label={__('90+ Years Badge', 'mbn-theme')} url={data.badge90YearsUrl} id={data.badge90YearsId} onSelect={(m) => setData({ badge90YearsUrl: m.url, badge90YearsId: m.id })} onRemove={() => setData({ badge90YearsUrl: '', badge90YearsId: 0 })} maxWidth="150px" hidden={data.badge90YearsHidden} onToggleHide={(v) => setData({ badge90YearsHidden: v })} />
+      <ImageField label={__('Map Background', 'mbn-theme')} url={data.mapBackgroundUrl} id={data.mapBackgroundId} onSelect={(m) => setData({ mapBackgroundUrl: m.url, mapBackgroundId: m.id })} onRemove={() => setData({ mapBackgroundUrl: '', mapBackgroundId: 0 })} hidden={data.mapBackgroundHidden} onToggleHide={(v) => setData({ mapBackgroundHidden: v })} />
+      <ImageField label={__('No Fee Badge', 'mbn-theme')} url={data.badgeNoFeeUrl} id={data.badgeNoFeeId} onSelect={(m) => setData({ badgeNoFeeUrl: m.url, badgeNoFeeId: m.id })} onRemove={() => setData({ badgeNoFeeUrl: '', badgeNoFeeId: 0 })} maxWidth="150px" hidden={data.badgeNoFeeHidden} onToggleHide={(v) => setData({ badgeNoFeeHidden: v })} />
       <hr style={{ margin: '20px 0' }} />
       <h4>{__('Free Evaluations', 'mbn-theme')}</h4>
       <TextControl label={__('Title', 'mbn-theme')} value={data.freeEvaluationsTitle || ''} onChange={(v) => setData({ freeEvaluationsTitle: v })} />
@@ -399,14 +433,41 @@ function WhyHireEditor({ data, setData, sensors }) {
   );
 }
 
-function CaseResultEditor({ data, setData }) {
+function CaseResultEditor({ data, setData, sensors }) {
+  const results = makeArrayField(data, setData, 'results');
   return (
     <Fragment>
       <TextControl label={__('Tag', 'mbn-theme')} value={data.tag || ''} onChange={(v) => setData({ tag: v })} />
-      <TextControl label={__('Amount', 'mbn-theme')} value={data.amount || ''} onChange={(v) => setData({ amount: v })} />
+      <h4 style={{ marginTop: '20px' }}>{__('Amounts', 'mbn-theme')}</h4>
+      <p style={{ margin: '0 0 8px', fontSize: '12px', color: '#666' }}>{__('One amount fills the row. Two or more display as bordered cards, two per row.', 'mbn-theme')}</p>
+      <Repeater field={results} sensors={sensors} ItemComponent={SortableCaseAmount} addLabel={__('+ Add Amount', 'mbn-theme')} newItem={{ amount: '', description: '' }} />
+      <hr style={{ margin: '20px 0' }} />
       <TextControl label={__('Title', 'mbn-theme')} value={data.title || ''} onChange={(v) => setData({ title: v })} />
       <TextareaControl label={__('Description (HTML)', 'mbn-theme')} value={data.description || ''} onChange={(v) => setData({ description: v })} rows={3} />
       <ImageField label={__('Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} />
+    </Fragment>
+  );
+}
+
+function ListInjuriesEditor({ data, setData, sensors }) {
+  const items = makeArrayField(data, setData, 'items');
+  return (
+    <Fragment>
+      <BackgroundColorControl value={data.backgroundColor || ''} onChange={(v) => setData({ backgroundColor: v })} defaultValue="" label={__('Section Background', 'mbn-theme')} />
+      <TextareaControl label={__('Title (HTML)', 'mbn-theme')} value={data.title || ''} onChange={(v) => setData({ title: v })} rows={2} help={__('Wrap text in <span class="pad-text-blue">…</span> to highlight it blue.', 'mbn-theme')} />
+      <TextareaControl label={__('Description (HTML)', 'mbn-theme')} value={data.description || ''} onChange={(v) => setData({ description: v })} rows={3} />
+      <SelectControl
+        label={__('List Marker', 'mbn-theme')}
+        value={data.listType || 'ul'}
+        options={[
+          { label: __('Bulleted (ul)', 'mbn-theme'), value: 'ul' },
+          { label: __('Numbered (ol)', 'mbn-theme'), value: 'ol' },
+          { label: __('No marker', 'mbn-theme'), value: 'none' },
+        ]}
+        onChange={(v) => setData({ listType: v })}
+      />
+      <h4 style={{ marginTop: '20px' }}>{__('Injuries', 'mbn-theme')}</h4>
+      <Repeater field={items} sensors={sensors} ItemComponent={SortableInjury} addLabel={__('+ Add Injury', 'mbn-theme')} newItem={{ label: '', url: '' }} />
     </Fragment>
   );
 }
@@ -624,7 +685,7 @@ function SectionEditor({ type, data, setData, sensors }) {
     case 'whyHire':
       return <WhyHireEditor data={data} setData={setData} sensors={sensors} />;
     case 'caseResult':
-      return <CaseResultEditor data={data} setData={setData} />;
+      return <CaseResultEditor data={data} setData={setData} sensors={sensors} />;
     case 'cta':
       return <CtaEditor data={data} setData={setData} />;
     case 'afterAccident':
@@ -653,6 +714,8 @@ function SectionEditor({ type, data, setData, sensors }) {
       return <AccidentListEditor data={data} setData={setData} sensors={sensors} />;
     case 'whyLawyer':
       return <WhyLawyerEditor data={data} setData={setData} sensors={sensors} />;
+    case 'listInjuries':
+      return <ListInjuriesEditor data={data} setData={setData} sensors={sensors} />;
     default:
       return null;
   }

@@ -33,6 +33,58 @@ if ( ! function_exists( 'mbn_pad_alt_text' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_allow_inline_styles' ) ) {
+  /**
+   * Extend the CSS properties `wp_kses` permits in inline style attributes.
+   *
+   * By default `safecss_filter_attr()` drops declarations such as `list-style`,
+   * so styles editors add to rich-text fields silently disappear on the front
+   * end. This adds the layout/list properties that editors commonly need.
+   *
+   * @param string[] $styles Allowed CSS property names.
+   * @return string[]
+   */
+  function mbn_pad_allow_inline_styles( $styles ) {
+    return array_merge(
+      $styles,
+      array(
+		  'list-style',
+		  'list-style-type',
+		  'list-style-position',
+		  'display',
+		  'gap',
+		  'flex-direction',
+		  'flex-wrap',
+		  'align-items',
+		  'justify-content',
+		  'grid-template-columns',
+		  'column-count',
+		  'column-gap',
+		  'white-space',
+      )
+    );
+  }
+}
+
+if ( ! function_exists( 'mbn_pad_kses' ) ) {
+  /**
+   * Sanitize rich-text field HTML while preserving editor-supplied inline styles.
+   *
+   * Same allowlist as wp_kses_post() (which already permits the `style`
+   * attribute) but with an expanded set of safe CSS properties so inline
+   * styling entered in the editor renders on the front end.
+   *
+   * @param string $html Raw field HTML.
+   * @return string Sanitized HTML.
+   */
+  function mbn_pad_kses( $html ) {
+    add_filter( 'safe_style_css', 'mbn_pad_allow_inline_styles' );
+    $out = wp_kses_post( (string) $html );
+    remove_filter( 'safe_style_css', 'mbn_pad_allow_inline_styles' );
+    return $out;
+  }
+}
+
 if ( ! function_exists( 'mbn_pad_render_section_title' ) ) {
   /**
    * Render the optional Section Title band above a component.
@@ -79,7 +131,7 @@ if ( ! function_exists( 'mbn_pad_render_why_hire' ) ) {
    * @param string $assets Block assets URI.
    */
   function mbn_pad_render_why_hire( $data, $assets ) {
-    $d         = array_merge(
+    $d       = array_merge(
       array(
 		  'heading'                      => '',
 		  'subtitle'                     => '',
@@ -91,11 +143,10 @@ if ( ! function_exists( 'mbn_pad_render_why_hire' ) ) {
       ),
       (array) $data
     );
-    $photo     = ! empty( $data['photoUrl'] ) ? $data['photoUrl'] : $assets . '/img-why-hire-photo.png';
-    $badge90   = ! empty( $data['badge90YearsUrl'] ) ? $data['badge90YearsUrl'] : $assets . '/badge-90-plus-combined-legal-experience-blck.svg';
-    $map_bg    = ! empty( $data['mapBackgroundUrl'] ) ? $data['mapBackgroundUrl'] : $assets . '/hero-map-bg.jpg';
-    $badge_fee = ! empty( $data['badgeNoFeeUrl'] ) ? $data['badgeNoFeeUrl'] : $assets . '/badge-no-fee-until-win.svg';
-    $section   = mbn_pad_section_style( $data );
+    $photo   = ! empty( $data['photoUrl'] ) ? $data['photoUrl'] : $assets . '/img-why-hire-photo.png';
+    $badge90 = ! empty( $data['badge90YearsUrl'] ) ? $data['badge90YearsUrl'] : $assets . '/badge-90-plus-combined-legal-experience-blck.svg';
+    $map_bg  = ! empty( $data['mapBackgroundUrl'] ) ? $data['mapBackgroundUrl'] : $assets . '/hero-map-bg.jpg';
+    $section = mbn_pad_section_style( $data );
     ?>
 <section class="pad-why-hire <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
@@ -115,32 +166,59 @@ if ( ! function_exists( 'mbn_pad_render_why_hire' ) ) {
       </div>
 
       <div class="pad-why-hire__visual">
+        <?php if ( empty( $data['photoHidden'] ) ) : ?>
         <div class="pad-why-hire__photo-stack" aria-hidden="true">
           <img src="<?php echo esc_url( $photo ); ?>" alt="" class="pad-why-hire__photo-front">
         </div>
+        <?php endif; ?>
+        <?php if ( empty( $data['badge90YearsHidden'] ) ) : ?>
         <div class="pad-badge pad-badge--years" aria-label="90+ Years Combined Legal Experience">
           <img src="<?php echo esc_url( $badge90 ); ?>" alt="" aria-hidden="true">
         </div>
+        <?php endif; ?>
       </div>
     </div>
   </div>
 
+    <?php if ( empty( $data['mapBackgroundHidden'] ) ) : ?>
   <div class="pad-why-hire__map" aria-hidden="true">
     <img src="<?php echo esc_url( $map_bg ); ?>" alt="">
   </div>
+  <?php endif; ?>
 
+    <?php mbn_pad_render_why_hire_secondary( $d, $data, $assets ); ?>
+</section>
+    <?php
+  }
+}
+
+if ( ! function_exists( 'mbn_pad_render_why_hire_secondary' ) ) {
+  /**
+   * Render the Why Hire secondary band (no-fee badge, free evaluations, millions recovered).
+   *
+   * @param array  $d      Merged section data.
+   * @param array  $data   Raw section data (for the no-fee badge URL and hide flag).
+   * @param string $assets Block assets URI.
+   */
+  function mbn_pad_render_why_hire_secondary( $d, $data, $assets ) {
+    $badge_fee    = ! empty( $data['badgeNoFeeUrl'] ) ? $data['badgeNoFeeUrl'] : $assets . '/badge-no-fee-until-win.svg';
+    $badge_hide   = ! empty( $data['badgeNoFeeHidden'] );
+    $has_millions = ! empty( $d['millionsRecoveredTitle'] ) || ! empty( $d['millionsRecoveredDescription'] );
+    ?>
   <div class="pad-container">
     <div class="pad-why-hire__secondary">
       <div class="pad-why-hire__badge-col">
+        <?php if ( ! $badge_hide ) : ?>
         <div class="pad-badge pad-badge--no-fee" aria-label="No Fee Until We Win — No Settlement No Fee">
           <img src="<?php echo esc_url( $badge_fee ); ?>" alt="" class="pad-badge__settle-text" aria-hidden="true">
         </div>
+        <?php endif; ?>
         <article class="pad-why-hire__feature">
           <h3><?php echo esc_html( $d['freeEvaluationsTitle'] ); ?></h3>
           <?php echo wp_kses_post( $d['freeEvaluationsDescription'] ); ?>
         </article>
       </div>
-      <?php if ( ! empty( $d['millionsRecoveredTitle'] ) || ! empty( $d['millionsRecoveredDescription'] ) ) : ?>
+      <?php if ( $has_millions ) : ?>
       <div class="pad-why-hire__millions">
         <h3><?php echo esc_html( $d['millionsRecoveredTitle'] ); ?></h3>
         <?php echo wp_kses_post( $d['millionsRecoveredDescription'] ); ?>
@@ -148,7 +226,6 @@ if ( ! function_exists( 'mbn_pad_render_why_hire' ) ) {
       <?php endif; ?>
     </div>
   </div>
-</section>
     <?php
   }
 }
@@ -162,7 +239,7 @@ if ( ! function_exists( 'mbn_pad_render_case_result' ) ) {
    */
   function mbn_pad_render_case_result( $data, $assets ) {
     $has_photo = ! empty( $data['photoUrl'] );
-    $has_card  = ! empty( $data['tag'] ) || ! empty( $data['amount'] ) || ! empty( $data['title'] ) || ! empty( $data['description'] );
+    $has_card  = ! empty( $data['tag'] ) || ! empty( $data['results'] ) || ! empty( $data['amount'] ) || ! empty( $data['title'] ) || ! empty( $data['description'] );
     if ( ! $has_photo && ! $has_card ) {
       return;
     }
@@ -188,6 +265,36 @@ if ( ! function_exists( 'mbn_pad_render_case_result' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_render_case_result_amounts' ) ) {
+  /**
+   * Render the amount/description cards of a Case Result section.
+   *
+   * A single amount fills the row; two or more render as bordered cards.
+   *
+   * @param array $results List of { amount, description } items.
+   */
+  function mbn_pad_render_case_result_amounts( $results ) {
+    if ( empty( $results ) || ! is_array( $results ) ) {
+      return;
+    }
+    $single = ( count( $results ) <= 1 ) ? ' pad-case-result__results--single' : '';
+    printf( '<div class="pad-case-result__results%s">', esc_attr( $single ) );
+    foreach ( $results as $result ) {
+      $amount = $result['amount'] ?? '';
+      $desc   = $result['description'] ?? '';
+      echo '<div class="pad-case-result__result">';
+      if ( '' !== $amount ) {
+        echo '<div class="pad-case-result__amount">' . mbn_pad_kses( $amount ) . '</div>';
+      }
+      if ( '' !== $desc ) {
+        echo '<div class="pad-case-result__result-desc">' . mbn_pad_kses( $desc ) . '</div>';
+      }
+      echo '</div>';
+    }
+    echo '</div>';
+  }
+}
+
 if ( ! function_exists( 'mbn_pad_render_case_result_card' ) ) {
   /**
    * Render the inner card of a Case Result section.
@@ -196,22 +303,30 @@ if ( ! function_exists( 'mbn_pad_render_case_result_card' ) ) {
    */
   function mbn_pad_render_case_result_card( $data ) {
     $tag         = $data['tag'] ?? '';
-    $amount      = $data['amount'] ?? '';
     $title       = $data['title'] ?? '';
     $description = $data['description'] ?? '';
+    $results     = $data['results'] ?? array();
+
+    // Backward compatibility: promote a legacy single amount to a result item.
+    if ( empty( $results ) && ! empty( $data['amount'] ) ) {
+      $results = array(
+		  array(
+			  'amount'      => $data['amount'],
+			  'description' => '',
+		  ),
+      );
+    }
     ?>
   <div class="pad-case-result__card">
       <?php if ( '' !== $tag ) : ?>
     <span class="pad-case-result__tag"><?php echo esc_html( $tag ); ?></span>
     <?php endif; ?>
-      <?php if ( '' !== $amount ) : ?>
-    <p class="pad-case-result__amount"><?php echo esc_html( $amount ); ?></p>
-    <?php endif; ?>
+    <?php mbn_pad_render_case_result_amounts( $results ); ?>
       <?php if ( '' !== $title ) : ?>
-    <h4 class="pad-case-result__title"><?php echo esc_html( $title ); ?></h4>
+    <h4 class="pad-case-result__title"><?php echo wp_kses_post( $title ); ?></h4>
     <?php endif; ?>
       <?php if ( '' !== $description ) : ?>
-        <?php echo wp_kses_post( $description ); ?>
+    <div class="pad-case-result__desc"><?php echo wp_kses_post( $description ); ?></div>
     <?php endif; ?>
   </div>
     <?php
@@ -281,7 +396,7 @@ if ( ! function_exists( 'mbn_pad_render_after_accident' ) ) {
         <?php if ( ! empty( $heading ) && 0 === $index ) : ?>
         <h2 class="pad-section-heading"><?php echo wp_kses_post( $heading ); ?></h2>
         <?php endif; ?>
-        <?php echo wp_kses_post( $split['text'] ?? '' ); ?>
+        <?php echo mbn_pad_kses( $split['text'] ?? '' ); ?>
       </div>
       <figure class="pad-split__image">
         <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $alt_text ); ?>" loading="lazy">
@@ -910,6 +1025,93 @@ if ( ! function_exists( 'mbn_pad_render_why_lawyer' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_render_list_injuries_item' ) ) {
+  /**
+   * Render a single List Injuries item: a link when a URL is set, plain text otherwise.
+   *
+   * @param array $item Item data: label, url.
+   */
+  function mbn_pad_render_list_injuries_item( $item ) {
+
+    if ( ! is_array( $item ) ) {
+      return;
+    }
+    $label = $item['label'] ?? '';
+    $url   = $item['url'] ?? '';
+    if ( '' === $label ) {
+      return;
+    }
+    if ( '' !== $url ) {
+      printf(
+        '<li class="pad-list-injuries__item"><a href="%1$s">%2$s</a></li>',
+        esc_url( $url ),
+        esc_html( $label )
+      );
+      return;
+    }
+    printf( '<li class="pad-list-injuries__item">%s</li>', esc_html( $label ) );
+  }
+}
+
+if ( ! function_exists( 'mbn_pad_render_list_injuries_list' ) ) {
+  /**
+   * Render the List Injuries list element (ol / ul / ul-without-marker).
+   *
+   * @param array  $items     List items.
+   * @param string $list_type List style: 'ol', 'ul', or 'none'.
+   */
+  function mbn_pad_render_list_injuries_list( $items, $list_type ) {
+    if ( empty( $items ) || ! is_array( $items ) ) {
+      return;
+    }
+    $tag    = ( 'ol' === $list_type ) ? 'ol' : 'ul';
+    $marker = ( 'none' === $list_type ) ? ' pad-list-injuries__list--none' : '';
+    printf( '<%1$s class="pad-list-injuries__list%2$s">', esc_html( $tag ), esc_attr( $marker ) );
+    foreach ( $items as $item ) {
+      mbn_pad_render_list_injuries_item( $item );
+    }
+    printf( '</%s>', esc_html( $tag ) );
+  }
+}
+
+if ( ! function_exists( 'mbn_pad_render_list_injuries' ) ) {
+  /**
+   * Render a List Injuries section: optional title + description above a
+   * repeatable list whose marker style (ol / ul / none) is configurable.
+   *
+   * @param array $data Section data: title, description, listType, backgroundColor, items[{label,url}].
+   */
+  function mbn_pad_render_list_injuries( $data ) {
+    if ( ! is_array( $data ) ) {
+      return;
+    }
+    $items       = $data['items'] ?? array();
+    $title       = $data['title'] ?? '';
+    $description = $data['description'] ?? '';
+    if ( '' === $title && '' === $description && empty( $items ) ) {
+      return;
+    }
+    $section = mbn_pad_section_style( $data );
+    ?>
+<section class="pad-list-injuries <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
+  <div class="pad-container">
+    <?php if ( '' !== $title || '' !== $description ) : ?>
+    <div class="pad-section-header pad-section-header--center pad-list-injuries__header">
+      <?php if ( '' !== $title ) : ?>
+      <h2 class="pad-section-heading"><?php echo wp_kses_post( $title ); ?></h2>
+      <?php endif; ?>
+      <?php if ( '' !== $description ) : ?>
+      <div class="pad-section-subtitle"><?php echo wp_kses_post( $description ); ?></div>
+      <?php endif; ?>
+    </div>
+    <?php endif; ?>
+    <?php mbn_pad_render_list_injuries_list( $items, $data['listType'] ?? 'ul' ); ?>
+  </div>
+</section>
+    <?php
+  }
+}
+
 // Map section types to their renderer callbacks.
 $renderers = array(
 	'whyHire'       => 'mbn_pad_render_why_hire',
@@ -928,6 +1130,7 @@ $renderers = array(
 	'testimonials'  => 'mbn_pad_render_testimonials',
 	'accidentList'  => 'mbn_pad_render_accident_list',
 	'whyLawyer'     => 'mbn_pad_render_why_lawyer',
+	'listInjuries'  => 'mbn_pad_render_list_injuries',
 );
 
 $wrapper_attributes = get_block_wrapper_attributes();
