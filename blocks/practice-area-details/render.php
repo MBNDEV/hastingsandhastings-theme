@@ -151,8 +151,12 @@ if ( ! function_exists( 'mbn_pad_render_why_hire' ) ) {
 <section class="pad-why-hire <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <div class="pad-section-header pad-section-header--center">
+      <?php if ( ! empty( $d['heading'] ) ) : ?>
       <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $d['heading'] ); ?></h2>
+      <?php endif; ?>
+      <?php if ( ! empty( $d['subtitle'] ) ) : ?>
       <div class="pad-section-subtitle"><?php echo mbn_pad_kses( $d['subtitle'] ); ?></div>
+      <?php endif; ?>
     </div>
 
     <div class="pad-why-hire__layout">
@@ -510,7 +514,9 @@ if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
   <div class="pad-container">
     <div class="pad-steps__layout">
       <div class="pad-steps__intro">
+        <?php if ( ! empty( $d['heading'] ) ) : ?>
         <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $d['heading'] ); ?></h2>
+        <?php endif; ?>
         <?php echo mbn_pad_kses( $d['introText'] ); ?>
       </div>
 
@@ -556,10 +562,16 @@ if ( ! function_exists( 'mbn_pad_render_time_limit' ) ) {
     ?>
 <section class="pad-time-limit <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
+    <?php if ( ! empty( $data['heading'] ) || ! empty( $data['subtitle'] ) ) : ?>
     <div class="pad-section-header pad-section-header--center">
-      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ?? '' ); ?></h2>
-      <div class="pad-section-subtitle"><?php echo mbn_pad_kses( $data['subtitle'] ?? '' ); ?></div>
+      <?php if ( ! empty( $data['heading'] ) ) : ?>
+      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ); ?></h2>
+      <?php endif; ?>
+      <?php if ( ! empty( $data['subtitle'] ) ) : ?>
+      <div class="pad-section-subtitle"><?php echo mbn_pad_kses( $data['subtitle'] ); ?></div>
+      <?php endif; ?>
     </div>
+    <?php endif; ?>
 
     <div class="pad-split pad-split--text-left">
       <div class="pad-split__text">
@@ -591,7 +603,9 @@ if ( ! function_exists( 'mbn_pad_render_insurance' ) ) {
   <div class="pad-container">
     <div class="pad-split pad-split--text-left">
       <div class="pad-split__text">
-        <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ?? '' ); ?></h2>
+        <?php if ( ! empty( $data['heading'] ) ) : ?>
+        <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ); ?></h2>
+        <?php endif; ?>
         <?php echo mbn_pad_kses( $data['text'] ?? '' ); ?>
       </div>
       <figure class="pad-split__image">
@@ -704,8 +718,12 @@ if ( ! function_exists( 'mbn_pad_render_liability' ) ) {
   <div class="pad-container">
     <?php if ( ! empty( $data['heading'] ) || ! empty( $data['subtitle'] ) ) : ?>
     <div class="pad-section-header pad-section-header--center">
-      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ?? '' ); ?></h2>
-      <div class="pad-section-subtitle"><?php echo mbn_pad_kses( $data['subtitle'] ?? '' ); ?></div>
+      <?php if ( ! empty( $data['heading'] ) ) : ?>
+      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ); ?></h2>
+      <?php endif; ?>
+      <?php if ( ! empty( $data['subtitle'] ) ) : ?>
+      <div class="pad-section-subtitle"><?php echo mbn_pad_kses( $data['subtitle'] ); ?></div>
+      <?php endif; ?>
     </div>
     <?php endif; ?>
 
@@ -741,10 +759,16 @@ if ( ! function_exists( 'mbn_pad_render_compensation' ) ) {
     ?>
 <section class="pad-compensation <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
+    <?php if ( ! empty( $data['heading'] ) || ! empty( $data['subtitle'] ) ) : ?>
     <div class="pad-section-header pad-section-header--center">
-      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ?? '' ); ?></h2>
-      <div class="pad-section-subtitle"><?php echo mbn_pad_kses( $data['subtitle'] ?? '' ); ?></div>
+      <?php if ( ! empty( $data['heading'] ) ) : ?>
+      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ); ?></h2>
+      <?php endif; ?>
+      <?php if ( ! empty( $data['subtitle'] ) ) : ?>
+      <div class="pad-section-subtitle"><?php echo mbn_pad_kses( $data['subtitle'] ); ?></div>
+      <?php endif; ?>
     </div>
+    <?php endif; ?>
 
     <div class="pad-compensation__grid">
       <?php foreach ( $items as $item ) : ?>
@@ -784,7 +808,9 @@ if ( ! function_exists( 'mbn_pad_render_documentation' ) ) {
   <div class="pad-container">
     <div class="pad-split pad-split--text-left">
       <div class="pad-split__text">
-        <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ?? '' ); ?></h2>
+        <?php if ( ! empty( $data['heading'] ) ) : ?>
+        <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ); ?></h2>
+        <?php endif; ?>
         <?php echo mbn_pad_kses( $data['text'] ?? '' ); ?>
       </div>
       <figure class="pad-split__image">
@@ -837,7 +863,9 @@ if ( ! function_exists( 'mbn_pad_render_attorneys' ) ) {
       <img src="<?php echo esc_url( $photo ); ?>" alt="" class="pad-attorneys__attorney">
     </div>
     <div class="pad-attorneys__text-col">
+      <?php if ( ! empty( $d['heading'] ) ) : ?>
       <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $d['heading'] ); ?></h2>
+      <?php endif; ?>
       <?php echo mbn_pad_kses( $d['text'] ); ?>
     </div>
   </div>
@@ -900,7 +928,9 @@ if ( ! function_exists( 'mbn_pad_render_common_causes' ) ) {
   <div class="pad-container">
     <div class="pad-common-causes__layout">
       <div class="pad-common-causes__intro">
-        <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ?? '' ); ?></h2>
+        <?php if ( ! empty( $data['heading'] ) ) : ?>
+        <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ); ?></h2>
+        <?php endif; ?>
         <?php echo mbn_pad_kses( $data['text'] ?? '' ); ?>
         <figure class="pad-common-causes__image">
           <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $alt ); ?>" loading="lazy">
@@ -937,7 +967,9 @@ if ( ! function_exists( 'mbn_pad_render_testimonials' ) ) {
       <?php if ( ! empty( $data['eyebrow'] ) ) : ?>
       <p class="pad-testimonials__eyebrow"><?php echo esc_html( $data['eyebrow'] ); ?></p>
       <?php endif; ?>
-      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ?? '' ); ?></h2>
+      <?php if ( ! empty( $data['heading'] ) ) : ?>
+      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ); ?></h2>
+      <?php endif; ?>
       <?php if ( ! empty( $data['subtitle'] ) ) : ?>
       <div class="pad-section-subtitle"><?php echo mbn_pad_kses( $data['subtitle'] ); ?></div>
       <?php endif; ?>
@@ -1028,7 +1060,9 @@ if ( ! function_exists( 'mbn_pad_render_why_lawyer_row' ) ) {
     ?>
       <div class="pad-why-lawyer__row<?php echo esc_attr( $layout_class ); ?>">
         <div class="pad-why-lawyer__text">
-          <h3 class="pad-why-lawyer__row-heading"><?php echo mbn_pad_kses( $row['heading'] ?? '' ); ?></h3>
+          <?php if ( ! empty( $row['heading'] ) ) : ?>
+          <h3 class="pad-why-lawyer__row-heading"><?php echo mbn_pad_kses( $row['heading'] ); ?></h3>
+          <?php endif; ?>
           <?php echo mbn_pad_kses( $row['text'] ?? '' ); ?>
         </div>
         <figure class="pad-why-lawyer__image">
@@ -1057,8 +1091,12 @@ if ( ! function_exists( 'mbn_pad_render_why_lawyer' ) ) {
   <div class="pad-container">
     <?php if ( ! empty( $data['heading'] ) || ! empty( $data['subtitle'] ) ) : ?>
     <div class="pad-section-header pad-section-header--center pad-why-lawyer__header">
-      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ?? '' ); ?></h2>
-      <div class="pad-section-subtitle"><?php echo mbn_pad_kses( $data['subtitle'] ?? '' ); ?></div>
+      <?php if ( ! empty( $data['heading'] ) ) : ?>
+      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ); ?></h2>
+      <?php endif; ?>
+      <?php if ( ! empty( $data['subtitle'] ) ) : ?>
+      <div class="pad-section-subtitle"><?php echo mbn_pad_kses( $data['subtitle'] ); ?></div>
+      <?php endif; ?>
     </div>
     <?php endif; ?>
 
