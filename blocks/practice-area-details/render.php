@@ -377,6 +377,9 @@ if ( ! function_exists( 'mbn_pad_render_cta' ) ) {
    * @param string $assets Block assets URI.
    */
   function mbn_pad_render_cta( $data, $assets ) {
+    if ( ! is_array( $data ) ) {
+      return;
+    }
     $logo    = ! empty( $data['logoUrl'] ) ? $data['logoUrl'] : $assets . '/logo-mark.svg';
     $texture = ! empty( $data['textureUrl'] ) ? $data['textureUrl'] : $assets . '/cta-bg-texture.jpg';
     $phone   = $data['phoneNumber'] ?? '';
@@ -666,6 +669,9 @@ if ( ! function_exists( 'mbn_pad_render_liability_item' ) ) {
    * @param array $item Item data: term, description, backgroundColor.
    */
   function mbn_pad_render_liability_item( $item ) {
+    if ( ! is_array( $item ) ) {
+      return;
+    }
     $bg     = mbn_pad_section_style( $item );
     $has_bg = '' !== $bg['class'] || '' !== $bg['style'];
     $class  = 'pad-liability__item' . ( $has_bg ? ' pad-liability__item--has-bg ' . $bg['class'] : '' );
@@ -1160,6 +1166,9 @@ if ( ! function_exists( 'mbn_pad_render_area_item' ) ) {
    * @param array $area Area data: name, url, newTab.
    */
   function mbn_pad_render_area_item( $area ) {
+    if ( ! is_array( $area ) ) {
+      return;
+    }
     $name = $area['name'] ?? '';
     $url  = $area['url'] ?? '';
     if ( '' === $name ) {
@@ -1233,6 +1242,9 @@ if ( ! function_exists( 'mbn_pad_render_areas_served' ) ) {
    * @param array $data Section data: title, description, align, backgroundColor, imageUrl, imageId, areas[].
    */
   function mbn_pad_render_areas_served( $data ) {
+    if ( ! is_array( $data ) ) {
+      return;
+    }
     $title       = $data['title'] ?? '';
     $description = $data['description'] ?? '';
     $areas       = $data['areas'] ?? array();
