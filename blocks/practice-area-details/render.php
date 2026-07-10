@@ -123,6 +123,53 @@ if ( ! function_exists( 'mbn_pad_render_section_title' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_render_why_hire_features' ) ) {
+  /**
+   * Render the Why Hire features column.
+   *
+   * @param array $features Feature items (title, description).
+   */
+  function mbn_pad_render_why_hire_features( $features ) {
+    ?>
+      <div class="pad-why-hire__features">
+        <?php foreach ( (array) $features as $feature ) : ?>
+        <article class="pad-why-hire__feature">
+          <h3><?php echo esc_html( $feature['title'] ?? '' ); ?></h3>
+          <?php echo mbn_pad_kses( $feature['description'] ?? '' ); ?>
+        </article>
+        <?php endforeach; ?>
+      </div>
+    <?php
+  }
+}
+
+if ( ! function_exists( 'mbn_pad_render_why_hire_visual' ) ) {
+  /**
+   * Render the Why Hire visual column (photo stack and 90+ years badge).
+   *
+   * @param array  $data   Raw section data.
+   * @param string $assets Block assets URI.
+   */
+  function mbn_pad_render_why_hire_visual( $data, $assets ) {
+    $photo   = ! empty( $data['photoUrl'] ) ? $data['photoUrl'] : $assets . '/img-why-hire-photo.png';
+    $badge90 = ! empty( $data['badge90YearsUrl'] ) ? $data['badge90YearsUrl'] : $assets . '/badge-90-plus-combined-legal-experience-blck.svg';
+    ?>
+      <div class="pad-why-hire__visual">
+        <?php if ( empty( $data['photoHidden'] ) ) : ?>
+        <div class="pad-why-hire__photo-stack" aria-hidden="true">
+          <img src="<?php echo esc_url( $photo ); ?>" alt="" class="pad-why-hire__photo-front">
+        </div>
+        <?php endif; ?>
+        <?php if ( empty( $data['badge90YearsHidden'] ) ) : ?>
+        <div class="pad-badge pad-badge--years" aria-label="90+ Years Combined Legal Experience">
+          <img src="<?php echo esc_url( $badge90 ); ?>" alt="" aria-hidden="true">
+        </div>
+        <?php endif; ?>
+      </div>
+    <?php
+  }
+}
+
 if ( ! function_exists( 'mbn_pad_render_why_hire' ) ) {
   /**
    * Render a Why Hire section.
@@ -143,8 +190,6 @@ if ( ! function_exists( 'mbn_pad_render_why_hire' ) ) {
       ),
       (array) $data
     );
-    $photo   = ! empty( $data['photoUrl'] ) ? $data['photoUrl'] : $assets . '/img-why-hire-photo.png';
-    $badge90 = ! empty( $data['badge90YearsUrl'] ) ? $data['badge90YearsUrl'] : $assets . '/badge-90-plus-combined-legal-experience-blck.svg';
     $map_bg  = ! empty( $data['mapBackgroundUrl'] ) ? $data['mapBackgroundUrl'] : $assets . '/hero-map-bg.jpg';
     $section = mbn_pad_section_style( $data );
     ?>
@@ -160,27 +205,8 @@ if ( ! function_exists( 'mbn_pad_render_why_hire' ) ) {
     </div>
 
     <div class="pad-why-hire__layout">
-      <div class="pad-why-hire__features">
-        <?php foreach ( $d['features'] as $feature ) : ?>
-        <article class="pad-why-hire__feature">
-          <h3><?php echo esc_html( $feature['title'] ?? '' ); ?></h3>
-          <?php echo mbn_pad_kses( $feature['description'] ?? '' ); ?>
-        </article>
-        <?php endforeach; ?>
-      </div>
-
-      <div class="pad-why-hire__visual">
-        <?php if ( empty( $data['photoHidden'] ) ) : ?>
-        <div class="pad-why-hire__photo-stack" aria-hidden="true">
-          <img src="<?php echo esc_url( $photo ); ?>" alt="" class="pad-why-hire__photo-front">
-        </div>
-        <?php endif; ?>
-        <?php if ( empty( $data['badge90YearsHidden'] ) ) : ?>
-        <div class="pad-badge pad-badge--years" aria-label="90+ Years Combined Legal Experience">
-          <img src="<?php echo esc_url( $badge90 ); ?>" alt="" aria-hidden="true">
-        </div>
-        <?php endif; ?>
-      </div>
+      <?php mbn_pad_render_why_hire_features( $d['features'] ); ?>
+      <?php mbn_pad_render_why_hire_visual( $data, $assets ); ?>
     </div>
   </div>
 
@@ -489,6 +515,33 @@ if ( ! function_exists( 'mbn_pad_render_steps_plain_list' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_render_steps_item' ) ) {
+  /**
+   * Render a single Steps accordion item.
+   *
+   * @param array  $step       Step data (question, answer).
+   * @param int    $step_index Zero-based step index.
+   * @param string $list_type  Steps list type.
+   * @param string $chevron    Chevron icon URL.
+   * @param string $uid        Unique ID prefix for this section instance.
+   */
+  function mbn_pad_render_steps_item( $step, $step_index, $list_type, $chevron, $uid ) {
+    $step_id = $uid . '-answer-' . ( $step_index + 1 );
+    $is_open = ( 0 === $step_index );
+    ?>
+        <div class="pad-steps__item <?php echo $is_open ? 'pad-steps__item--open' : ''; ?>" role="listitem">
+          <button class="pad-steps__question" aria-expanded="<?php echo $is_open ? 'true' : 'false'; ?>" aria-controls="<?php echo esc_attr( $step_id ); ?>">
+            <?php mbn_pad_render_steps_question( $step['question'] ?? '', $list_type, $step_index + 1 ); ?>
+            <img src="<?php echo esc_url( $chevron ); ?>" alt="" aria-hidden="true" class="pad-steps__icon">
+          </button>
+          <div class="pad-steps__answer <?php echo $is_open ? '' : 'pad-steps__answer--hidden'; ?>" id="<?php echo esc_attr( $step_id ); ?>">
+            <?php echo mbn_pad_kses( $step['answer'] ?? '' ); ?>
+          </div>
+        </div>
+    <?php
+  }
+}
+
 if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
   /**
    * Render a Steps Accordion section.
@@ -525,19 +578,7 @@ if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
       <?php else : ?>
       <div class="pad-steps__accordion" role="list">
         <?php foreach ( $accordion as $step_index => $step ) : ?>
-          <?php
-          $step_id = $uid . '-answer-' . ( $step_index + 1 );
-          $is_open = ( 0 === $step_index );
-          ?>
-        <div class="pad-steps__item <?php echo $is_open ? 'pad-steps__item--open' : ''; ?>" role="listitem">
-          <button class="pad-steps__question" aria-expanded="<?php echo $is_open ? 'true' : 'false'; ?>" aria-controls="<?php echo esc_attr( $step_id ); ?>">
-            <?php mbn_pad_render_steps_question( $step['question'] ?? '', $d['listType'], $step_index + 1 ); ?>
-            <img src="<?php echo esc_url( $chevron ); ?>" alt="" aria-hidden="true" class="pad-steps__icon">
-          </button>
-          <div class="pad-steps__answer <?php echo $is_open ? '' : 'pad-steps__answer--hidden'; ?>" id="<?php echo esc_attr( $step_id ); ?>">
-            <?php echo mbn_pad_kses( $step['answer'] ?? '' ); ?>
-          </div>
-        </div>
+          <?php mbn_pad_render_steps_item( (array) $step, $step_index, $d['listType'], $chevron, $uid ); ?>
         <?php endforeach; ?>
       </div>
       <?php endif; ?>
