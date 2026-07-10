@@ -693,25 +693,29 @@ if ( ! function_exists( 'mbn_pad_section_style' ) ) {
   }
 }
 
-if ( ! function_exists( 'mbn_pad_render_liability_intro' ) ) {
+if ( ! function_exists( 'mbn_pad_render_section_intro' ) ) {
   /**
-   * Render the optional intro block of a Liability section.
+   * Render the optional intro block (heading + text) below a section header.
    *
-   * @param array $data Section data: introHeading, introText.
+   * @param array  $data   Section data: introHeading, introText.
+   * @param string $prefix BEM block prefix for the intro classes (e.g. 'pad-liability').
    */
-  function mbn_pad_render_liability_intro( $data ) {
+  function mbn_pad_render_section_intro( $data, $prefix ) {
+    if ( ! is_array( $data ) ) {
+      return;
+    }
     $heading = $data['introHeading'] ?? '';
     $text    = $data['introText'] ?? '';
     if ( empty( $heading ) && empty( $text ) ) {
       return;
     }
     ?>
-    <div class="pad-liability__intro">
+    <div class="<?php echo esc_attr( $prefix ); ?>__intro">
       <?php if ( ! empty( $heading ) ) : ?>
-      <h3 class="pad-liability__intro-heading"><?php echo mbn_pad_kses( $heading ); ?></h3>
+      <h3 class="<?php echo esc_attr( $prefix ); ?>__intro-heading"><?php echo mbn_pad_kses( $heading ); ?></h3>
       <?php endif; ?>
       <?php if ( ! empty( $text ) ) : ?>
-      <div class="pad-liability__intro-text"><?php echo mbn_pad_kses( $text ); ?></div>
+      <div class="<?php echo esc_attr( $prefix ); ?>__intro-text"><?php echo mbn_pad_kses( $text ); ?></div>
       <?php endif; ?>
     </div>
     <?php
@@ -768,7 +772,7 @@ if ( ! function_exists( 'mbn_pad_render_liability' ) ) {
     </div>
     <?php endif; ?>
 
-    <?php mbn_pad_render_liability_intro( $data ); ?>
+    <?php mbn_pad_render_section_intro( $data, 'pad-liability' ); ?>
 
     <ul class="pad-liability__list">
       <?php foreach ( $items as $item ) : ?>
@@ -784,6 +788,26 @@ if ( ! function_exists( 'mbn_pad_render_liability' ) ) {
 
   </div>
 </section>
+    <?php
+  }
+}
+
+if ( ! function_exists( 'mbn_pad_render_compensation_item' ) ) {
+  /**
+   * Render a single Compensation grid item.
+   *
+   * @param array $item Item data: title, description, featured.
+   */
+  function mbn_pad_render_compensation_item( $item ) {
+    if ( ! is_array( $item ) ) {
+      return;
+    }
+    $item_class = ! empty( $item['featured'] ) ? 'pad-compensation__item pad-compensation__item--featured' : 'pad-compensation__item';
+    ?>
+      <article class="<?php echo esc_attr( $item_class ); ?>">
+        <h3><?php echo esc_html( $item['title'] ?? '' ); ?></h3>
+        <?php echo mbn_pad_kses( $item['description'] ?? '' ); ?>
+      </article>
     <?php
   }
 }
@@ -811,13 +835,11 @@ if ( ! function_exists( 'mbn_pad_render_compensation' ) ) {
     </div>
     <?php endif; ?>
 
-    <div class="pad-compensation__grid">
+    <?php mbn_pad_render_section_intro( $data, 'pad-compensation' ); ?>
+
+    <div class="pad-compensation__grid<?php echo ! empty( $data['masonry'] ) ? ' pad-compensation__grid--masonry' : ''; ?>">
       <?php foreach ( $items as $item ) : ?>
-        <?php $item_class = ! empty( $item['featured'] ) ? 'pad-compensation__item pad-compensation__item--featured' : 'pad-compensation__item'; ?>
-      <article class="<?php echo esc_attr( $item_class ); ?>">
-        <h3><?php echo esc_html( $item['title'] ?? '' ); ?></h3>
-        <?php echo mbn_pad_kses( $item['description'] ?? '' ); ?>
-      </article>
+        <?php mbn_pad_render_compensation_item( $item ); ?>
       <?php endforeach; ?>
     </div>
 

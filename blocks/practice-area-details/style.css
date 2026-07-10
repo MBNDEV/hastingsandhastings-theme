@@ -779,13 +779,15 @@
   margin: 0 auto 48px;
 }
 
-.pad-liability__intro {
+.pad-liability__intro,
+.pad-compensation__intro {
   display: flex;
   flex-direction: column;
   gap: 16px;
   margin-bottom: 48px;
 }
-.pad-liability__intro-heading {
+.pad-liability__intro-heading,
+.pad-compensation__intro-heading {
   font-family: var(--pad-font-primary);
   font-weight: 600;
   font-size: 28px;
@@ -793,12 +795,14 @@
   color: #000000;
   margin: 0;
 }
-.pad-liability__intro-text {
+.pad-liability__intro-text,
+.pad-compensation__intro-text {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-.pad-liability__intro-text p {
+.pad-liability__intro-text p,
+.pad-compensation__intro-text p {
   font-family: var(--pad-font-secondary);
   font-size: 18px;
   line-height: 1.5;
@@ -903,6 +907,18 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 64px;
+}
+/* Masonry variant: items pack down each column instead of aligning in rows.
+   Row spacing moves to item margins, compensated on the container. */
+.pad-compensation__grid--masonry {
+  display: block;
+  columns: 2;
+  column-gap: 64px;
+  margin-bottom: -64px;
+}
+.pad-compensation__grid--masonry .pad-compensation__item {
+  break-inside: avoid;
+  margin-bottom: 64px;
 }
 
 .pad-compensation__item {
@@ -1566,6 +1582,13 @@ ol.pad-list-injuries__list {
     grid-template-columns: 1fr;
     gap: 40px;
   }
+  .pad-compensation__grid--masonry {
+    columns: 1;
+    margin-bottom: -40px;
+  }
+  .pad-compensation__grid--masonry .pad-compensation__item {
+    margin-bottom: 40px;
+  }
   .pad-compensation__after {
     margin-top: 40px;
   }
@@ -1729,13 +1752,16 @@ ol.pad-list-injuries__list {
   .pad-liability__desc p {
     font-size: 16px;
   }
-  .pad-liability__intro {
+  .pad-liability__intro,
+  .pad-compensation__intro {
     margin-bottom: 32px;
   }
-  .pad-liability__intro-heading {
+  .pad-liability__intro-heading,
+  .pad-compensation__intro-heading {
     font-size: 22px;
   }
-  .pad-liability__intro-text p {
+  .pad-liability__intro-text p,
+  .pad-compensation__intro-text p {
     font-size: 16px;
   }
   .pad-liability__after {
