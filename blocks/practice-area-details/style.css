@@ -197,6 +197,14 @@
 /* ============================================================
    CTA BAR (shared)
    ============================================================ */
+/* Optional section background wrapper around the CTA bar. */
+.pad-cta {
+  padding-block: var(--pad-section-pad-v);
+}
+.pad-cta .pad-cta-bar {
+  margin-block: 0;
+}
+
 .pad-cta-bar {
   position: relative;
   overflow: hidden;
@@ -536,7 +544,8 @@
   grid-template-columns: 1fr;
 }
 /* Bordered cards only when there are two or more amounts. */
-.pad-case-result__results:not(.pad-case-result__results--single) .pad-case-result__result {
+.pad-case-result__results:not(.pad-case-result__results--single)
+  .pad-case-result__result {
   border: 1px solid var(--pad-blue-600);
   border-radius: 16px;
   padding: 24px;
@@ -714,7 +723,7 @@
   line-height: 1.556;
   color: var(--pad-text-body);
 }
-.pad-steps__plain-item a{
+.pad-steps__plain-item a {
   color: inherit;
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -729,7 +738,7 @@
 .pad-time-limit .pad-section-header {
   margin-bottom: 48px;
 }
-.pad-time-limit .pad-section-subtitle{
+.pad-time-limit .pad-section-subtitle {
   max-width: 920px;
 }
 .pad-time-limit a {
@@ -813,6 +822,14 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+/* Optional per-item background highlight. */
+.pad-liability__item--has-bg {
+  padding: 24px;
+  border-radius: 16px;
+}
+.pad-liability__item--has-bg .pad-liability__divider {
+  display: none;
 }
 
 .pad-liability__divider {
@@ -1090,6 +1107,55 @@ ol.pad-list-injuries__list {
   color: var(--pad-blue-600);
 }
 
+/* ============================================================
+   Areas We Serve
+   ============================================================ */
+.pad-areas-served {
+  padding-block: var(--pad-section-pad-v);
+}
+.pad-areas-served__header {
+  margin-bottom: 32px;
+}
+.pad-areas-served--center .pad-areas-served__header {
+  text-align: center;
+}
+.pad-areas-served--center .pad-areas-served__list {
+  justify-content: center;
+}
+.pad-areas-served__list {
+  list-style: none;
+  margin: 0 0 40px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+}
+.pad-areas-served__item {
+  font-family: var(--pad-font-primary);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--pad-blue-600);
+}
+.pad-areas-served__item a {
+  color: var(--pad-blue-600);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.pad-areas-served__item a:hover {
+  color: var(--pad-blue-800);
+}
+.pad-areas-served__map {
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.pad-areas-served__map img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 @media screen and (max-width: 1366px) {
   .pad-attorneys__photo-col {
     margin-left: -140px;
@@ -1337,11 +1403,9 @@ ol.pad-list-injuries__list {
    Small Desktop: below 1200px
    ============================================================ */
 @media screen and (max-width: 1199px) {
-  
   .pad-steps__plain-list {
     margin-left: 0;
   }
-
 }
 
 /* ============================================================
@@ -1549,6 +1613,14 @@ ol.pad-list-injuries__list {
     padding: 16px 0;
   }
   .pad-accident-list__link {
+    font-size: 18px;
+  }
+
+  /* Areas We Serve */
+  .pad-areas-served__list {
+    gap: 12px 20px;
+  }
+  .pad-areas-served__item {
     font-size: 18px;
   }
 

@@ -333,18 +333,17 @@ if ( ! function_exists( 'mbn_pad_render_case_result_card' ) ) {
   }
 }
 
-if ( ! function_exists( 'mbn_pad_render_cta' ) ) {
+if ( ! function_exists( 'mbn_pad_render_cta_bar' ) ) {
   /**
-   * Render a CTA banner.
+   * Render the inner CTA bar markup.
    *
-   * @param array  $data   Section data.
-   * @param string $assets Block assets URI.
+   * @param array  $data    Section data.
+   * @param string $logo    Resolved logo URL.
+   * @param string $texture Resolved texture URL.
+   * @param string $phone   Phone number.
+   * @param string $tel     Sanitized tel: value.
    */
-  function mbn_pad_render_cta( $data, $assets ) {
-    $logo    = ! empty( $data['logoUrl'] ) ? $data['logoUrl'] : $assets . '/logo-mark.svg';
-    $texture = ! empty( $data['textureUrl'] ) ? $data['textureUrl'] : $assets . '/cta-bg-texture.jpg';
-    $phone   = $data['phoneNumber'] ?? '';
-    $tel     = preg_replace( '/[^0-9+]/', '', $phone );
+  function mbn_pad_render_cta_bar( $data, $logo, $texture, $phone, $tel ) {
     ?>
 <div class="pad-cta-bar">
   <div class="pad-cta-bar__bg" aria-hidden="true">
@@ -365,6 +364,32 @@ if ( ! function_exists( 'mbn_pad_render_cta' ) ) {
       </div>
     </div>
   </div>
+</div>
+    <?php
+  }
+}
+
+if ( ! function_exists( 'mbn_pad_render_cta' ) ) {
+  /**
+   * Render a CTA banner, optionally wrapped in a section background.
+   *
+   * @param array  $data   Section data.
+   * @param string $assets Block assets URI.
+   */
+  function mbn_pad_render_cta( $data, $assets ) {
+    $logo    = ! empty( $data['logoUrl'] ) ? $data['logoUrl'] : $assets . '/logo-mark.svg';
+    $texture = ! empty( $data['textureUrl'] ) ? $data['textureUrl'] : $assets . '/cta-bg-texture.jpg';
+    $phone   = $data['phoneNumber'] ?? '';
+    $tel     = preg_replace( '/[^0-9+]/', '', $phone );
+    $section = mbn_pad_section_style( $data );
+    $has_bg  = '' !== $section['class'] . $section['style'];
+    if ( ! $has_bg ) {
+      mbn_pad_render_cta_bar( $data, $logo, $texture, $phone, $tel );
+      return;
+    }
+    ?>
+<div class="pad-cta <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
+    <?php mbn_pad_render_cta_bar( $data, $logo, $texture, $phone, $tel ); ?>
 </div>
     <?php
   }
@@ -634,6 +659,30 @@ if ( ! function_exists( 'mbn_pad_render_liability_intro' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_render_liability_item' ) ) {
+  /**
+   * Render a single Liability list item, with an optional per-item background.
+   *
+   * @param array $item Item data: term, description, backgroundColor.
+   */
+  function mbn_pad_render_liability_item( $item ) {
+    $bg     = mbn_pad_section_style( $item );
+    $has_bg = '' !== $bg['class'] || '' !== $bg['style'];
+    $class  = 'pad-liability__item' . ( $has_bg ? ' pad-liability__item--has-bg ' . $bg['class'] : '' );
+    ?>
+      <li class="<?php echo esc_attr( $class ); ?>" style="<?php echo esc_attr( $bg['style'] ); ?>">
+        <hr class="pad-liability__divider" aria-hidden="true">
+        <div class="pad-liability__row">
+          <h3 class="pad-liability__term"><?php echo esc_html( $item['term'] ?? '' ); ?></h3>
+          <div class="pad-liability__desc">
+            <?php echo wp_kses_post( $item['description'] ?? '' ); ?>
+          </div>
+        </div>
+      </li>
+    <?php
+  }
+}
+
 if ( ! function_exists( 'mbn_pad_render_liability' ) ) {
   /**
    * Render a Liability section.
@@ -657,15 +706,7 @@ if ( ! function_exists( 'mbn_pad_render_liability' ) ) {
 
     <ul class="pad-liability__list">
       <?php foreach ( $items as $item ) : ?>
-      <li class="pad-liability__item">
-        <hr class="pad-liability__divider" aria-hidden="true">
-        <div class="pad-liability__row">
-          <h3 class="pad-liability__term"><?php echo esc_html( $item['term'] ?? '' ); ?></h3>
-          <div class="pad-liability__desc">
-            <?php echo wp_kses_post( $item['description'] ?? '' ); ?>
-          </div>
-        </div>
-      </li>
+        <?php mbn_pad_render_liability_item( $item ); ?>
       <?php endforeach; ?>
     </ul>
 
@@ -1112,6 +1153,111 @@ if ( ! function_exists( 'mbn_pad_render_list_injuries' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_render_area_item' ) ) {
+  /**
+   * Render a single Areas We Serve item: a link (optionally new-tab) or plain text.
+   *
+   * @param array $area Area data: name, url, newTab.
+   */
+  function mbn_pad_render_area_item( $area ) {
+    $name = $area['name'] ?? '';
+    $url  = $area['url'] ?? '';
+    if ( '' === $name ) {
+      return;
+    }
+    if ( '' === $url ) {
+      printf( '<li class="pad-areas-served__item">%s</li>', esc_html( $name ) );
+      return;
+    }
+    if ( ! empty( $area['newTab'] ) ) {
+      printf(
+        '<li class="pad-areas-served__item"><a href="%1$s" target="_blank" rel="noopener noreferrer">%2$s</a></li>',
+        esc_url( $url ),
+        esc_html( $name )
+      );
+      return;
+    }
+    printf(
+      '<li class="pad-areas-served__item"><a href="%1$s">%2$s</a></li>',
+      esc_url( $url ),
+      esc_html( $name )
+    );
+  }
+}
+
+if ( ! function_exists( 'mbn_pad_render_areas_served_list' ) ) {
+  /**
+   * Render the Areas We Serve link list.
+   *
+   * @param array $areas List of { name, url, newTab } items.
+   */
+  function mbn_pad_render_areas_served_list( $areas ) {
+    if ( empty( $areas ) ) {
+      return;
+    }
+    echo '<ul class="pad-areas-served__list">';
+    foreach ( $areas as $area ) {
+      mbn_pad_render_area_item( $area );
+    }
+    echo '</ul>';
+  }
+}
+
+if ( ! function_exists( 'mbn_pad_render_areas_served_header' ) ) {
+  /**
+   * Render the Areas We Serve title + description block.
+   *
+   * @param string $title       Title HTML.
+   * @param string $description Description HTML.
+   */
+  function mbn_pad_render_areas_served_header( $title, $description ) {
+    if ( '' === $title && '' === $description ) {
+      return;
+    }
+    echo '<div class="pad-areas-served__header">';
+    if ( '' !== $title ) {
+      echo '<h2 class="pad-section-heading">' . wp_kses_post( $title ) . '</h2>';
+    }
+    if ( '' !== $description ) {
+      echo '<div class="pad-section-subtitle">' . wp_kses_post( $description ) . '</div>';
+    }
+    echo '</div>';
+  }
+}
+
+if ( ! function_exists( 'mbn_pad_render_areas_served' ) ) {
+  /**
+   * Render an Areas We Serve section: title + description (left/center aligned),
+   * a repeatable list of area links, and an optional map image.
+   *
+   * @param array $data Section data: title, description, align, backgroundColor, imageUrl, imageId, areas[].
+   */
+  function mbn_pad_render_areas_served( $data ) {
+    $title       = $data['title'] ?? '';
+    $description = $data['description'] ?? '';
+    $areas       = $data['areas'] ?? array();
+    $has_image   = ! empty( $data['imageUrl'] );
+    if ( '' === $title && '' === $description && empty( $areas ) && ! $has_image ) {
+      return;
+    }
+    $align   = ( 'center' === ( $data['align'] ?? 'left' ) ) ? ' pad-areas-served--center' : '';
+    $section = mbn_pad_section_style( $data );
+    ?>
+<section class="pad-areas-served<?php echo esc_attr( $align ); ?> <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
+  <div class="pad-container">
+    <?php mbn_pad_render_areas_served_header( $title, $description ); ?>
+    <?php mbn_pad_render_areas_served_list( $areas ); ?>
+    <?php if ( $has_image ) : ?>
+    <figure class="pad-areas-served__map">
+      <img src="<?php echo esc_url( $data['imageUrl'] ); ?>" alt="<?php echo esc_attr( mbn_pad_alt_text( $data['imageId'] ?? 0, __( 'Areas we serve map', 'mbn-theme' ) ) ); ?>" loading="lazy">
+    </figure>
+    <?php endif; ?>
+  </div>
+</section>
+    <?php
+  }
+}
+
 // Map section types to their renderer callbacks.
 $renderers = array(
 	'whyHire'       => 'mbn_pad_render_why_hire',
@@ -1131,6 +1277,7 @@ $renderers = array(
 	'accidentList'  => 'mbn_pad_render_accident_list',
 	'whyLawyer'     => 'mbn_pad_render_why_lawyer',
 	'listInjuries'  => 'mbn_pad_render_list_injuries',
+	'areasServed'   => 'mbn_pad_render_areas_served',
 );
 
 $wrapper_attributes = get_block_wrapper_attributes();
