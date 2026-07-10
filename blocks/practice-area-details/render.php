@@ -152,7 +152,7 @@ if ( ! function_exists( 'mbn_pad_render_why_hire' ) ) {
   <div class="pad-container">
     <div class="pad-section-header pad-section-header--center">
       <h2 class="pad-section-heading"><?php echo wp_kses_post( $d['heading'] ); ?></h2>
-      <p class="pad-section-subtitle"><?php echo esc_html( $d['subtitle'] ); ?></p>
+      <div class="pad-section-subtitle"><?php echo wp_kses_post( $d['subtitle'] ); ?></div>
     </div>
 
     <div class="pad-why-hire__layout">
@@ -504,6 +504,7 @@ if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
     $accordion = $d['accordion'] ?? array();
     $chevron   = ! empty( $d['chevronIconUrl'] ) ? $d['chevronIconUrl'] : $assets . '/icon-chevron-up.svg';
     $section   = mbn_pad_section_style( $data );
+    $uid       = wp_unique_id( 'pad-steps-' );
     ?>
 <section class="pad-steps <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
@@ -519,7 +520,7 @@ if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
       <div class="pad-steps__accordion" role="list">
         <?php foreach ( $accordion as $step_index => $step ) : ?>
           <?php
-          $step_id = 'step-answer-' . ( $step_index + 1 );
+          $step_id = $uid . '-answer-' . ( $step_index + 1 );
           $is_open = ( 0 === $step_index );
           ?>
         <div class="pad-steps__item <?php echo $is_open ? 'pad-steps__item--open' : ''; ?>" role="listitem">
@@ -704,7 +705,7 @@ if ( ! function_exists( 'mbn_pad_render_liability' ) ) {
     <?php if ( ! empty( $data['heading'] ) || ! empty( $data['subtitle'] ) ) : ?>
     <div class="pad-section-header pad-section-header--center">
       <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
-      <p class="pad-section-subtitle"><?php echo wp_kses_post( $data['subtitle'] ?? '' ); ?></p>
+      <div class="pad-section-subtitle"><?php echo wp_kses_post( $data['subtitle'] ?? '' ); ?></div>
     </div>
     <?php endif; ?>
 
@@ -742,7 +743,7 @@ if ( ! function_exists( 'mbn_pad_render_compensation' ) ) {
   <div class="pad-container">
     <div class="pad-section-header pad-section-header--center">
       <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
-      <p class="pad-section-subtitle"><?php echo wp_kses_post( $data['subtitle'] ?? '' ); ?></p>
+      <div class="pad-section-subtitle"><?php echo wp_kses_post( $data['subtitle'] ?? '' ); ?></div>
     </div>
 
     <div class="pad-compensation__grid">
@@ -938,7 +939,7 @@ if ( ! function_exists( 'mbn_pad_render_testimonials' ) ) {
       <?php endif; ?>
       <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
       <?php if ( ! empty( $data['subtitle'] ) ) : ?>
-      <p class="pad-section-subtitle"><?php echo esc_html( $data['subtitle'] ); ?></p>
+      <div class="pad-section-subtitle"><?php echo wp_kses_post( $data['subtitle'] ); ?></div>
       <?php endif; ?>
     </div>
 
@@ -1057,7 +1058,7 @@ if ( ! function_exists( 'mbn_pad_render_why_lawyer' ) ) {
     <?php if ( ! empty( $data['heading'] ) || ! empty( $data['subtitle'] ) ) : ?>
     <div class="pad-section-header pad-section-header--center pad-why-lawyer__header">
       <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
-      <p class="pad-section-subtitle"><?php echo wp_kses_post( $data['subtitle'] ?? '' ); ?></p>
+      <div class="pad-section-subtitle"><?php echo wp_kses_post( $data['subtitle'] ?? '' ); ?></div>
     </div>
     <?php endif; ?>
 

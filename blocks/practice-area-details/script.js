@@ -19,7 +19,7 @@
       buttons.forEach(function (btn) {
         btn.addEventListener('click', function () {
           const item = btn.closest('.pad-steps__item');
-          const answer = block.querySelector('#' + btn.getAttribute('aria-controls'));
+          const answer = item.querySelector('.pad-steps__answer');
           if (!answer) {
             return;
           }

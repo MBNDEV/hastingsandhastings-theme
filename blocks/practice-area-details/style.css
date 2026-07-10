@@ -697,12 +697,25 @@
   opacity: 0;
   padding-bottom: 0;
 }
-.pad-steps__answer p {
+.pad-steps__answer p,
+.pad-steps__answer ul li {
   font-family: var(--pad-font-secondary);
   font-size: 18px;
   line-height: 1.556;
   color: var(--pad-text-body);
   margin: 0;
+}
+.pad-steps__answer ul{
+  list-style: disc;
+  padding-left: 18px;
+}
+.pad-steps__answer ul li{
+  margin-bottom: 8px;
+}
+.pad-steps__answer a{
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 /* Plain list variant (title only, no accordion) */

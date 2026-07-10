@@ -429,7 +429,7 @@ function WhyHireEditor({ data, setData, sensors }) {
   return (
     <Fragment>
       <TextControl label={__('Heading', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} />
-      <TextareaControl label={__('Subtitle', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={3} />
+      <TextareaControl label={__('Subtitle (HTML)', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={3} />
       <h4 style={{ marginTop: '20px' }}>{__('Features', 'mbn-theme')}</h4>
       <Repeater field={features} sensors={sensors} ItemComponent={SortableFeature} addLabel={__('+ Add Feature', 'mbn-theme')} newItem={{ title: '', description: '' }} />
       <hr style={{ margin: '20px 0' }} />
@@ -605,7 +605,7 @@ function LiabilityEditor({ data, setData, sensors }) {
         help={__('Reset to use the theme default (80px desktop / 56px tablet / 40px mobile).', 'mbn-theme')}
       />
       <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} />
-      <TextareaControl label={__('Subtitle', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={2} />
+      <TextareaControl label={__('Subtitle (HTML)', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={2} />
       <h4 style={{ marginTop: '20px' }}>{__('Intro (optional)', 'mbn-theme')}</h4>
       <TextControl label={__('Intro Heading', 'mbn-theme')} value={data.introHeading || ''} onChange={(v) => setData({ introHeading: v })} help={__('Leave empty to hide the intro block.', 'mbn-theme')} />
       <TextareaControl label={__('Intro Text (HTML)', 'mbn-theme')} value={data.introText || ''} onChange={(v) => setData({ introText: v })} rows={3} />
@@ -621,7 +621,7 @@ function CompensationEditor({ data, setData, sensors }) {
   return (
     <Fragment>
       <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} />
-      <TextareaControl label={__('Subtitle', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={2} />
+      <TextareaControl label={__('Subtitle (HTML)', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={3} />
       <h4 style={{ marginTop: '20px' }}>{__('Compensation Items', 'mbn-theme')}</h4>
       <Repeater field={items} sensors={sensors} ItemComponent={SortableCompensation} addLabel={__('+ Add Compensation Item', 'mbn-theme')} newItem={{ title: '', description: '', featured: false }} />
       <TextareaControl label={__('Text After Grid (HTML)', 'mbn-theme')} value={data.afterText || ''} onChange={(v) => setData({ afterText: v })} rows={4} help={__('Optional paragraph(s) shown below the compensation grid. Leave empty to hide.', 'mbn-theme')} style={{ marginTop: '20px' }} />
@@ -687,7 +687,7 @@ function TestimonialsEditor({ data, setData, sensors }) {
     <Fragment>
       <TextControl label={__('Eyebrow', 'mbn-theme')} value={data.eyebrow || ''} onChange={(v) => setData({ eyebrow: v })} />
       <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} />
-      <TextareaControl label={__('Subtitle', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={3} />
+      <TextareaControl label={__('Subtitle (HTML)', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={3} />
       <ImageField label={__('Stars Icon', 'mbn-theme')} url={data.starsIconUrl} id={data.starsIconId} onSelect={(m) => setData({ starsIconUrl: m.url, starsIconId: m.id })} onRemove={() => setData({ starsIconUrl: '', starsIconId: 0 })} maxWidth="150px" />
       <h4 style={{ marginTop: '20px' }}>{__('Testimonials', 'mbn-theme')}</h4>
       <Repeater field={items} sensors={sensors} ItemComponent={SortableTestimonial} addLabel={__('+ Add Testimonial', 'mbn-theme')} newItem={{ quote: '', name: '', role: '' }} />
