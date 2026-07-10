@@ -31,6 +31,7 @@ const SECTION_TYPES = {
   accidentList: { label: 'Lists of Accidents' },
   whyLawyer: { label: 'Why You Need a Lawyer' },
   listInjuries: { label: 'List Injuries' },
+  areasServed: { label: 'Areas We Serve' },
 };
 
 // Empty data payload for a newly added section of the given type.
@@ -41,7 +42,7 @@ function emptyData(type) {
     case 'caseResult':
       return { backgroundColor: '', tag: '', results: [], title: '', description: '', photoUrl: '', photoId: 0 };
     case 'cta':
-      return { logoUrl: '', logoId: 0, textureUrl: '', textureId: 0, heading: '', subtext: '', buttonText: '', buttonUrl: '', phoneLabel: '', phoneNumber: '' };
+      return { backgroundColor: '', logoUrl: '', logoId: 0, textureUrl: '', textureId: 0, heading: '', subtext: '', buttonText: '', buttonUrl: '', phoneLabel: '', phoneNumber: '' };
     case 'afterAccident':
       return { backgroundColor: '', heading: '', splits: [] };
     case 'steps':
@@ -79,6 +80,8 @@ function emptyData(type) {
       };
     case 'listInjuries':
       return { title: '', description: '', listType: 'ul', backgroundColor: '', items: [] };
+    case 'areasServed':
+      return { backgroundColor: '', align: 'left', title: '', description: '', imageUrl: '', imageId: 0, areas: [] };
     default:
       return {};
   }
@@ -231,6 +234,7 @@ function SortableLiability({ item, index, updateItem, removeItem, duplicateItem 
       <ItemHeader attributes={attributes} listeners={listeners} label={__('Liability', 'mbn-theme')} index={index} onDuplicate={() => duplicateItem(index)} onRemove={() => removeItem(index)} />
       <TextControl label={__('Term', 'mbn-theme')} value={item.term} onChange={(v) => updateItem(index, { term: v })} />
       <TextareaControl label={__('Description (HTML allowed)', 'mbn-theme')} value={item.description} onChange={(v) => updateItem(index, { description: v })} rows={5} style={{ marginTop: '10px' }} />
+      <BackgroundColorControl compact value={item.backgroundColor || ''} onChange={(v) => updateItem(index, { backgroundColor: v })} defaultValue="" label={__('Item Background', 'mbn-theme')} />
     </div>
   );
 }
@@ -309,6 +313,18 @@ function SortableInjury({ item, index, updateItem, removeItem, duplicateItem }) 
       <ItemHeader attributes={attributes} listeners={listeners} label={__('Injury', 'mbn-theme')} index={index} onDuplicate={() => duplicateItem(index)} onRemove={() => removeItem(index)} />
       <TextControl label={__('Label', 'mbn-theme')} value={item.label} onChange={(v) => updateItem(index, { label: v })} />
       <TextControl label={__('URL (optional)', 'mbn-theme')} value={item.url} onChange={(v) => updateItem(index, { url: v })} help={__('Leave empty to render as plain text (no link).', 'mbn-theme')} />
+    </div>
+  );
+}
+
+function SortableArea({ item, index, updateItem, removeItem, duplicateItem }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
+  return (
+    <div ref={setNodeRef} style={itemStyle(transform, transition, isDragging)}>
+      <ItemHeader attributes={attributes} listeners={listeners} label={__('Area', 'mbn-theme')} index={index} onDuplicate={() => duplicateItem(index)} onRemove={() => removeItem(index)} />
+      <TextControl label={__('Area Name', 'mbn-theme')} value={item.name} onChange={(v) => updateItem(index, { name: v })} />
+      <TextControl label={__('URL', 'mbn-theme')} value={item.url} onChange={(v) => updateItem(index, { url: v })} help={__('Leave empty to render as plain text (no link).', 'mbn-theme')} />
+      <ToggleControl label={__('Open in new tab', 'mbn-theme')} checked={!!item.newTab} onChange={(v) => updateItem(index, { newTab: v })} />
     </div>
   );
 }
@@ -453,7 +469,6 @@ function ListInjuriesEditor({ data, setData, sensors }) {
   const items = makeArrayField(data, setData, 'items');
   return (
     <Fragment>
-      <BackgroundColorControl value={data.backgroundColor || ''} onChange={(v) => setData({ backgroundColor: v })} defaultValue="" label={__('Section Background', 'mbn-theme')} />
       <TextareaControl label={__('Title (HTML)', 'mbn-theme')} value={data.title || ''} onChange={(v) => setData({ title: v })} rows={2} help={__('Wrap text in <span class="pad-text-blue">…</span> to highlight it blue.', 'mbn-theme')} />
       <TextareaControl label={__('Description (HTML)', 'mbn-theme')} value={data.description || ''} onChange={(v) => setData({ description: v })} rows={3} />
       <SelectControl
@@ -468,6 +483,30 @@ function ListInjuriesEditor({ data, setData, sensors }) {
       />
       <h4 style={{ marginTop: '20px' }}>{__('Injuries', 'mbn-theme')}</h4>
       <Repeater field={items} sensors={sensors} ItemComponent={SortableInjury} addLabel={__('+ Add Injury', 'mbn-theme')} newItem={{ label: '', url: '' }} />
+    </Fragment>
+  );
+}
+
+function AreasServedEditor({ data, setData, sensors }) {
+  const areas = makeArrayField(data, setData, 'areas');
+  return (
+    <Fragment>
+      <SelectControl
+        label={__('Text Alignment', 'mbn-theme')}
+        value={data.align || 'left'}
+        options={[
+          { label: __('Align Left', 'mbn-theme'), value: 'left' },
+          { label: __('Align Center', 'mbn-theme'), value: 'center' },
+        ]}
+        onChange={(v) => setData({ align: v })}
+        help={__('Applies to the title and description.', 'mbn-theme')}
+      />
+      <TextareaControl label={__('Title (HTML)', 'mbn-theme')} value={data.title || ''} onChange={(v) => setData({ title: v })} rows={2} help={__('Wrap text in <span class="pad-text-blue">…</span> to highlight it blue.', 'mbn-theme')} />
+      <TextareaControl label={__('Description (HTML)', 'mbn-theme')} value={data.description || ''} onChange={(v) => setData({ description: v })} rows={3} />
+      <h4 style={{ marginTop: '20px' }}>{__('Areas', 'mbn-theme')}</h4>
+      <Repeater field={areas} sensors={sensors} ItemComponent={SortableArea} addLabel={__('+ Add Area', 'mbn-theme')} newItem={{ name: '', url: '', newTab: false }} />
+      <hr style={{ margin: '20px 0' }} />
+      <ImageField label={__('Map Image', 'mbn-theme')} url={data.imageUrl} id={data.imageId} onSelect={(m) => setData({ imageUrl: m.url, imageId: m.id })} onRemove={() => setData({ imageUrl: '', imageId: 0 })} />
     </Fragment>
   );
 }
@@ -571,7 +610,7 @@ function LiabilityEditor({ data, setData, sensors }) {
       <TextControl label={__('Intro Heading', 'mbn-theme')} value={data.introHeading || ''} onChange={(v) => setData({ introHeading: v })} help={__('Leave empty to hide the intro block.', 'mbn-theme')} />
       <TextareaControl label={__('Intro Text (HTML)', 'mbn-theme')} value={data.introText || ''} onChange={(v) => setData({ introText: v })} rows={3} />
       <h4 style={{ marginTop: '20px' }}>{__('Liability Items', 'mbn-theme')}</h4>
-      <Repeater field={items} sensors={sensors} ItemComponent={SortableLiability} addLabel={__('+ Add Liability Item', 'mbn-theme')} newItem={{ term: '', description: '' }} />
+      <Repeater field={items} sensors={sensors} ItemComponent={SortableLiability} addLabel={__('+ Add Liability Item', 'mbn-theme')} newItem={{ term: '', description: '', backgroundColor: '' }} />
       <TextareaControl label={__('Text After List (HTML)', 'mbn-theme')} value={data.afterText || ''} onChange={(v) => setData({ afterText: v })} rows={4} help={__('Optional paragraph(s) shown below the liability list. Leave empty to hide.', 'mbn-theme')} style={{ marginTop: '20px' }} />
     </Fragment>
   );
@@ -716,6 +755,8 @@ function SectionEditor({ type, data, setData, sensors }) {
       return <WhyLawyerEditor data={data} setData={setData} sensors={sensors} />;
     case 'listInjuries':
       return <ListInjuriesEditor data={data} setData={setData} sensors={sensors} />;
+    case 'areasServed':
+      return <AreasServedEditor data={data} setData={setData} sensors={sensors} />;
     default:
       return null;
   }
@@ -750,15 +791,13 @@ function SortableSection({ section, expanded, onToggle, onDuplicate, onRemove, u
       {expanded && (
         <div style={{ padding: '12px' }}>
           <SectionTitleControls data={section.title || {}} onChange={(updates) => updateTitle(section.id, updates)} />
-          {section.type !== 'cta' && (
-            <BackgroundColorControl
-              value={(section.data || {}).backgroundColor || ''}
-              onChange={(v) => updateData(section.id, { backgroundColor: v })}
-              defaultValue={section.type === 'liability' ? 'bg-white' : (section.type === 'accidentList' ? 'bg-light-blue' : '')}
-              label={__('Section Background', 'mbn-theme')}
-              help={__('Select a preset or custom color for this section’s background. Deselect to use the section default.', 'mbn-theme')}
-            />
-          )}
+          <BackgroundColorControl
+            value={(section.data || {}).backgroundColor || ''}
+            onChange={(v) => updateData(section.id, { backgroundColor: v })}
+            defaultValue={section.type === 'liability' ? 'bg-white' : (section.type === 'accidentList' ? 'bg-light-blue' : '')}
+            label={__('Section Background', 'mbn-theme')}
+            help={__('Select a preset or custom color for this section’s background. Deselect to use the section default.', 'mbn-theme')}
+          />
           <SectionEditor type={section.type} data={section.data || {}} setData={(updates) => updateData(section.id, updates)} sensors={sensors} />
         </div>
       )}
