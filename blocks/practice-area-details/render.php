@@ -701,6 +701,9 @@ if ( ! function_exists( 'mbn_pad_render_section_intro' ) ) {
    * @param string $prefix BEM block prefix for the intro classes (e.g. 'pad-liability').
    */
   function mbn_pad_render_section_intro( $data, $prefix ) {
+    if ( ! is_array( $data ) ) {
+      return;
+    }
     $heading = $data['introHeading'] ?? '';
     $text    = $data['introText'] ?? '';
     if ( empty( $heading ) && empty( $text ) ) {
@@ -796,6 +799,9 @@ if ( ! function_exists( 'mbn_pad_render_compensation_item' ) ) {
    * @param array $item Item data: title, description, featured.
    */
   function mbn_pad_render_compensation_item( $item ) {
+    if ( ! is_array( $item ) ) {
+      return;
+    }
     $item_class = ! empty( $item['featured'] ) ? 'pad-compensation__item pad-compensation__item--featured' : 'pad-compensation__item';
     ?>
       <article class="<?php echo esc_attr( $item_class ); ?>">
@@ -833,7 +839,7 @@ if ( ! function_exists( 'mbn_pad_render_compensation' ) ) {
 
     <div class="pad-compensation__grid<?php echo ! empty( $data['masonry'] ) ? ' pad-compensation__grid--masonry' : ''; ?>">
       <?php foreach ( $items as $item ) : ?>
-        <?php mbn_pad_render_compensation_item( (array) $item ); ?>
+        <?php mbn_pad_render_compensation_item( $item ); ?>
       <?php endforeach; ?>
     </div>
 
