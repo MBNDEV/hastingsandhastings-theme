@@ -199,7 +199,7 @@
    ============================================================ */
 /* Optional section background wrapper around the CTA bar. */
 .pad-cta {
-  padding-block: var(--pad-section-pad-v);
+  padding-block: clamp(40px, 4vw, 50px);
 }
 .pad-cta .pad-cta-bar {
   margin-block: 0;
