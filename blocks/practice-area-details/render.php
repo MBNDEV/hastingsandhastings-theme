@@ -110,11 +110,11 @@ if ( ! function_exists( 'mbn_pad_render_section_title' ) ) {
   <div class="pad-intro <?php echo esc_attr( $bg_class ); ?>" style="<?php echo esc_attr( $bg_style ); ?>">
     <div class="pad-container pad-intro__inner">
       <?php if ( ! empty( $heading ) ) : ?>
-      <h2 class="pad-section-heading"><?php echo wp_kses_post( $heading ); ?></h2>
+      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $heading ); ?></h2>
       <?php endif; ?>
       <?php foreach ( (array) $paragraphs as $paragraph ) : ?>
         <?php if ( ! empty( $paragraph ) ) : ?>
-      <div class="pad-section-subtitle"><?php echo wp_kses_post( $paragraph ); ?></div>
+      <div class="pad-section-subtitle"><?php echo mbn_pad_kses( $paragraph ); ?></div>
         <?php endif; ?>
       <?php endforeach; ?>
     </div>
@@ -151,8 +151,8 @@ if ( ! function_exists( 'mbn_pad_render_why_hire' ) ) {
 <section class="pad-why-hire <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <div class="pad-section-header pad-section-header--center">
-      <h2 class="pad-section-heading"><?php echo wp_kses_post( $d['heading'] ); ?></h2>
-      <div class="pad-section-subtitle"><?php echo wp_kses_post( $d['subtitle'] ); ?></div>
+      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $d['heading'] ); ?></h2>
+      <div class="pad-section-subtitle"><?php echo mbn_pad_kses( $d['subtitle'] ); ?></div>
     </div>
 
     <div class="pad-why-hire__layout">
@@ -160,7 +160,7 @@ if ( ! function_exists( 'mbn_pad_render_why_hire' ) ) {
         <?php foreach ( $d['features'] as $feature ) : ?>
         <article class="pad-why-hire__feature">
           <h3><?php echo esc_html( $feature['title'] ?? '' ); ?></h3>
-          <?php echo wp_kses_post( $feature['description'] ?? '' ); ?>
+          <?php echo mbn_pad_kses( $feature['description'] ?? '' ); ?>
         </article>
         <?php endforeach; ?>
       </div>
@@ -215,13 +215,13 @@ if ( ! function_exists( 'mbn_pad_render_why_hire_secondary' ) ) {
         <?php endif; ?>
         <article class="pad-why-hire__feature">
           <h3><?php echo esc_html( $d['freeEvaluationsTitle'] ); ?></h3>
-          <?php echo wp_kses_post( $d['freeEvaluationsDescription'] ); ?>
+          <?php echo mbn_pad_kses( $d['freeEvaluationsDescription'] ); ?>
         </article>
       </div>
       <?php if ( $has_millions ) : ?>
       <div class="pad-why-hire__millions">
         <h3><?php echo esc_html( $d['millionsRecoveredTitle'] ); ?></h3>
-        <?php echo wp_kses_post( $d['millionsRecoveredDescription'] ); ?>
+        <?php echo mbn_pad_kses( $d['millionsRecoveredDescription'] ); ?>
       </div>
       <?php endif; ?>
     </div>
@@ -323,10 +323,10 @@ if ( ! function_exists( 'mbn_pad_render_case_result_card' ) ) {
     <?php endif; ?>
     <?php mbn_pad_render_case_result_amounts( $results ); ?>
       <?php if ( '' !== $title ) : ?>
-    <h4 class="pad-case-result__title"><?php echo wp_kses_post( $title ); ?></h4>
+    <h4 class="pad-case-result__title"><?php echo mbn_pad_kses( $title ); ?></h4>
     <?php endif; ?>
       <?php if ( '' !== $description ) : ?>
-    <div class="pad-case-result__desc"><?php echo wp_kses_post( $description ); ?></div>
+    <div class="pad-case-result__desc"><?php echo mbn_pad_kses( $description ); ?></div>
     <?php endif; ?>
   </div>
     <?php
@@ -422,7 +422,7 @@ if ( ! function_exists( 'mbn_pad_render_after_accident' ) ) {
     <div class="pad-split <?php echo esc_attr( $layout_class ); ?>">
       <div class="pad-split__text">
         <?php if ( ! empty( $heading ) && 0 === $index ) : ?>
-        <h2 class="pad-section-heading"><?php echo wp_kses_post( $heading ); ?></h2>
+        <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $heading ); ?></h2>
         <?php endif; ?>
         <?php echo mbn_pad_kses( $split['text'] ?? '' ); ?>
       </div>
@@ -478,7 +478,7 @@ if ( ! function_exists( 'mbn_pad_render_steps_plain_list' ) ) {
     ?>
       <ul class="pad-steps__plain-list">
         <?php foreach ( $items as $item ) : ?>
-        <li class="pad-steps__plain-item"><?php echo wp_kses_post( $item['question'] ?? '' ); ?></li>
+        <li class="pad-steps__plain-item"><?php echo mbn_pad_kses( $item['question'] ?? '' ); ?></li>
         <?php endforeach; ?>
       </ul>
     <?php
@@ -510,8 +510,8 @@ if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
   <div class="pad-container">
     <div class="pad-steps__layout">
       <div class="pad-steps__intro">
-        <h2 class="pad-section-heading"><?php echo wp_kses_post( $d['heading'] ); ?></h2>
-        <?php echo wp_kses_post( $d['introText'] ); ?>
+        <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $d['heading'] ); ?></h2>
+        <?php echo mbn_pad_kses( $d['introText'] ); ?>
       </div>
 
       <?php if ( 'plain' === $d['listType'] ) : ?>
@@ -529,7 +529,7 @@ if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
             <img src="<?php echo esc_url( $chevron ); ?>" alt="" aria-hidden="true" class="pad-steps__icon">
           </button>
           <div class="pad-steps__answer <?php echo $is_open ? '' : 'pad-steps__answer--hidden'; ?>" id="<?php echo esc_attr( $step_id ); ?>">
-            <?php echo wp_kses_post( $step['answer'] ?? '' ); ?>
+            <?php echo mbn_pad_kses( $step['answer'] ?? '' ); ?>
           </div>
         </div>
         <?php endforeach; ?>
@@ -557,13 +557,13 @@ if ( ! function_exists( 'mbn_pad_render_time_limit' ) ) {
 <section class="pad-time-limit <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <div class="pad-section-header pad-section-header--center">
-      <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
-      <div class="pad-section-subtitle"><?php echo wp_kses_post( $data['subtitle'] ?? '' ); ?></div>
+      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ?? '' ); ?></h2>
+      <div class="pad-section-subtitle"><?php echo mbn_pad_kses( $data['subtitle'] ?? '' ); ?></div>
     </div>
 
     <div class="pad-split pad-split--text-left">
       <div class="pad-split__text">
-        <?php echo wp_kses_post( $data['text'] ?? '' ); ?>
+        <?php echo mbn_pad_kses( $data['text'] ?? '' ); ?>
       </div>
       <figure class="pad-split__image">
         <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $alt ); ?>" loading="lazy">
@@ -591,8 +591,8 @@ if ( ! function_exists( 'mbn_pad_render_insurance' ) ) {
   <div class="pad-container">
     <div class="pad-split pad-split--text-left">
       <div class="pad-split__text">
-        <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
-        <?php echo wp_kses_post( $data['text'] ?? '' ); ?>
+        <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ?? '' ); ?></h2>
+        <?php echo mbn_pad_kses( $data['text'] ?? '' ); ?>
       </div>
       <figure class="pad-split__image">
         <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $alt ); ?>" loading="lazy">
@@ -653,10 +653,10 @@ if ( ! function_exists( 'mbn_pad_render_liability_intro' ) ) {
     ?>
     <div class="pad-liability__intro">
       <?php if ( ! empty( $heading ) ) : ?>
-      <h3 class="pad-liability__intro-heading"><?php echo wp_kses_post( $heading ); ?></h3>
+      <h3 class="pad-liability__intro-heading"><?php echo mbn_pad_kses( $heading ); ?></h3>
       <?php endif; ?>
       <?php if ( ! empty( $text ) ) : ?>
-      <div class="pad-liability__intro-text"><?php echo wp_kses_post( $text ); ?></div>
+      <div class="pad-liability__intro-text"><?php echo mbn_pad_kses( $text ); ?></div>
       <?php endif; ?>
     </div>
     <?php
@@ -682,7 +682,7 @@ if ( ! function_exists( 'mbn_pad_render_liability_item' ) ) {
         <div class="pad-liability__row">
           <h3 class="pad-liability__term"><?php echo esc_html( $item['term'] ?? '' ); ?></h3>
           <div class="pad-liability__desc">
-            <?php echo wp_kses_post( $item['description'] ?? '' ); ?>
+            <?php echo mbn_pad_kses( $item['description'] ?? '' ); ?>
           </div>
         </div>
       </li>
@@ -704,8 +704,8 @@ if ( ! function_exists( 'mbn_pad_render_liability' ) ) {
   <div class="pad-container">
     <?php if ( ! empty( $data['heading'] ) || ! empty( $data['subtitle'] ) ) : ?>
     <div class="pad-section-header pad-section-header--center">
-      <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
-      <div class="pad-section-subtitle"><?php echo wp_kses_post( $data['subtitle'] ?? '' ); ?></div>
+      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ?? '' ); ?></h2>
+      <div class="pad-section-subtitle"><?php echo mbn_pad_kses( $data['subtitle'] ?? '' ); ?></div>
     </div>
     <?php endif; ?>
 
@@ -719,7 +719,7 @@ if ( ! function_exists( 'mbn_pad_render_liability' ) ) {
 
     <?php if ( ! empty( $data['afterText'] ) ) : ?>
     <div class="pad-liability__after">
-      <?php echo wp_kses_post( $data['afterText'] ); ?>
+      <?php echo mbn_pad_kses( $data['afterText'] ); ?>
     </div>
     <?php endif; ?>
 
@@ -742,8 +742,8 @@ if ( ! function_exists( 'mbn_pad_render_compensation' ) ) {
 <section class="pad-compensation <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <div class="pad-section-header pad-section-header--center">
-      <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
-      <div class="pad-section-subtitle"><?php echo wp_kses_post( $data['subtitle'] ?? '' ); ?></div>
+      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ?? '' ); ?></h2>
+      <div class="pad-section-subtitle"><?php echo mbn_pad_kses( $data['subtitle'] ?? '' ); ?></div>
     </div>
 
     <div class="pad-compensation__grid">
@@ -751,14 +751,14 @@ if ( ! function_exists( 'mbn_pad_render_compensation' ) ) {
         <?php $item_class = ! empty( $item['featured'] ) ? 'pad-compensation__item pad-compensation__item--featured' : 'pad-compensation__item'; ?>
       <article class="<?php echo esc_attr( $item_class ); ?>">
         <h3><?php echo esc_html( $item['title'] ?? '' ); ?></h3>
-        <?php echo wp_kses_post( $item['description'] ?? '' ); ?>
+        <?php echo mbn_pad_kses( $item['description'] ?? '' ); ?>
       </article>
       <?php endforeach; ?>
     </div>
 
     <?php if ( ! empty( $data['afterText'] ) ) : ?>
     <div class="pad-compensation__after">
-      <?php echo wp_kses_post( $data['afterText'] ); ?>
+      <?php echo mbn_pad_kses( $data['afterText'] ); ?>
     </div>
     <?php endif; ?>
 
@@ -784,8 +784,8 @@ if ( ! function_exists( 'mbn_pad_render_documentation' ) ) {
   <div class="pad-container">
     <div class="pad-split pad-split--text-left">
       <div class="pad-split__text">
-        <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
-        <?php echo wp_kses_post( $data['text'] ?? '' ); ?>
+        <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ?? '' ); ?></h2>
+        <?php echo mbn_pad_kses( $data['text'] ?? '' ); ?>
       </div>
       <figure class="pad-split__image">
         <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $alt ); ?>" loading="lazy">
@@ -837,8 +837,8 @@ if ( ! function_exists( 'mbn_pad_render_attorneys' ) ) {
       <img src="<?php echo esc_url( $photo ); ?>" alt="" class="pad-attorneys__attorney">
     </div>
     <div class="pad-attorneys__text-col">
-      <h2 class="pad-section-heading"><?php echo wp_kses_post( $d['heading'] ); ?></h2>
-      <?php echo wp_kses_post( $d['text'] ); ?>
+      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $d['heading'] ); ?></h2>
+      <?php echo mbn_pad_kses( $d['text'] ); ?>
     </div>
   </div>
 </section>
@@ -864,11 +864,11 @@ if ( ! function_exists( 'mbn_pad_render_third_party' ) ) {
   <div class="pad-container">
     <div class="pad-split pad-split--text-left">
       <div class="pad-split__text">
-        <?php echo wp_kses_post( $data['text'] ?? '' ); ?>
+        <?php echo mbn_pad_kses( $data['text'] ?? '' ); ?>
         <?php if ( ! empty( $items ) ) : ?>
         <ul class="pad-third-party__list">
           <?php foreach ( $items as $item ) : ?>
-          <li class="pad-third-party__item"><img src="<?php echo esc_url( $chevron ); ?>" alt="" aria-hidden="true"><span><?php echo wp_kses_post( $item['text'] ?? '' ); ?></span></li>
+          <li class="pad-third-party__item"><img src="<?php echo esc_url( $chevron ); ?>" alt="" aria-hidden="true"><span><?php echo mbn_pad_kses( $item['text'] ?? '' ); ?></span></li>
           <?php endforeach; ?>
         </ul>
         <?php endif; ?>
@@ -900,8 +900,8 @@ if ( ! function_exists( 'mbn_pad_render_common_causes' ) ) {
   <div class="pad-container">
     <div class="pad-common-causes__layout">
       <div class="pad-common-causes__intro">
-        <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
-        <?php echo wp_kses_post( $data['text'] ?? '' ); ?>
+        <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ?? '' ); ?></h2>
+        <?php echo mbn_pad_kses( $data['text'] ?? '' ); ?>
         <figure class="pad-common-causes__image">
           <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $alt ); ?>" loading="lazy">
         </figure>
@@ -909,7 +909,7 @@ if ( ! function_exists( 'mbn_pad_render_common_causes' ) ) {
 
       <ul class="pad-common-causes__list">
         <?php foreach ( $items as $item ) : ?>
-        <li><?php echo wp_kses_post( $item['text'] ?? '' ); ?></li>
+        <li><?php echo mbn_pad_kses( $item['text'] ?? '' ); ?></li>
         <?php endforeach; ?>
       </ul>
     </div>
@@ -937,9 +937,9 @@ if ( ! function_exists( 'mbn_pad_render_testimonials' ) ) {
       <?php if ( ! empty( $data['eyebrow'] ) ) : ?>
       <p class="pad-testimonials__eyebrow"><?php echo esc_html( $data['eyebrow'] ); ?></p>
       <?php endif; ?>
-      <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
+      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ?? '' ); ?></h2>
       <?php if ( ! empty( $data['subtitle'] ) ) : ?>
-      <div class="pad-section-subtitle"><?php echo wp_kses_post( $data['subtitle'] ); ?></div>
+      <div class="pad-section-subtitle"><?php echo mbn_pad_kses( $data['subtitle'] ); ?></div>
       <?php endif; ?>
     </div>
 
@@ -981,7 +981,7 @@ if ( ! function_exists( 'mbn_pad_render_accident_list' ) ) {
 <section class="pad-accident-list <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <?php if ( ! empty( $data['heading'] ) ) : ?>
-    <h3 class="pad-accident-list__heading"><?php echo wp_kses_post( $data['heading'] ); ?></h3>
+    <h3 class="pad-accident-list__heading"><?php echo mbn_pad_kses( $data['heading'] ); ?></h3>
     <?php endif; ?>
     <?php if ( ! empty( $items ) ) : ?>
     <ul class="pad-accident-list__grid">
@@ -1028,8 +1028,8 @@ if ( ! function_exists( 'mbn_pad_render_why_lawyer_row' ) ) {
     ?>
       <div class="pad-why-lawyer__row<?php echo esc_attr( $layout_class ); ?>">
         <div class="pad-why-lawyer__text">
-          <h3 class="pad-why-lawyer__row-heading"><?php echo wp_kses_post( $row['heading'] ?? '' ); ?></h3>
-          <?php echo wp_kses_post( $row['text'] ?? '' ); ?>
+          <h3 class="pad-why-lawyer__row-heading"><?php echo mbn_pad_kses( $row['heading'] ?? '' ); ?></h3>
+          <?php echo mbn_pad_kses( $row['text'] ?? '' ); ?>
         </div>
         <figure class="pad-why-lawyer__image">
           <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $alt_text ); ?>" loading="lazy">
@@ -1057,8 +1057,8 @@ if ( ! function_exists( 'mbn_pad_render_why_lawyer' ) ) {
   <div class="pad-container">
     <?php if ( ! empty( $data['heading'] ) || ! empty( $data['subtitle'] ) ) : ?>
     <div class="pad-section-header pad-section-header--center pad-why-lawyer__header">
-      <h2 class="pad-section-heading"><?php echo wp_kses_post( $data['heading'] ?? '' ); ?></h2>
-      <div class="pad-section-subtitle"><?php echo wp_kses_post( $data['subtitle'] ?? '' ); ?></div>
+      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ?? '' ); ?></h2>
+      <div class="pad-section-subtitle"><?php echo mbn_pad_kses( $data['subtitle'] ?? '' ); ?></div>
     </div>
     <?php endif; ?>
 
@@ -1146,10 +1146,10 @@ if ( ! function_exists( 'mbn_pad_render_list_injuries' ) ) {
     <?php if ( '' !== $title || '' !== $description ) : ?>
     <div class="pad-section-header pad-section-header--center pad-list-injuries__header">
       <?php if ( '' !== $title ) : ?>
-      <h2 class="pad-section-heading"><?php echo wp_kses_post( $title ); ?></h2>
+      <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $title ); ?></h2>
       <?php endif; ?>
       <?php if ( '' !== $description ) : ?>
-      <div class="pad-section-subtitle"><?php echo wp_kses_post( $description ); ?></div>
+      <div class="pad-section-subtitle"><?php echo mbn_pad_kses( $description ); ?></div>
       <?php endif; ?>
     </div>
     <?php endif; ?>
@@ -1226,10 +1226,10 @@ if ( ! function_exists( 'mbn_pad_render_areas_served_header' ) ) {
     }
     echo '<div class="pad-areas-served__header">';
     if ( '' !== $title ) {
-      echo '<h2 class="pad-section-heading">' . wp_kses_post( $title ) . '</h2>';
+      echo '<h2 class="pad-section-heading">' . mbn_pad_kses( $title ) . '</h2>';
     }
     if ( '' !== $description ) {
-      echo '<div class="pad-section-subtitle">' . wp_kses_post( $description ) . '</div>';
+      echo '<div class="pad-section-subtitle">' . mbn_pad_kses( $description ) . '</div>';
     }
     echo '</div>';
   }
