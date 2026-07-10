@@ -54,7 +54,7 @@ function emptyData(type) {
     case 'liability':
       return { heading: '', subtitle: '', introHeading: '', introText: '', backgroundColor: 'bg-white', paddingTop: '', paddingBottom: '', afterText: '', items: [] };
     case 'compensation':
-      return { backgroundColor: '', heading: '', subtitle: '', afterText: '', items: [] };
+      return { backgroundColor: '', heading: '', subtitle: '', introHeading: '', introText: '', afterText: '', masonry: false, items: [] };
     case 'documentation':
       return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0 };
     case 'attorneys':
@@ -622,7 +622,11 @@ function CompensationEditor({ data, setData, sensors }) {
     <Fragment>
       <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} />
       <TextareaControl label={__('Subtitle (HTML)', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={3} />
+      <h4 style={{ marginTop: '20px' }}>{__('Intro (optional)', 'mbn-theme')}</h4>
+      <TextControl label={__('Intro Heading', 'mbn-theme')} value={data.introHeading || ''} onChange={(v) => setData({ introHeading: v })} help={__('Leave empty to hide the intro block.', 'mbn-theme')} />
+      <TextareaControl label={__('Intro Text (HTML)', 'mbn-theme')} value={data.introText || ''} onChange={(v) => setData({ introText: v })} rows={3} />
       <h4 style={{ marginTop: '20px' }}>{__('Compensation Items', 'mbn-theme')}</h4>
+      <ToggleControl label={__('Masonry layout (2 columns)', 'mbn-theme')} checked={!!data.masonry} onChange={(v) => setData({ masonry: v })} help={__('Pack items into two balanced columns instead of aligned rows.', 'mbn-theme')} />
       <Repeater field={items} sensors={sensors} ItemComponent={SortableCompensation} addLabel={__('+ Add Compensation Item', 'mbn-theme')} newItem={{ title: '', description: '', featured: false }} />
       <TextareaControl label={__('Text After Grid (HTML)', 'mbn-theme')} value={data.afterText || ''} onChange={(v) => setData({ afterText: v })} rows={4} help={__('Optional paragraph(s) shown below the compensation grid. Leave empty to hide.', 'mbn-theme')} style={{ marginTop: '20px' }} />
     </Fragment>
