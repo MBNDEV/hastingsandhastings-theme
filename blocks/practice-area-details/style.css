@@ -913,7 +913,7 @@
 
 .pad-liability__row {
   display: grid;
-  grid-template-columns: 470px 1fr;
+  grid-template-columns: clamp(320px, 35%, 470px) 1fr;
   gap: 64px;
   align-items: start;
 }
