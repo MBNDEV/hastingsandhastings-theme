@@ -756,13 +756,14 @@ if ( ! function_exists( 'mbn_pad_render_liability' ) ) {
    * @param array $data Section data.
    */
   function mbn_pad_render_liability( $data ) {
-    $items   = $data['items'] ?? array();
-    $section = mbn_pad_section_style( $data );
+    $items        = $data['items'] ?? array();
+    $section      = mbn_pad_section_style( $data );
+    $header_class = ! empty( $data['subtitleTwoCol'] ) ? 'pad-section-header pad-section-header--split' : 'pad-section-header pad-section-header--center';
     ?>
 <section class="pad-liability <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <?php if ( ! empty( $data['heading'] ) || ! empty( $data['subtitle'] ) ) : ?>
-    <div class="pad-section-header pad-section-header--center">
+    <div class="<?php echo esc_attr( $header_class ); ?>">
       <?php if ( ! empty( $data['heading'] ) ) : ?>
       <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $data['heading'] ); ?></h2>
       <?php endif; ?>
