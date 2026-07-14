@@ -670,6 +670,14 @@
 .pad-steps__after p:last-child {
   margin-bottom: 0;
 }
+@media screen and (max-width: 767px) {
+  .pad-steps__after {
+    margin-top: 32px;
+  }
+  .pad-steps__after p {
+    font-size: 16px;
+  }
+}
 
 /* Accordion */
 .pad-steps__accordion {
