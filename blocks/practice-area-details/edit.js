@@ -52,7 +52,7 @@ function emptyData(type) {
     case 'insurance':
       return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0 };
     case 'liability':
-      return { heading: '', subtitle: '', introHeading: '', introText: '', backgroundColor: 'bg-white', paddingTop: '', paddingBottom: '', afterText: '', items: [] };
+      return { heading: '', subtitle: '', subtitleTwoCol: false, introHeading: '', introText: '', backgroundColor: 'bg-white', paddingTop: '', paddingBottom: '', afterText: '', items: [] };
     case 'compensation':
       return { backgroundColor: '', heading: '', subtitle: '', introHeading: '', introText: '', afterText: '', masonry: false, items: [] };
     case 'documentation':
@@ -606,6 +606,7 @@ function LiabilityEditor({ data, setData, sensors }) {
       />
       <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} />
       <TextareaControl label={__('Subtitle (HTML)', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={2} />
+      <ToggleControl label={__('Two-column subtitle', 'mbn-theme')} checked={!!data.subtitleTwoCol} onChange={(v) => setData({ subtitleTwoCol: v })} help={__('On desktop, left-align the heading and place the subtitle paragraphs in two columns (write two <p> paragraphs, one per column). Tablet and mobile stay centered.', 'mbn-theme')} />
       <h4 style={{ marginTop: '20px' }}>{__('Intro (optional)', 'mbn-theme')}</h4>
       <TextControl label={__('Intro Heading', 'mbn-theme')} value={data.introHeading || ''} onChange={(v) => setData({ introHeading: v })} help={__('Leave empty to hide the intro block.', 'mbn-theme')} />
       <TextareaControl label={__('Intro Text (HTML)', 'mbn-theme')} value={data.introText || ''} onChange={(v) => setData({ introText: v })} rows={3} />

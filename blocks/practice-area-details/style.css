@@ -79,6 +79,32 @@
   text-align: center;
   align-items: center;
 }
+/* Split variant: centered on tablet/mobile, on desktop the heading is
+   left-aligned and the subtitle paragraphs sit in two columns. */
+.pad-section-header--split {
+  text-align: center;
+  align-items: center;
+}
+@media screen and (min-width: 1024px) {
+  .pad-section-header--split {
+    text-align: left;
+    align-items: stretch;
+    gap: 24px;
+  }
+  .pad-section-header--split .pad-section-heading {
+    margin-bottom: 0;
+  }
+  .pad-section-header--split .pad-section-subtitle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 80px;
+    row-gap: 16px;
+    align-items: start;
+  }
+  .pad-section-header--split .pad-section-subtitle p {
+    margin: 0;
+  }
+}
 
 /* ----- Intro header band (heading + paragraphs, configurable background) ----- */
 .pad-intro {
@@ -777,6 +803,11 @@
   max-width: 920px;
   width: 100%;
   margin: 0 auto 48px;
+}
+@media screen and (min-width: 1024px) {
+  .pad-liability .pad-section-header--split {
+    max-width: none;
+  }
 }
 
 .pad-liability__intro,
