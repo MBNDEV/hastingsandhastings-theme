@@ -101,7 +101,7 @@
     row-gap: 16px;
     align-items: start;
   }
-  .pad-section-header--split .pad-section-subtitle p {
+  .pad-section-header--split .pad-section-subtitle > * {
     margin: 0;
   }
 }
@@ -653,6 +653,30 @@
   line-height: 1.556;
   color: var(--pad-text-body);
   margin: 0;
+}
+
+.pad-steps__after {
+  margin-top: 48px;
+  text-align: center;
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--pad-text-body);
+  word-break: break-word;
+}
+.pad-steps__after p {
+  margin: 0 0 16px;
+}
+.pad-steps__after p:last-child {
+  margin-bottom: 0;
+}
+@media screen and (max-width: 767px) {
+  .pad-steps__after {
+    margin-top: 32px;
+  }
+  .pad-steps__after p {
+    font-size: 16px;
+  }
 }
 
 /* Accordion */

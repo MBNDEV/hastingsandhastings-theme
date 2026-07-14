@@ -555,6 +555,7 @@ if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
 		  'heading'   => '',
 		  'introText' => '',
 		  'listType'  => 'ol',
+		  'afterText' => '',
       ),
       (array) $data
     );
@@ -582,7 +583,14 @@ if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
         <?php endforeach; ?>
       </div>
       <?php endif; ?>
+
     </div>
+
+    <?php if ( ! empty( $d['afterText'] ) ) : ?>
+    <div class="pad-steps__after">
+      <?php echo mbn_pad_kses( $d['afterText'] ); ?>
+    </div>
+    <?php endif; ?>
   </div>
 </section>
     <?php

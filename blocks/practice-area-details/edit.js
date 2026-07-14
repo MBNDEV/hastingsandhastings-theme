@@ -46,7 +46,7 @@ function emptyData(type) {
     case 'afterAccident':
       return { backgroundColor: '', heading: '', splits: [] };
     case 'steps':
-      return { backgroundColor: '', heading: '', introText: '', chevronIconUrl: '', chevronIconId: 0, listType: 'ol', accordion: [] };
+      return { backgroundColor: '', heading: '', introText: '', chevronIconUrl: '', chevronIconId: 0, listType: 'ol', accordion: [], afterText: '' };
     case 'timeLimit':
       return { backgroundColor: '', heading: '', subtitle: '', text: '', photoUrl: '', photoId: 0 };
     case 'insurance':
@@ -557,6 +557,7 @@ function StepsEditor({ data, setData, sensors }) {
       />
       <h4 style={{ marginTop: '20px' }}>{__('Steps', 'mbn-theme')}</h4>
       <Repeater field={steps} sensors={sensors} ItemComponent={SortableStep} addLabel={__('+ Add Step', 'mbn-theme')} newItem={{ question: '', answer: '' }} />
+      <TextareaControl label={__('Text After Steps (HTML)', 'mbn-theme')} value={data.afterText || ''} onChange={(v) => setData({ afterText: v })} rows={4} help={__('Optional centered paragraph(s) shown below the steps. Leave empty to hide.', 'mbn-theme')} style={{ marginTop: '20px' }} />
     </Fragment>
   );
 }
