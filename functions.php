@@ -31,6 +31,9 @@ require_once get_theme_file_path( 'template-parts/button.php' );
  * Theme setup
  */
 function mbn_theme_setup() {
+	// Let WordPress manage the document <title> (required for Yoast SEO titles).
+	add_theme_support( 'title-tag' );
+
 	// Add support for block styles.
 	add_theme_support( 'wp-block-styles' );
 
