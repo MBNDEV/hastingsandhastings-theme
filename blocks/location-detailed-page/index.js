@@ -6,7 +6,7 @@ import {
   MediaUpload,
   MediaUploadCheck,
 } from '@wordpress/block-editor';
-import { PanelBody, TextControl, Button, ToggleControl } from '@wordpress/components';
+import { PanelBody, TextControl, TextareaControl, Button, ToggleControl } from '@wordpress/components';
 import { Fragment, useState } from '@wordpress/element';
 import metadata from './block.json';
 import './style.css';
@@ -1585,43 +1585,13 @@ function Edit( { attributes, setAttributes } ) {
                 value={ faq.question || '' }
                 onChange={ ( value ) => updateArrayItem( 'faqItems', index, { question: value } ) }
               />
-              <div style={ { marginTop: '12px' } }>
-                <label
-                  style={ {
-                    display: 'block',
-                    marginBottom: '8px',
-                    fontSize: '11px',
-                    fontWeight: 600,
-                    textTransform: 'uppercase',
-                    color: '#1e1e1e',
-                  } }
-                >
-                  Answer (with formatting)
-                </label>
-                <div style={ {
-                  border: '1px solid #949494',
-                  borderRadius: '2px',
-                  padding: '8px',
-                  minHeight: '100px',
-                  fontSize: '13px',
-                  lineHeight: '1.4',
-                } }>
-                  <RichText
-                    tagName="p"
-                    identifier={ `faq-answer-${ index }` }
-                    value={ faq.answer || '' }
-                    onChange={ ( value ) => updateArrayItem( 'faqItems', index, { answer: value } ) }
-                    placeholder="Type your answer here. Use the toolbar for formatting..."
-                    allowedFormats={ [
-                      'core/bold',
-                      'core/italic',
-                      'core/link',
-                      'core/strikethrough',
-                      'core/underline',
-                    ] }
-                  />
-                </div>
-              </div>
+              <TextareaControl
+                label="Answer (HTML allowed)"
+                value={ faq.answer || '' }
+                onChange={ ( value ) => updateArrayItem( 'faqItems', index, { answer: value } ) }
+                rows={ 5 }
+                style={ { marginTop: '10px' } }
+              />
               <div style={ { marginTop: '12px' } }>
                 <label
                   style={ {

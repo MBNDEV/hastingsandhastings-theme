@@ -577,7 +577,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
               <img src="<?php echo esc_url( $block_assets_uri . '/arrow-up.svg' ); ?>" alt="" aria-hidden="true" class="ldp-accordion__icon">
             </button>
             <div class="ldp-accordion__answer<?php echo esc_attr( $is_open ? '' : ' ldp-accordion__answer--hidden' ); ?>" id="faq-answer-<?php echo esc_attr( (string) ( $faq_index + 1 ) ); ?>">
-              <?php echo wp_kses_post( $faq_item['answer'] ?? '' ); ?>
+              <?php echo mbn_pad_kses( $faq_item['answer'] ?? '' ); ?>
               <?php if ( ! empty( $faq_item['bullets'] ) ) : ?>
                 <ul><?php echo wp_kses_post( $faq_item['bullets'] ); ?></ul>
               <?php endif; ?>

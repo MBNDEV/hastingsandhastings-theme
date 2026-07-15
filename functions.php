@@ -78,6 +78,7 @@ require_once get_theme_file_path( 'tailwind-loader.php' );
 require_once get_theme_file_path( 'optimize.php' );
 
 // Load integrated inc/ files.
+require_once get_theme_file_path( 'inc/includes-kses-helpers.php' );           // Shared kses helpers for block HTML fields.
 require_once get_theme_file_path( 'inc/includes-theme-options.php' );          // Native theme options page.
 require_once get_theme_file_path( 'inc/includes-post-meta.php' );              // Native post meta boxes.
 require_once get_theme_file_path( 'inc/includes-theme-preset-options-render.php' ); // Font presets & CSS variables.
