@@ -82,7 +82,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
           <!-- Content Title -->
           <?php if ( ! empty( $content_title ) ) : ?>
             <h4 class="loc-hlimg__content-title">
-              <?php echo wp_kses_post( $content_title ); ?>
+              <?php echo esc_html( $content_title ); ?>
             </h4>
           <?php endif; ?>
 
