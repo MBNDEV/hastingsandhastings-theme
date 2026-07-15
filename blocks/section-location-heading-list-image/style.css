@@ -72,6 +72,12 @@
   flex-direction: column;
   gap: 16px;
 }
+.loc-hlimg__content .loc-hlimg__before-list p{
+  font-size: 18px;
+  line-height: 1.556;
+  color: var(--ldp-text-body);
+  margin: 0;
+}
 
 /* ── Content title (above before-list paragraphs) ─────────── */
 
