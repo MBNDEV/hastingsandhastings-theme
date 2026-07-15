@@ -56,9 +56,9 @@ $wrapper_attributes = get_block_wrapper_attributes(
                     <?php endif; ?>
                     
                     <?php if ( ! empty( $main_heading ) ) : ?>
-                        <h1 class="form-main-heading">
+                        <h2 class="form-main-heading">
                             <?php echo esc_html( $main_heading ); ?>
-                        </h1>
+                        </h2>
                     <?php endif; ?>
                     
                     <?php if ( ! empty( $subheading_text ) ) : ?>
