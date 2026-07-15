@@ -33,58 +33,6 @@ if ( ! function_exists( 'mbn_pad_alt_text' ) ) {
   }
 }
 
-if ( ! function_exists( 'mbn_pad_allow_inline_styles' ) ) {
-  /**
-   * Extend the CSS properties `wp_kses` permits in inline style attributes.
-   *
-   * By default `safecss_filter_attr()` drops declarations such as `list-style`,
-   * so styles editors add to rich-text fields silently disappear on the front
-   * end. This adds the layout/list properties that editors commonly need.
-   *
-   * @param string[] $styles Allowed CSS property names.
-   * @return string[]
-   */
-  function mbn_pad_allow_inline_styles( $styles ) {
-    return array_merge(
-      $styles,
-      array(
-		  'list-style',
-		  'list-style-type',
-		  'list-style-position',
-		  'display',
-		  'gap',
-		  'flex-direction',
-		  'flex-wrap',
-		  'align-items',
-		  'justify-content',
-		  'grid-template-columns',
-		  'column-count',
-		  'column-gap',
-		  'white-space',
-      )
-    );
-  }
-}
-
-if ( ! function_exists( 'mbn_pad_kses' ) ) {
-  /**
-   * Sanitize rich-text field HTML while preserving editor-supplied inline styles.
-   *
-   * Same allowlist as wp_kses_post() (which already permits the `style`
-   * attribute) but with an expanded set of safe CSS properties so inline
-   * styling entered in the editor renders on the front end.
-   *
-   * @param string $html Raw field HTML.
-   * @return string Sanitized HTML.
-   */
-  function mbn_pad_kses( $html ) {
-    add_filter( 'safe_style_css', 'mbn_pad_allow_inline_styles' );
-    $out = wp_kses_post( (string) $html );
-    remove_filter( 'safe_style_css', 'mbn_pad_allow_inline_styles' );
-    return $out;
-  }
-}
-
 if ( ! function_exists( 'mbn_pad_render_section_title' ) ) {
   /**
    * Render the optional Section Title band above a component.
