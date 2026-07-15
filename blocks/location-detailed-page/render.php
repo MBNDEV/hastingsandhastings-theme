@@ -8,6 +8,58 @@
 
 $block_assets_uri = get_theme_file_uri( '/build/blocks/location-detailed-page/assets/images' );
 
+if ( ! function_exists( 'mbn_pad_allow_inline_styles' ) ) {
+	/**
+	 * Extend the CSS properties `wp_kses` permits in inline style attributes.
+	 *
+	 * By default `safecss_filter_attr()` drops declarations such as `list-style`,
+	 * so styles editors add to rich-text fields silently disappear on the front
+	 * end. This adds the layout/list properties that editors commonly need.
+	 *
+	 * @param string[] $styles Allowed CSS property names.
+	 * @return string[]
+	 */
+  function mbn_pad_allow_inline_styles( $styles ) {
+      return array_merge(
+        $styles,
+        array(
+			'list-style',
+			'list-style-type',
+			'list-style-position',
+			'display',
+			'gap',
+			'flex-direction',
+			'flex-wrap',
+			'align-items',
+			'justify-content',
+			'grid-template-columns',
+			'column-count',
+			'column-gap',
+			'white-space',
+		)
+      );
+  }
+}
+
+if ( ! function_exists( 'mbn_pad_kses' ) ) {
+	/**
+	 * Sanitize rich-text field HTML while preserving editor-supplied inline styles.
+	 *
+	 * Same allowlist as wp_kses_post() (which already permits the `style`
+	 * attribute) but with an expanded set of safe CSS properties so inline
+	 * styling entered in the editor renders on the front end.
+	 *
+	 * @param string $html Raw field HTML.
+	 * @return string Sanitized HTML.
+	 */
+  function mbn_pad_kses( $html ) {
+      add_filter( 'safe_style_css', 'mbn_pad_allow_inline_styles' );
+      $out = wp_kses_post( (string) $html );
+      remove_filter( 'safe_style_css', 'mbn_pad_allow_inline_styles' );
+      return $out;
+  }
+}
+
 $why_choose_title                = $attributes['whyChooseTitle'] ?? '';
 $why_choose_intro                = $attributes['whyChooseIntro'] ?? '';
 $why_choose_items                = ! empty( $attributes['whyChooseItems'] ) && is_array( $attributes['whyChooseItems'] ) ? $attributes['whyChooseItems'] : array();
@@ -577,7 +629,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
               <img src="<?php echo esc_url( $block_assets_uri . '/arrow-up.svg' ); ?>" alt="" aria-hidden="true" class="ldp-accordion__icon">
             </button>
             <div class="ldp-accordion__answer<?php echo esc_attr( $is_open ? '' : ' ldp-accordion__answer--hidden' ); ?>" id="faq-answer-<?php echo esc_attr( (string) ( $faq_index + 1 ) ); ?>">
-              <?php echo wp_kses_post( $faq_item['answer'] ?? '' ); ?>
+              <?php echo mbn_pad_kses( $faq_item['answer'] ?? '' ); ?>
               <?php if ( ! empty( $faq_item['bullets'] ) ) : ?>
                 <ul><?php echo wp_kses_post( $faq_item['bullets'] ); ?></ul>
               <?php endif; ?>

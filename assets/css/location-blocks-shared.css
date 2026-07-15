@@ -95,6 +95,11 @@
   text-decoration: underline;
 }
 
+.ldp-section-subtitle a:hover,
+.ldp-section-subtitle--center a:hover {
+  color: var(--ldp-text-link);
+}
+
 /* === SHARED BUTTON === */
 .ldp-btn {
   display: inline-flex;
