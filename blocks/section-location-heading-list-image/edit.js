@@ -152,6 +152,7 @@ export default function Edit( { attributes, setAttributes } ) {
     listItems,
     imageUrl,
     imageId,
+    contentTitle,
     beforeListParagraphs,
     afterListParagraphs,
     footerParagraphs,
@@ -436,6 +437,12 @@ export default function Edit( { attributes, setAttributes } ) {
           title={ __( 'Before List Paragraphs (Optional)', 'mbn-theme' ) }
           initialOpen={ false }
         >
+          <TextControl
+            label={ __( 'Content Title (Optional)', 'mbn-theme' ) }
+            value={ contentTitle || '' }
+            onChange={ ( value ) => setAttributes( { contentTitle: value } ) }
+            help={ __( 'Shown above the paragraphs/list in the content column. Leave blank to hide.', 'mbn-theme' ) }
+          />
           <div>
             <strong>{ __( 'Paragraphs Before List', 'mbn-theme' ) }</strong>
             { beforeListParagraphs && beforeListParagraphs.map( ( paragraph, index ) => (
@@ -698,6 +705,11 @@ export default function Edit( { attributes, setAttributes } ) {
               >
                 { __( 'LIST ITEMS', 'mbn-theme' ) } ({ listStyle === 'two-column' ? __( 'Two Column', 'mbn-theme' ) : __( 'Single Column', 'mbn-theme' ) })
               </div>
+              { contentTitle && (
+                <h4 className="loc-hlimg__content-title" style={ { marginBottom: '8px' } }>
+                  { contentTitle }
+                </h4>
+              ) }
               { listItems && listItems.length > 0 ? (
                 <p style={ { fontSize: '13px', color: '#757575' } }>
                   { listItems.length } { __( 'item(s)', 'mbn-theme' ) }

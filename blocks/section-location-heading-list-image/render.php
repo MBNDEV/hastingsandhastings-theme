@@ -14,6 +14,7 @@ $list_style             = $attributes['listStyle'] ?? 'single';
 $list_items             = $attributes['listItems'] ?? array();
 $image_url              = $attributes['imageUrl'] ?? '';
 $image_id               = $attributes['imageId'] ?? 0;
+$content_title          = $attributes['contentTitle'] ?? '';
 $before_list_paragraphs = $attributes['beforeListParagraphs'] ?? array();
 $after_list_paragraphs  = $attributes['afterListParagraphs'] ?? array();
 $footer_paragraphs      = $attributes['footerParagraphs'] ?? array();
@@ -75,9 +76,16 @@ $wrapper_attributes = get_block_wrapper_attributes(
     <?php endif; ?>
 
     <!-- ── Body: list + image ─────────────────────────────── -->
-    <?php if ( ! empty( $list_items ) || ! empty( $final_image_url ) || ! empty( $before_list_paragraphs ) || ! empty( $after_list_paragraphs ) ) : ?>
+    <?php if ( ! empty( $list_items ) || ! empty( $final_image_url ) || ! empty( $content_title ) || ! empty( $before_list_paragraphs ) || ! empty( $after_list_paragraphs ) ) : ?>
       <div class="loc-hlimg__body">
         <div class="loc-hlimg__content">
+          <!-- Content Title -->
+          <?php if ( ! empty( $content_title ) ) : ?>
+            <h4 class="loc-hlimg__content-title">
+              <?php echo esc_html( $content_title ); ?>
+            </h4>
+          <?php endif; ?>
+
           <!-- Before List Paragraphs -->
           <?php if ( ! empty( $before_list_paragraphs ) && is_array( $before_list_paragraphs ) ) : ?>
             <div class="loc-hlimg__before-list">

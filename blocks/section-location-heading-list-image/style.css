@@ -72,6 +72,17 @@
   flex-direction: column;
   gap: 16px;
 }
+
+/* ── Content title (above before-list paragraphs) ─────────── */
+
+.loc-hlimg__content-title {
+  font-family: var(--ldp-font-primary, 'Noto Serif', serif);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.45;
+  color: var(--ldp-text-heading, #13263e);
+  margin: 0;
+}
 /* ── Custom list ──────────────────────────────────────────── */
 
 .loc-hlimg__list {
@@ -269,6 +280,10 @@
   .loc-hlimg__heading {
     font-size: 22px;
     line-height: 32px;
+  }
+
+  .loc-hlimg__content-title {
+    font-size: 20px;
   }
 
   .loc-hlimg__intro,
