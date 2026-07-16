@@ -152,6 +152,7 @@ export default function Edit( { attributes, setAttributes } ) {
     listItems,
     imageUrl,
     imageId,
+    imagePosition,
     contentTitle,
     beforeListParagraphs,
     afterListParagraphs,
@@ -567,6 +568,16 @@ export default function Edit( { attributes, setAttributes } ) {
           title={ __( 'Image', 'mbn-theme' ) }
           initialOpen={ activeSection === 'image' }
         >
+          <SelectControl
+            label={ __( 'Image Position', 'mbn-theme' ) }
+            value={ imagePosition || 'right' }
+            options={ [
+              { label: __( 'Right (Default)', 'mbn-theme' ), value: 'right' },
+              { label: __( 'Left', 'mbn-theme' ), value: 'left' },
+            ] }
+            onChange={ ( value ) => setAttributes( { imagePosition: value } ) }
+            help={ __( 'Position of the image relative to the content on desktop.', 'mbn-theme' ) }
+          />
           <MediaUploadCheck>
             <MediaUpload
               onSelect={ ( media ) =>
@@ -690,6 +701,7 @@ export default function Edit( { attributes, setAttributes } ) {
               borderRadius: '8px',
               padding: '16px',
               display: 'flex',
+              flexDirection: imagePosition === 'left' ? 'row-reverse' : 'row',
               gap: '24px',
               alignItems: 'center',
             } }

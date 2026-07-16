@@ -65,6 +65,12 @@
   width: 100%;
 }
 
+@media screen and (min-width: 1024px) {
+  .loc-hlimg__body--image-left {
+    flex-direction: row-reverse;
+  }
+}
+
 .loc-hlimg__content {
   flex: 1 0 0;
   min-width: 0;
@@ -72,7 +78,8 @@
   flex-direction: column;
   gap: 16px;
 }
-.loc-hlimg__before-list-para {
+.loc-hlimg__before-list-para,
+.loc-hlimg__after-list-para {
   font-size: 18px;
   line-height: 1.556;
   color: var(--ldp-text-body);
