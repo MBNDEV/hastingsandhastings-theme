@@ -133,7 +133,7 @@
 
 .loc-hlimg__item-title {
   display: block;
-  color: #1a1a1a;
+  color: var(--ldp-text-body);
   font-family: var(--ldp-font-secondary, 'Heebo', sans-serif);
   font-weight: 700;
   font-size: 14px;
@@ -142,7 +142,7 @@
 
 .loc-hlimg__item-desc {
   display: block;
-  color: #363b3f;
+  color: var(--ldp-text-link);
   font-family: var(--ldp-font-secondary, 'Heebo', sans-serif);
   font-weight: 400;
   font-size: 14px;
@@ -166,7 +166,7 @@
 }
 
 .loc-hlimg__item-label {
-  color: #363b3f;
+  color: var(--ldp-text-link);
   font-family: var(--ldp-font-secondary, 'Heebo', sans-serif);
   font-weight: 400;
   font-size: 14px;
