@@ -138,6 +138,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
                   <?php
                   $item_title       = $item['title'] ?? '';
                   $item_description = $item['description'] ?? '';
+                  $item_url         = $item['url'] ?? '';
                   ?>
                   <?php if ( ! empty( $item_title ) || ! empty( $item_description ) ) : ?>
                     <li class="loc-hlimg__list-item">
@@ -151,7 +152,15 @@ $wrapper_attributes = get_block_wrapper_attributes(
                       >
                       <div class="loc-hlimg__item-text">
                         <?php if ( ! empty( $item_title ) ) : ?>
-                          <strong class="loc-hlimg__item-title"><?php echo wp_kses_post( $item_title ); ?></strong>
+                          <strong class="loc-hlimg__item-title">
+                            <?php if ( ! empty( $item_url ) ) : ?>
+                              <a class="loc-hlimg__item-title-link" href="<?php echo esc_url( $item_url ); ?>">
+                                <?php echo esc_html( $item_title ); ?>
+                              </a>
+                            <?php else : ?>
+                              <?php echo esc_html( $item_title ); ?>
+                            <?php endif; ?>
+                          </strong>
                         <?php endif; ?>
                         <?php if ( ! empty( $item_description ) ) : ?>
                           <span class="loc-hlimg__item-desc"><?php echo wp_kses_post( $item_description ); ?></span>

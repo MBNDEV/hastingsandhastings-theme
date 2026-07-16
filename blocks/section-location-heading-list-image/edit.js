@@ -11,6 +11,7 @@ import {
   SelectControl,
   TextareaControl,
   TextControl,
+  ToggleControl,
   Icon,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
@@ -111,6 +112,25 @@ function SortableListItem( { item, index, listStyle, updateListItem, removeListI
               value={ item.title || '' }
               onChange={ ( value ) => updateListItem( index, { title: value } ) }
             />
+            <ToggleControl
+              label={ __( 'Link Title', 'mbn-theme' ) }
+              checked={ !! item.showUrl || !! item.url }
+              onChange={ ( value ) =>
+                updateListItem(
+                  index,
+                  value ? { showUrl: true } : { showUrl: false, url: '' }
+                )
+              }
+              help={ __( 'Turn on to add an optional URL for the title.', 'mbn-theme' ) }
+            />
+            { ( !! item.showUrl || !! item.url ) && (
+              <TextControl
+                label={ __( 'Title URL', 'mbn-theme' ) }
+                value={ item.url || '' }
+                onChange={ ( value ) => updateListItem( index, { url: value } ) }
+                help={ __( 'Leave empty for plain text', 'mbn-theme' ) }
+              />
+            ) }
             <div style={ { marginTop: '8px' } }>
               <label
                 style={ {
