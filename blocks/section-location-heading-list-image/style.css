@@ -140,6 +140,17 @@
   line-height: 1.5;
 }
 
+.loc-hlimg__item-title-link {
+  color: var(--ldp-text-body);
+  text-decoration: none;
+}
+
+.loc-hlimg__item-title-link:hover {
+  color: var(--ldp-text-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .loc-hlimg__item-desc {
   display: block;
   color: var(--ldp-text-link);
