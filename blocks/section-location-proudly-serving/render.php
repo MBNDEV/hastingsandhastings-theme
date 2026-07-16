@@ -41,8 +41,9 @@ $wrapper_attributes = get_block_wrapper_attributes(
                   continue;
                 }
                 ?>
+                <?php $link_new_tab = $column_link['newTab'] ?? true; ?>
                 <li>
-                  <a href="<?php echo esc_url( $column_link['url'] ?? '#' ); ?>">
+                  <a href="<?php echo esc_url( $column_link['url'] ?? '#' ); ?>"<?php echo $link_new_tab ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>>
                     <img src="<?php echo esc_url( $chevron_icon ); ?>" alt="" aria-hidden="true">
                     <?php echo esc_html( $column_link['label'] ?? '' ); ?>
                   </a>
