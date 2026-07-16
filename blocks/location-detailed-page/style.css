@@ -1175,6 +1175,11 @@
   color: var(--ldp-text-link);
   text-decoration: none;
   white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.ldp-serving__links li a:hover {
+  padding-left: 0.35rem;
+  text-decoration: underline;
 }
 
 .ldp-serving__links li a img {

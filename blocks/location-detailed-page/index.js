@@ -1827,6 +1827,15 @@ function Edit( { attributes, setAttributes } ) {
                       updateArrayItem( 'servingColumns', colIndex, { links } );
                     } }
                   />
+                  <ToggleControl
+                    label="Open in new tab"
+                    checked={ link.newTab !== false }
+                    onChange={ ( value ) => {
+                      const links = [ ...( column.links || [] ) ];
+                      links[ linkIndex ] = { ...links[ linkIndex ], newTab: value };
+                      updateArrayItem( 'servingColumns', colIndex, { links } );
+                    } }
+                  />
                   <Button
                     isDestructive
                     onClick={ () =>

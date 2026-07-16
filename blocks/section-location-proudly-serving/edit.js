@@ -1,5 +1,5 @@
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, TextControl, Button, Icon } from '@wordpress/components';
+import { PanelBody, TextControl, ToggleControl, Button, Icon } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
@@ -61,6 +61,12 @@ function SortableLink({ link, columnIndex, linkIndex, updateLink, removeLink, du
         label={__('URL', 'mbn-theme')}
         value={link.url}
         onChange={(value) => updateLink(columnIndex, linkIndex, { url: value })}
+      />
+
+      <ToggleControl
+        label={__('Open in new tab', 'mbn-theme')}
+        checked={link.newTab !== false}
+        onChange={(value) => updateLink(columnIndex, linkIndex, { newTab: value })}
       />
     </div>
   );
