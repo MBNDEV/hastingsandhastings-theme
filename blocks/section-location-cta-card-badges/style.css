@@ -73,6 +73,9 @@
   text-underline-offset: 2px;
 }
 
+.ldp-cta-card__desc a:hover{
+  color: var(--ldp-white);
+}
 .ldp-btn {
   display: inline-block;
   padding: 1rem 2rem;
