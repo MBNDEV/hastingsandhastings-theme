@@ -155,10 +155,10 @@ $wrapper_attributes = get_block_wrapper_attributes(
                           <strong class="loc-hlimg__item-title">
                             <?php if ( ! empty( $item_url ) ) : ?>
                               <a class="loc-hlimg__item-title-link" href="<?php echo esc_url( $item_url ); ?>">
-                                <?php echo wp_kses_post( $item_title ); ?>
+                                <?php echo esc_html( $item_title ); ?>
                               </a>
                             <?php else : ?>
-                              <?php echo wp_kses_post( $item_title ); ?>
+                              <?php echo esc_html( $item_title ); ?>
                             <?php endif; ?>
                           </strong>
                         <?php endif; ?>
