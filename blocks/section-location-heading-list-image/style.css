@@ -65,8 +65,10 @@
   width: 100%;
 }
 
-.loc-hlimg__body--image-left {
-  flex-direction: row-reverse;
+@media screen and (min-width: 1024px) {
+  .loc-hlimg__body--image-left {
+    flex-direction: row-reverse;
+  }
 }
 
 .loc-hlimg__content {
