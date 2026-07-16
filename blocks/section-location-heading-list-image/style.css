@@ -65,6 +65,10 @@
   width: 100%;
 }
 
+.loc-hlimg__body--image-left {
+  flex-direction: row-reverse;
+}
+
 .loc-hlimg__content {
   flex: 1 0 0;
   min-width: 0;

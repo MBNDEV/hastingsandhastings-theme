@@ -71,6 +71,10 @@
       "type": "number",
       "default": 0
     },
+    "imagePosition": {
+      "type": "string",
+      "default": "right"
+    },
     "contentTitle": {
       "type": "string",
       "default": ""

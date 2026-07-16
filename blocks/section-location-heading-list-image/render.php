@@ -14,6 +14,7 @@ $list_style             = $attributes['listStyle'] ?? 'single';
 $list_items             = $attributes['listItems'] ?? array();
 $image_url              = $attributes['imageUrl'] ?? '';
 $image_id               = $attributes['imageId'] ?? 0;
+$image_position         = $attributes['imagePosition'] ?? 'right';
 $content_title          = $attributes['contentTitle'] ?? '';
 $before_list_paragraphs = $attributes['beforeListParagraphs'] ?? array();
 $after_list_paragraphs  = $attributes['afterListParagraphs'] ?? array();
@@ -37,6 +38,11 @@ if ( ! empty( $image_id ) ) {
 $list_class = 'two-column' === $list_style
   ? 'loc-hlimg__list loc-hlimg__list--two-col'
   : 'loc-hlimg__list';
+
+// Body class based on image position
+$body_class = 'left' === $image_position
+  ? 'loc-hlimg__body loc-hlimg__body--image-left'
+  : 'loc-hlimg__body';
 
 // Handle background color
 $is_custom_color = strpos( $background_color, '#' ) === 0;
@@ -77,7 +83,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
     <!-- ── Body: list + image ─────────────────────────────── -->
     <?php if ( ! empty( $list_items ) || ! empty( $final_image_url ) || ! empty( $content_title ) || ! empty( $before_list_paragraphs ) || ! empty( $after_list_paragraphs ) ) : ?>
-      <div class="loc-hlimg__body">
+      <div class="<?php echo esc_attr( $body_class ); ?>">
         <div class="loc-hlimg__content">
           <!-- Content Title -->
           <?php if ( ! empty( $content_title ) ) : ?>
