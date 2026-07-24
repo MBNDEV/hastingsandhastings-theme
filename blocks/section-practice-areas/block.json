@@ -61,7 +61,7 @@
     },
     "ctaButtonUrl": {
       "type": "string",
-      "default": "#"
+      "default": "/practice-areas/"
     },
     "backgroundColor": {
       "type": "string",

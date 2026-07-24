@@ -29,7 +29,7 @@
     },
     "locationsButtonUrl": {
       "type": "string",
-      "default": "#"
+      "default": "/locations/"
     },
     "practiceAreasButtonText": {
       "type": "string",
@@ -37,7 +37,7 @@
     },
     "practiceAreasButtonUrl": {
       "type": "string",
-      "default": "#"
+      "default": "/practice-areas/"
     },
     "footerLogoUrl": {
       "type": "string",
@@ -65,6 +65,13 @@
     "copyrightText": {
       "type": "string",
       "default": "© 2026 Hastings & Hastings. All rights reserved."
+    },
+    "footerBottomLinks": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object"
+      }
     },
     "mobileContactUrl": {
       "type": "string",

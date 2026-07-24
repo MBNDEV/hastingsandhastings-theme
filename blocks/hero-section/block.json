@@ -85,7 +85,7 @@
     },
     "ctaButtonUrl": {
       "type": "string",
-      "default": "#contact"
+      "default": "/contact-us/"
     },
     "phoneNumber": {
       "type": "string",

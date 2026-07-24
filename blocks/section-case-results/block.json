@@ -42,7 +42,7 @@
     },
     "buttonUrl": {
       "type": "string",
-      "default": "#"
+      "default": "/results/"
     },
     "backgroundColor": {
       "type": "string",
