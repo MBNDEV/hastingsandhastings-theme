@@ -148,7 +148,7 @@ get_header();
           <h4 class="blog-content__cta-title"><?php esc_html_e( 'Start Your Free Consultation', 'mbn-theme' ); ?></h4>
           <p class="blog-content__cta-text"><?php esc_html_e( 'If you are unsure where to start or how to manage these different payment options, talking with an experienced brain injury attorney can help you determine the best path forward.', 'mbn-theme' ); ?></p>
           <div class="blog-content__cta-actions">
-            <a href="#" class="blog-content__cta-btn"><?php esc_html_e( 'CONTACT US TODAY TO SCHEDULE A FREE CONSULTATION', 'mbn-theme' ); ?></a>
+            <a href="/contact-us/" class="blog-content__cta-btn"><?php esc_html_e( 'CONTACT US TODAY TO SCHEDULE A FREE CONSULTATION', 'mbn-theme' ); ?></a>
             <p class="blog-content__cta-phone"><span><?php esc_html_e( 'CALL TODAY', 'mbn-theme' ); ?></span> <a href="tel:4806053939">(480) 605-3939</a></p>
           </div>
         </aside>
