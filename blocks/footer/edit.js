@@ -1,5 +1,5 @@
 import { useBlockProps, InspectorControls, MediaUpload } from '@wordpress/block-editor';
-import { PanelBody, SelectControl, TextControl, TextareaControl, Button, Icon } from '@wordpress/components';
+import { PanelBody, SelectControl, TextControl, TextareaControl, ToggleControl, Button, Icon } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Fragment, useEffect, useState } from '@wordpress/element';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
@@ -89,8 +89,77 @@ function SortableSocialItem({ item, index, updateItem, removeItem, duplicateItem
   );
 }
 
+// Sortable Footer Bottom Link Item
+function SortableLinkItem({ item, index, updateItem, removeItem, duplicateItem }) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: item.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    marginBottom: '20px',
+    padding: '15px',
+    border: '1px solid #ddd',
+    borderRadius: '4px',
+    backgroundColor: '#fff',
+  };
+
+  return (
+    <div ref={setNodeRef} style={style}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div {...attributes} {...listeners} style={{ cursor: 'grab', padding: '5px' }}>
+            <Icon icon="menu" />
+          </div>
+          <strong>{item.text || `Link ${index + 1}`}</strong>
+        </div>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <Button
+            icon="admin-page"
+            label={__('Duplicate', 'mbn-theme')}
+            onClick={() => duplicateItem(index)}
+          />
+          <Button
+            icon="trash"
+            label={__('Remove', 'mbn-theme')}
+            onClick={() => removeItem(index)}
+          />
+        </div>
+      </div>
+
+      <TextControl
+        label={__('Link Text', 'mbn-theme')}
+        value={item.text}
+        onChange={(value) => updateItem(index, { text: value })}
+        placeholder="e.g., Privacy Policy"
+      />
+
+      <TextControl
+        label={__('URL', 'mbn-theme')}
+        value={item.url}
+        onChange={(value) => updateItem(index, { url: value })}
+        placeholder="/privacy-policy/"
+        type="url"
+      />
+
+      <ToggleControl
+        label={__('Open in new tab', 'mbn-theme')}
+        checked={!!item.openInNewTab}
+        onChange={(value) => updateItem(index, { openInNewTab: value })}
+      />
+    </div>
+  );
+}
+
 export default function Edit({ attributes, setAttributes }) {
-  const { locationsMenuId, practiceAreasMenuId, mainFooterMenuId, locationsButtonText, locationsButtonUrl, practiceAreasButtonText, practiceAreasButtonUrl, footerLogoUrl, footerLogoId, footerLogoLinkUrl, footerTagline, socialMedia, copyrightText, mobileContactUrl, mobilePhoneNumber } = attributes;
+  const { locationsMenuId, practiceAreasMenuId, mainFooterMenuId, locationsButtonText, locationsButtonUrl, practiceAreasButtonText, practiceAreasButtonUrl, footerLogoUrl, footerLogoId, footerLogoLinkUrl, footerTagline, socialMedia, copyrightText, footerBottomLinks, mobileContactUrl, mobilePhoneNumber } = attributes;
   
   const [menus, setMenus] = useState([]);
 
@@ -154,9 +223,54 @@ export default function Edit({ attributes, setAttributes }) {
     if (active.id !== over.id) {
       const oldIndex = socialMedia.findIndex(item => item.id === active.id);
       const newIndex = socialMedia.findIndex(item => item.id === over.id);
-      
+
       setAttributes({
         socialMedia: arrayMove(socialMedia, oldIndex, newIndex),
+      });
+    }
+  };
+
+  const updateBottomLink = (index, updates) => {
+    const updatedItems = [...footerBottomLinks];
+    updatedItems[index] = { ...updatedItems[index], ...updates };
+    setAttributes({ footerBottomLinks: updatedItems });
+  };
+
+  const addBottomLink = () => {
+    setAttributes({
+      footerBottomLinks: [...footerBottomLinks, {
+        id: generateUniqueId(),
+        text: '',
+        url: '',
+        openInNewTab: false,
+      }]
+    });
+  };
+
+  const removeBottomLink = (index) => {
+    const updatedItems = footerBottomLinks.filter((_, i) => i !== index);
+    setAttributes({ footerBottomLinks: updatedItems });
+  };
+
+  const duplicateBottomLink = (index) => {
+    const itemToDuplicate = { ...footerBottomLinks[index], id: generateUniqueId() };
+    const updatedItems = [
+      ...footerBottomLinks.slice(0, index + 1),
+      itemToDuplicate,
+      ...footerBottomLinks.slice(index + 1)
+    ];
+    setAttributes({ footerBottomLinks: updatedItems });
+  };
+
+  const handleBottomLinkDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (active.id !== over.id) {
+      const oldIndex = footerBottomLinks.findIndex(item => item.id === active.id);
+      const newIndex = footerBottomLinks.findIndex(item => item.id === over.id);
+
+      setAttributes({
+        footerBottomLinks: arrayMove(footerBottomLinks, oldIndex, newIndex),
       });
     }
   };
@@ -301,6 +415,38 @@ export default function Edit({ attributes, setAttributes }) {
             value={copyrightText}
             onChange={(value) => setAttributes({ copyrightText: value })}
           />
+        </PanelBody>
+
+        <PanelBody title={__('Footer Bottom Links', 'mbn-theme')}>
+          <p style={{ marginBottom: '15px', fontSize: '13px', color: '#666' }}>
+            {__('Links shown inline with the copyright text, separated by "|". Drag and drop to reorder.', 'mbn-theme')}
+          </p>
+
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleBottomLinkDragEnd}
+          >
+            <SortableContext
+              items={footerBottomLinks.map((item) => item.id)}
+              strategy={verticalListSortingStrategy}
+            >
+              {footerBottomLinks.map((item, index) => (
+                <SortableLinkItem
+                  key={item.id}
+                  item={item}
+                  index={index}
+                  updateItem={updateBottomLink}
+                  removeItem={removeBottomLink}
+                  duplicateItem={duplicateBottomLink}
+                />
+              ))}
+            </SortableContext>
+          </DndContext>
+
+          <Button variant="primary" onClick={addBottomLink} style={{ marginTop: '15px' }}>
+            {__('+ Add Link', 'mbn-theme')}
+          </Button>
         </PanelBody>
 
         <PanelBody title={__('Mobile Sticky Banner', 'mbn-theme')} initialOpen={false}>

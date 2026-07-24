@@ -13,7 +13,7 @@ $main_heading     = $attributes['mainHeading'] ?? 'Proven experience. Real resul
 $description      = $attributes['description'] ?? '';
 $case_results     = $attributes['caseResults'] ?? array();
 $button_text      = $attributes['buttonText'] ?? 'SEE MORE CASE RESULTS';
-$button_url       = $attributes['buttonUrl'] ?? '#';
+$button_url       = $attributes['buttonUrl'] ?? '/results/';
 $background_color = $attributes['backgroundColor'] ?? 'bg-white';
 
 // Determine if background color is a hex code or Tailwind class

@@ -160,7 +160,7 @@
     },
     "caseResultsButtonUrl": {
       "type": "string",
-      "default": "#"
+      "default": "/results/"
     },
     "howWeHelpTitle": {
       "type": "string",
