@@ -20,6 +20,7 @@
   --pad-grey-50: #f8f9fa;
   --pad-text-heading: #13263e;
   --pad-text-body: #53585f;
+  --pad-text-link: #363b3f;
   --pad-white: #ffffff;
 
   --pad-font-primary: "Noto Serif", Georgia, serif;
@@ -131,6 +132,12 @@
   color: var(--pad-text-body);
   text-decoration: underline;
 }
+.pad-after-accident a:hover,
+.pad-time-limit a:hover,
+.pad-liability a:hover,
+.pad-attorneys a:hover {
+  color: var(--pad-text-link);
+}
 
 /* ----- Split layout (two-column text + image) ----- */
 .pad-split {
@@ -186,6 +193,11 @@
   text-decoration: underline;
   text-decoration-inset: 2px;
 }
+
+.pad-split__text p a:hover{
+  color: var(--pad-text-link);
+}
+
 .pad-split__text strong {
   color: var(--pad-text-heading);
   font-weight: 400;
@@ -805,8 +817,11 @@
   max-width: 920px;
 }
 .pad-time-limit a {
-  color: var(--pad-blue-600);
+  color: var(--pad-text-body);
   text-decoration: underline;
+}
+.pad-time-limit a:hover {
+  color: var(--pad-text-link);
 }
 
 /* ============================================================
@@ -1275,7 +1290,7 @@ ol.pad-list-injuries__list {
   font-family: var(--pad-font-secondary);
   font-size: 14px;
   line-height: 1.5;
-  color: #363b3f;
+  color: var(--pad-text-link);
 }
 .pad-third-party__item img {
   width: 24px;
@@ -1283,8 +1298,11 @@ ol.pad-list-injuries__list {
   flex-shrink: 0;
 }
 .pad-third-party__item a {
-  color: inherit;
+  color: var(--pad-text-body);
   text-decoration: underline;
+}
+.pad-third-party__item a:hover{
+  color: var(--pad-text-link);
 }
 
 /* ============================================================
@@ -1345,8 +1363,11 @@ ol.pad-list-injuries__list {
   border-bottom: 1px solid #000000;
 }
 .pad-common-causes__list a {
-  color: inherit;
+  color: var(--pad-text-body);
   text-decoration: underline;
+}
+.pad-common-causes__list a:hover{
+  color: var(--pad-text-link);
 }
 
 /* ============================================================
