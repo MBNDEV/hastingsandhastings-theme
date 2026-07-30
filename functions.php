@@ -100,6 +100,8 @@ require_once get_theme_file_path( 'inc/includes-attorney-cpt.php' );            
 require_once get_theme_file_path( 'inc/includes-attorney-fields.php' );         // Attorney ACF field groups.
 require_once get_theme_file_path( 'inc/includes-case-results.php' );            // Case Results custom post type and fields.
 require_once get_theme_file_path( 'inc/includes-handwritten-reviews.php' );     // Handwritten Reviews CPT, meta box, and REST endpoint.
+require_once get_theme_file_path( 'inc/includes-practice-area-cpt.php' );       // Practice Area custom post type.
+require_once get_theme_file_path( 'inc/includes-practice-area-fields.php' );    // Practice Area ACF field groups.
 
 /**
  * Enqueue scroll animation assets (frontend only).
@@ -311,3 +313,33 @@ function hastingsandhastings_enqueue_single_attorney_assets() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'hastingsandhastings_enqueue_single_attorney_assets', 20 );
+
+/**
+ * Enqueue dedicated assets for the Practice Area template.
+ *
+ * @return void
+ */
+function hastingsandhastings_enqueue_practice_area_assets() {
+  if ( ! is_page_template( 'page-templates/template-practice-area.php' ) ) {
+    return;
+  }
+
+  $practice_area_style_path = get_theme_file_path( 'assets/css/single-practice-area.css' );
+  $single_blog_script_path  = get_theme_file_path( 'assets/js/single-blog-theme.js' );
+
+  wp_enqueue_style(
+    'hastingsandhastings-single-practice-area',
+    get_theme_file_uri( 'assets/css/single-practice-area.css' ),
+    array(),
+    file_exists( $practice_area_style_path ) ? (string) filemtime( $practice_area_style_path ) : null
+  );
+
+  wp_enqueue_script(
+    'hastingsandhastings-single-blog-theme',
+    get_theme_file_uri( 'assets/js/single-blog-theme.js' ),
+    array(),
+    file_exists( $single_blog_script_path ) ? (string) filemtime( $single_blog_script_path ) : null,
+    false
+  );
+}
+add_action( 'wp_enqueue_scripts', 'hastingsandhastings_enqueue_practice_area_assets', 20 );
