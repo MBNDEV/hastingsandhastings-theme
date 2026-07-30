@@ -78,6 +78,30 @@ function custom_theme_practice_area_thumbnail_support(): void {
 add_action( 'after_setup_theme', 'custom_theme_practice_area_thumbnail_support' );
 
 /**
+ * Pre-select the "Practice Area" template on new Practice Area entries.
+ *
+ * Runs only on first insert (the auto-draft created the moment "Add New" is
+ * opened), so the Template dropdown already shows "Practice Area" instead of
+ * "Default template" — and an editor who later switches back to Default isn't
+ * overridden on subsequent saves.
+ *
+ * @param int     $post_id Post ID.
+ * @param WP_Post $post    Post object.
+ * @param bool    $update  Whether this is an existing post being updated.
+ * @return void
+ */
+function custom_theme_practice_area_default_template( int $post_id, WP_Post $post, bool $update ): void {
+  if ( $update || 'practice_area' !== $post->post_type ) {
+    return;
+  }
+
+  if ( '' === get_page_template_slug( $post_id ) ) {
+    update_post_meta( $post_id, '_wp_page_template', 'page-templates/template-practice-area.php' );
+  }
+}
+add_action( 'wp_insert_post', 'custom_theme_practice_area_default_template', 10, 3 );
+
+/**
  * Output flat, page-like permalinks for Practice Area entries (no CPT slug prefix).
  *
  * @param string  $post_link Default permalink.
