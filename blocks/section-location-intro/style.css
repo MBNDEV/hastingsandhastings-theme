@@ -225,6 +225,15 @@
   margin: 0;
 }
 
+.ldp-why-choose__attorneys-text p a{
+  color: var(--ldp-text-body);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.ldp-why-choose__attorneys-text p a:hover{
+  color: var(--ldp-text-link);
+}
 .ldp-why-choose__attorneys-img {
   margin: 0;
   position: relative;
