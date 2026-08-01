@@ -456,12 +456,12 @@ if ( ! function_exists( 'mbn_pad_render_steps_plain_list' ) ) {
     ?>
       <ul class="pad-steps__plain-list">
         <?php foreach ( $items as $item ) : ?>
-        <?php $link_url = $item['linkUrl'] ?? ''; ?>
+          <?php $link_url = $item['linkUrl'] ?? ''; ?>
         <li class="pad-steps__plain-item">
           <?php if ( ! empty( $link_url ) ) : ?>
           <a class="pad-steps__plain-link" href="<?php echo esc_url( $link_url ); ?>"><?php echo mbn_pad_kses( $item['question'] ?? '' ); ?></a>
           <?php else : ?>
-          <?php echo mbn_pad_kses( $item['question'] ?? '' ); ?>
+            <?php echo mbn_pad_kses( $item['question'] ?? '' ); ?>
           <?php endif; ?>
         </li>
         <?php endforeach; ?>
