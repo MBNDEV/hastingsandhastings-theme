@@ -85,6 +85,7 @@
           "title": "Start Your Free Consultation",
           "description": "Our Mesa personal injury attorneys are ready to listen to your story, be honest with you about whether you may be able to recover compensation for your injuries, and if we're able, work hard to represent you and your family.",
           "buttonText": "Start your free consultation now!",
+          "buttonUrl": "#",
           "phoneLabel": "Call Today",
           "phoneText": "(480) 480-2929",
           "phoneUrl": "tel:4804802929",
@@ -99,6 +100,7 @@
           "title": "Contact a Mesa Personal Injury Attorney Today",
           "description": "Our team at Hastings and Hastings is ready to hear from you today. Our free case consultations are always offered at no cost and no risk to prospective clients, and we're committed to ensuring that your injury case is handled by a licensed attorney from the very beginning.",
           "buttonText": "Request Free Consultation",
+          "buttonUrl": "#",
           "phoneLabel": "Call Today",
           "phoneText": "(480) 480-2929",
           "phoneUrl": "tel:4804802929",
@@ -409,6 +411,10 @@
         }
       ]
     },
+    "faultIntroRowId": {
+      "type": "string",
+      "default": "intro-row"
+    },
     "faultIntroTitle": {
       "type": "string",
       "default": "Determining Fault for Your Mesa, AZ Accident"
@@ -429,6 +435,10 @@
       "type": "string",
       "default": "Car accident intersection scene in Arizona"
     },
+    "faultComparativeId": {
+      "type": "string",
+      "default": "comparative"
+    },
     "faultComparativeTitle": {
       "type": "string",
       "default": "Comparative Negligence Laws in Arizona Accidents"
@@ -440,6 +450,10 @@
     "faultComparativeColumn2": {
       "type": "string",
       "default": ""
+    },
+    "faultCompensationId": {
+      "type": "string",
+      "default": "compensation"
     },
     "faultCompensationTitle": {
       "type": "string",
@@ -464,6 +478,10 @@
       "items": {
         "type": "object"
       }
+    },
+    "faultStepsId": {
+      "type": "string",
+      "default": "steps"
     },
     "faultStepsTitle": {
       "type": "string",
@@ -496,6 +514,10 @@
         "type": "object"
       }
     },
+    "faultTimeLimitRowId": {
+      "type": "string",
+      "default": "time-limit-row"
+    },
     "faultTimeLimitTitle": {
       "type": "string",
       "default": "How Long Do I Have to File a Personal Injury Claim in Mesa, Arizona?"
@@ -519,6 +541,10 @@
     "faultTimeLimitImageAlt": {
       "type": "string",
       "default": "Accident scene highlighting the urgency of filing claims"
+    },
+    "faultStatuteRowId": {
+      "type": "string",
+      "default": "statute-row"
     },
     "faultStatuteImageId": {
       "type": "number",

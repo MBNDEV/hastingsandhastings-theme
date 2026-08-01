@@ -46,26 +46,32 @@ $case_categories = ! empty( $attributes['caseCategories'] ) && is_array( $attrib
 $faq_items       = ! empty( $attributes['faqItems'] ) && is_array( $attributes['faqItems'] ) ? $attributes['faqItems'] : array();
 $serving_columns = ! empty( $attributes['servingColumns'] ) && is_array( $attributes['servingColumns'] ) ? $attributes['servingColumns'] : array();
 
+$fault_intro_row_id          = $attributes['faultIntroRowId'] ?? 'intro-row';
 $fault_intro_title           = $attributes['faultIntroTitle'] ?? 'Determining Fault for Your Mesa, AZ Accident';
 $fault_intro_text            = $attributes['faultIntroText'] ?? '';
 $fault_intro_image_id        = $attributes['faultIntroImageId'] ?? 0;
 $fault_intro_image_url       = $attributes['faultIntroImageUrl'] ?? '';
 $fault_intro_image_alt       = $attributes['faultIntroImageAlt'] ?? 'Car accident intersection scene in Arizona';
+$fault_comparative_id        = $attributes['faultComparativeId'] ?? 'comparative';
 $fault_comparative_title     = $attributes['faultComparativeTitle'] ?? 'Comparative Negligence Laws in Arizona Accidents';
 $fault_comparative_column1   = $attributes['faultComparativeColumn1'] ?? '';
 $fault_comparative_column2   = $attributes['faultComparativeColumn2'] ?? '';
+$fault_compensation_id       = $attributes['faultCompensationId'] ?? 'compensation';
 $fault_compensation_title    = $attributes['faultCompensationTitle'] ?? 'Recovering Compensation After an Injury';
 $fault_compensation_subtitle = $attributes['faultCompensationSubtitle'] ?? '';
 $fault_damage_types          = ! empty( $attributes['faultDamageTypes'] ) && is_array( $attributes['faultDamageTypes'] ) ? $attributes['faultDamageTypes'] : array();
+$fault_steps_id              = $attributes['faultStepsId'] ?? 'steps';
 $fault_steps_title           = $attributes['faultStepsTitle'] ?? 'Important Steps for Your Mesa Personal Injury Case';
 $fault_steps_subtitle        = $attributes['faultStepsSubtitle'] ?? '';
 $fault_steps                 = ! empty( $attributes['faultSteps'] ) && is_array( $attributes['faultSteps'] ) ? $attributes['faultSteps'] : array();
+$fault_time_limit_row_id     = $attributes['faultTimeLimitRowId'] ?? 'time-limit-row';
 $fault_time_limit_title      = $attributes['faultTimeLimitTitle'] ?? 'How Long Do I Have to File a Personal Injury Claim in Mesa, Arizona?';
 $fault_time_limit_paragraph1 = $attributes['faultTimeLimitParagraph1'] ?? '';
 $fault_time_limit_paragraph2 = $attributes['faultTimeLimitParagraph2'] ?? '';
 $fault_time_limit_image_id   = $attributes['faultTimeLimitImageId'] ?? 0;
 $fault_time_limit_image_url  = $attributes['faultTimeLimitImageUrl'] ?? '';
 $fault_time_limit_image_alt  = $attributes['faultTimeLimitImageAlt'] ?? 'Accident scene highlighting the urgency of filing claims';
+$fault_statute_row_id        = $attributes['faultStatuteRowId'] ?? 'statute-row';
 $fault_statute_image_id      = $attributes['faultStatuteImageId'] ?? 0;
 $fault_statute_image_url     = $attributes['faultStatuteImageUrl'] ?? '';
 $fault_statute_image_alt     = $attributes['faultStatuteImageAlt'] ?? 'Legal and medical billing documents';
@@ -167,7 +173,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
             <p class="ldp-cta-card__desc"><?php echo wp_kses_post( $cta_cards[0]['description'] ?? '' ); ?></p>
           </div>
           <div class="ldp-cta-card__actions">
-            <button class="ldp-btn ldp-btn--yellow" type="button"><?php echo esc_html( $cta_cards[0]['buttonText'] ?? '' ); ?></button>
+            <a class="ldp-btn ldp-btn--yellow" href="<?php echo esc_url( $cta_cards[0]['buttonUrl'] ?? '#' ); ?>"><?php echo esc_html( $cta_cards[0]['buttonText'] ?? '' ); ?></a>
             <p class="ldp-cta-card__phone"><?php echo esc_html( $cta_cards[0]['phoneLabel'] ?? '' ); ?> <a href="<?php echo esc_url( $cta_cards[0]['phoneUrl'] ?? '#' ); ?>"><?php echo esc_html( $cta_cards[0]['phoneText'] ?? '' ); ?></a></p>
           </div>
         </div>
@@ -391,7 +397,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
   <section class="ldp-fault" id="determining-fault">
     <div class="ldp-container">
       <?php if ( ! empty( $fault_intro_title ) || ! empty( $fault_intro_text ) ) : ?>
-        <div class="ldp-fault__intro-row">
+        <div class="ldp-fault__intro-row" id="<?php echo esc_attr( $fault_intro_row_id ); ?>">
           <div class="ldp-fault__intro-text">
             <?php if ( ! empty( $fault_intro_title ) ) : ?>
               <h3 class="ldp-section-title"><?php echo esc_html( $fault_intro_title ); ?></h3>
@@ -415,7 +421,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
       <?php endif; ?>
 
       <?php if ( ! empty( $fault_comparative_title ) || ! empty( $fault_comparative_column1 ) || ! empty( $fault_comparative_column2 ) ) : ?>
-        <div class="ldp-fault__comparative">
+        <div class="ldp-fault__comparative" id="<?php echo esc_attr( $fault_comparative_id ); ?>">
           <?php if ( ! empty( $fault_comparative_title ) ) : ?>
             <h4 class="ldp-section-title"><?php echo esc_html( $fault_comparative_title ); ?></h4>
           <?php endif; ?>
@@ -434,7 +440,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
       <?php endif; ?>
 
       <?php if ( ! empty( $fault_compensation_title ) || ! empty( $fault_damage_types ) ) : ?>
-        <div class="ldp-fault__compensation">
+        <div class="ldp-fault__compensation" id="<?php echo esc_attr( $fault_compensation_id ); ?>">
           <div class="ldp-fault__section-header">
             <?php if ( ! empty( $fault_compensation_title ) ) : ?>
               <h3 class="ldp-section-title ldp-section-title--center"><?php echo esc_html( $fault_compensation_title ); ?></h3>
@@ -466,7 +472,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
       <?php endif; ?>
 
       <?php if ( ! empty( $fault_steps_title ) || ! empty( $fault_steps ) ) : ?>
-        <div class="ldp-fault__steps">
+        <div class="ldp-fault__steps" id="<?php echo esc_attr( $fault_steps_id ); ?>">
           <div class="ldp-fault__section-header">
             <?php if ( ! empty( $fault_steps_title ) ) : ?>
               <h3 class="ldp-section-title ldp-section-title--center"><?php echo esc_html( $fault_steps_title ); ?></h3>
@@ -505,7 +511,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
       <?php endif; ?>
 
       <?php if ( ! empty( $fault_time_limit_title ) || ! empty( $fault_time_limit_paragraph1 ) || ! empty( $fault_time_limit_paragraph2 ) ) : ?>
-        <div class="ldp-fault__time-limit-row">
+        <div class="ldp-fault__time-limit-row" id="<?php echo esc_attr( $fault_time_limit_row_id ); ?>">
           <div class="ldp-fault__time-limit-text">
             <?php if ( ! empty( $fault_time_limit_title ) ) : ?>
               <h3 class="ldp-section-title"><?php echo esc_html( $fault_time_limit_title ); ?></h3>
@@ -532,7 +538,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
       <?php endif; ?>
 
       <?php if ( ! empty( $fault_statute_image_url ) || ! empty( $fault_statute_text ) ) : ?>
-        <div class="ldp-fault__statute-row">
+        <div class="ldp-fault__statute-row" id="<?php echo esc_attr( $fault_statute_row_id ); ?>">
           <?php if ( ! empty( $fault_statute_image_url ) ) : ?>
             <?php
             $fault_statute_alt_text = ! empty( $fault_statute_image_id ) ? get_post_meta( $fault_statute_image_id, '_wp_attachment_image_alt', true ) : '';
@@ -606,7 +612,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
               <p class="ldp-cta-card__desc"><?php echo wp_kses_post( $cta_cards[1]['description'] ?? '' ); ?></p>
             </div>
             <div class="ldp-cta-card__actions">
-              <button class="ldp-btn ldp-btn--yellow" type="button"><?php echo esc_html( $cta_cards[1]['buttonText'] ?? '' ); ?></button>
+              <a class="ldp-btn ldp-btn--yellow" href="<?php echo esc_url( $cta_cards[1]['buttonUrl'] ?? '#' ); ?>"><?php echo esc_html( $cta_cards[1]['buttonText'] ?? '' ); ?></a>
               <p class="ldp-cta-card__phone"><?php echo esc_html( $cta_cards[1]['phoneLabel'] ?? '' ); ?> <a href="<?php echo esc_url( $cta_cards[1]['phoneUrl'] ?? '#' ); ?>"><?php echo esc_html( $cta_cards[1]['phoneText'] ?? '' ); ?></a></p>
             </div>
           </div>

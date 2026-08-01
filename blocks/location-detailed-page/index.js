@@ -52,6 +52,7 @@ const makeCtaCard = () => ( {
   title: '',
   description: '',
   buttonText: '',
+  buttonUrl: '#',
   phoneLabel: 'Call Today',
   phoneText: '',
   phoneUrl: 'tel:',
@@ -158,26 +159,32 @@ function Edit( { attributes, setAttributes } ) {
     caseResults = [],
     resourcesLinks = [],
     caseCategories = [],
+    faultIntroRowId = 'intro-row',
     faultIntroTitle,
     faultIntroText,
     faultIntroImageId,
     faultIntroImageUrl,
     faultIntroImageAlt,
+    faultComparativeId = 'comparative',
     faultComparativeTitle,
     faultComparativeColumn1,
     faultComparativeColumn2,
+    faultCompensationId = 'compensation',
     faultCompensationTitle,
     faultCompensationSubtitle,
     faultDamageTypes = [],
+    faultStepsId = 'steps',
     faultStepsTitle,
     faultStepsSubtitle,
     faultSteps = [],
+    faultTimeLimitRowId = 'time-limit-row',
     faultTimeLimitTitle,
     faultTimeLimitParagraph1,
     faultTimeLimitParagraph2,
     faultTimeLimitImageId,
     faultTimeLimitImageUrl,
     faultTimeLimitImageAlt,
+    faultStatuteRowId = 'statute-row',
     faultStatuteImageId,
     faultStatuteImageUrl,
     faultStatuteImageAlt,
@@ -463,6 +470,11 @@ function Edit( { attributes, setAttributes } ) {
                 label="Button text"
                 value={ card.buttonText || '' }
                 onChange={ ( value ) => updateArrayItem( 'ctaCards', index, { buttonText: value } ) }
+              />
+              <TextControl
+                label="Button URL"
+                value={ card.buttonUrl || '' }
+                onChange={ ( value ) => updateArrayItem( 'ctaCards', index, { buttonUrl: value } ) }
               />
               <TextControl
                 label="Phone label"
@@ -1113,6 +1125,12 @@ function Edit( { attributes, setAttributes } ) {
         >
           <p><strong>Intro Section</strong></p>
           <TextControl
+            label="Intro Row ID (anchor)"
+            help="Used as the id attribute for this row, e.g. for #anchor links."
+            value={ faultIntroRowId }
+            onChange={ ( value ) => setAttributes( { faultIntroRowId: value } ) }
+          />
+          <TextControl
             label="Intro Title"
             value={ faultIntroTitle }
             onChange={ ( value ) => setAttributes( { faultIntroTitle: value } ) }
@@ -1169,6 +1187,12 @@ function Edit( { attributes, setAttributes } ) {
           />
           <hr />
           <p><strong>Comparative Negligence</strong></p>
+          <TextControl
+            label="Comparative Section ID (anchor)"
+            help="Used as the id attribute for this section, e.g. for #anchor links."
+            value={ faultComparativeId }
+            onChange={ ( value ) => setAttributes( { faultComparativeId: value } ) }
+          />
           <TextControl
             label="Comparative Title"
             value={ faultComparativeTitle }
@@ -1232,6 +1256,12 @@ function Edit( { attributes, setAttributes } ) {
           </div>
           <hr />
           <p><strong>Compensation Section</strong></p>
+          <TextControl
+            label="Compensation Section ID (anchor)"
+            help="Used as the id attribute for this section, e.g. for #anchor links."
+            value={ faultCompensationId }
+            onChange={ ( value ) => setAttributes( { faultCompensationId: value } ) }
+          />
           <TextControl
             label="Compensation Title"
             value={ faultCompensationTitle }
@@ -1310,6 +1340,12 @@ function Edit( { attributes, setAttributes } ) {
           </Button>
           <hr />
           <p><strong>Steps Section</strong></p>
+          <TextControl
+            label="Steps Section ID (anchor)"
+            help="Used as the id attribute for this section, e.g. for #anchor links."
+            value={ faultStepsId }
+            onChange={ ( value ) => setAttributes( { faultStepsId: value } ) }
+          />
           <TextControl
             label="Steps Title"
             value={ faultStepsTitle }
@@ -1393,6 +1429,12 @@ function Edit( { attributes, setAttributes } ) {
           </Button>
           <hr />
           <p><strong>Time Limit Section</strong></p>
+          <TextControl
+            label="Time Limit Row ID (anchor)"
+            help="Used as the id attribute for this row, e.g. for #anchor links."
+            value={ faultTimeLimitRowId }
+            onChange={ ( value ) => setAttributes( { faultTimeLimitRowId: value } ) }
+          />
           <TextControl
             label="Time Limit Title"
             value={ faultTimeLimitTitle }
@@ -1478,6 +1520,12 @@ function Edit( { attributes, setAttributes } ) {
           />
           <hr />
           <p><strong>Statute Section</strong></p>
+          <TextControl
+            label="Statute Row ID (anchor)"
+            help="Used as the id attribute for this row, e.g. for #anchor links."
+            value={ faultStatuteRowId }
+            onChange={ ( value ) => setAttributes( { faultStatuteRowId: value } ) }
+          />
           <MediaUploadCheck>
             <MediaUpload
               onSelect={ ( media ) => setAttributes( { faultStatuteImageId: media.id, faultStatuteImageUrl: media.url } ) }
