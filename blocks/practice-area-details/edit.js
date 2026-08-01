@@ -197,6 +197,13 @@ function SortableStep({ item, index, updateItem, removeItem, duplicateItem }) {
       <ItemHeader attributes={attributes} listeners={listeners} label={__('Step', 'mbn-theme')} index={index} onDuplicate={() => duplicateItem(index)} onRemove={() => removeItem(index)} />
       <TextControl label={__('Question', 'mbn-theme')} value={item.question} onChange={(v) => updateItem(index, { question: v })} />
       <TextareaControl label={__('Answer (HTML allowed)', 'mbn-theme')} value={item.answer} onChange={(v) => updateItem(index, { answer: v })} rows={5} style={{ marginTop: '10px' }} />
+      <TextControl
+        label={__('Link URL (optional)', 'mbn-theme')}
+        value={item.linkUrl || ''}
+        onChange={(v) => updateItem(index, { linkUrl: v })}
+        help={__('Only used when List Type is "Title only — no accordion." Turns the title into a link.', 'mbn-theme')}
+        style={{ marginTop: '10px' }}
+      />
     </div>
   );
 }
@@ -556,7 +563,7 @@ function StepsEditor({ data, setData, sensors }) {
         help={(data.listType || 'ol') === 'plain' ? __('Only each step’s title is shown as a simple divider list. Answers and the chevron icon are ignored.', 'mbn-theme') : undefined}
       />
       <h4 style={{ marginTop: '20px' }}>{__('Steps', 'mbn-theme')}</h4>
-      <Repeater field={steps} sensors={sensors} ItemComponent={SortableStep} addLabel={__('+ Add Step', 'mbn-theme')} newItem={{ question: '', answer: '' }} />
+      <Repeater field={steps} sensors={sensors} ItemComponent={SortableStep} addLabel={__('+ Add Step', 'mbn-theme')} newItem={{ question: '', answer: '', linkUrl: '' }} />
       <TextareaControl label={__('Text After Steps (HTML)', 'mbn-theme')} value={data.afterText || ''} onChange={(v) => setData({ afterText: v })} rows={4} help={__('Optional centered paragraph(s) shown below the steps. Leave empty to hide.', 'mbn-theme')} style={{ marginTop: '20px' }} />
     </Fragment>
   );
