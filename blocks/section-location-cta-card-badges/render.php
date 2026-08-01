@@ -44,7 +44,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
 <section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
   <div class="ldp-container">
-    <div class="ldp-cta-card ldp-cta-card--faq" id="contact">
+    <div class="ldp-cta-card ldp-cta-card--faq">
       <div class="ldp-cta-card__bg" style="background-image: url('<?php echo esc_url( $cta_bg ); ?>')"></div>
       <div class="ldp-cta-card__logo" aria-hidden="true">
         <img src="<?php echo esc_url( $cta_logo ); ?>" alt="" class="ldp-cta-card__logo-left">
