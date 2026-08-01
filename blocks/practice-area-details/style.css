@@ -670,7 +670,14 @@
   color: var(--pad-text-body);
   margin: 0;
 }
-
+.pad-steps__intro p a{
+  text-underline-offset: 2px;
+  text-decoration: underline;
+  color: inherit;
+}
+.pad-steps__intro p a:hover{
+  color: var(--pad-text-link);
+}
 .pad-steps__after {
   margin-top: 48px;
   text-align: center;
@@ -782,6 +789,9 @@
   color: inherit;
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+.pad-steps__answer a:hover{
+  color: var(--pad-text-link);
 }
 
 /* Plain list variant (title only, no accordion) */
