@@ -414,6 +414,10 @@
   text-decoration: underline;
   color: inherit;
   text-underline-offset: 2px;
+  display:inline;
+}
+.pad-why-hire__feature p a:hover {
+  color: var(--pad-text-link);
 }
 .pad-why-hire .pad-section-subtitle {
   max-width: 680px;
