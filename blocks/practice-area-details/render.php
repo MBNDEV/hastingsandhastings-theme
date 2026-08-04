@@ -885,6 +885,7 @@ if ( ! function_exists( 'mbn_pad_render_attorneys' ) ) {
     </div>
   </div>
 
+  <?php if ( ! empty( $d['heading'] ) || ! empty( $d['text'] ) ) : ?>
   <div class="pad-attorneys__feature">
     <div class="pad-attorneys__photo-col" aria-hidden="true">
       <img src="<?php echo esc_url( $photo ); ?>" alt="" class="pad-attorneys__attorney">
@@ -896,6 +897,7 @@ if ( ! function_exists( 'mbn_pad_render_attorneys' ) ) {
       <?php echo mbn_pad_kses( $d['text'] ); ?>
     </div>
   </div>
+  <?php endif; ?>
 </section>
     <?php
   }
