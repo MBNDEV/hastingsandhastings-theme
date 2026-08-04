@@ -1035,7 +1035,11 @@
   text-underline-offset: 2px;
   color: inherit;
 }
-
+.pad-compensation__item ul{
+  list-style: disc;
+  padding-left: 18px;
+  margin: 0;
+}
 .pad-compensation__after {
   display: flex;
   flex-direction: column;
