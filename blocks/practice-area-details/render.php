@@ -332,7 +332,7 @@ if ( ! function_exists( 'mbn_pad_render_cta_bar' ) ) {
       <img src="<?php echo esc_url( $logo ); ?>" alt="">
       <div class="pad-cta-bar__text">
         <h4 class="pad-cta-bar__heading"><?php echo esc_html( $data['heading'] ?? '' ); ?></h4>
-        <p class="pad-cta-bar__subtext"><?php echo esc_html( $data['subtext'] ?? '' ); ?></p>
+        <p class="pad-cta-bar__subtext"><?php echo mbn_pad_kses( $data['subtext'] ?? '' ); ?></p>
       </div>
     </div>
     <div class="pad-cta-bar__body">
@@ -459,11 +459,12 @@ if ( ! function_exists( 'mbn_pad_render_steps_plain_list' ) ) {
         <?php if ( ! empty( $text ) ) : ?>
         <div class="pad-steps__plain-list-text"><?php echo mbn_pad_kses( $text ); ?></div>
         <?php endif; ?>
+        <?php if ( ! empty( $items ) ) : ?>
         <ul class="pad-steps__plain-list">
-        <?php foreach ( $items as $item ) : ?>
-          <?php $link_url = $item['linkUrl'] ?? ''; ?>
+          <?php foreach ( $items as $item ) : ?>
+            <?php $link_url = $item['linkUrl'] ?? ''; ?>
         <li class="pad-steps__plain-item">
-          <?php if ( ! empty( $link_url ) ) : ?>
+            <?php if ( ! empty( $link_url ) ) : ?>
           <a class="pad-steps__plain-link" href="<?php echo esc_url( $link_url ); ?>"><?php echo mbn_pad_kses( $item['question'] ?? '' ); ?></a>
           <?php else : ?>
             <?php echo mbn_pad_kses( $item['question'] ?? '' ); ?>
@@ -471,6 +472,7 @@ if ( ! function_exists( 'mbn_pad_render_steps_plain_list' ) ) {
         </li>
         <?php endforeach; ?>
         </ul>
+        <?php endif; ?>
       </div>
     <?php
   }
