@@ -331,6 +331,10 @@
   color: var(--pad-grey-300);
   margin: 0;
 }
+.pad-cta-bar__subtext a {
+  color: var(--pad-white);
+  text-decoration: underline;
+}
 
 .pad-cta-bar__actions {
   display: flex;
