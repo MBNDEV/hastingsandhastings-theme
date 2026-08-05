@@ -447,14 +447,19 @@ if ( ! function_exists( 'mbn_pad_render_steps_plain_list' ) ) {
   /**
    * Render a Steps list as plain title-only rows (no accordion).
    *
-   * @param array $items Step items; only each item's question is shown.
+   * @param array  $items Step items; only each item's question is shown.
+   * @param string $text  Optional HTML shown above the list. Hidden if empty.
    */
-  function mbn_pad_render_steps_plain_list( $items ) {
+  function mbn_pad_render_steps_plain_list( $items, $text = '' ) {
     if ( ! is_array( $items ) ) {
       return;
     }
     ?>
-      <ul class="pad-steps__plain-list">
+      <div class="pad-steps__plain-list-wrap">
+        <?php if ( ! empty( $text ) ) : ?>
+        <div class="pad-steps__plain-list-text"><?php echo mbn_pad_kses( $text ); ?></div>
+        <?php endif; ?>
+        <ul class="pad-steps__plain-list">
         <?php foreach ( $items as $item ) : ?>
           <?php $link_url = $item['linkUrl'] ?? ''; ?>
         <li class="pad-steps__plain-item">
@@ -465,7 +470,8 @@ if ( ! function_exists( 'mbn_pad_render_steps_plain_list' ) ) {
           <?php endif; ?>
         </li>
         <?php endforeach; ?>
-      </ul>
+        </ul>
+      </div>
     <?php
   }
 }
@@ -507,10 +513,11 @@ if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
   function mbn_pad_render_steps( $data, $assets ) {
     $d         = array_merge(
       array(
-		  'heading'   => '',
-		  'introText' => '',
-		  'listType'  => 'ol',
-		  'afterText' => '',
+		  'heading'       => '',
+		  'introText'     => '',
+		  'listType'      => 'ol',
+		  'plainListText' => '',
+		  'afterText'     => '',
       ),
       (array) $data
     );
@@ -530,7 +537,7 @@ if ( ! function_exists( 'mbn_pad_render_steps' ) ) {
       </div>
 
       <?php if ( 'plain' === $d['listType'] ) : ?>
-        <?php mbn_pad_render_steps_plain_list( $accordion ); ?>
+        <?php mbn_pad_render_steps_plain_list( $accordion, $d['plainListText'] ); ?>
       <?php else : ?>
       <div class="pad-steps__accordion" role="list">
         <?php foreach ( $accordion as $step_index => $step ) : ?>
