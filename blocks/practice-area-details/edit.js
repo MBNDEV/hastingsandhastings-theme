@@ -521,8 +521,8 @@ function AreasServedEditor({ data, setData, sensors }) {
 function CtaEditor({ data, setData }) {
   return (
     <Fragment>
-      <TextControl label={__('Heading', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} />
-      <TextareaControl label={__('Subtext', 'mbn-theme')} value={data.subtext || ''} onChange={(v) => setData({ subtext: v })} rows={2} />
+      <TextControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} />
+      <TextareaControl label={__('Subtext (HTML)', 'mbn-theme')} value={data.subtext || ''} onChange={(v) => setData({ subtext: v })} rows={2} />
       <TextControl label={__('Button Text', 'mbn-theme')} value={data.buttonText || ''} onChange={(v) => setData({ buttonText: v })} />
       <TextControl label={__('Button URL', 'mbn-theme')} value={data.buttonUrl || ''} onChange={(v) => setData({ buttonUrl: v })} />
       <TextControl label={__('Phone Label', 'mbn-theme')} value={data.phoneLabel || ''} onChange={(v) => setData({ phoneLabel: v })} />

@@ -179,10 +179,13 @@ if ( ! function_exists( 'mbn_pad_render_why_hire_secondary' ) ) {
    * @param string $assets Block assets URI.
    */
   function mbn_pad_render_why_hire_secondary( $d, $data, $assets ) {
-    $badge_fee    = ! empty( $data['badgeNoFeeUrl'] ) ? $data['badgeNoFeeUrl'] : $assets . '/badge-no-fee-until-win.svg';
-    $badge_hide   = ! empty( $data['badgeNoFeeHidden'] );
-    $has_millions = ! empty( $d['millionsRecoveredTitle'] ) || ! empty( $d['millionsRecoveredDescription'] );
+    $badge_fee            = ! empty( $data['badgeNoFeeUrl'] ) ? $data['badgeNoFeeUrl'] : $assets . '/badge-no-fee-until-win.svg';
+    $badge_hide           = ! empty( $data['badgeNoFeeHidden'] );
+    $has_millions         = ! empty( $d['millionsRecoveredTitle'] ) || ! empty( $d['millionsRecoveredDescription'] );
+    $has_free_evaluations = ! empty( $d['freeEvaluationsTitle'] ) || ! empty( $d['freeEvaluationsDescription'] );
     ?>
+    
+    <?php if ( ! $badge_hide || $has_millions || $has_free_evaluations ) : ?>
   <div class="pad-container">
     <div class="pad-why-hire__secondary">
       <div class="pad-why-hire__badge-col">
@@ -191,10 +194,12 @@ if ( ! function_exists( 'mbn_pad_render_why_hire_secondary' ) ) {
           <img src="<?php echo esc_url( $badge_fee ); ?>" alt="" class="pad-badge__settle-text" aria-hidden="true">
         </div>
         <?php endif; ?>
+        <?php if ( $has_free_evaluations ) : ?>
         <article class="pad-why-hire__feature">
           <h3><?php echo esc_html( $d['freeEvaluationsTitle'] ); ?></h3>
           <?php echo mbn_pad_kses( $d['freeEvaluationsDescription'] ); ?>
         </article>
+        <?php endif; ?>
       </div>
       <?php if ( $has_millions ) : ?>
       <div class="pad-why-hire__millions">
@@ -204,6 +209,7 @@ if ( ! function_exists( 'mbn_pad_render_why_hire_secondary' ) ) {
       <?php endif; ?>
     </div>
   </div>
+  <?php endif; ?>
     <?php
   }
 }
@@ -331,7 +337,7 @@ if ( ! function_exists( 'mbn_pad_render_cta_bar' ) ) {
     <div class="pad-cta-bar__logo" aria-hidden="true">
       <img src="<?php echo esc_url( $logo ); ?>" alt="">
       <div class="pad-cta-bar__text">
-        <h4 class="pad-cta-bar__heading"><?php echo esc_html( $data['heading'] ?? '' ); ?></h4>
+        <h4 class="pad-cta-bar__heading"><?php echo mbn_pad_kses( $data['heading'] ?? '' ); ?></h4>
         <p class="pad-cta-bar__subtext"><?php echo mbn_pad_kses( $data['subtext'] ?? '' ); ?></p>
       </div>
     </div>
