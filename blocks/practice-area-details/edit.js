@@ -46,7 +46,7 @@ function emptyData(type) {
     case 'afterAccident':
       return { backgroundColor: '', heading: '', splits: [] };
     case 'steps':
-      return { backgroundColor: '', heading: '', introText: '', chevronIconUrl: '', chevronIconId: 0, listType: 'ol', accordion: [], afterText: '' };
+      return { backgroundColor: '', heading: '', introText: '', chevronIconUrl: '', chevronIconId: 0, listType: 'ol', plainListText: '', accordion: [], afterText: '' };
     case 'timeLimit':
       return { backgroundColor: '', heading: '', subtitle: '', text: '', photoUrl: '', photoId: 0 };
     case 'insurance':
@@ -562,6 +562,9 @@ function StepsEditor({ data, setData, sensors }) {
         onChange={(v) => setData({ listType: v })}
         help={(data.listType || 'ol') === 'plain' ? __('Only each step’s title is shown as a simple divider list. Answers and the chevron icon are ignored.', 'mbn-theme') : undefined}
       />
+      {(data.listType || 'ol') === 'plain' && (
+        <TextareaControl label={__('Text Before List (HTML)', 'mbn-theme')} value={data.plainListText || ''} onChange={(v) => setData({ plainListText: v })} rows={3} help={__('Optional text shown above the title-only list. Leave empty to hide.', 'mbn-theme')} />
+      )}
       <h4 style={{ marginTop: '20px' }}>{__('Steps', 'mbn-theme')}</h4>
       <Repeater field={steps} sensors={sensors} ItemComponent={SortableStep} addLabel={__('+ Add Step', 'mbn-theme')} newItem={{ question: '', answer: '', linkUrl: '' }} />
       <TextareaControl label={__('Text After Steps (HTML)', 'mbn-theme')} value={data.afterText || ''} onChange={(v) => setData({ afterText: v })} rows={4} help={__('Optional centered paragraph(s) shown below the steps. Leave empty to hide.', 'mbn-theme')} style={{ marginTop: '20px' }} />

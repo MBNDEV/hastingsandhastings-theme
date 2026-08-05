@@ -662,6 +662,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  max-width: 600px;
 }
 .pad-steps__intro p {
   font-family: var(--pad-font-secondary);
@@ -692,6 +693,11 @@
 }
 .pad-steps__after p:last-child {
   margin-bottom: 0;
+}
+@media screen and (max-width: 1023px) {
+  .pad-steps__intro {
+    max-width: 100%;
+  }
 }
 @media screen and (max-width: 767px) {
   .pad-steps__after {
@@ -795,6 +801,24 @@
 }
 
 /* Plain list variant (title only, no accordion) */
+.pad-steps__plain-list-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pad-steps__plain-list-text {
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.556;
+  color: var(--pad-text-body);
+  margin-left: 20%;
+}
+.pad-steps__plain-list-text p {
+  margin: 0 0 16px;
+}
+.pad-steps__plain-list-text p:last-child {
+  margin-bottom: 0;
+}
 .pad-steps__plain-list {
   list-style: none;
   margin: 0;
@@ -806,7 +830,7 @@
 }
 .pad-steps__plain-item {
   border-top: 1px solid var(--pad-grey-300);
-  padding: 8px 0;
+  padding: 12px 0;
   font-family: var(--pad-font-secondary);
   font-size: 18px;
   line-height: 1.556;
@@ -1526,7 +1550,8 @@ ol.pad-list-injuries__list {
    Small Desktop: below 1200px
    ============================================================ */
 @media screen and (max-width: 1199px) {
-  .pad-steps__plain-list {
+  .pad-steps__plain-list,
+  .pad-steps__plain-list-text {
     margin-left: 0;
   }
 }
