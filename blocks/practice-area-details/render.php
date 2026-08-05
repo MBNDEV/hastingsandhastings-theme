@@ -332,7 +332,7 @@ if ( ! function_exists( 'mbn_pad_render_cta_bar' ) ) {
       <img src="<?php echo esc_url( $logo ); ?>" alt="">
       <div class="pad-cta-bar__text">
         <h4 class="pad-cta-bar__heading"><?php echo esc_html( $data['heading'] ?? '' ); ?></h4>
-        <p class="pad-cta-bar__subtext"><?php echo esc_html( $data['subtext'] ?? '' ); ?></p>
+        <p class="pad-cta-bar__subtext"><?php echo mbn_pad_kses( $data['subtext'] ?? '' ); ?></p>
       </div>
     </div>
     <div class="pad-cta-bar__body">
