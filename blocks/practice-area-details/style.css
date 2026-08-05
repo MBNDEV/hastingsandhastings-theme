@@ -331,9 +331,14 @@
   color: var(--pad-grey-300);
   margin: 0;
 }
-.pad-cta-bar__subtext a {
-  color: var(--pad-white);
+
+.pad-cta-bar__subtext a{
+  color: inherit;
   text-decoration: underline;
+}
+
+.pad-cta-bar__subtext a:hover {
+  color: var(--pad-white);
 }
 
 .pad-cta-bar__actions {
