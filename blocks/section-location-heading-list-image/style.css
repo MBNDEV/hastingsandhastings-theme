@@ -85,6 +85,10 @@
   color: var(--ldp-text-body);
   margin: 0;
 }
+.loc-hlimg__before-list-para:not(:last-child),
+.loc-hlimg__after-list-para:not(:last-child) {
+  margin-bottom: 15px;
+}
 
 /* ── Content title (above before-list paragraphs) ─────────── */
 
