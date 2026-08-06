@@ -123,6 +123,13 @@
 .ldp-faq__badges-text:last-child {
   margin-bottom: 0;
 }
+.ldp-faq__badges-text a{
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ldp-faq__badges-text a:hover{
+  color: var(--ldp-text-link);
+}
 
 .ldp-faq__badge {
   margin: 0;

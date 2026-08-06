@@ -106,7 +106,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 15px;
 }
 
 .loc-hlimg__list-item {
@@ -156,7 +156,7 @@
   color: var(--ldp-text-link);
   font-family: var(--ldp-font-secondary, 'Heebo', sans-serif);
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
 }
 .loc-hlimg__item-desc a{
