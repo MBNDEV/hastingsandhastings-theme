@@ -72,6 +72,22 @@ $wrapper_attributes = get_block_wrapper_attributes(
                       <a href="<?php echo esc_url( $office['phoneUrl'] ?? '' ); ?>"><?php echo esc_html( $office['phoneNumber'] ); ?></a>
                     </li>
                   <?php endif; ?>
+
+                  <?php if ( ! empty( $office['otherNumbers'] ) && is_array( $office['otherNumbers'] ) ) : ?>
+                    <?php foreach ( $office['otherNumbers'] as $other_number ) : ?>
+                      <?php if ( ! empty( $other_number['phoneNumber'] ) ) : ?>
+                      <li class="contact-locations__office-link contact-locations__office-link--other">
+                        <?php if ( ! empty( $other_number['iconUrl'] ) ) : ?>
+                        <img src="<?php echo esc_url( $other_number['iconUrl'] ); ?>" alt="" width="24" height="24" aria-hidden="true">
+                        <?php endif; ?>
+                        <?php if ( ! empty( $other_number['label'] ) ) : ?>
+                        <span class="contact-locations__office-link-label"><?php echo esc_html( $other_number['label'] ); ?></span>
+                        <?php endif; ?>
+                        <a href="<?php echo esc_url( $other_number['phoneUrl'] ?? '' ); ?>"><?php echo esc_html( $other_number['phoneNumber'] ); ?></a>
+                      </li>
+                      <?php endif; ?>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
                 </ul>
               </article>
             <?php endforeach; ?>

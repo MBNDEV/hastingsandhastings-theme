@@ -1,4 +1,4 @@
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls, MediaUpload } from '@wordpress/block-editor';
 import { PanelBody, TextControl, TextareaControl, ToggleControl, Button } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
@@ -34,10 +34,33 @@ export default function Edit({ attributes, setAttributes }) {
 					addressUrl: '',
 					phoneNumber: '',
 					phoneUrl: '',
-					byAppointmentOnly: false
+					byAppointmentOnly: false,
+					otherNumbers: []
 				}
 			]
 		});
+	};
+
+	// Update an "Other Numbers" row within an office
+	const updateOtherNumber = (officeIndex, otherIndex, updates) => {
+		const updatedOthers = [...(officeLocations[officeIndex].otherNumbers || [])];
+		updatedOthers[otherIndex] = { ...updatedOthers[otherIndex], ...updates };
+		updateOfficeLocation(officeIndex, { otherNumbers: updatedOthers });
+	};
+
+	// Remove an "Other Numbers" row within an office
+	const removeOtherNumber = (officeIndex, otherIndex) => {
+		const updatedOthers = (officeLocations[officeIndex].otherNumbers || []).filter((_, i) => i !== otherIndex);
+		updateOfficeLocation(officeIndex, { otherNumbers: updatedOthers });
+	};
+
+	// Add an "Other Numbers" row within an office
+	const addOtherNumber = (officeIndex) => {
+		const updatedOthers = [
+			...(officeLocations[officeIndex].otherNumbers || []),
+			{ iconUrl: '', iconId: 0, label: '', phoneNumber: '', phoneUrl: '' }
+		];
+		updateOfficeLocation(officeIndex, { otherNumbers: updatedOthers });
 	};
 
 	const blockProps = useBlockProps({
@@ -129,6 +152,84 @@ export default function Edit({ attributes, setAttributes }) {
 										/>
 									</Fragment>
 								)}
+
+								<div style={{ marginTop: '16px' }}>
+									<strong>{__('Other Numbers', 'mbn-theme')}</strong>
+									{(office.otherNumbers || []).map((other, otherIndex) => (
+										<div
+											key={otherIndex}
+											style={{
+												border: '1px solid #eee',
+												padding: '10px',
+												marginTop: '8px',
+												borderRadius: '4px'
+											}}
+										>
+											<MediaUpload
+												onSelect={(media) => updateOtherNumber(index, otherIndex, { iconUrl: media.url, iconId: media.id })}
+												allowedTypes={['image']}
+												value={other.iconId}
+												render={({ open }) => (
+													<div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+														{other.iconUrl && (
+															<img
+																src={other.iconUrl}
+																alt=""
+																style={{ display: 'block', width: '24px', height: '24px' }}
+															/>
+														)}
+														<Button
+															icon="upload"
+															label={other.iconUrl ? __('Replace Icon', 'mbn-theme') : __('Select Icon', 'mbn-theme')}
+															onClick={open}
+															variant="secondary"
+															isSmall
+														/>
+														{other.iconUrl && (
+															<Button
+																icon="trash"
+																label={__('Remove Icon', 'mbn-theme')}
+																onClick={() => updateOtherNumber(index, otherIndex, { iconUrl: '', iconId: 0 })}
+																isDestructive
+																isSmall
+															/>
+														)}
+													</div>
+												)}
+											/>
+											<TextControl
+												label={__('Label', 'mbn-theme')}
+												value={other.label}
+												onChange={(value) => updateOtherNumber(index, otherIndex, { label: value.slice(0, 10) })}
+												maxLength={10}
+												help={__('Short label, e.g. "Fax" (max 10 characters).', 'mbn-theme')}
+											/>
+											<TextControl
+												label={__('Phone Number', 'mbn-theme')}
+												value={other.phoneNumber}
+												onChange={(value) => updateOtherNumber(index, otherIndex, { phoneNumber: value })}
+											/>
+											<TextControl
+												label={__('Phone URL', 'mbn-theme')}
+												value={other.phoneUrl}
+												onChange={(value) => updateOtherNumber(index, otherIndex, { phoneUrl: value })}
+												placeholder="tel:4807061100"
+												help={__('Format: tel:PHONENUMBER (remove spaces and dashes)', 'mbn-theme')}
+											/>
+											<Button isDestructive isSmall onClick={() => removeOtherNumber(index, otherIndex)}>
+												{__('Remove', 'mbn-theme')}
+											</Button>
+										</div>
+									))}
+									<Button
+										variant="secondary"
+										isSmall
+										onClick={() => addOtherNumber(index)}
+										style={{ marginTop: '8px' }}
+									>
+										{__('+ Add Other Number', 'mbn-theme')}
+									</Button>
+								</div>
 							</div>
 						))}
 
