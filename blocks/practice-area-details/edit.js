@@ -48,19 +48,19 @@ function emptyData(type) {
     case 'steps':
       return { backgroundColor: '', heading: '', introText: '', chevronIconUrl: '', chevronIconId: 0, listType: 'ol', plainListText: '', accordion: [], afterText: '' };
     case 'timeLimit':
-      return { backgroundColor: '', heading: '', subtitle: '', text: '', photoUrl: '', photoId: 0 };
+      return { backgroundColor: '', heading: '', subtitle: '', text: '', photoUrl: '', photoId: 0, imageHeight: '' };
     case 'insurance':
-      return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0 };
+      return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0, imageHeight: '' };
     case 'liability':
       return { heading: '', subtitle: '', subtitleTwoCol: false, introHeading: '', introText: '', backgroundColor: 'bg-white', paddingTop: '', paddingBottom: '', afterText: '', items: [] };
     case 'compensation':
       return { backgroundColor: '', heading: '', subtitle: '', introHeading: '', introText: '', afterText: '', masonry: false, items: [] };
     case 'documentation':
-      return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0 };
+      return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0, imageHeight: '' };
     case 'attorneys':
       return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0, badgeCards: [] };
     case 'thirdParty':
-      return { backgroundColor: '', text: '', items: [], chevronIconUrl: '', chevronIconId: 0, photoUrl: '', photoId: 0 };
+      return { backgroundColor: '', text: '', items: [], chevronIconUrl: '', chevronIconId: 0, photoUrl: '', photoId: 0, imageHeight: '' };
     case 'commonCauses':
       return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0, items: [] };
     case 'testimonials':
@@ -147,6 +147,33 @@ function ImageField({ label, url, id, onSelect, onRemove, maxWidth = '100%', hid
   );
 }
 
+// Height control for a pad-split__image: fixed px (default 370, theme
+// auto-shrinks on tablet/mobile) or "auto" to use the image's natural ratio.
+function ImageHeightControl({ value, onChange }) {
+  const isAuto = value === 'auto';
+  return (
+    <Fragment>
+      <ToggleControl
+        label={__('Auto height', 'mbn-theme')}
+        help={__('Use the image’s natural aspect ratio instead of a fixed crop height.', 'mbn-theme')}
+        checked={isAuto}
+        onChange={(checked) => onChange(checked ? 'auto' : '')}
+      />
+      {!isAuto && (
+        <RangeControl
+          label={__('Image Height (px)', 'mbn-theme')}
+          value={value === '' || value === undefined ? undefined : Number(value)}
+          onChange={(v) => onChange(v === undefined ? '' : v)}
+          min={100}
+          max={800}
+          allowReset
+          help={__('Reset to use the theme default (370px desktop, scales down on tablet/mobile).', 'mbn-theme')}
+        />
+      )}
+    </Fragment>
+  );
+}
+
 // Shared drag/duplicate/remove header for repeater items.
 function itemStyle(transform, transition, isDragging) {
   return {
@@ -230,6 +257,7 @@ function SortableSplit({ item, index, updateItem, removeItem, duplicateItem }) {
         onSelect={(m) => updateItem(index, { imageUrl: m.url, imageId: m.id })}
         onRemove={() => updateItem(index, { imageUrl: '', imageId: 0 })}
       />
+      <ImageHeightControl value={item.imageHeight} onChange={(v) => updateItem(index, { imageHeight: v })} />
     </div>
   );
 }
@@ -539,7 +567,7 @@ function AfterAccidentEditor({ data, setData, sensors }) {
     <Fragment>
       <TextControl label={__('Heading', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} />
       <h4 style={{ marginTop: '20px' }}>{__('Split Sections', 'mbn-theme')}</h4>
-      <Repeater field={splits} sensors={sensors} ItemComponent={SortableSplit} addLabel={__('+ Add Split Section', 'mbn-theme')} newItem={{ text: '', imageUrl: '', imageId: 0, layout: 'text-left' }} />
+      <Repeater field={splits} sensors={sensors} ItemComponent={SortableSplit} addLabel={__('+ Add Split Section', 'mbn-theme')} newItem={{ text: '', imageUrl: '', imageId: 0, layout: 'text-left', imageHeight: '' }} />
     </Fragment>
   );
 }
@@ -579,6 +607,7 @@ function TimeLimitEditor({ data, setData }) {
       <TextareaControl label={__('Subtitle (HTML)', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={3} />
       <TextareaControl label={__('Text (HTML)', 'mbn-theme')} value={data.text || ''} onChange={(v) => setData({ text: v })} rows={5} />
       <ImageField label={__('Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} />
+      <ImageHeightControl value={data.imageHeight} onChange={(v) => setData({ imageHeight: v })} />
     </Fragment>
   );
 }
@@ -589,6 +618,7 @@ function InsuranceEditor({ data, setData }) {
       <TextControl label={__('Heading', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} />
       <TextareaControl label={__('Text (HTML)', 'mbn-theme')} value={data.text || ''} onChange={(v) => setData({ text: v })} rows={5} />
       <ImageField label={__('Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} />
+      <ImageHeightControl value={data.imageHeight} onChange={(v) => setData({ imageHeight: v })} />
     </Fragment>
   );
 }
@@ -651,6 +681,7 @@ function DocumentationEditor({ data, setData }) {
       <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} />
       <TextareaControl label={__('Text (HTML)', 'mbn-theme')} value={data.text || ''} onChange={(v) => setData({ text: v })} rows={5} />
       <ImageField label={__('Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} />
+      <ImageHeightControl value={data.imageHeight} onChange={(v) => setData({ imageHeight: v })} />
     </Fragment>
   );
 }
@@ -680,6 +711,7 @@ function ThirdPartyEditor({ data, setData, sensors }) {
       <hr style={{ margin: '20px 0' }} />
       <ImageField label={__('Chevron Icon', 'mbn-theme')} url={data.chevronIconUrl} id={data.chevronIconId} onSelect={(m) => setData({ chevronIconUrl: m.url, chevronIconId: m.id })} onRemove={() => setData({ chevronIconUrl: '', chevronIconId: 0 })} maxWidth="50px" />
       <ImageField label={__('Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} />
+      <ImageHeightControl value={data.imageHeight} onChange={(v) => setData({ imageHeight: v })} />
     </Fragment>
   );
 }

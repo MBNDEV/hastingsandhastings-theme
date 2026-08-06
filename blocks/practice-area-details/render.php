@@ -33,6 +33,25 @@ if ( ! function_exists( 'mbn_pad_alt_text' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_split_image_style' ) ) {
+  /**
+   * Build the inline style attribute overriding a split image's height.
+   *
+   * Sets the --pad-split-image-height custom property, which the CSS height
+   * rules fall back to 370px/280px/220px (desktop/tablet/mobile) when unset.
+   *
+   * @param mixed $height Pixel number, numeric string, 'auto', or empty for the theme default.
+   * @return string A ` style="..."` attribute, or '' when no override is set.
+   */
+  function mbn_pad_split_image_style( $height ) {
+    if ( '' === $height || null === $height ) {
+      return '';
+    }
+    $value = ( 'auto' === $height ) ? 'auto' : intval( $height ) . 'px';
+    return ' style="--pad-split-image-height: ' . esc_attr( $value ) . ';"';
+  }
+}
+
 if ( ! function_exists( 'mbn_pad_render_section_title' ) ) {
   /**
    * Render the optional Section Title band above a component.
@@ -410,7 +429,7 @@ if ( ! function_exists( 'mbn_pad_render_after_accident' ) ) {
         <?php endif; ?>
         <?php echo mbn_pad_kses( $split['text'] ?? '' ); ?>
       </div>
-      <figure class="pad-split__image">
+      <figure class="pad-split__image"<?php echo mbn_pad_split_image_style( $split['imageHeight'] ?? '' ); ?>>
         <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $alt_text ); ?>" loading="lazy">
       </figure>
     </div>
@@ -596,7 +615,7 @@ if ( ! function_exists( 'mbn_pad_render_time_limit' ) ) {
       <div class="pad-split__text">
         <?php echo mbn_pad_kses( $data['text'] ?? '' ); ?>
       </div>
-      <figure class="pad-split__image">
+      <figure class="pad-split__image"<?php echo mbn_pad_split_image_style( $data['imageHeight'] ?? '' ); ?>>
         <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $alt ); ?>" loading="lazy">
       </figure>
     </div>
@@ -627,7 +646,7 @@ if ( ! function_exists( 'mbn_pad_render_insurance' ) ) {
         <?php endif; ?>
         <?php echo mbn_pad_kses( $data['text'] ?? '' ); ?>
       </div>
-      <figure class="pad-split__image">
+      <figure class="pad-split__image"<?php echo mbn_pad_split_image_style( $data['imageHeight'] ?? '' ); ?>>
         <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $alt ); ?>" loading="lazy">
       </figure>
     </div>
@@ -855,7 +874,7 @@ if ( ! function_exists( 'mbn_pad_render_documentation' ) ) {
         <?php endif; ?>
         <?php echo mbn_pad_kses( $data['text'] ?? '' ); ?>
       </div>
-      <figure class="pad-split__image">
+      <figure class="pad-split__image"<?php echo mbn_pad_split_image_style( $data['imageHeight'] ?? '' ); ?>>
         <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $alt ); ?>" loading="lazy">
       </figure>
     </div>
@@ -945,7 +964,7 @@ if ( ! function_exists( 'mbn_pad_render_third_party' ) ) {
         </ul>
         <?php endif; ?>
       </div>
-      <figure class="pad-split__image">
+      <figure class="pad-split__image"<?php echo mbn_pad_split_image_style( $data['imageHeight'] ?? '' ); ?>>
         <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $alt ); ?>" loading="lazy">
       </figure>
     </div>
