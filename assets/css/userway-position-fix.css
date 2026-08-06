@@ -1,0 +1,24 @@
+/**
+ * Reposition the UserWay accessibility widget on mobile so it clears both:
+ *  - the header's hamburger menu button (top-right, UserWay's own default spot)
+ *  - the sticky mobile Call/Contact bar in the footer (~88px tall, bottom-anchored)
+ *
+ * UserWay injects its own markup client-side and sets its position via inline
+ * styles, so this needs !important. The exact container selector isn't
+ * officially documented — `#userwayaccessibilityicon` and `div.uai` are the
+ * two most consistently reported across UserWay's own examples and community
+ * overrides, so both are targeted; an unmatched selector is simply a no-op.
+ *
+ * @package CustomTheme
+ */
+
+@media screen and (max-width: 1023px) {
+  #userwayaccessibilityicon,
+  .uwy div.userway_buttons_wrapper {
+    top: auto !important;
+    left: auto !important;
+    right: 16px !important;
+    bottom: 80px !important;
+    transform: none !important;
+  }
+}

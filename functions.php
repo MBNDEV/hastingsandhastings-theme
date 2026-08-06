@@ -159,6 +159,20 @@ function hastingsandhastings_enqueue_scroll_animations() {
 }
 add_action( 'wp_enqueue_scripts', 'hastingsandhastings_enqueue_scroll_animations' );
 
+/**
+ * Reposition the third-party UserWay accessibility widget on mobile so it
+ * clears the header's hamburger button and the sticky mobile Call/Contact bar.
+ */
+function hastingsandhastings_enqueue_userway_position_fix() {
+	wp_enqueue_style(
+      'hastingsandhastings-userway-position-fix',
+      get_theme_file_uri( 'assets/css/userway-position-fix.css' ),
+      array(),
+      filemtime( get_theme_file_path( 'assets/css/userway-position-fix.css' ) )
+	);
+}
+add_action( 'wp_enqueue_scripts', 'hastingsandhastings_enqueue_userway_position_fix' );
+
 PucFactory::buildUpdateChecker(
   'https://github.com/MBNDEV/mbn-theme',
   get_theme_file_path( 'style.css' ),
