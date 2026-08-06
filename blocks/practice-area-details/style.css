@@ -203,6 +203,71 @@
   font-weight: 400;
 }
 
+/* ----- Split popup modal (triggered by <a href="#popup"> in the text) ----- */
+.pad-split__modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.pad-split__modal[hidden] {
+  display: none;
+}
+.pad-split__modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+}
+.pad-split__modal-panel {
+  position: relative;
+  background: var(--pad-white);
+  border-radius: 16px;
+  padding: 40px;
+  width: min(90vw, 620px);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+.pad-split__modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.pad-split__modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: var(--pad-font-secondary);
+  font-size: 14px;
+  line-height: 1.428;
+  color: #000000;
+}
+.pad-split__modal-body p,
+.pad-split__modal-body ul,
+.pad-split__modal-body ol {
+  margin: 0;
+}
+.pad-split__modal-body ul {
+  list-style: disc;
+  padding-left: 18px;
+}
+.pad-split__modal-body ol {
+  list-style: decimal;
+  padding-left: 15px;
+}
+
 /* ----- Button ----- */
 .pad-btn {
   display: inline-flex;

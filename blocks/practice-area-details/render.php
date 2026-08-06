@@ -53,6 +53,36 @@ if ( ! function_exists( 'mbn_pad_split_image_style' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_split_modal' ) ) {
+  /**
+   * Render an optional popup modal for a pad-split item.
+   *
+   * Triggered by an <a href="#popup"> link inside the split's text, matched
+   * by DOM proximity (closest .pad-split) in script.js — no unique id needed.
+   *
+   * @param array $item The split item or section data holding 'modalContent'.
+   */
+  function mbn_pad_split_modal( $item ) {
+    $content = $item['modalContent'] ?? '';
+    if ( empty( $content ) ) {
+      return;
+    }
+    ?>
+    <div class="pad-split__modal" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'More information', 'mbn-theme' ); ?>" hidden>
+      <div class="pad-split__modal-backdrop"></div>
+      <div class="pad-split__modal-panel">
+        <button class="pad-split__modal-close" aria-label="<?php esc_attr_e( 'Close', 'mbn-theme' ); ?>">
+          <svg viewBox="0 0 13.15 13.15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="13" height="13">
+            <path d="M12.1748 0.5C12.3391 0.5 12.4411 0.548504 12.5215 0.628906C12.6017 0.709215 12.6503 0.810702 12.6504 0.974609C12.6504 1.13881 12.6018 1.2409 12.5215 1.32129L7.26758 6.5752L7.62109 6.92871L12.5215 11.8281C12.6019 11.9085 12.6504 12.0106 12.6504 12.1748C12.6504 12.3391 12.6019 12.4411 12.5215 12.5215C12.4411 12.6019 12.3391 12.6504 12.1748 12.6504C12.0106 12.6504 11.9085 12.6019 11.8281 12.5215L6.92871 7.62109L6.5752 7.26758L1.32129 12.5215C1.2409 12.6018 1.13881 12.6504 0.974609 12.6504C0.810702 12.6503 0.709215 12.6017 0.628906 12.5215C0.548504 12.4411 0.5 12.3391 0.5 12.1748C0.500038 12.0106 0.548536 11.9085 0.628906 11.8281L5.88184 6.5752L5.52832 6.22168L0.628906 1.32129C0.548504 1.24089 0.5 1.13888 0.5 0.974609C0.500076 0.810568 0.548567 0.709245 0.628906 0.628906C0.709245 0.548567 0.810568 0.500076 0.974609 0.5C1.13888 0.5 1.24089 0.548504 1.32129 0.628906L6.22168 5.52832L6.5752 5.88184L11.8281 0.628906C11.9085 0.548536 12.0106 0.500038 12.1748 0.5Z" fill="black"/>
+          </svg>
+        </button>
+        <div class="pad-split__modal-body"><?php echo mbn_pad_kses( $content ); ?></div>
+      </div>
+    </div>
+    <?php
+  }
+}
+
 if ( ! function_exists( 'mbn_pad_render_section_title' ) ) {
   /**
    * Render the optional Section Title band above a component.
@@ -433,6 +463,7 @@ if ( ! function_exists( 'mbn_pad_render_after_accident' ) ) {
       <figure class="pad-split__image" style="<?php echo esc_attr( mbn_pad_split_image_style( $split['imageHeight'] ?? '' ) ); ?>">
         <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $alt_text ); ?>" loading="lazy">
       </figure>
+      <?php mbn_pad_split_modal( $split ); ?>
     </div>
     <?php endforeach; ?>
   </div>
@@ -619,6 +650,7 @@ if ( ! function_exists( 'mbn_pad_render_time_limit' ) ) {
       <figure class="pad-split__image" style="<?php echo esc_attr( mbn_pad_split_image_style( $data['imageHeight'] ?? '' ) ); ?>">
         <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $alt ); ?>" loading="lazy">
       </figure>
+      <?php mbn_pad_split_modal( $data ); ?>
     </div>
   </div>
 </section>
@@ -650,6 +682,7 @@ if ( ! function_exists( 'mbn_pad_render_insurance' ) ) {
       <figure class="pad-split__image" style="<?php echo esc_attr( mbn_pad_split_image_style( $data['imageHeight'] ?? '' ) ); ?>">
         <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $alt ); ?>" loading="lazy">
       </figure>
+      <?php mbn_pad_split_modal( $data ); ?>
     </div>
   </div>
 </section>
@@ -878,6 +911,7 @@ if ( ! function_exists( 'mbn_pad_render_documentation' ) ) {
       <figure class="pad-split__image" style="<?php echo esc_attr( mbn_pad_split_image_style( $data['imageHeight'] ?? '' ) ); ?>">
         <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $alt ); ?>" loading="lazy">
       </figure>
+      <?php mbn_pad_split_modal( $data ); ?>
     </div>
   </div>
 </section>
@@ -968,6 +1002,7 @@ if ( ! function_exists( 'mbn_pad_render_third_party' ) ) {
       <figure class="pad-split__image" style="<?php echo esc_attr( mbn_pad_split_image_style( $data['imageHeight'] ?? '' ) ); ?>">
         <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $alt ); ?>" loading="lazy">
       </figure>
+      <?php mbn_pad_split_modal( $data ); ?>
     </div>
   </div>
 </section>
