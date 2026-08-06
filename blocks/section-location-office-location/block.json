@@ -32,7 +32,8 @@
           "addressUrl": "",
           "phoneNumber": "(602) 433-2323",
           "phoneUrl": "tel:6024332323",
-          "byAppointmentOnly": false
+          "byAppointmentOnly": false,
+          "otherNumbers": []
         },
         {
           "name": "Northwest Peoria",
@@ -40,7 +41,8 @@
           "addressUrl": "",
           "phoneNumber": "(480) 706-1100",
           "phoneUrl": "tel:4807061100",
-          "byAppointmentOnly": false
+          "byAppointmentOnly": false,
+          "otherNumbers": []
         },
         {
           "name": "Mesa",
@@ -48,7 +50,8 @@
           "addressUrl": "",
           "phoneNumber": "(480) 649-1800",
           "phoneUrl": "tel:4806491800",
-          "byAppointmentOnly": false
+          "byAppointmentOnly": false,
+          "otherNumbers": []
         }
       ]
     },
