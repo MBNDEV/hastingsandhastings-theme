@@ -48,19 +48,19 @@ function emptyData(type) {
     case 'steps':
       return { backgroundColor: '', heading: '', introText: '', chevronIconUrl: '', chevronIconId: 0, listType: 'ol', plainListText: '', accordion: [], afterText: '' };
     case 'timeLimit':
-      return { backgroundColor: '', heading: '', subtitle: '', text: '', photoUrl: '', photoId: 0, imageHeight: '' };
+      return { backgroundColor: '', heading: '', subtitle: '', text: '', photoUrl: '', photoId: 0, imageHeight: '', modalContent: '' };
     case 'insurance':
-      return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0, imageHeight: '' };
+      return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0, imageHeight: '', modalContent: '' };
     case 'liability':
       return { heading: '', subtitle: '', subtitleTwoCol: false, introHeading: '', introText: '', backgroundColor: 'bg-white', paddingTop: '', paddingBottom: '', afterText: '', items: [] };
     case 'compensation':
       return { backgroundColor: '', heading: '', subtitle: '', introHeading: '', introText: '', afterText: '', masonry: false, items: [] };
     case 'documentation':
-      return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0, imageHeight: '' };
+      return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0, imageHeight: '', modalContent: '' };
     case 'attorneys':
       return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0, badgeCards: [] };
     case 'thirdParty':
-      return { backgroundColor: '', text: '', items: [], chevronIconUrl: '', chevronIconId: 0, photoUrl: '', photoId: 0, imageHeight: '' };
+      return { backgroundColor: '', text: '', items: [], chevronIconUrl: '', chevronIconId: 0, photoUrl: '', photoId: 0, imageHeight: '', modalContent: '' };
     case 'commonCauses':
       return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0, items: [] };
     case 'testimonials':
@@ -258,6 +258,13 @@ function SortableSplit({ item, index, updateItem, removeItem, duplicateItem }) {
         onRemove={() => updateItem(index, { imageUrl: '', imageId: 0 })}
       />
       <ImageHeightControl value={item.imageHeight} onChange={(v) => updateItem(index, { imageHeight: v })} />
+      <TextareaControl
+        label={__('Popup Content (HTML, optional)', 'mbn-theme')}
+        value={item.modalContent || ''}
+        onChange={(v) => updateItem(index, { modalContent: v })}
+        rows={5}
+        help={__('Shown in a popup when an <a href="#popup"> link in the Text field above is clicked. Lists (<ol>/<ul>) are supported. Leave empty to disable.', 'mbn-theme')}
+      />
     </div>
   );
 }
@@ -567,7 +574,7 @@ function AfterAccidentEditor({ data, setData, sensors }) {
     <Fragment>
       <TextControl label={__('Heading', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} />
       <h4 style={{ marginTop: '20px' }}>{__('Split Sections', 'mbn-theme')}</h4>
-      <Repeater field={splits} sensors={sensors} ItemComponent={SortableSplit} addLabel={__('+ Add Split Section', 'mbn-theme')} newItem={{ text: '', imageUrl: '', imageId: 0, layout: 'text-left', imageHeight: '' }} />
+      <Repeater field={splits} sensors={sensors} ItemComponent={SortableSplit} addLabel={__('+ Add Split Section', 'mbn-theme')} newItem={{ text: '', imageUrl: '', imageId: 0, layout: 'text-left', imageHeight: '', modalContent: '' }} />
     </Fragment>
   );
 }
@@ -608,6 +615,13 @@ function TimeLimitEditor({ data, setData }) {
       <TextareaControl label={__('Text (HTML)', 'mbn-theme')} value={data.text || ''} onChange={(v) => setData({ text: v })} rows={5} />
       <ImageField label={__('Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} />
       <ImageHeightControl value={data.imageHeight} onChange={(v) => setData({ imageHeight: v })} />
+      <TextareaControl
+        label={__('Popup Content (HTML, optional)', 'mbn-theme')}
+        value={data.modalContent || ''}
+        onChange={(v) => setData({ modalContent: v })}
+        rows={5}
+        help={__('Shown in a popup when an <a href="#popup"> link in the Text field above is clicked. Lists (<ol>/<ul>) are supported. Leave empty to disable.', 'mbn-theme')}
+      />
     </Fragment>
   );
 }
@@ -619,6 +633,13 @@ function InsuranceEditor({ data, setData }) {
       <TextareaControl label={__('Text (HTML)', 'mbn-theme')} value={data.text || ''} onChange={(v) => setData({ text: v })} rows={5} />
       <ImageField label={__('Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} />
       <ImageHeightControl value={data.imageHeight} onChange={(v) => setData({ imageHeight: v })} />
+      <TextareaControl
+        label={__('Popup Content (HTML, optional)', 'mbn-theme')}
+        value={data.modalContent || ''}
+        onChange={(v) => setData({ modalContent: v })}
+        rows={5}
+        help={__('Shown in a popup when an <a href="#popup"> link in the Text field above is clicked. Lists (<ol>/<ul>) are supported. Leave empty to disable.', 'mbn-theme')}
+      />
     </Fragment>
   );
 }
@@ -682,6 +703,13 @@ function DocumentationEditor({ data, setData }) {
       <TextareaControl label={__('Text (HTML)', 'mbn-theme')} value={data.text || ''} onChange={(v) => setData({ text: v })} rows={5} />
       <ImageField label={__('Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} />
       <ImageHeightControl value={data.imageHeight} onChange={(v) => setData({ imageHeight: v })} />
+      <TextareaControl
+        label={__('Popup Content (HTML, optional)', 'mbn-theme')}
+        value={data.modalContent || ''}
+        onChange={(v) => setData({ modalContent: v })}
+        rows={5}
+        help={__('Shown in a popup when an <a href="#popup"> link in the Text field above is clicked. Lists (<ol>/<ul>) are supported. Leave empty to disable.', 'mbn-theme')}
+      />
     </Fragment>
   );
 }
@@ -712,6 +740,13 @@ function ThirdPartyEditor({ data, setData, sensors }) {
       <ImageField label={__('Chevron Icon', 'mbn-theme')} url={data.chevronIconUrl} id={data.chevronIconId} onSelect={(m) => setData({ chevronIconUrl: m.url, chevronIconId: m.id })} onRemove={() => setData({ chevronIconUrl: '', chevronIconId: 0 })} maxWidth="50px" />
       <ImageField label={__('Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} />
       <ImageHeightControl value={data.imageHeight} onChange={(v) => setData({ imageHeight: v })} />
+      <TextareaControl
+        label={__('Popup Content (HTML, optional)', 'mbn-theme')}
+        value={data.modalContent || ''}
+        onChange={(v) => setData({ modalContent: v })}
+        rows={5}
+        help={__('Shown in a popup when an <a href="#popup"> link in the Text field above is clicked. Lists (<ol>/<ul>) are supported. Leave empty to disable.', 'mbn-theme')}
+      />
     </Fragment>
   );
 }
