@@ -277,12 +277,14 @@ if ( ! function_exists( 'mbn_pad_render_case_result' ) ) {
     if ( ! $has_photo && ! $has_card ) {
       return;
     }
-    $photo   = $has_photo ? $data['photoUrl'] : $assets . '/case-result-photo.jpg';
-    $tag     = $data['tag'] ?? '';
-    $section = mbn_pad_section_style( $data );
+    $photo       = $has_photo ? $data['photoUrl'] : $assets . '/case-result-photo.jpg';
+    $tag         = $data['tag'] ?? '';
+    $section     = mbn_pad_section_style( $data );
+    $align_items = $data['alignItems'] ?? 'start';
+    $align_class = in_array( $align_items, array( 'center', 'end', 'stretch', 'baseline' ), true ) ? ' pad-case-result--align-' . $align_items : '';
     ?>
 <section class="<?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
-  <div class="pad-case-result pad-container">
+  <div class="pad-case-result pad-container<?php echo esc_attr( $align_class ); ?>">
     <?php if ( $has_photo ) : ?>
     <figure class="pad-case-result__photo">
       <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $tag . ' case result' ); ?>">

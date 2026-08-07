@@ -40,7 +40,7 @@ function emptyData(type) {
     case 'whyHire':
       return { backgroundColor: '', heading: '', subtitle: '', features: [], photoUrl: '', photoId: 0, photoHidden: false, badge90YearsUrl: '', badge90YearsId: 0, badge90YearsHidden: false, mapBackgroundUrl: '', mapBackgroundId: 0, mapBackgroundHidden: false, badgeNoFeeUrl: '', badgeNoFeeId: 0, badgeNoFeeHidden: false, freeEvaluationsTitle: '', freeEvaluationsDescription: '', millionsRecoveredTitle: '', millionsRecoveredDescription: '' };
     case 'caseResult':
-      return { backgroundColor: '', tag: '', results: [], title: '', description: '', photoUrl: '', photoId: 0 };
+      return { backgroundColor: '', tag: '', results: [], title: '', description: '', photoUrl: '', photoId: 0, alignItems: 'start' };
     case 'cta':
       return { backgroundColor: '', logoUrl: '', logoId: 0, textureUrl: '', textureId: 0, heading: '', subtext: '', buttonText: '', buttonUrl: '', phoneLabel: '', phoneNumber: '' };
     case 'afterAccident':
@@ -504,6 +504,19 @@ function CaseResultEditor({ data, setData, sensors }) {
   const results = makeArrayField(data, setData, 'results');
   return (
     <Fragment>
+      <SelectControl
+        label={__('Vertical Alignment', 'mbn-theme')}
+        value={data.alignItems || 'start'}
+        options={[
+          { label: __('Top', 'mbn-theme'), value: 'start' },
+          { label: __('Center', 'mbn-theme'), value: 'center' },
+          { label: __('Bottom', 'mbn-theme'), value: 'end' },
+          { label: __('Stretch', 'mbn-theme'), value: 'stretch' },
+          { label: __('Baseline', 'mbn-theme'), value: 'baseline' },
+        ]}
+        onChange={(v) => setData({ alignItems: v })}
+        help={__('Aligns the photo and card columns within the section.', 'mbn-theme')}
+      />
       <TextControl label={__('Tag', 'mbn-theme')} value={data.tag || ''} onChange={(v) => setData({ tag: v })} />
       <h4 style={{ marginTop: '20px' }}>{__('Amounts', 'mbn-theme')}</h4>
       <p style={{ margin: '0 0 8px', fontSize: '12px', color: '#666' }}>{__('One amount fills the row. Two or more display as bordered cards, two per row. Set Width to Full to span both columns.', 'mbn-theme')}</p>

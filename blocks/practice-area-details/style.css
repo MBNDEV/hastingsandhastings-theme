@@ -611,6 +611,18 @@
   align-items: start;
   margin-bottom: 48px;
 }
+.pad-case-result--align-center {
+  align-items: center;
+}
+.pad-case-result--align-end {
+  align-items: end;
+}
+.pad-case-result--align-stretch {
+  align-items: stretch;
+}
+.pad-case-result--align-baseline {
+  align-items: baseline;
+}
 
 .pad-case-result__photo {
   margin: 0;
