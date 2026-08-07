@@ -342,6 +342,15 @@ function SortableCaseAmount({ item, index, updateItem, removeItem, duplicateItem
   return (
     <div ref={setNodeRef} style={itemStyle(transform, transition, isDragging)}>
       <ItemHeader attributes={attributes} listeners={listeners} label={__('Amount', 'mbn-theme')} index={index} onDuplicate={() => duplicateItem(index)} onRemove={() => removeItem(index)} />
+      <SelectControl
+        label={__('Width', 'mbn-theme')}
+        value={item.span || '1'}
+        options={[
+          { label: __('Half Width (1 column)', 'mbn-theme'), value: '1' },
+          { label: __('Full Width (2 columns)', 'mbn-theme'), value: '2' },
+        ]}
+        onChange={(v) => updateItem(index, { span: v })}
+      />
       <TextareaControl label={__('Amount (HTML allowed)', 'mbn-theme')} value={item.amount} onChange={(v) => updateItem(index, { amount: v })} rows={2} />
       <TextareaControl label={__('Description (HTML allowed)', 'mbn-theme')} value={item.description} onChange={(v) => updateItem(index, { description: v })} rows={3} style={{ marginTop: '10px' }} />
     </div>
@@ -497,8 +506,8 @@ function CaseResultEditor({ data, setData, sensors }) {
     <Fragment>
       <TextControl label={__('Tag', 'mbn-theme')} value={data.tag || ''} onChange={(v) => setData({ tag: v })} />
       <h4 style={{ marginTop: '20px' }}>{__('Amounts', 'mbn-theme')}</h4>
-      <p style={{ margin: '0 0 8px', fontSize: '12px', color: '#666' }}>{__('One amount fills the row. Two or more display as bordered cards, two per row.', 'mbn-theme')}</p>
-      <Repeater field={results} sensors={sensors} ItemComponent={SortableCaseAmount} addLabel={__('+ Add Amount', 'mbn-theme')} newItem={{ amount: '', description: '' }} />
+      <p style={{ margin: '0 0 8px', fontSize: '12px', color: '#666' }}>{__('One amount fills the row. Two or more display as bordered cards, two per row. Set Width to Full to span both columns.', 'mbn-theme')}</p>
+      <Repeater field={results} sensors={sensors} ItemComponent={SortableCaseAmount} addLabel={__('+ Add Amount', 'mbn-theme')} newItem={{ amount: '', description: '', span: '1' }} />
       <hr style={{ margin: '20px 0' }} />
       <TextControl label={__('Title', 'mbn-theme')} value={data.title || ''} onChange={(v) => setData({ title: v })} />
       <TextareaControl label={__('Description (HTML)', 'mbn-theme')} value={data.description || ''} onChange={(v) => setData({ description: v })} rows={3} />

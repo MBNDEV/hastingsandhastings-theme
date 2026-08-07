@@ -668,6 +668,10 @@
   border-radius: 16px;
   padding: 24px;
 }
+.pad-case-result__results:not(.pad-case-result__results--single)
+  .pad-case-result__result--span-2 {
+  grid-column: span 2;
+}
 
 .pad-case-result__amount {
   font-family: var(--pad-font-primary);
@@ -711,6 +715,14 @@
   line-height: 1.556;
   color: var(--pad-text-body);
   margin: 0;
+}
+.pad-case-result__desc a{
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  color: inherit;
+}
+.pad-case-result__desc a:hover{
+  color: var(--pad-text-link);
 }
 
 /* ============================================================
@@ -1209,6 +1221,8 @@
   overflow: hidden;
   margin-left: auto;
   margin-right: -40px;
+  display: flex;
+  align-items: flex-end;
 }
 
 .pad-attorneys__attorney {
@@ -1895,6 +1909,10 @@ ol.pad-list-injuries__list {
   /* Case result */
   .pad-case-result__results {
     grid-template-columns: 1fr;
+  }
+  .pad-case-result__results:not(.pad-case-result__results--single)
+    .pad-case-result__result--span-2 {
+    grid-column: span 1;
   }
   .pad-case-result__card {
     padding: 20px 24px;
