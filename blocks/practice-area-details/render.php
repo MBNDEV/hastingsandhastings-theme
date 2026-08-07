@@ -304,8 +304,9 @@ if ( ! function_exists( 'mbn_pad_render_case_result_amounts' ) ) {
    * Render the amount/description cards of a Case Result section.
    *
    * A single amount fills the row; two or more render as bordered cards.
+   * An item may span both grid columns via its `span` value.
    *
-   * @param array $results List of { amount, description } items.
+   * @param array $results List of { amount, description, span } items.
    */
   function mbn_pad_render_case_result_amounts( $results ) {
     if ( empty( $results ) || ! is_array( $results ) ) {
@@ -314,9 +315,10 @@ if ( ! function_exists( 'mbn_pad_render_case_result_amounts' ) ) {
     $single = ( count( $results ) <= 1 ) ? ' pad-case-result__results--single' : '';
     printf( '<div class="pad-case-result__results%s">', esc_attr( $single ) );
     foreach ( $results as $result ) {
-      $amount = $result['amount'] ?? '';
-      $desc   = $result['description'] ?? '';
-      echo '<div class="pad-case-result__result">';
+      $amount     = $result['amount'] ?? '';
+      $desc       = $result['description'] ?? '';
+      $span_class = ( '2' === (string) ( $result['span'] ?? '1' ) ) ? ' pad-case-result__result--span-2' : '';
+      echo '<div class="pad-case-result__result' . esc_attr( $span_class ) . '">';
       if ( '' !== $amount ) {
         echo '<div class="pad-case-result__amount">' . mbn_pad_kses( $amount ) . '</div>';
       }
