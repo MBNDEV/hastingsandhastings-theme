@@ -201,6 +201,64 @@ if ( ! function_exists( 'mbn_lp_set_testimonials' ) ) {
 }
 
 /**
+ * Lead form for each landing page, by page ID.
+ *
+ * ⚠ Page IDs are per-environment. These are the STAGING ids — production will
+ * have different ones, and a page that is not listed here falls back to the
+ * variant default, which may be the wrong form. When these pages go live,
+ * either update this map or set the ID on each page in the editor
+ * ("Landing Page Form" in the sidebar), which travels with the page.
+ *
+ * @return array<int, int> Page ID => Gravity Forms form ID.
+ */
+function mbn_lp_form_map() {
+	/**
+	 * Filters the page-to-form map, so an environment can supply its own
+	 * without editing the theme.
+	 *
+	 * @param array<int, int> $map Page ID => form ID.
+	 */
+	return (array) apply_filters(
+		'mbn_lp_form_map',
+		array(
+			14101 => 5,
+			14105 => 6,
+			14103 => 7,
+		)
+	);
+}
+
+if ( ! function_exists( 'mbn_lp_form_id_for' ) ) {
+	/**
+	 * Resolve which Gravity Form a landing page should render.
+	 *
+	 * In order: the page's own field, the hard-coded map, then the default for
+	 * the language variant.
+	 *
+	 * @param int    $page_id Page ID.
+	 * @param string $variant Language variant ('en' or 'es').
+	 * @return int
+	 */
+	function mbn_lp_form_id_for( $page_id, $variant = 'en' ) {
+		$page_id = (int) $page_id;
+
+		$per_page = $page_id > 0 ? (int) get_post_meta( $page_id, MBN_LP_FORM_META_KEY, true ) : 0;
+
+		if ( $per_page > 0 ) {
+			return $per_page;
+		}
+
+		$map = mbn_lp_form_map();
+
+		if ( isset( $map[ $page_id ] ) && (int) $map[ $page_id ] > 0 ) {
+			return (int) $map[ $page_id ];
+		}
+
+		return 'es' === $variant ? 7 : 5;
+	}
+}
+
+/**
  * Register the per-page lead form field.
  *
  * Several landing pages share one template but route leads to different forms,
@@ -230,7 +288,8 @@ function mbn_lp_render_form_meta_box( $post ) {
 	$template = get_page_template_slug( $post->ID );
 	$is_lp    = in_array( $template, array( MBN_LP_TEMPLATE, MBN_LP_TEMPLATE_ES, 'page-templates/template-hastings-lp.php' ), true );
 	$value    = (int) get_post_meta( $post->ID, MBN_LP_FORM_META_KEY, true );
-	$fallback = MBN_LP_TEMPLATE_ES === $template ? 7 : 5;
+	$map      = mbn_lp_form_map();
+	$fallback = isset( $map[ $post->ID ] ) ? (int) $map[ $post->ID ] : ( MBN_LP_TEMPLATE_ES === $template ? 7 : 5 );
 
 	wp_nonce_field( 'mbn_lp_form_metabox', 'mbn_lp_form_nonce' );
 
@@ -406,17 +465,13 @@ if ( ! function_exists( 'mbn_lp_render_form' ) ) {
 	function mbn_lp_render_form() {
 		$variant = mbn_lp_variant();
 
-		// Whatever this page was given in the editor wins; otherwise the variant default.
-		$per_page = (int) get_post_meta( get_the_ID(), MBN_LP_FORM_META_KEY, true );
-		$default  = $per_page > 0 ? $per_page : ( 'es' === $variant ? 7 : 5 );
-
 		/**
 		 * Filters the Gravity Forms form ID used by the landing page.
 		 *
-		 * @param int    $form_id Per-page value if set, else the variant default.
+		 * @param int    $form_id Resolved from the page's field, the form map, or the variant default.
 		 * @param string $variant Language variant ('en' or 'es').
 		 */
-		$form_id = (int) apply_filters( 'mbn_lp_form_id', $default, $variant );
+		$form_id = (int) apply_filters( 'mbn_lp_form_id', mbn_lp_form_id_for( get_the_ID(), $variant ), $variant );
 
 		if ( $form_id > 0 && function_exists( 'gravity_form' ) && class_exists( 'GFAPI' ) ) {
 			$form = GFAPI::get_form( $form_id );
