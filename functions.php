@@ -102,9 +102,7 @@ require_once get_theme_file_path( 'inc/includes-case-results.php' );            
 require_once get_theme_file_path( 'inc/includes-handwritten-reviews.php' );     // Handwritten Reviews CPT, meta box, and REST endpoint.
 require_once get_theme_file_path( 'inc/includes-practice-area-cpt.php' );       // Practice Area custom post type.
 require_once get_theme_file_path( 'inc/includes-practice-area-fields.php' );    // Practice Area ACF field groups.
-require_once get_theme_file_path( 'inc/includes-practice-area-migrated.php' );  // Old-site migration compatibility (sidebar links, image alt text).
 require_once get_theme_file_path( 'inc/includes-lp-template.php' );             // Landing Page (LP) template assets and lead form.
-
 /**
  * Enqueue scroll animation assets (frontend only).
  */
@@ -160,6 +158,20 @@ function hastingsandhastings_enqueue_scroll_animations() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'hastingsandhastings_enqueue_scroll_animations' );
+
+/**
+ * Reposition the third-party UserWay accessibility widget on mobile so it
+ * clears the header's hamburger button and the sticky mobile Call/Contact bar.
+ */
+function hastingsandhastings_enqueue_userway_position_fix() {
+	wp_enqueue_style(
+      'hastingsandhastings-userway-position-fix',
+      get_theme_file_uri( 'assets/css/userway-position-fix.css' ),
+      array(),
+      filemtime( get_theme_file_path( 'assets/css/userway-position-fix.css' ) )
+	);
+}
+add_action( 'wp_enqueue_scripts', 'hastingsandhastings_enqueue_userway_position_fix' );
 
 PucFactory::buildUpdateChecker(
   'https://github.com/MBNDEV/mbn-theme',
