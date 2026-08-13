@@ -44,7 +44,7 @@ function emptyData(type) {
     case 'cta':
       return { backgroundColor: '', logoUrl: '', logoId: 0, textureUrl: '', textureId: 0, heading: '', subtext: '', buttonText: '', buttonUrl: '', phoneLabel: '', phoneNumber: '' };
     case 'afterAccident':
-      return { backgroundColor: '', heading: '', splits: [] };
+      return { backgroundColor: '', heading: '', splits: [], afterText: '' };
     case 'steps':
       return { backgroundColor: '', heading: '', introText: '', chevronIconUrl: '', chevronIconId: 0, listType: 'ol', plainListText: '', accordion: [], afterText: '' };
     case 'timeLimit':
@@ -597,6 +597,7 @@ function AfterAccidentEditor({ data, setData, sensors }) {
       <TextControl label={__('Heading', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} />
       <h4 style={{ marginTop: '20px' }}>{__('Split Sections', 'mbn-theme')}</h4>
       <Repeater field={splits} sensors={sensors} ItemComponent={SortableSplit} addLabel={__('+ Add Split Section', 'mbn-theme')} newItem={{ text: '', imageUrl: '', imageId: 0, layout: 'text-left', imageHeight: '', modalContent: '' }} />
+      <TextareaControl label={__('Text After Sections (HTML)', 'mbn-theme')} value={data.afterText || ''} onChange={(v) => setData({ afterText: v })} rows={4} help={__('Optional centered paragraph(s) shown below the split sections. Leave empty to hide.', 'mbn-theme')} style={{ marginTop: '20px' }} />
     </Fragment>
   );
 }

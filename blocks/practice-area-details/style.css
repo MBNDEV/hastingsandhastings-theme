@@ -743,6 +743,29 @@
 .pad-after-accident {
   padding-block: var(--pad-section-pad-v);
 }
+.pad-after-accident__after {
+  margin-top: 48px;
+  text-align: center;
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--pad-text-body);
+  word-break: break-word;
+}
+.pad-after-accident__after p {
+  margin: 0 0 16px;
+}
+.pad-after-accident__after p:last-child {
+  margin-bottom: 0;
+}
+@media screen and (max-width: 767px) {
+  .pad-after-accident__after {
+    margin-top: 32px;
+  }
+  .pad-after-accident__after p {
+    font-size: 16px;
+  }
+}
 
 /* ============================================================
    SECTION 3 · Steps
