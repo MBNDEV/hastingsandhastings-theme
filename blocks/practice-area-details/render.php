@@ -436,6 +436,37 @@ if ( ! function_exists( 'mbn_pad_render_cta' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_render_after_accident_split' ) ) {
+  /**
+   * Render a single split item of an After Accident section.
+   *
+   * @param array  $split    Split item data.
+   * @param int    $index    Zero-based split index, used for the fallback image and heading placement.
+   * @param string $heading  Section heading, shown above the first split only.
+   * @param string $assets   Block assets URI.
+   * @param array  $defaults Fallback image filenames, cycled by index.
+   */
+  function mbn_pad_render_after_accident_split( $split, $index, $heading, $assets, $defaults ) {
+    $layout_class = 'pad-split--' . esc_attr( $split['layout'] ?? 'text-left' );
+    $image_url    = ! empty( $split['imageUrl'] ) ? $split['imageUrl'] : $assets . '/' . $defaults[ $index % count( $defaults ) ];
+    $alt_text     = mbn_pad_alt_text( $split['imageId'] ?? 0, __( 'Car accident scene', 'mbn-theme' ) );
+    ?>
+    <div class="pad-split <?php echo esc_attr( $layout_class ); ?>">
+      <div class="pad-split__text">
+        <?php if ( ! empty( $heading ) && 0 === $index ) : ?>
+        <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $heading ); ?></h2>
+        <?php endif; ?>
+        <?php echo mbn_pad_kses( $split['text'] ?? '' ); ?>
+      </div>
+      <figure class="pad-split__image" style="<?php echo esc_attr( mbn_pad_split_image_style( $split['imageHeight'] ?? '' ) ); ?>">
+        <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $alt_text ); ?>" loading="lazy">
+      </figure>
+      <?php mbn_pad_split_modal( $split ); ?>
+    </div>
+    <?php
+  }
+}
+
 if ( ! function_exists( 'mbn_pad_render_after_accident' ) ) {
   /**
    * Render an After Accident section.
@@ -452,25 +483,14 @@ if ( ! function_exists( 'mbn_pad_render_after_accident' ) ) {
 <section class="pad-after-accident <?php echo esc_attr( $section['class'] ); ?>" style="<?php echo esc_attr( $section['style'] ); ?>">
   <div class="pad-container">
     <?php foreach ( $splits as $index => $split ) : ?>
-      <?php
-      $layout_class = 'pad-split--' . esc_attr( $split['layout'] ?? 'text-left' );
-      $image_url    = ! empty( $split['imageUrl'] ) ? $split['imageUrl'] : $assets . '/' . $defaults[ $index % count( $defaults ) ];
-      $alt_text     = mbn_pad_alt_text( $split['imageId'] ?? 0, __( 'Car accident scene', 'mbn-theme' ) );
-      ?>
-    <div class="pad-split <?php echo esc_attr( $layout_class ); ?>">
-      <div class="pad-split__text">
-        <?php if ( ! empty( $heading ) && 0 === $index ) : ?>
-        <h2 class="pad-section-heading"><?php echo mbn_pad_kses( $heading ); ?></h2>
-        <?php endif; ?>
-        <?php echo mbn_pad_kses( $split['text'] ?? '' ); ?>
-      </div>
-      <figure class="pad-split__image" style="<?php echo esc_attr( mbn_pad_split_image_style( $split['imageHeight'] ?? '' ) ); ?>">
-        <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $alt_text ); ?>" loading="lazy">
-      </figure>
-      <?php mbn_pad_split_modal( $split ); ?>
-    </div>
+      <?php mbn_pad_render_after_accident_split( $split, $index, $heading, $assets, $defaults ); ?>
     <?php endforeach; ?>
   </div>
+    <?php if ( ! empty( $data['afterText'] ) ) : ?>
+    <div class="pad-after-accident__after">
+      <?php echo mbn_pad_kses( $data['afterText'] ); ?>
+    </div>
+    <?php endif; ?>
 </section>
     <?php
   }
