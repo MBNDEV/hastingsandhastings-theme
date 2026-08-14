@@ -620,6 +620,12 @@
 }
 
 /* RESPONSIVE */
+@media (min-width: 1024px) and (max-width: 1280px) {
+  .btn-cta {
+    padding: 14px 16px;
+  }
+}
+
 @media (max-width: 1279px) {
   .logo-full {
     display: none;

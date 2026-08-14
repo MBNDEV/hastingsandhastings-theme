@@ -114,6 +114,12 @@
 }
 
 /* Responsive adjustments */
+@media (min-width: 1024px) and (max-width: 1280px) {
+  .btn-cta {
+    padding: 14px 16px;
+  }
+}
+
 @media (max-width: 768px) {
   .hero-video-container {
     min-height: 85svh;
