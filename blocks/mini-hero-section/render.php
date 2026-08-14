@@ -50,7 +50,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 	<div class="relative  mini-hero-content flex items-center justify-center px-4 md:px-6 lg:px-12 py-16 md:py-20 ">
     
 		<!-- Main Content Container -->
-		<div class="relative max-w-[1440px] w-full mx-auto py-8 md:py-16 lg:py-20 px-6 md:px-12 lg:px-24 rounded-3xl overflow-hidden">
+		<div class="relative max-w-[1440px] w-full mx-auto py-8 md:py-16 lg:py-20 px-6 md:px-10 lg:px-14 rounded-3xl overflow-hidden">
       <!-- Video Background -->
       <?php if ( $video_mp4_url || $video_webm_url ) : ?>
         <video 
@@ -128,10 +128,10 @@ $wrapper_attributes = get_block_wrapper_attributes(
 				<!-- CTA Bar -->
 				<?php if ( $show_cta_bar ) : ?>
 					<div class="cta-bar border border-accent-blue w-full rounded-3xl px-4 md:px-6 py-6 xl:px-12">
-						<div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+						<div class="flex flex-col lg:flex-row items-center justify-between gap-12">
 							
 							<!-- Left Side: Value Propositions -->
-							<div class="flex flex-col sm:flex-row items-center w-full lg:w-8/12 xl:w-9/12 gap-6 md:gap-8 xl:gap-16 flex-1 justify-around lg:justify-start">
+							<div class="flex flex-col sm:flex-row items-center w-full lg:w-8/12 gap-6 md:gap-8 xl:gap-12 flex-1 justify-around lg:justify-start">
 								
 								<!-- Settlement Fees -->
 								<div class="flex flex-row lg:flex-col xl:flex-row items-center gap-2">
@@ -182,7 +182,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 							</div>
 
 							<!-- Right Side: CTA Buttons -->
-							<div class="flex flex-col items-center justify-center w-full lg:w-4/12 xl:w-3/12 gap-4">
+							<div class="flex flex-col items-center justify-center w-full lg:w-4/12 gap-4">
 								<a href="<?php echo esc_url( $cta_button_url ); ?>" class="btn-cta">
 									<?php echo esc_html( $cta_button_text ); ?>
 								</a>
