@@ -66,7 +66,7 @@ function emptyData(type) {
     case 'testimonials':
       return { backgroundColor: '', eyebrow: '', heading: '', subtitle: '', starsIconUrl: '', starsIconId: 0, items: [] };
     case 'accidentList':
-      return { heading: '', backgroundColor: 'bg-light-blue', items: [] };
+      return { heading: '', backgroundColor: 'bg-light-blue', items: [], afterText: '' };
     case 'whyLawyer':
       return {
         backgroundColor: '',
@@ -808,6 +808,7 @@ function AccidentListEditor({ data, setData, sensors }) {
       <TextControl label={__('List Heading', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} help={__('Shown above the list, e.g. “Examples of personal injury in Arizona include:”', 'mbn-theme')} />
       <h4 style={{ marginTop: '20px' }}>{__('Accidents', 'mbn-theme')}</h4>
       <Repeater field={items} sensors={sensors} ItemComponent={SortableAccident} addLabel={__('+ Add Accident', 'mbn-theme')} newItem={{ label: '', url: '' }} />
+      <TextareaControl label={__('Text After List (HTML)', 'mbn-theme')} value={data.afterText || ''} onChange={(v) => setData({ afterText: v })} rows={4} help={__('Optional centered paragraph(s) shown below the list. Leave empty to hide.', 'mbn-theme')} style={{ marginTop: '20px' }} />
     </Fragment>
   );
 }
