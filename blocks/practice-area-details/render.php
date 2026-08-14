@@ -1120,6 +1120,30 @@ if ( ! function_exists( 'mbn_pad_render_testimonials' ) ) {
   }
 }
 
+if ( ! function_exists( 'mbn_pad_render_accident_list_item' ) ) {
+  /**
+   * Render a single Accident List item: a link when a URL is set, plain text otherwise.
+   *
+   * @param array $item Item data: label, url.
+   */
+  function mbn_pad_render_accident_list_item( $item ) {
+    $label = $item['label'] ?? '';
+    $url   = $item['url'] ?? '';
+    if ( '' === $label ) {
+      return;
+    }
+    ?>
+      <li class="pad-accident-list__item">
+        <?php if ( '' !== $url ) : ?>
+        <a class="pad-accident-list__link" href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a>
+        <?php else : ?>
+        <span class="pad-accident-list__link"><?php echo esc_html( $label ); ?></span>
+        <?php endif; ?>
+      </li>
+    <?php
+  }
+}
+
 if ( ! function_exists( 'mbn_pad_render_accident_list' ) ) {
   /**
    * Render a Lists of Accidents section: a heading above a sortable grid of links.
@@ -1140,23 +1164,15 @@ if ( ! function_exists( 'mbn_pad_render_accident_list' ) ) {
     <?php endif; ?>
     <?php if ( ! empty( $items ) ) : ?>
     <ul class="pad-accident-list__grid">
-      <?php
-      foreach ( $items as $item ) :
-        $label = $item['label'] ?? '';
-        $url   = $item['url'] ?? '';
-        if ( '' === $label ) {
-          continue;
-        }
-        ?>
-      <li class="pad-accident-list__item">
-        <?php if ( '' !== $url ) : ?>
-        <a class="pad-accident-list__link" href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a>
-        <?php else : ?>
-        <span class="pad-accident-list__link"><?php echo esc_html( $label ); ?></span>
-        <?php endif; ?>
-      </li>
+      <?php foreach ( $items as $item ) : ?>
+        <?php mbn_pad_render_accident_list_item( $item ); ?>
       <?php endforeach; ?>
     </ul>
+    <?php endif; ?>
+    <?php if ( ! empty( $data['afterText'] ) ) : ?>
+    <div class="pad-after-accident__after">
+      <?php echo mbn_pad_kses( $data['afterText'] ); ?>
+    </div>
     <?php endif; ?>
   </div>
 </section>
