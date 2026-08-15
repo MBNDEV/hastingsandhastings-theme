@@ -156,6 +156,17 @@ function custom_theme_is_spanish_posts_page(): bool {
 }
 
 /**
+ * Whether the current request serves Spanish content: the Spanish posts
+ * archive page or a single Spanish Post. Drives the language attributes,
+ * SEO meta, and header/footer template swap.
+ *
+ * @return bool
+ */
+function custom_theme_is_spanish_context(): bool {
+  return custom_theme_is_spanish_posts_page() || is_singular( 'spanish_post' );
+}
+
+/**
  * Serve the Spanish posts archive page as Spanish to browsers and crawlers.
  *
  * Mirrors mbn_lp_language_attributes() for the Spanish landing page template.
@@ -164,7 +175,7 @@ function custom_theme_is_spanish_posts_page(): bool {
  * @return string
  */
 function custom_theme_spanish_posts_page_language_attributes( string $output ): string {
-  if ( ! custom_theme_is_spanish_posts_page() ) {
+  if ( ! custom_theme_is_spanish_context() ) {
     return $output;
   }
 
@@ -186,7 +197,7 @@ add_filter( 'language_attributes', 'custom_theme_spanish_posts_page_language_att
  * @return string
  */
 function custom_theme_spanish_posts_page_og_locale( string $locale ): string {
-  if ( ! custom_theme_is_spanish_posts_page() ) {
+  if ( ! custom_theme_is_spanish_context() ) {
     return $locale;
   }
 
@@ -211,11 +222,14 @@ add_filter( 'wpseo_locale', 'custom_theme_spanish_posts_page_og_locale' );
  * @return array
  */
 function custom_theme_spanish_posts_page_hreflang( array $hreflang_items ): array {
-  if ( ! custom_theme_is_spanish_posts_page() ) {
+  if ( ! custom_theme_is_spanish_context() ) {
     return $hreflang_items;
   }
 
-  $url = $hreflang_items['en'] ?? home_url( '/' . CUSTOM_THEME_SPANISH_POSTS_PAGE_SLUG . '/' );
+  $fallback = is_singular( 'spanish_post' )
+    ? (string) get_permalink()
+    : home_url( '/' . CUSTOM_THEME_SPANISH_POSTS_PAGE_SLUG . '/' );
+  $url      = $hreflang_items['en'] ?? $fallback;
   unset( $hreflang_items['en'] );
 
   $hreflang_items['es']        = $url;
