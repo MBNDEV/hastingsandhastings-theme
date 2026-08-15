@@ -52,7 +52,7 @@ function custom_theme_get_merged_custom_html( string $slot ): string {
   $keys = $map[ $slot ];
 
   // Check for post-specific HTML first (overrides global)
-  if ( is_singular( array( 'post', 'page' ) ) ) {
+  if ( is_singular( array( 'post', 'page', 'spanish_post' ) ) ) {
     $post_id = (int) get_queried_object_id();
     if ( $post_id > 0 ) {
       $local = get_post_meta( $post_id, $keys['post'], true );

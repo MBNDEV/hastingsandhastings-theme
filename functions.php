@@ -284,7 +284,8 @@ if ( ! function_exists( 'hastingsandhastings_get_recent_article_image_url' ) ) {
  * @return void
  */
 function hastingsandhastings_enqueue_single_blog_assets() {
-  if ( ! is_single() || 'post' !== get_post_type() ) {
+  // Spanish Posts reuse the blog single design (single-spanish_post.php).
+  if ( ! is_singular( array( 'post', 'spanish_post' ) ) ) {
     return;
   }
 
