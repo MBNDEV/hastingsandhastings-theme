@@ -1104,7 +1104,8 @@
 .ldp-faq__badge {
   margin: 0;
   flex-shrink: 0;
-  width: 300px;
+  max-width: 300px;
+  width: 100%;
 }
 
 .ldp-faq__badge img {
@@ -1190,6 +1191,18 @@
 
 .ldp-serving__links li a:hover {
   text-decoration: underline;
+}
+
+/* =============================================
+   === Laptop: 1024px to 1366px ===
+   ============================================= */
+@media screen and (max-width: 1366px) and (min-width: 1024px) {
+  .ldp-why-choose__attorneys {
+    grid-template-columns: 2fr 480px;
+  }
+  .ldp-faq__badge {
+    max-width: 230px;
+  }
 }
 
 
@@ -1312,7 +1325,7 @@
   }
 
   .ldp-faq__badge {
-    width: 200px;
+    max-width: 200px;
   }
 
   /* CTA card */
