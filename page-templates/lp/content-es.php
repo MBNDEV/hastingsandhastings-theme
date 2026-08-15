@@ -20,32 +20,32 @@ $mbn_lp_assets_url = mbn_lp_assets_url();
 
 // Handed to lp-custom.js, which rebuilds the slider from this same list.
 mbn_lp_set_testimonials(
-	array(
-		array(
-			'intro' => 'Recomendaría Hastings and Hastings a cualquier persona que conozco.',
-			'text'  => 'Tuve un accidente automovilístico hace unos meses y no podría estar más contento con el resultado. Sean Hennick, mi abogado, junto con todo el personal de Hastings and Hastings, fueron sumamente profesionales y serviciales. Tener a Hastings and Hastings de mi lado hizo que este proceso pareciera fácil. Recomendaría Hastings and Hastings a cualquier persona que conozco.',
-		),
-		array(
-			'intro' => 'Anthony es mi primera opción.',
-			'text'  => 'Anthony llevó mi caso de lesiones desde la oficina de la 101 e Indian School. Nunca antes me había lesionado. Anthony me explicó todo paso a paso y agradezco toda su ayuda. Espero no volver a lesionarme, pero si ocurre, Anthony es mi primera opción.',
-		),
-		array(
-			'intro' => 'Fue un alivio no tener que preocuparme por nada.',
-			'text'  => '¡Hastings and Hastings es lo mejor! Muchas gracias por todo el trabajo que hicieron, pero sobre todo por estar ahí cuando tenía preguntas. Usé otra firma en mi accidente anterior (2006) y pensé que nunca volvería a contratar a un abogado. Al principio fueron amables, pero después de firmar se portaron horrible. En Hastings, Sean Hennick llevó mi caso y fue excelente. Pídanlo si pueden… Estaba muy asustada después de mi accidente, pero al conocerlo me di cuenta de que entendía lo que yo estaba viviendo y de que me iba a ayudar. Después de eso, su oficina se encargó prácticamente de todo… yo pude concentrarme en recuperar mi vida normal. Fue un alivio no tener que preocuparme por nada… gracias. Los recomiendo, y a Sean en particular.',
-		),
-		array(
-			'intro' => '¡Quedé muy contento con el resultado!',
-			'text'  => 'Hastings and Hastings se encargó de mi reclamo después de que yo había intentado tratar con la aseguradora por mi cuenta. Erwin me explicó todo el proceso en la consulta inicial y quedé muy contento con el resultado.',
-		),
-		array(
-			'intro' => 'Responden los correos y dan seguimiento.',
-			'text'  => '¡Son excelentes! Hacen preguntas preliminares para asegurarse de que no pierdas tu tiempo (ni el de ellos). Te defienden y hacen lo correcto para ti. No tengo más que comentarios positivos sobre cómo llevaron mi caso. Responden los correos y dan seguimiento. Solo aceptan casos legítimos y no promueven demandas “frívolas”.',
-		),
-		array(
-			'intro' => 'Estoy muy satisfecha con mi experiencia con ellos',
-			'text'  => 'No puedo expresar lo contenta que estoy con Hastings & Hastings en este momento. Acudí a ellos hace unos nueve meses después de mi accidente y hoy recibí mi indemnización. Todos fueron muy amables y serviciales. La asistente legal de mi abogado siempre respondía mis correos con rapidez, lo cual me impresionó mucho. Estoy tan satisfecha con mi experiencia con ellos que tuve que escribir una reseña.',
-		),
-	)
+  array(
+	  array(
+		  'intro' => 'Recomendaría Hastings and Hastings a cualquier persona que conozco.',
+		  'text'  => 'Tuve un accidente automovilístico hace unos meses y no podría estar más contento con el resultado. Sean Hennick, mi abogado, junto con todo el personal de Hastings and Hastings, fueron sumamente profesionales y serviciales. Tener a Hastings and Hastings de mi lado hizo que este proceso pareciera fácil. Recomendaría Hastings and Hastings a cualquier persona que conozco.',
+	  ),
+	  array(
+		  'intro' => 'Anthony es mi primera opción.',
+		  'text'  => 'Anthony llevó mi caso de lesiones desde la oficina de la 101 e Indian School. Nunca antes me había lesionado. Anthony me explicó todo paso a paso y agradezco toda su ayuda. Espero no volver a lesionarme, pero si ocurre, Anthony es mi primera opción.',
+	  ),
+	  array(
+		  'intro' => 'Fue un alivio no tener que preocuparme por nada.',
+		  'text'  => '¡Hastings and Hastings es lo mejor! Muchas gracias por todo el trabajo que hicieron, pero sobre todo por estar ahí cuando tenía preguntas. Usé otra firma en mi accidente anterior (2006) y pensé que nunca volvería a contratar a un abogado. Al principio fueron amables, pero después de firmar se portaron horrible. En Hastings, Sean Hennick llevó mi caso y fue excelente. Pídanlo si pueden… Estaba muy asustada después de mi accidente, pero al conocerlo me di cuenta de que entendía lo que yo estaba viviendo y de que me iba a ayudar. Después de eso, su oficina se encargó prácticamente de todo… yo pude concentrarme en recuperar mi vida normal. Fue un alivio no tener que preocuparme por nada… gracias. Los recomiendo, y a Sean en particular.',
+	  ),
+	  array(
+		  'intro' => '¡Quedé muy contento con el resultado!',
+		  'text'  => 'Hastings and Hastings se encargó de mi reclamo después de que yo había intentado tratar con la aseguradora por mi cuenta. Erwin me explicó todo el proceso en la consulta inicial y quedé muy contento con el resultado.',
+	  ),
+	  array(
+		  'intro' => 'Responden los correos y dan seguimiento.',
+		  'text'  => '¡Son excelentes! Hacen preguntas preliminares para asegurarse de que no pierdas tu tiempo (ni el de ellos). Te defienden y hacen lo correcto para ti. No tengo más que comentarios positivos sobre cómo llevaron mi caso. Responden los correos y dan seguimiento. Solo aceptan casos legítimos y no promueven demandas “frívolas”.',
+	  ),
+	  array(
+		  'intro' => 'Estoy muy satisfecha con mi experiencia con ellos',
+		  'text'  => 'No puedo expresar lo contenta que estoy con Hastings & Hastings en este momento. Acudí a ellos hace unos nueve meses después de mi accidente y hoy recibí mi indemnización. Todos fueron muy amables y serviciales. La asistente legal de mi abogado siempre respondía mis correos con rapidez, lo cual me impresionó mucho. Estoy tan satisfecha con mi experiencia con ellos que tuve que escribir una reseña.',
+	  ),
+  )
 );
 ?>
 <div data-elementor-type="wp-page" data-elementor-id="8842" class="elementor elementor-8842">
