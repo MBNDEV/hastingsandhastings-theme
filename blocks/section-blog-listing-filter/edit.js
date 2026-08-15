@@ -1,15 +1,24 @@
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, RangeControl } from '@wordpress/components';
+import { PanelBody, RangeControl, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 export default function Edit({ attributes, setAttributes }) {
-  const { postsPerPage } = attributes;
+  const { postsPerPage, postType } = attributes;
   const blockProps = useBlockProps();
 
   return (
     <>
       <InspectorControls>
         <PanelBody title={__('Settings', 'mbn-theme')}>
+          <SelectControl
+            label={__('Post Type', 'mbn-theme')}
+            value={postType}
+            options={[
+              { label: __('Post', 'mbn-theme'), value: 'post' },
+              { label: __('Spanish Post', 'mbn-theme'), value: 'spanish_post' },
+            ]}
+            onChange={(value) => setAttributes({ postType: value })}
+          />
           <RangeControl
             label={__('Posts Per Page', 'mbn-theme')}
             value={postsPerPage}

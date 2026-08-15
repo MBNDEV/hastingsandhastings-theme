@@ -6,8 +6,20 @@
  * @package MBN_Theme
  */
 
-$posts_per_page = $attributes['postsPerPage'] ?? 12;
-$current_page   = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
+$posts_per_page     = $attributes['postsPerPage'] ?? 12;
+$selected_post_type = $attributes['postType'] ?? 'post';
+$current_page       = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
+
+// Each post type keeps its own category taxonomy (e.g. 'category' for posts,
+// a dedicated taxonomy for other post types), so resolve it from the post
+// type itself rather than assuming 'category'.
+$category_taxonomy = 'category';
+foreach ( get_object_taxonomies( $selected_post_type, 'objects' ) as $tax_object ) {
+  if ( $tax_object->hierarchical ) {
+      $category_taxonomy = $tax_object->name;
+      break;
+  }
+}
 
 // Get category filter from URL
 $category_slugs = array();
@@ -19,7 +31,7 @@ if ( isset( $_GET['blog_categories'] ) ) {
 
 // Build query args
 $args = array(
-    'post_type'      => 'post',
+    'post_type'      => $selected_post_type,
     'post_status'    => 'publish',
     'posts_per_page' => $posts_per_page,
     'paged'          => $current_page,
@@ -29,7 +41,7 @@ $args = array(
 if ( ! empty( $category_slugs ) ) {
     $args['tax_query'] = array(
         array(
-            'taxonomy' => 'category',
+            'taxonomy' => $category_taxonomy,
             'field'    => 'slug',
             'terms'    => $category_slugs,
         ),
@@ -38,16 +50,21 @@ if ( ! empty( $category_slugs ) ) {
 
 $query = new WP_Query( $args );
 
-// Get all categories (excluding ID 1 and 11)
-$all_categories = get_categories(
-  array(
-	  'taxonomy'   => 'category',
-	  'hide_empty' => false,
-	  'exclude'    => array( 1, 11 ),
-	  'orderby'    => 'id',
-	  'order'      => 'ASC',
-  )
+// Get all categories for the current post type's taxonomy.
+// IDs 1 and 11 are excluded only for the built-in 'category' taxonomy;
+// other post types' taxonomies have their own distinct term IDs.
+$category_args = array(
+    'taxonomy'   => $category_taxonomy,
+    'hide_empty' => false,
+    'orderby'    => 'id',
+    'order'      => 'ASC',
 );
+
+if ( 'category' === $category_taxonomy ) {
+    $category_args['exclude'] = array( 1, 11 );
+}
+
+$all_categories = get_categories( $category_args );
 
 // Organize categories into parent/child structure
 $category_tree = array();

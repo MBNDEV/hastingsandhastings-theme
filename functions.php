@@ -102,6 +102,7 @@ require_once get_theme_file_path( 'inc/includes-case-results.php' );            
 require_once get_theme_file_path( 'inc/includes-handwritten-reviews.php' );     // Handwritten Reviews CPT, meta box, and REST endpoint.
 require_once get_theme_file_path( 'inc/includes-practice-area-cpt.php' );       // Practice Area custom post type.
 require_once get_theme_file_path( 'inc/includes-practice-area-fields.php' );    // Practice Area ACF field groups.
+require_once get_theme_file_path( 'inc/includes-spanish-post-cpt.php' );        // Spanish Post custom post type and taxonomy.
 require_once get_theme_file_path( 'inc/includes-lp-template.php' );             // Landing Page (LP) template assets and lead form.
 /**
  * Enqueue scroll animation assets (frontend only).
