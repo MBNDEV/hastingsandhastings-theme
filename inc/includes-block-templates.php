@@ -333,9 +333,10 @@ add_action( 'init', 'custom_theme_maybe_seed_default_block_templates', 20 );
 
 /**
  * Resolve the Block Template post ID for a base slug, preferring a
- * "{slug}-es" variant when the current request is the Spanish posts archive
- * page (see custom_theme_is_spanish_posts_page() in
- * includes-spanish-post-cpt.php). Falls back to the base slug when no
+ * "{slug}-es" variant when the current request serves Spanish content —
+ * the Spanish posts archive page or a single Spanish Post (see
+ * custom_theme_is_spanish_context() in includes-spanish-post-cpt.php).
+ * Falls back to the base slug when no
  * Spanish variant has been published yet, so nothing breaks until an editor
  * creates one.
  *
@@ -343,7 +344,7 @@ add_action( 'init', 'custom_theme_maybe_seed_default_block_templates', 20 );
  * @return int Post ID or 0.
  */
 function custom_theme_resolve_block_template_id( string $base_slug ): int {
-  if ( function_exists( 'custom_theme_is_spanish_posts_page' ) && custom_theme_is_spanish_posts_page() ) {
+  if ( function_exists( 'custom_theme_is_spanish_context' ) && custom_theme_is_spanish_context() ) {
     $es_post_id = custom_theme_get_block_template_id_by_slug( $base_slug . '-es' );
     if ( $es_post_id > 0 ) {
       return $es_post_id;
