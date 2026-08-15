@@ -9,6 +9,10 @@ if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
 
+if ( ! defined( 'CUSTOM_THEME_SPANISH_POSTS_PAGE_SLUG' ) ) {
+  define( 'CUSTOM_THEME_SPANISH_POSTS_PAGE_SLUG', 'espanol-posts' );
+}
+
 /**
  * Register Spanish Post Category taxonomy.
  *
@@ -86,9 +90,17 @@ function custom_theme_register_spanish_post_post_type(): void {
 		'show_in_admin_bar'  => true,
 		'show_in_nav_menus'  => true,
 		'query_var'          => true,
-		'rewrite'            => array( 'slug' => 'es' ),
+		// Singles live under the same base as the espanol-posts landing page
+		// (e.g. /espanol-posts/la-importancia-del-derecho/). The archive must
+		// stay off: with it on, the CPT archive rewrite rule would win over
+		// the real /espanol-posts/ page and custom_theme_is_spanish_posts_page()
+		// would never match.
+		'rewrite'            => array(
+			'slug'       => CUSTOM_THEME_SPANISH_POSTS_PAGE_SLUG,
+			'with_front' => false,
+		),
 		'capability_type'    => 'post',
-		'has_archive'        => true,
+		'has_archive'        => false,
 		'hierarchical'       => false,
 		'show_in_rest'       => true,
 		'menu_position'      => 22,
@@ -119,17 +131,15 @@ add_action( 'after_switch_theme', 'custom_theme_spanish_post_flush_rewrite_on_sw
  * @return void
  */
 function custom_theme_spanish_post_one_time_flush(): void {
-  if ( get_option( 'custom_theme_spanish_post_rewrite_flushed' ) ) {
+  // v2: slug moved from /es/ to /espanol-posts/ — new key forces one re-flush
+  // on environments where the v1 flag was already set.
+  if ( get_option( 'custom_theme_spanish_post_rewrite_flushed_v2' ) ) {
     return;
   }
   flush_rewrite_rules();
-  update_option( 'custom_theme_spanish_post_rewrite_flushed', true, false );
+  update_option( 'custom_theme_spanish_post_rewrite_flushed_v2', true, false );
 }
 add_action( 'init', 'custom_theme_spanish_post_one_time_flush', 99 );
-
-if ( ! defined( 'CUSTOM_THEME_SPANISH_POSTS_PAGE_SLUG' ) ) {
-  define( 'CUSTOM_THEME_SPANISH_POSTS_PAGE_SLUG', 'espanol-posts' );
-}
 
 /**
  * Whether the current request is the Spanish posts archive page.
