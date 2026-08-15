@@ -15,6 +15,10 @@
     "postsPerPage": {
       "type": "number",
       "default": 12
+    },
+    "postType": {
+      "type": "string",
+      "default": "post"
     }
   },
   "supports": {

@@ -1356,7 +1356,7 @@
 
 
 /* =============================================
-   === MOBILE: below 768px ===
+   === SEMI-MOBILE: below 768px ===
    ============================================= */
 @media screen and (max-width: 767px) {
 
@@ -1571,6 +1571,20 @@
     gap: 24px;
   }
 }
+
+  /* =============================================
+   === MOBILE: below 639px ===
+   ============================================= */
+@media screen and (max-width: 639px) {
+  .ldp-why-choose__stat {
+    justify-content: center;
+    max-width: 360px;
+  }
+  .ldp-why-choose__stats {
+    align-items: center;
+  }
+}
+
 @media screen and (max-width: 479px) {
   .ldp-serving__columns {
     grid-template-columns: 1fr;
