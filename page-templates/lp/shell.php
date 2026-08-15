@@ -27,9 +27,9 @@ $mbn_lp_variant = isset( $mbn_lp_variant ) ? $mbn_lp_variant : 'en';
 if ( ! function_exists( 'mbn_lp_assets_url' ) ) {
 	$mbn_lp_support = get_theme_file_path( 'inc/includes-lp-template.php' );
 
-	if ( is_readable( $mbn_lp_support ) ) {
-		require_once $mbn_lp_support;
-	}
+  if ( is_readable( $mbn_lp_support ) ) {
+      require_once $mbn_lp_support;
+  }
 }
 
 if ( ! function_exists( 'mbn_lp_assets_url' ) ) {
@@ -61,15 +61,15 @@ if ( ! function_exists( 'mbn_lp_assets_url' ) ) {
 		 * @param string $variant Language variant ('en' or 'es').
 		 */
 		$mbn_lp_content = (string) apply_filters(
-			'mbn_lp_content_path',
-			get_theme_file_path( 'es' === $mbn_lp_variant ? 'page-templates/lp/content-es.php' : 'page-templates/lp/content.php' ),
-			get_the_ID(),
-			$mbn_lp_variant
+          'mbn_lp_content_path',
+          get_theme_file_path( 'es' === $mbn_lp_variant ? 'page-templates/lp/content-es.php' : 'page-templates/lp/content.php' ),
+          get_the_ID(),
+          $mbn_lp_variant
 		);
 
-		if ( function_exists( 'mbn_lp_assets_url' ) && is_readable( $mbn_lp_content ) ) {
-			require $mbn_lp_content;
-		}
+      if ( function_exists( 'mbn_lp_assets_url' ) && is_readable( $mbn_lp_content ) ) {
+          require $mbn_lp_content;
+      }
 
 	endwhile;
 	?>
