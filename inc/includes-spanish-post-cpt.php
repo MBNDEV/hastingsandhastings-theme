@@ -113,6 +113,30 @@ function custom_theme_register_spanish_post_post_type(): void {
 add_action( 'init', 'custom_theme_register_spanish_post_post_type', 7 );
 
 /**
+ * Reclaim /espanol-posts/page/N/ from the spanish_post single-post rewrite.
+ *
+ * Every post type's single permalink automatically gets an unconditional
+ * "<permalink>(/[0-9]+)?" rewrite rule for <!--nextpage--> content splitting
+ * (WP_Rewrite::generate_rewrite_rules()) — it isn't controlled by has_archive
+ * or by the rewrite 'paged' flag. Because spanish_post singles share the
+ * landing page's own slug, that rule matches /espanol-posts/page/2/ by
+ * treating "page" as a post slug and "2" as its content sub-page, finds no
+ * such post, and 404s before the landing page's own ?paged= pagination
+ * (blocks/section-blog-listing-filter/render.php) ever gets a chance. A
+ * 'top' rule runs before the CPT's permastruct, so it wins the match.
+ *
+ * @return void
+ */
+function custom_theme_spanish_posts_page_pagination_rewrite(): void {
+  add_rewrite_rule(
+    '^' . CUSTOM_THEME_SPANISH_POSTS_PAGE_SLUG . '/page/([0-9]{1,})/?$',
+    'index.php?pagename=' . CUSTOM_THEME_SPANISH_POSTS_PAGE_SLUG . '&paged=$matches[1]',
+    'top'
+  );
+}
+add_action( 'init', 'custom_theme_spanish_posts_page_pagination_rewrite', 8 );
+
+/**
  * Flush rewrite rules on theme switch for CPT registration consistency.
  *
  * @return void
@@ -120,6 +144,7 @@ add_action( 'init', 'custom_theme_register_spanish_post_post_type', 7 );
 function custom_theme_spanish_post_flush_rewrite_on_switch_theme(): void {
   custom_theme_register_spanish_post_category_taxonomy();
   custom_theme_register_spanish_post_post_type();
+  custom_theme_spanish_posts_page_pagination_rewrite();
   flush_rewrite_rules();
 }
 add_action( 'after_switch_theme', 'custom_theme_spanish_post_flush_rewrite_on_switch_theme' );
@@ -131,13 +156,13 @@ add_action( 'after_switch_theme', 'custom_theme_spanish_post_flush_rewrite_on_sw
  * @return void
  */
 function custom_theme_spanish_post_one_time_flush(): void {
-  // v2: slug moved from /es/ to /espanol-posts/ — new key forces one re-flush
-  // on environments where the v1 flag was already set.
-  if ( get_option( 'custom_theme_spanish_post_rewrite_flushed_v2' ) ) {
+  // v3: added the /espanol-posts/page/N/ rewrite rule above — new key forces
+  // one re-flush on environments where the v2 flag was already set.
+  if ( get_option( 'custom_theme_spanish_post_rewrite_flushed_v3' ) ) {
     return;
   }
   flush_rewrite_rules();
-  update_option( 'custom_theme_spanish_post_rewrite_flushed_v2', true, false );
+  update_option( 'custom_theme_spanish_post_rewrite_flushed_v3', true, false );
 }
 add_action( 'init', 'custom_theme_spanish_post_one_time_flush', 99 );
 
@@ -238,3 +263,47 @@ function custom_theme_spanish_posts_page_hreflang( array $hreflang_items ): arra
   return $hreflang_items;
 }
 add_filter( 'wpml_hreflangs', 'custom_theme_spanish_posts_page_hreflang' );
+
+/**
+ * Point the WPML language switcher's Spanish link on the Blog page at the
+ * Spanish posts landing page.
+ *
+ * The Blog page has no real WPML-translated Spanish counterpart, so without
+ * this WPML falls back to its own guessed URL (e.g. /es/blog/, which doesn't
+ * exist) instead of the espanol-posts page that actually serves as its
+ * Spanish equivalent.
+ *
+ * @param string $url  The language URL WPML is about to output.
+ * @param array  $data Language data for this switcher link, keyed by 'code'.
+ * @return string
+ */
+function custom_theme_blog_page_spanish_switcher_url( string $url, array $data ): string {
+  if ( 'es' === ( $data['code'] ?? '' ) && is_page( 'blog' ) ) {
+    return home_url( '/' . CUSTOM_THEME_SPANISH_POSTS_PAGE_SLUG . '/' );
+  }
+
+  return $url;
+}
+add_filter( 'wpml_ls_language_url', 'custom_theme_blog_page_spanish_switcher_url', 10, 2 );
+
+/**
+ * Correct the hreflang tag WPML emits for the Blog page's Spanish version.
+ *
+ * Same gap as custom_theme_blog_page_spanish_switcher_url() above: the Blog
+ * page has no real WPML-translated Spanish counterpart, so WPML's own
+ * hreflang output guesses /es/blog/ (which doesn't exist) instead of the
+ * espanol-posts page that actually serves as its Spanish equivalent.
+ *
+ * @param array $hreflang_items Hreflang code => URL map.
+ * @return array
+ */
+function custom_theme_blog_page_spanish_hreflang( array $hreflang_items ): array {
+  if ( ! is_page( 'blog' ) ) {
+    return $hreflang_items;
+  }
+
+  $hreflang_items['es'] = home_url( '/' . CUSTOM_THEME_SPANISH_POSTS_PAGE_SLUG . '/' );
+
+  return $hreflang_items;
+}
+add_filter( 'wpml_hreflangs', 'custom_theme_blog_page_spanish_hreflang' );
