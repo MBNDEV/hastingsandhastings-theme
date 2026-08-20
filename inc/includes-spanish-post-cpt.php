@@ -306,4 +306,6 @@ function custom_theme_blog_page_spanish_hreflang( array $hreflang_items ): array
 
   return $hreflang_items;
 }
-//add_filter( 'wpml_hreflangs', 'custom_theme_blog_page_spanish_hreflang' );
+// Disabled: re-enable once the espanol-posts hreflang mapping is confirmed correct.
+// phpcs:ignore Squiz.PHP.CommentedOutCode.Found -- Intentionally disabled, not dead code.
+// add_filter( 'wpml_hreflangs', 'custom_theme_blog_page_spanish_hreflang' );

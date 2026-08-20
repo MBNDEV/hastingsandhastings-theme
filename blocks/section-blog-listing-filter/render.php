@@ -129,7 +129,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 ?>
 
 <section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-  <div class="self-stretch w-full max-w-screen-2xl px-6 md:px-12 lg:px-20 xl:px-44 py-20 bg-white inline-flex flex-col justify-center mx-auto items-start gap-11 overflow-hidden">
+  <div class="self-stretch w-full max-w-screen-2xl px-6 md:px-12 lg:px-20 xl:px-44 py-20 bg-white inline-flex flex-col min-h-svh mx-auto items-start gap-11 overflow-hidden">
       <!-- Filter Toggle -->
       <div class="relative size- inline-flex justify-start items-center gap-1.5">
           <div class="justify-start text-text-body text-sm font-normal font-body leading-5"><?php echo esc_html( $ui_strings['filter_label'] ); ?></div>
@@ -176,7 +176,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
                                             name="category_filter[]" 
                                             value="<?php echo esc_attr( $child->slug ); ?>"
                                             <?php echo in_array( $child->slug, $category_slugs, true ) ? 'checked' : ''; ?>
-                                            class="category-checkbox w-5 h-5 rounded border-2 border-gray-400 text-secondary focus:ring-2 focus:ring-secondary cursor-pointer">
+                                            class="category-checkbox shrink-0 w-[20px] h-[20px] rounded border-2 border-gray-400 text-secondary focus:ring-2 focus:ring-secondary cursor-pointer">
                                       <span class="text-gray-800 text-sm font-normal font-body leading-5"><?php echo esc_html( $child->name ); ?></span>
                                   </label>
                               <?php endforeach; ?>
