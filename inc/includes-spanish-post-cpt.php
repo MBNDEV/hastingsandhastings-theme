@@ -306,4 +306,4 @@ function custom_theme_blog_page_spanish_hreflang( array $hreflang_items ): array
 
   return $hreflang_items;
 }
-add_filter( 'wpml_hreflangs', 'custom_theme_blog_page_spanish_hreflang' );
+//add_filter( 'wpml_hreflangs', 'custom_theme_blog_page_spanish_hreflang' );
