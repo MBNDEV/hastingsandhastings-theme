@@ -26,6 +26,14 @@ $mobile_contact_url         = $attributes['mobileContactUrl'] ?? '/contact-us/';
 $mobile_phone_number        = $attributes['mobilePhoneNumber'] ?? '(480) 418-2483';
 $footer_padding_bottom      = ( ! empty( $mobile_contact_url ) || ! empty( $mobile_phone_number ) ) ? 'pb-24 lg:pb-0' : '';
 
+// The column headings below aren't block attributes (unlike the button text
+// above), so they don't automatically follow a Spanish Footer Template's
+// translated content — swap them the same way section-blog-listing-filter's
+// render.php does for its own copy.
+$is_spanish_context     = function_exists( 'custom_theme_is_spanish_context' ) && custom_theme_is_spanish_context();
+$locations_heading      = $is_spanish_context ? 'Ubicaciones' : __( 'Locations', 'mbn-theme' );
+$practice_areas_heading = $is_spanish_context ? 'Áreas de Práctica' : __( 'Practice Areas', 'mbn-theme' );
+
 $wrapper_attributes = get_block_wrapper_attributes(
   array(
 	  'class' => 'bg-footer-bg text-footer-text ' . esc_attr( $footer_padding_bottom ),
@@ -140,7 +148,7 @@ if ( ! function_exists( 'render_footer_menu' ) ) {
       <?php if ( $locations_menu_id ) : ?>
         <div class="mb-12 lg:mb-16">
           <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
-            <h3 class="text-2xl font-bold text-white font-heading"><?php echo esc_html__( 'Locations', 'mbn-theme' ); ?></h3>
+            <h3 class="text-2xl font-bold text-white font-heading"><?php echo esc_html( $locations_heading ); ?></h3>
             <a href="<?php echo esc_url( $locations_button_url ); ?>" class="hidden sm:inline-flex items-center justify-center py-3 px-6 font-bold text-sm uppercase tracking-wide whitespace-nowrap transition-all duration-300 cursor-pointer no-underline text-white rounded-full border border-white/30 bg-transparent hover:bg-white/10 hover:border-white/50">
               <?php echo esc_html( $locations_button_text ); ?>
             </a>
@@ -162,7 +170,7 @@ if ( ! function_exists( 'render_footer_menu' ) ) {
       <?php if ( $practice_areas_menu_id ) : ?>
         <div>
           <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
-            <h3 class="text-2xl font-bold text-white font-heading"><?php echo esc_html__( 'Practice Areas', 'mbn-theme' ); ?></h3>
+            <h3 class="text-2xl font-bold text-white font-heading"><?php echo esc_html( $practice_areas_heading ); ?></h3>
             <a href="<?php echo esc_url( $practice_areas_button_url ); ?>" class="hidden sm:inline-flex items-center justify-center py-3 px-6 font-bold text-sm uppercase tracking-wide whitespace-nowrap transition-all duration-300 cursor-pointer no-underline text-white rounded-full border border-white/30 bg-transparent hover:bg-white/10 hover:border-white/50">
               <?php echo esc_html( $practice_areas_button_text ); ?>
             </a>
