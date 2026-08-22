@@ -156,12 +156,13 @@ if ( ! class_exists( 'Mobile_Nav_Walker' ) ) {
      */
     public function start_lvl( &$output, $depth = 0, $args = null ) {
       if ( 0 === $depth ) {
-        // First level submenu wrapper
+        // First level submenu wrapper. The inner div is the single grid item
+        // the CSS grid-template-rows accordion animates - see style.css.
         ++$this->submenu_counter;
-        $output .= '<div class="mobile-submenu" id="submenu-' . $this->submenu_counter . '">';
+        $output .= '<div class="mobile-submenu" id="submenu-' . $this->submenu_counter . '"><div class="mobile-submenu-inner">';
       } elseif ( 1 === $depth ) {
-        // Second level - content wrapper for category links
-        $output .= '<div class="mobile-submenu-content">';
+        // Second level - content wrapper for category links, same inner-div pattern.
+        $output .= '<div class="mobile-submenu-content"><div class="mobile-submenu-content-inner">';
       }
     }
 
@@ -174,9 +175,9 @@ if ( ! class_exists( 'Mobile_Nav_Walker' ) ) {
      */
     public function end_lvl( &$output, $depth = 0, $args = null ) {
       if ( 0 === $depth ) {
-        $output .= '</div>'; // Close mobile-submenu
+        $output .= '</div></div>'; // Close mobile-submenu-inner and mobile-submenu
       } elseif ( 1 === $depth ) {
-        $output .= '</div>'; // Close mobile-submenu-content
+        $output .= '</div></div>'; // Close mobile-submenu-content-inner and mobile-submenu-content
       }
     }
 
