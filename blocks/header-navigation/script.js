@@ -108,11 +108,12 @@
     menuDrawer.addEventListener('click', function(e) {
       // Check if clicked element is a mobile-menu-link or inside one
       const link = e.target.closest('.mobile-menu-link');
-      
+
       if (link) {
         const submenuId = link.getAttribute('data-submenu');
-        
-        if (submenuId) {
+        const chevron = e.target.closest('.mobile-chevron');
+
+        if (submenuId && chevron) {
           e.preventDefault();
           
           const parentItem = link.parentElement;
