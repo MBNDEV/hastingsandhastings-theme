@@ -528,19 +528,29 @@
 }
 
 /* MOBILE SUBMENU */
+/* grid-template-rows 0fr/1fr animates the row track's height instead of
+   max-height, so it's driven by the compositor instead of layout - no jank
+   from repeatedly reflowing an arbitrary max-height. The inner div is the
+   grid's one item; `overflow: hidden` on it is what lets the item ignore its
+   own content size and actually shrink to 0 as the row collapses (a grid
+   item's automatic minimum size is 0 once its overflow isn't visible). */
 .mobile-submenu {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
   background: rgba(255, 255, 255, 0.5);
 }
 
 .mobile-submenu.active {
-  max-height: 2000px;
+  grid-template-rows: 1fr;
+}
+
+.mobile-submenu-inner {
+  overflow: hidden;
 }
 
 /* For simple dropdowns without categories */
-.mobile-submenu > a {
+.mobile-submenu-inner > a {
   display: block;
   padding: 12px 24px 12px 48px;
   font-size: 15px;
@@ -549,7 +559,7 @@
   transition: all 0.2s ease;
 }
 
-.mobile-submenu > a:hover {
+.mobile-submenu-inner > a:hover {
   color: #3480C3;
   padding-left: 52px;
 }
@@ -591,14 +601,19 @@
 }
 
 /* MOBILE SUBMENU CONTENT (Second-level accordion content) */
+/* Same grid-template-rows technique as .mobile-submenu above. */
 .mobile-submenu-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
 }
 
 .mobile-submenu-content.active {
-  max-height: 1000px;
+  grid-template-rows: 1fr;
+}
+
+.mobile-submenu-content-inner {
+  overflow: hidden;
 }
 
 .mobile-submenu-content a {
