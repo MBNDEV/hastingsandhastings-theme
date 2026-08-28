@@ -619,13 +619,13 @@ $wrapper_attributes = get_block_wrapper_attributes(
         </div>
       <?php endif; ?>
 
-      <div class="ldp-faq__badges">
-        <?php
-        $badges_text_paragraphs = $attributes['badgesTextParagraphs'] ?? array();
-        $badges_items           = $attributes['badgesItems'] ?? array();
-        ?>
-
-        <?php if ( ! empty( $badges_text_paragraphs ) && is_array( $badges_text_paragraphs ) ) : ?>
+      <?php
+      $badges_text_paragraphs = $attributes['badgesTextParagraphs'] ?? array();
+      $badges_items           = $attributes['badgesItems'] ?? array();
+      $badges_has_text        = ! empty( $badges_text_paragraphs ) && is_array( $badges_text_paragraphs );
+      ?>
+      <div class="ldp-faq__badges<?php echo $badges_has_text ? '' : ' ldp-faq__badges--no-text'; ?>">
+        <?php if ( $badges_has_text ) : ?>
           <div class="ldp-faq__badges-row-text">
             <?php foreach ( $badges_text_paragraphs as $paragraph ) : ?>
               <?php if ( ! empty( $paragraph['text'] ) ) : ?>
