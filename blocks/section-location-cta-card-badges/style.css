@@ -150,6 +150,14 @@
   align-items: center;
 }
 
+.ldp-faq__badges--no-text {
+  grid-template-columns: 1fr;
+}
+
+.ldp-faq__badges--no-text .ldp-faq__badges-row {
+  justify-content: center;
+}
+
 .ldp-faq__badges-text {
   font-size: 18px;
   line-height: 1.556;

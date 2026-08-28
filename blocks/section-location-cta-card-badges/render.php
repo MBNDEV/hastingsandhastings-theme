@@ -66,7 +66,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
       </div>
     </div>
 
-    <div class="ldp-faq__badges">
+    <div class="ldp-faq__badges<?php echo empty( $badges_text_paragraphs ) ? ' ldp-faq__badges--no-text' : ''; ?>">
       <?php if ( ! empty( $badges_text_paragraphs ) && is_array( $badges_text_paragraphs ) ) : ?>
         <div class="ldp-faq__badges-row-text">
           <?php foreach ( $badges_text_paragraphs as $paragraph ) : ?>
