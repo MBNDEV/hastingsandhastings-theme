@@ -80,6 +80,16 @@ export default function Edit({ attributes, setAttributes }) {
 		setAttributes({ [arrayName]: array.filter((_, i) => i !== index) });
 	};
 
+	// Move array item helper
+	const moveArrayItem = (arrayName, index, direction) => {
+		const array = attributes[arrayName];
+		const newIndex = index + direction;
+		if (newIndex < 0 || newIndex >= array.length) return;
+		const updated = [...array];
+		[updated[index], updated[newIndex]] = [updated[newIndex], updated[index]];
+		setAttributes({ [arrayName]: updated });
+	};
+
 	// Add array item helper
 	const addArrayItem = (arrayName, defaultItem) => {
     const array = attributes[arrayName] || [];
@@ -143,12 +153,26 @@ export default function Edit({ attributes, setAttributes }) {
 						<div key={index} style={{ border: '1px solid #ddd', padding: '15px', marginBottom: '15px', borderRadius: '4px', backgroundColor: '#fff' }}>
 							<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
 								<strong>{__('Link', 'mbn-theme')} {index + 1}</strong>
-								<Button
-									icon="trash"
-									label={__('Remove', 'mbn-theme')}
-									onClick={() => removeArrayItem('socialLinks', index)}
-									isDestructive
-								/>
+								<div style={{ display: 'flex', gap: '4px' }}>
+									<Button
+										icon="arrow-up-alt2"
+										label={__('Move up', 'mbn-theme')}
+										onClick={() => moveArrayItem('socialLinks', index, -1)}
+										disabled={index === 0}
+									/>
+									<Button
+										icon="arrow-down-alt2"
+										label={__('Move down', 'mbn-theme')}
+										onClick={() => moveArrayItem('socialLinks', index, 1)}
+										disabled={index === socialLinks.length - 1}
+									/>
+									<Button
+										icon="trash"
+										label={__('Remove', 'mbn-theme')}
+										onClick={() => removeArrayItem('socialLinks', index)}
+										isDestructive
+									/>
+								</div>
 							</div>
 							<TextControl
 								label={__('Platform', 'mbn-theme')}
