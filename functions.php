@@ -104,6 +104,7 @@ require_once get_theme_file_path( 'inc/includes-practice-area-cpt.php' );       
 require_once get_theme_file_path( 'inc/includes-practice-area-fields.php' );    // Practice Area ACF field groups.
 require_once get_theme_file_path( 'inc/includes-spanish-post-cpt.php' );        // Spanish Post custom post type and taxonomy.
 require_once get_theme_file_path( 'inc/includes-lp-template.php' );             // Landing Page (LP) template assets and lead form.
+require_once get_theme_file_path( 'inc/includes-auto-collision-template.php' ); // Auto Collision lander assets and multi-step form.
 require_once get_theme_file_path( 'inc/includes-post-bulk-actions.php' );      // "Set category" bulk action for the Posts list screen.
 require_once get_theme_file_path( 'inc/includes-spanish-post-bulk-actions.php' ); // "Move to Blog" bulk action for the Spanish Posts list screen.
 /**

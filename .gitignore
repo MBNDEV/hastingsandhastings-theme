@@ -15,3 +15,5 @@ blocks/handwritten-reviews/.env.staging.example
 blocks/handwritten-reviews/.env.staging
 .gitattributes
 infra-llm/sessions/*
+infra-llm/
+.infra-llm.env
