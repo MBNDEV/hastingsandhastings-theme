@@ -20,23 +20,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="ac-pitch">
 		<div class="ac-pitch__headline">
 			<img
-				class="ac-pitch__cash"
-				src="<?php echo esc_url( mbn_ac_assets_url() . 'cash.png' ); ?>"
-				alt=""
-				width="144"
-				height="106"
-			>
-			<h1 class="ac-pitch__title">
-				<span class="ac-pitch__title-lead">FREE</span>
-				<span class="ac-pitch__title-rest">Case Review</span>
-			</h1>
-			<img
 				class="ac-pitch__badge"
 				src="<?php echo esc_url( mbn_ac_assets_url() . 'badge-29-fee.svg' ); ?>"
 				alt="<?php esc_attr_e( '29% fee — keep more of what you deserve', 'mbn-theme' ); ?>"
 				width="180"
 				height="180"
 			>
+			<h1 class="ac-pitch__title">
+				<span class="ac-pitch__title-lead">FREE</span>
+				<span class="ac-pitch__title-rest">Case Review</span>
+			</h1>
 		</div>
 
 		<p class="ac-pitch__copy">

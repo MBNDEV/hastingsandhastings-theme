@@ -13,8 +13,10 @@
 	--ac-surface: #17293f;
 	--ac-blue: #286fb7;
 	--ac-blue-dark: #1e5086;
+	--ac-blue-200: #c6dbf1;
 	--ac-heading: #4f95d9;
 	--ac-muted: #9ca5ad;
+	--ac-option: rgba(0, 0, 0, 0.35);
 	--ac-action: #fff24c;
 	--ac-action-text: #13263e;
 	--ac-serif: "Noto Serif", Georgia, "Times New Roman", serif;
@@ -25,13 +27,14 @@
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
-	background-color: var(--ac-navy-deep);
+	background-color: var(--ac-navy);
 
-	/* The diagonal light streak from the design, lower-left to upper-right. */
+	/* The frame's two-layer wash: a navy corner falloff over a broad blue streak
+	   running lower-left to upper-right. Angles are the design's, converted to
+	   the CSS convention. */
 	background-image:
-		linear-gradient(107deg, rgba(40, 111, 183, 0) 30%, rgba(60, 134, 205, 0.28) 47%, rgba(40, 111, 183, 0) 64%),
-		radial-gradient(120% 95% at 82% 4%, rgba(30, 80, 134, 0.5) 0%, rgba(13, 26, 44, 0) 62%),
-		linear-gradient(158deg, #101f33 0%, #13263e 46%, #0c1828 100%);
+		linear-gradient(116.5deg, var(--ac-navy) 0.24%, rgba(0, 0, 0, 0) 45.9%),
+		linear-gradient(296.6deg, var(--ac-navy) 7.48%, var(--ac-blue-dark) 53.12%, rgba(19, 38, 62, 0) 88.47%);
 	background-attachment: fixed;
 	color: #fff;
 	font-family: var(--ac-sans);
@@ -52,6 +55,15 @@ body.admin-bar .ac-shell {
  */
 body.mbn-ac .wpml-ls-statics-footer {
 	display: none;
+}
+
+/* The theme sets no global border-box, and several rules here size an element
+   with max-width while padding it — without this they overflow the container. */
+.ac-shell,
+.ac-shell *,
+.ac-shell *::before,
+.ac-shell *::after {
+	box-sizing: border-box;
 }
 
 .ac-shell a {
@@ -81,7 +93,7 @@ body.mbn-ac .wpml-ls-statics-footer {
 .ac-header__phone {
 	color: #fff;
 	font-size: 24px;
-	font-weight: 700;
+	font-weight: 600;
 	line-height: 28px;
 	white-space: nowrap;
 }
@@ -92,12 +104,15 @@ body.mbn-ac .wpml-ls-statics-footer {
 	display: flex;
 	flex: 1;
 	align-items: center;
-	padding: 40px var(--ac-gutter);
+	justify-content: center;
+	padding: 24px var(--ac-gutter);
 }
 
 .ac-layout {
 	display: grid;
-	grid-template-columns: 650px 420px;
+	/* The pitch track yields first, so the columns still fit in the window
+	   between the container width and the 1180px breakpoint. */
+	grid-template-columns: minmax(0, 650px) 420px;
 	gap: 70px;
 	width: 100%;
 	max-width: var(--ac-container);
@@ -106,32 +121,32 @@ body.mbn-ac .wpml-ls-statics-footer {
 
 /* Pitch column ------------------------------------------------------------ */
 
-.ac-pitch__headline {
-	position: relative;
-	min-height: 164px;
+.ac-pitch {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+	align-items: flex-start;
 }
 
-.ac-pitch__cash {
-	position: absolute;
-	top: 29px;
-	left: 0;
-	width: 144px;
+.ac-pitch__headline {
+	display: flex;
+	align-items: center;
+	gap: 24px;
+	padding: 10px 0;
 }
 
 .ac-pitch__badge {
-	position: absolute;
-	top: -109px;
-	left: 365px;
+	flex-shrink: 0;
 	width: 180px;
 }
 
 .ac-pitch__title {
+	max-width: 494px;
 	margin: 0;
-	padding-left: 168px;
 	font-family: var(--ac-serif);
-	font-size: 72px;
+	font-size: 64px;
 	font-weight: 600;
-	line-height: 82px;
+	line-height: 72px;
 }
 
 .ac-pitch__title-lead,
@@ -145,22 +160,23 @@ body.mbn-ac .wpml-ls-statics-footer {
 
 .ac-pitch__copy {
 	max-width: 650px;
-	margin: 18px 0 0;
-	color: var(--ac-muted);
+	margin: 0;
+	color: var(--ac-blue-200);
+	opacity: 0.8;
 }
 
 .ac-featured {
 	display: flex;
 	align-items: center;
 	gap: 24px;
-	margin-top: 18px;
 	padding: 10px;
 }
 
 .ac-featured__label {
 	font-family: var(--ac-serif);
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: 700;
+	line-height: 27px;
 	white-space: nowrap;
 }
 
@@ -202,13 +218,13 @@ body.mbn-ac .wpml-ls-statics-footer {
 
 .ac-footer {
 	display: flex;
-	align-items: flex-start;
+	align-items: center;
 	justify-content: space-between;
 	gap: 40px;
 	width: 100%;
 	max-width: var(--ac-container);
 	margin: 0 auto;
-	padding: 25px 0 30px;
+	padding: 24px 0;
 	border-top: 1px solid var(--ac-blue);
 }
 
@@ -218,15 +234,17 @@ body.mbn-ac .wpml-ls-statics-footer {
 
 .ac-footer__copyright {
 	margin: 0;
-	font-size: 14px;
-	font-weight: 500;
-	line-height: 19px;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: normal;
+	opacity: 0.75;
 }
 
 .ac-footer__links {
 	margin: 4px 0 0;
-	font-size: 13px;
-	line-height: 18px;
+	font-size: 12px;
+	line-height: normal;
+	opacity: 0.75;
 }
 
 .ac-footer__links a {
@@ -240,9 +258,9 @@ body.mbn-ac .wpml-ls-statics-footer {
 
 .ac-footer__terms {
 	margin: 12px 0 0;
-	color: var(--ac-muted);
-	font-size: 11px;
-	line-height: 16px;
+	color: rgba(255, 255, 255, 0.6);
+	font-size: 10px;
+	line-height: normal;
 }
 
 .ac-footer__badges {
@@ -255,11 +273,11 @@ body.mbn-ac .wpml-ls-statics-footer {
 	width: 100px;
 }
 
-/* The footer sits inside the page gutter, but the rule spans the container. */
+/* The rule spans the container exactly, so the footer keeps clear of the page
+   gutter by shrinking rather than by padding — padding would push the border
+   out to the full gutter width. */
 .ac-shell > .ac-footer {
-	padding-right: var(--ac-gutter);
-	padding-left: var(--ac-gutter);
-	max-width: calc(var(--ac-container) + var(--ac-gutter) * 2);
+	width: calc(100% - var(--ac-gutter) * 2);
 }
 
 /* Gravity Forms ----------------------------------------------------------- */
@@ -297,8 +315,8 @@ body.mbn-ac .wpml-ls-statics-footer {
 }
 
 .ac-formcol .ac-step-counter {
-	color: var(--ac-muted);
-	font-size: 18px;
+	color: var(--ac-blue-200);
+	font-size: 16px;
 	line-height: 28px;
 }
 
@@ -333,8 +351,8 @@ body.mbn-ac .wpml-ls-statics-footer {
 	padding: 0;
 	color: var(--ac-action);
 	font-family: var(--ac-sans);
-	font-size: 20px;
-	font-weight: 700;
+	font-size: 18px;
+	font-weight: 600;
 	line-height: 28px;
 }
 
@@ -393,9 +411,8 @@ body.mbn-ac .wpml-ls-statics-footer {
 	max-width: none;
 	min-height: 40px;
 	margin: 0;
-	padding: 6px 12px;
-	border-radius: 4px;
-	background: var(--ac-surface);
+	padding: 6px 10px;
+	background: var(--ac-option);
 	color: #fff;
 	font-size: 16px;
 	font-weight: 400;
@@ -419,16 +436,20 @@ body.mbn-ac .wpml-ls-statics-footer {
 
 /* Text inputs, textarea, select */
 
-.ac-formcol .gform_wrapper input[type="text"],
-.ac-formcol .gform_wrapper input[type="email"],
-.ac-formcol .gform_wrapper input[type="tel"],
-.ac-formcol .gform_wrapper textarea,
-.ac-formcol .gform_wrapper select {
+/*
+ * .gform_wrapper is repeated for the same reason as on the buttons below:
+ * gravity-theme styles these as `.gform_wrapper.gravity-theme .gfield textarea`
+ * and prints after us, so anything less specific loses its padding and size.
+ */
+.ac-formcol .gform_wrapper.gform_wrapper .gfield input[type="text"],
+.ac-formcol .gform_wrapper.gform_wrapper .gfield input[type="email"],
+.ac-formcol .gform_wrapper.gform_wrapper .gfield input[type="tel"],
+.ac-formcol .gform_wrapper.gform_wrapper .gfield textarea,
+.ac-formcol .gform_wrapper.gform_wrapper .gfield select {
 	width: 100%;
-	padding: 10px 12px;
+	padding: 8px 10px;
 	border: 0;
-	border-radius: 4px;
-	background: var(--ac-surface);
+	background: var(--ac-option);
 	color: #fff;
 	font-family: var(--ac-sans);
 	font-size: 16px;
@@ -442,7 +463,8 @@ body.mbn-ac .wpml-ls-statics-footer {
 	resize: vertical;
 }
 
-.ac-formcol .gform_wrapper select {
+/* Must stay at least as specific as the rule above, which resets background. */
+.ac-formcol .gform_wrapper.gform_wrapper .gfield select {
 	padding-right: 40px;
 	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23ffffff' stroke-width='1.6'%3E%3Cpath d='M3 6l5 5 5-5'/%3E%3C/svg%3E");
 	background-repeat: no-repeat;
@@ -502,15 +524,15 @@ body.mbn-ac .wpml-ls-statics-footer {
 .ac-formcol .gform_wrapper .gform_footer .gform_button.gform_button {
 	min-height: 45px;
 	margin: 0;
-	padding: 0 22px;
+	padding: 12px 24px;
 	border: 0;
-	border-radius: 999px;
+	border-radius: 88px;
 	background: var(--ac-action);
 	color: var(--ac-action-text);
 	font-family: var(--ac-sans);
 	font-size: 14px;
 	font-weight: 700;
-	letter-spacing: 4px;
+	letter-spacing: 0.56px;
 	line-height: 1;
 	text-transform: uppercase;
 	cursor: pointer;
@@ -532,7 +554,7 @@ body.mbn-ac .wpml-ls-statics-footer {
 	font-family: var(--ac-sans);
 	font-size: 14px;
 	font-weight: 700;
-	letter-spacing: 4px;
+	letter-spacing: 0.56px;
 	line-height: 1;
 	text-transform: uppercase;
 	cursor: pointer;
@@ -547,9 +569,10 @@ body.mbn-ac .wpml-ls-statics-footer {
  * judged this way, so the rule is scoped to pages that actually hold radios —
  * otherwise every text step would render permanently dimmed.
  */
-.ac-formcol .gform_page:has(input[type="radio"]):not(:has(input[type="radio"]:checked)) .gform_page_footer .gform_next_button.gform_next_button {
-	background: #b3ad4f;
-	color: #2c3524;
+.ac-formcol .gform_page:has(input[type="radio"]):not(:has(input[type="radio"]:checked)) .gform_page_footer .gform_next_button.gform_next_button,
+.ac-formcol .gform_page:has(input[type="radio"]):not(:has(input[type="radio"]:checked)) .gform_page_footer .gform_next_button.gform_next_button:hover {
+	background: var(--ac-action);
+	opacity: 0.5;
 }
 
 /* Validation */
@@ -599,8 +622,8 @@ body.mbn-ac .wpml-ls-statics-footer {
 	}
 
 	.ac-pitch__title {
-		font-size: 60px;
-		line-height: 68px;
+		font-size: 56px;
+		line-height: 64px;
 	}
 
 	.ac-thanks {
@@ -612,6 +635,8 @@ body.mbn-ac .wpml-ls-statics-footer {
 	.ac-shell {
 		--ac-gutter: 20px;
 
+		/* One tall scrolling column now, so a fixed backdrop would sit still
+		   under the content and band visibly on iOS. */
 		background-attachment: scroll;
 	}
 
@@ -634,25 +659,11 @@ body.mbn-ac .wpml-ls-statics-footer {
 		gap: 40px;
 	}
 
-	.ac-pitch__headline {
-		min-height: 0;
-		padding-top: 96px;
-	}
-
-	.ac-pitch__cash {
-		top: 96px;
-		width: 96px;
-	}
-
 	.ac-pitch__badge {
-		top: 0;
-		left: auto;
-		right: 0;
-		width: 120px;
+		width: 140px;
 	}
 
 	.ac-pitch__title {
-		padding-left: 116px;
 		font-size: 44px;
 		line-height: 52px;
 	}
@@ -685,22 +696,21 @@ body.mbn-ac .wpml-ls-statics-footer {
 		gap: 12px;
 	}
 
+	.ac-pitch__headline {
+		gap: 16px;
+	}
+
 	.ac-pitch__badge {
-		width: 96px;
+		width: 88px;
 	}
 
 	.ac-pitch__title {
-		padding-left: 0;
-		font-size: 40px;
-		line-height: 46px;
+		font-size: 34px;
+		line-height: 40px;
 	}
 
-	.ac-pitch__cash {
-		display: none;
-	}
-
-	.ac-pitch__headline {
-		padding-top: 72px;
+	.ac-footer__badges img {
+		width: 72px;
 	}
 
 	.ac-formcol .gform_wrapper .ginput_complex {
