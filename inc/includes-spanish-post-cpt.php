@@ -273,13 +273,21 @@ add_filter( 'wpml_hreflangs', 'custom_theme_spanish_posts_page_hreflang' );
  * exist) instead of the espanol-posts page that actually serves as its
  * Spanish equivalent.
  *
+ * Built from get_option( 'home' ) rather than home_url(): WPML's own
+ * 'home_url' filter auto-prepends the *current browsing* language's prefix
+ * to every home_url() call (see WPML_Url_Filters::home_url_filter()), so
+ * calling home_url() here while already browsing the site in Spanish (e.g.
+ * /es/blog/page/33/) produced /es/espanol-posts/. espanol-posts is
+ * registered in WPML as English content with no real translation, so it
+ * must always resolve at the bare, unprefixed path.
+ *
  * @param string $url  The language URL WPML is about to output.
  * @param array  $data Language data for this switcher link, keyed by 'code'.
  * @return string
  */
 function custom_theme_blog_page_spanish_switcher_url( string $url, array $data ): string {
   if ( 'es' === ( $data['code'] ?? '' ) && is_page( 'blog' ) ) {
-    return home_url( '/' . CUSTOM_THEME_SPANISH_POSTS_PAGE_SLUG . '/' );
+    return untrailingslashit( get_option( 'home' ) ) . '/' . CUSTOM_THEME_SPANISH_POSTS_PAGE_SLUG . '/';
   }
 
   return $url;
