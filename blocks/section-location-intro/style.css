@@ -56,6 +56,9 @@
   color: var(--ldp-text-body);
   text-decoration: underline;
 }
+.ldp-why-choose__intro a:hover {
+  color: var(--ldp-text-link);
+}
 
 /* ── Track Record Section ────────────────────────────────── */
 .ldp-why-choose__track-record {
@@ -99,6 +102,13 @@
   margin: 0;
 }
 
+.ldp-why-choose__track-record-text p a{
+  color: var(--ldp-text-body);
+  text-decoration: underline;
+}
+.ldp-why-choose__track-record-text p a:hover {
+  color: var(--ldp-text-link);
+}
 .ldp-why-choose__stats {
   display: flex;
   flex-direction: column;
@@ -215,6 +225,15 @@
   margin: 0;
 }
 
+.ldp-why-choose__attorneys-text p a{
+  color: var(--ldp-text-body);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.ldp-why-choose__attorneys-text p a:hover{
+  color: var(--ldp-text-link);
+}
 .ldp-why-choose__attorneys-img {
   margin: 0;
   position: relative;

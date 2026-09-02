@@ -13,17 +13,26 @@ $locations_menu_id          = $attributes['locationsMenuId'] ?? 0;
 $practice_areas_menu_id     = $attributes['practiceAreasMenuId'] ?? 0;
 $main_footer_menu_id        = $attributes['mainFooterMenuId'] ?? 0;
 $locations_button_text      = $attributes['locationsButtonText'] ?? 'VIEW ALL LOCATIONS';
-$locations_button_url       = $attributes['locationsButtonUrl'] ?? '#';
+$locations_button_url       = $attributes['locationsButtonUrl'] ?? '/locations/';
 $practice_areas_button_text = $attributes['practiceAreasButtonText'] ?? 'VIEW ALL PRACTICE AREAS';
-$practice_areas_button_url  = $attributes['practiceAreasButtonUrl'] ?? '#';
+$practice_areas_button_url  = $attributes['practiceAreasButtonUrl'] ?? '/practice-areas/';
 $footer_logo_url            = $attributes['footerLogoUrl'] ?? '';
 $footer_logo_link_url       = $attributes['footerLogoLinkUrl'] ?? '/';
 $footer_tagline             = $attributes['footerTagline'] ?? '';
 $social_media               = $attributes['socialMedia'] ?? array();
 $copyright_text             = $attributes['copyrightText'] ?? '';
+$footer_bottom_links        = $attributes['footerBottomLinks'] ?? array();
 $mobile_contact_url         = $attributes['mobileContactUrl'] ?? '/contact-us/';
 $mobile_phone_number        = $attributes['mobilePhoneNumber'] ?? '(480) 418-2483';
 $footer_padding_bottom      = ( ! empty( $mobile_contact_url ) || ! empty( $mobile_phone_number ) ) ? 'pb-24 lg:pb-0' : '';
+
+// The column headings below aren't block attributes (unlike the button text
+// above), so they don't automatically follow a Spanish Footer Template's
+// translated content — swap them the same way section-blog-listing-filter's
+// render.php does for its own copy.
+$is_spanish_context     = function_exists( 'custom_theme_is_spanish_context' ) && custom_theme_is_spanish_context();
+$locations_heading      = $is_spanish_context ? 'Ubicaciones' : __( 'Locations', 'mbn-theme' );
+$practice_areas_heading = $is_spanish_context ? 'Áreas de Práctica' : __( 'Practice Areas', 'mbn-theme' );
 
 $wrapper_attributes = get_block_wrapper_attributes(
   array(
@@ -139,7 +148,7 @@ if ( ! function_exists( 'render_footer_menu' ) ) {
       <?php if ( $locations_menu_id ) : ?>
         <div class="mb-12 lg:mb-16">
           <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
-            <h3 class="text-2xl font-bold text-white font-heading"><?php echo esc_html__( 'Locations', 'mbn-theme' ); ?></h3>
+            <h3 class="text-2xl font-bold text-white font-heading"><?php echo esc_html( $locations_heading ); ?></h3>
             <a href="<?php echo esc_url( $locations_button_url ); ?>" class="hidden sm:inline-flex items-center justify-center py-3 px-6 font-bold text-sm uppercase tracking-wide whitespace-nowrap transition-all duration-300 cursor-pointer no-underline text-white rounded-full border border-white/30 bg-transparent hover:bg-white/10 hover:border-white/50">
               <?php echo esc_html( $locations_button_text ); ?>
             </a>
@@ -161,7 +170,7 @@ if ( ! function_exists( 'render_footer_menu' ) ) {
       <?php if ( $practice_areas_menu_id ) : ?>
         <div>
           <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
-            <h3 class="text-2xl font-bold text-white font-heading"><?php echo esc_html__( 'Practice Areas', 'mbn-theme' ); ?></h3>
+            <h3 class="text-2xl font-bold text-white font-heading"><?php echo esc_html( $practice_areas_heading ); ?></h3>
             <a href="<?php echo esc_url( $practice_areas_button_url ); ?>" class="hidden sm:inline-flex items-center justify-center py-3 px-6 font-bold text-sm uppercase tracking-wide whitespace-nowrap transition-all duration-300 cursor-pointer no-underline text-white rounded-full border border-white/30 bg-transparent hover:bg-white/10 hover:border-white/50">
               <?php echo esc_html( $practice_areas_button_text ); ?>
             </a>
@@ -235,11 +244,31 @@ if ( ! function_exists( 'render_footer_menu' ) ) {
     </div>
 
     <div class="border-t border-white border-opacity-10 pt-8">
-      
+      <?php
+      // Build the copyright + bottom links pieces, joined inline with a "|" delimiter.
+      $bottom_items = array();
 
-      <?php if ( $copyright_text ) : ?>
-        <p class="text-sm text-white opacity-60 text-center">
-          <?php echo esc_html( $copyright_text ); ?>
+      if ( $copyright_text ) {
+        $bottom_items[] = '<span class="text-light-blue-100">' . esc_html( $copyright_text ) . '</span>';
+      }
+
+      foreach ( $footer_bottom_links as $bottom_link ) {
+        if ( empty( $bottom_link['text'] ) || empty( $bottom_link['url'] ) ) {
+          continue;
+        }
+        $link_target    = ! empty( $bottom_link['openInNewTab'] ) ? ' target="_blank" rel="noopener noreferrer"' : '';
+        $bottom_items[] = '<a href="' . esc_url( $bottom_link['url'] ) . '"' . $link_target . ' class="text-light-blue-100 no-underline hover:underline transition-all duration-200">' . esc_html( $bottom_link['text'] ) . '</a>';
+      }
+      ?>
+
+      <?php if ( ! empty( $bottom_items ) ) : ?>
+        <p class="text-sm text-light-blue-100 opacity-60 text-center flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+          <?php foreach ( $bottom_items as $index => $bottom_item ) : ?>
+            <?php if ( $index > 0 ) : ?>
+              <span aria-hidden="true">|</span>
+            <?php endif; ?>
+            <?php echo $bottom_item; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Individual pieces are escaped above. ?>
+          <?php endforeach; ?>
         </p>
       <?php endif; ?>
     </div>

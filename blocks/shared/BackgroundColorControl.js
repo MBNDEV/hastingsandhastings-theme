@@ -28,9 +28,10 @@ export default function BackgroundColorControl({
   defaultValue = 'bg-white',
   label = __('Background Color', 'mbn-theme'),
   help = __('Select a preset color or click the palette icon to choose custom colors', 'mbn-theme'),
+  compact = false,
 }) {
   return (
-    <BaseControl label={label} help={help}>
+    <BaseControl label={label} help={compact ? undefined : help}>
       <ColorPalette
         colors={TAILWIND_COLORS.map(c => ({ name: c.name, color: c.color }))}
         value={(() => {
@@ -47,10 +48,12 @@ export default function BackgroundColorControl({
         }}
         clearable={false}
       />
-      <div style={{ marginTop: '10px', fontSize: '12px', color: '#666' }}>
-        {__('Current: ', 'mbn-theme')}
-        <strong>{value}</strong>
-      </div>
+      {!compact && (
+        <div style={{ marginTop: '10px', fontSize: '12px', color: '#666' }}>
+          {__('Current: ', 'mbn-theme')}
+          <strong>{value}</strong>
+        </div>
+      )}
     </BaseControl>
   );
 }

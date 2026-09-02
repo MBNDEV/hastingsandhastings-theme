@@ -39,7 +39,7 @@
 
 @media screen and (max-width: 1023px) {
   .testimonials-slider .swiper-slide {
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 25px;
+    padding-right: 20px;
   }
 }

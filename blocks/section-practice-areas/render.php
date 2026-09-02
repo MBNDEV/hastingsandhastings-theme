@@ -17,7 +17,7 @@ $cta_logo_url     = $attributes['ctaLogoUrl'] ?? '';
 $cta_heading      = $attributes['ctaHeading'] ?? 'Not Sure Where Your Case Fits?';
 $cta_description  = $attributes['ctaDescription'] ?? '';
 $cta_button_text  = $attributes['ctaButtonText'] ?? 'VIEW ALL PRACTICE AREAS';
-$cta_button_url   = $attributes['ctaButtonUrl'] ?? '#';
+$cta_button_url   = $attributes['ctaButtonUrl'] ?? '/practice-areas/';
 $background_color = $attributes['backgroundColor'] ?? 'bg-light-blue';
 
 // Determine if background color is a hex code or Tailwind class

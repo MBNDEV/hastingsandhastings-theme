@@ -11,6 +11,7 @@ import {
   SelectControl,
   TextareaControl,
   TextControl,
+  ToggleControl,
   Icon,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
@@ -111,6 +112,25 @@ function SortableListItem( { item, index, listStyle, updateListItem, removeListI
               value={ item.title || '' }
               onChange={ ( value ) => updateListItem( index, { title: value } ) }
             />
+            <ToggleControl
+              label={ __( 'Link Title', 'mbn-theme' ) }
+              checked={ !! item.showUrl || !! item.url }
+              onChange={ ( value ) =>
+                updateListItem(
+                  index,
+                  value ? { showUrl: true } : { showUrl: false, url: '' }
+                )
+              }
+              help={ __( 'Turn on to add an optional URL for the title.', 'mbn-theme' ) }
+            />
+            { ( !! item.showUrl || !! item.url ) && (
+              <TextControl
+                label={ __( 'Title URL', 'mbn-theme' ) }
+                value={ item.url || '' }
+                onChange={ ( value ) => updateListItem( index, { url: value } ) }
+                help={ __( 'Leave empty for plain text', 'mbn-theme' ) }
+              />
+            ) }
             <div style={ { marginTop: '8px' } }>
               <label
                 style={ {
@@ -152,6 +172,8 @@ export default function Edit( { attributes, setAttributes } ) {
     listItems,
     imageUrl,
     imageId,
+    imagePosition,
+    contentTitle,
     beforeListParagraphs,
     afterListParagraphs,
     footerParagraphs,
@@ -436,6 +458,12 @@ export default function Edit( { attributes, setAttributes } ) {
           title={ __( 'Before List Paragraphs (Optional)', 'mbn-theme' ) }
           initialOpen={ false }
         >
+          <TextControl
+            label={ __( 'Content Title (Optional)', 'mbn-theme' ) }
+            value={ contentTitle || '' }
+            onChange={ ( value ) => setAttributes( { contentTitle: value } ) }
+            help={ __( 'Shown above the paragraphs/list in the content column. Leave blank to hide.', 'mbn-theme' ) }
+          />
           <div>
             <strong>{ __( 'Paragraphs Before List', 'mbn-theme' ) }</strong>
             { beforeListParagraphs && beforeListParagraphs.map( ( paragraph, index ) => (
@@ -560,6 +588,16 @@ export default function Edit( { attributes, setAttributes } ) {
           title={ __( 'Image', 'mbn-theme' ) }
           initialOpen={ activeSection === 'image' }
         >
+          <SelectControl
+            label={ __( 'Image Position', 'mbn-theme' ) }
+            value={ imagePosition || 'right' }
+            options={ [
+              { label: __( 'Right (Default)', 'mbn-theme' ), value: 'right' },
+              { label: __( 'Left', 'mbn-theme' ), value: 'left' },
+            ] }
+            onChange={ ( value ) => setAttributes( { imagePosition: value } ) }
+            help={ __( 'Position of the image relative to the content on desktop.', 'mbn-theme' ) }
+          />
           <MediaUploadCheck>
             <MediaUpload
               onSelect={ ( media ) =>
@@ -683,6 +721,7 @@ export default function Edit( { attributes, setAttributes } ) {
               borderRadius: '8px',
               padding: '16px',
               display: 'flex',
+              flexDirection: imagePosition === 'left' ? 'row-reverse' : 'row',
               gap: '24px',
               alignItems: 'center',
             } }
@@ -698,6 +737,11 @@ export default function Edit( { attributes, setAttributes } ) {
               >
                 { __( 'LIST ITEMS', 'mbn-theme' ) } ({ listStyle === 'two-column' ? __( 'Two Column', 'mbn-theme' ) : __( 'Single Column', 'mbn-theme' ) })
               </div>
+              { contentTitle && (
+                <h4 className="loc-hlimg__content-title" style={ { marginBottom: '8px' } }>
+                  { contentTitle }
+                </h4>
+              ) }
               { listItems && listItems.length > 0 ? (
                 <p style={ { fontSize: '13px', color: '#757575' } }>
                   { listItems.length } { __( 'item(s)', 'mbn-theme' ) }

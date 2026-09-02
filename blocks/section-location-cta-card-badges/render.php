@@ -44,7 +44,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
 <section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
   <div class="ldp-container">
-    <div class="ldp-cta-card ldp-cta-card--faq" id="contact">
+    <div class="ldp-cta-card ldp-cta-card--faq">
       <div class="ldp-cta-card__bg" style="background-image: url('<?php echo esc_url( $cta_bg ); ?>')"></div>
       <div class="ldp-cta-card__logo" aria-hidden="true">
         <img src="<?php echo esc_url( $cta_logo ); ?>" alt="" class="ldp-cta-card__logo-left">
@@ -66,7 +66,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
       </div>
     </div>
 
-    <div class="ldp-faq__badges">
+    <div class="ldp-faq__badges<?php echo empty( $badges_text_paragraphs ) ? ' ldp-faq__badges--no-text' : ''; ?>">
       <?php if ( ! empty( $badges_text_paragraphs ) && is_array( $badges_text_paragraphs ) ) : ?>
         <div class="ldp-faq__badges-row-text">
           <?php foreach ( $badges_text_paragraphs as $paragraph ) : ?>

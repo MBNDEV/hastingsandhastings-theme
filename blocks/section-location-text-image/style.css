@@ -157,10 +157,10 @@
 
 .section-loc-text-image__item-desc {
   display: block;
-  color: #363b3f;
+  color: var(--ldp-text-link);
   font-family: var(--ldp-font-secondary, 'Heebo', sans-serif);
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
 }
 
@@ -170,7 +170,7 @@
 }
 
 .section-loc-text-image__item-label {
-  color: #363b3f;
+  color: var(--ldp-text-link);
   font-family: var(--ldp-font-secondary, 'Heebo', sans-serif);
   font-weight: 400;
   font-size: 14px;

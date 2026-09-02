@@ -1,0 +1,694 @@
+<wpml-config>
+
+	<!--
+		WPML configuration for MBN Theme.
+
+		WHY THIS FILE EXISTS
+		Every mbn-theme block is a dynamic, self-closing block: all of its copy lives
+		in JSON attributes inside the block comment, not in inner HTML. WPML cannot
+		guess which attributes are text, so without this file it registers no
+		translatable strings for these blocks at all - the WPML Translation Editor
+		shows an empty job and Spanish pages render the English attribute values.
+
+		AFTER EDITING THIS FILE
+		WPML caches theme config. Re-read it via
+		WPML > Support > Troubleshooting > "Reset and load the configuration files",
+		then re-save (or re-queue) any page whose blocks changed.
+
+		CONVENTIONS USED BELOW
+		  translated : visible copy, alt text, and navigational link targets
+		               (so Spanish CTAs can point at /es/ pages)
+		  omitted    : attachment IDs, media URLs (use WPML Media Translation),
+		               colors, alignment, class names, layout flags, anchors
+	-->
+
+	<gutenberg-blocks>
+		<gutenberg-block type="mbn-theme/awards-and-accolades-section" translate="1">
+			<key name="awardsLabel" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/contact-us-page" translate="1">
+			<key name="badges">
+				<key name="*">
+					<key name="caption" />
+				</key>
+			</key>
+			<key name="bodyText" />
+			<key name="eyebrowText" />
+			<key name="heading" />
+			<key name="locationsHeading" />
+			<key name="mapTitle" />
+			<key name="officeLocations">
+				<key name="*">
+					<key name="address" />
+					<key name="addressUrl" />
+					<key name="name" />
+					<key name="phoneNumber" />
+					<key name="phoneUrl" />
+				</key>
+			</key>
+			<key name="phoneLabel" />
+			<key name="phoneNumber" />
+			<key name="phoneUrl" />
+			<key name="socialLabel" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/footer" translate="1">
+			<key name="copyrightText" />
+			<key name="footerBottomLinks">
+				<key name="*">
+					<key name="text" />
+					<key name="url" />
+				</key>
+			</key>
+			<key name="footerLogoLinkUrl" />
+			<key name="footerTagline" />
+			<key name="locationsButtonText" />
+			<key name="locationsButtonUrl" />
+			<key name="mobileContactUrl" />
+			<key name="mobilePhoneNumber" />
+			<key name="practiceAreasButtonText" />
+			<key name="practiceAreasButtonUrl" />
+			<key name="socialMedia">
+				<key name="*">
+					<key name="label" />
+				</key>
+			</key>
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/handwritten-reviews" translate="1">
+			<key name="accordionItems">
+				<key name="*">
+					<key name="heading" />
+					<key name="month" />
+					<key name="year" />
+				</key>
+			</key>
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/header-navigation" translate="1">
+			<key name="buttonText" />
+			<key name="buttonUrl" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/hero-section" translate="1">
+			<key name="ctaButtonText" />
+			<key name="ctaButtonUrl" />
+			<key name="eyebrowText" />
+			<key name="feeUntilWinLabel" />
+			<key name="feeUntilWinNumber" />
+			<key name="heroButtonText" />
+			<key name="heroButtonUrl" />
+			<key name="mainHeading" />
+			<key name="outOfPocketLabel" />
+			<key name="outOfPocketNumber" />
+			<key name="phoneNumber" />
+			<key name="phoneNumberUrl" />
+			<key name="quickCallLabel" />
+			<key name="quickCallPhoneNumber" />
+			<key name="quickCallPhoneNumberUrl" />
+			<key name="settlementFeesLabel" />
+			<key name="settlementFeesNumber" />
+			<key name="subheading" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/location-detailed-page" translate="1">
+			<key name="badgesItems">
+				<key name="*">
+					<key name="imageAlt" />
+				</key>
+			</key>
+			<key name="badgesTextParagraphs">
+				<key name="*">
+					<key name="text" />
+				</key>
+			</key>
+			<key name="caseCategories">
+				<key name="*">
+					<key name="description" />
+					<key name="imageAlt" />
+					<key name="links">
+						<key name="*">
+							<key name="label" />
+							<key name="url" />
+						</key>
+					</key>
+					<key name="title" />
+				</key>
+			</key>
+			<key name="caseCategoriesClosing" />
+			<key name="caseCategoriesSubtitle" />
+			<key name="caseCategoriesTitle" />
+			<key name="caseResults">
+				<key name="*">
+					<key name="amount" />
+					<key name="description" />
+					<key name="imageAlt" />
+					<key name="tag" />
+					<key name="title" />
+				</key>
+			</key>
+			<key name="caseResultsButtonText" />
+			<key name="caseResultsButtonUrl" />
+			<key name="caseResultsSubtitle" />
+			<key name="caseResultsTitle" />
+			<key name="ctaCards">
+				<key name="*">
+					<key name="buttonText" />
+					<key name="buttonUrl" />
+					<key name="description" />
+					<key name="phoneLabel" />
+					<key name="phoneText" />
+					<key name="phoneUrl" />
+					<key name="title" />
+				</key>
+			</key>
+			<key name="faqItems">
+				<key name="*">
+					<key name="answer" />
+					<key name="question" />
+				</key>
+			</key>
+			<key name="faqSubtitle" />
+			<key name="faqTitle" />
+			<key name="faultComparativeColumn1" />
+			<key name="faultComparativeColumn2" />
+			<key name="faultComparativeTitle" />
+			<key name="faultCompensationSubtitle" />
+			<key name="faultCompensationTitle" />
+			<key name="faultDamageTypes">
+				<key name="*">
+					<key name="description" />
+					<key name="title" />
+				</key>
+			</key>
+			<key name="faultIntroImageAlt" />
+			<key name="faultIntroText" />
+			<key name="faultIntroTitle" />
+			<key name="faultStatuteImageAlt" />
+			<key name="faultStatuteText" />
+			<key name="faultSteps">
+				<key name="*">
+					<key name="description" />
+					<key name="number" />
+					<key name="title" />
+				</key>
+			</key>
+			<key name="faultStepsSubtitle" />
+			<key name="faultStepsTitle" />
+			<key name="faultTimeLimitImageAlt" />
+			<key name="faultTimeLimitParagraph1" />
+			<key name="faultTimeLimitParagraph2" />
+			<key name="faultTimeLimitTitle" />
+			<key name="howWeHelpHeaderImageAlt" />
+			<key name="howWeHelpIntro" />
+			<key name="howWeHelpItems">
+				<key name="*">
+					<key name="imageAlt" />
+					<key name="text" />
+				</key>
+			</key>
+			<key name="howWeHelpTitle" />
+			<key name="resourcesLinks">
+				<key name="*">
+					<key name="label" />
+					<key name="url" />
+				</key>
+			</key>
+			<key name="servingColumns">
+				<key name="*">
+					<key name="links">
+						<key name="*">
+							<key name="label" />
+							<key name="url" />
+						</key>
+					</key>
+					<key name="title" />
+				</key>
+			</key>
+			<key name="servingTitle" />
+			<key name="testimonials">
+				<key name="*">
+					<key name="authorName" />
+					<key name="authorRole" />
+					<key name="quote" />
+				</key>
+			</key>
+			<key name="testimonialsSubtitle" />
+			<key name="testimonialsTitle" />
+			<key name="whyChooseIntro" />
+			<key name="whyChooseItems">
+				<key name="*">
+					<key name="heading" />
+					<key name="imageAlt" />
+					<key name="paragraph" />
+				</key>
+			</key>
+			<key name="whyChooseStats">
+				<key name="*">
+					<key name="label" />
+					<key name="number" />
+				</key>
+			</key>
+			<key name="whyChooseStatsImageAlt" />
+			<key name="whyChooseTitle" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/locations-directory" translate="1">
+			<key name="mapAreas">
+				<key name="*">
+					<key name="description" />
+					<key name="links" />
+					<key name="title" />
+				</key>
+			</key>
+			<key name="mapTitle" />
+			<key name="regions">
+				<key name="*">
+					<key name="cards" />
+					<key name="description" />
+					<key name="links" />
+					<key name="title" />
+				</key>
+			</key>
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/mini-hero-section" translate="1">
+			<key name="ctaButtonText" />
+			<key name="ctaButtonUrl" />
+			<key name="eyebrowText" />
+			<key name="feeUntilWinLabel" />
+			<key name="feeUntilWinNumber" />
+			<key name="mainHeading" />
+			<key name="outOfPocketLabel" />
+			<key name="outOfPocketNumber" />
+			<key name="phoneNumber" />
+			<key name="phoneNumberUrl" />
+			<key name="settlementFeesLabel" />
+			<key name="settlementFeesNumber" />
+			<key name="subheading" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/practice-area-details" translate="1">
+			<key name="sections">
+				<key name="*">
+					<key name="data">
+						<key name="accordion">
+							<key name="*">
+								<key name="answer" />
+								<key name="linkUrl" />
+								<key name="question" />
+							</key>
+						</key>
+						<key name="afterText" />
+						<key name="amount" />
+						<key name="areas">
+							<key name="*">
+								<key name="name" />
+								<key name="url" />
+							</key>
+						</key>
+						<key name="badgeCards">
+							<key name="*">
+								<key name="description" />
+							</key>
+						</key>
+						<key name="buttonText" />
+						<key name="buttonUrl" />
+						<key name="description" />
+						<key name="eyebrow" />
+						<key name="features">
+							<key name="*">
+								<key name="description" />
+								<key name="title" />
+							</key>
+						</key>
+						<key name="freeEvaluationsDescription" />
+						<key name="freeEvaluationsTitle" />
+						<key name="heading" />
+						<key name="introHeading" />
+						<key name="introText" />
+						<key name="items">
+							<key name="*">
+								<key name="description" />
+								<key name="label" />
+								<key name="name" />
+								<key name="quote" />
+								<key name="role" />
+								<key name="term" />
+								<key name="text" />
+								<key name="title" />
+								<key name="url" />
+							</key>
+						</key>
+						<key name="listType" />
+						<key name="millionsRecoveredDescription" />
+						<key name="millionsRecoveredTitle" />
+						<key name="phoneLabel" />
+						<key name="phoneNumber" />
+						<key name="results">
+							<key name="*">
+								<key name="amount" />
+								<key name="description" />
+							</key>
+						</key>
+						<key name="rows">
+							<key name="*">
+								<key name="heading" />
+								<key name="text" />
+							</key>
+						</key>
+						<key name="splits">
+							<key name="*">
+								<key name="text" />
+							</key>
+						</key>
+						<key name="subtext" />
+						<key name="subtitle" />
+						<key name="tag" />
+						<key name="text" />
+						<key name="title" />
+					</key>
+					<key name="title">
+						<key name="heading" />
+						<key name="paragraphs" />
+					</key>
+				</key>
+			</key>
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-3col-badge-cta" translate="1">
+			<key name="badges">
+				<key name="*">
+					<key name="text" />
+				</key>
+			</key>
+			<key name="ctaButtonText" />
+			<key name="ctaButtonUrl" />
+			<key name="ctaHeading" />
+			<key name="ctaText" />
+			<key name="eyebrowText" />
+			<key name="mainContent" />
+			<key name="mainHeading" />
+			<key name="phoneNumber" />
+			<key name="phoneNumberUrl" />
+			<key name="subHeading" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-attorney-listing" translate="1">
+			<key name="description" />
+			<key name="heading" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-case-results" translate="1">
+			<key name="buttonText" />
+			<key name="buttonUrl" />
+			<key name="caseResults">
+				<key name="*">
+					<key name="caseContent" />
+					<key name="caseHeading" />
+					<key name="caseSubheading" />
+					<key name="tagText" />
+				</key>
+			</key>
+			<key name="description" />
+			<key name="eyebrowText" />
+			<key name="mainHeading" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-case-results-list-filter" translate="1">
+			<key name="applyButtonText" />
+			<key name="clearButtonText" />
+			<key name="filterDefaultText" />
+			<key name="filterLabel" />
+			<key name="filterSubtitle" />
+			<key name="filterTitle" />
+			<key name="noResultsText" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-client-testimonials" translate="1">
+			<key name="description" />
+			<key name="eyebrowText" />
+			<key name="mainHeading" />
+			<key name="testimonials">
+				<key name="*">
+					<key name="authorName" />
+					<key name="authorTitle" />
+					<key name="fullText" />
+					<key name="quote" />
+				</key>
+			</key>
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-how-process-works" translate="1">
+			<key name="ctaButtonText" />
+			<key name="ctaButtonUrl" />
+			<key name="ctaDescription" />
+			<key name="ctaHeading" />
+			<key name="ctaPhoneLabel" />
+			<key name="ctaPhoneNumber" />
+			<key name="description" />
+			<key name="eyebrowText" />
+			<key name="mainHeading" />
+			<key name="steps">
+				<key name="*">
+					<key name="description" />
+					<key name="heading" />
+				</key>
+			</key>
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-intro-homepage" translate="1">
+			<key name="awardsLabel" />
+			<key name="eyebrowText" />
+			<key name="mainHeading" />
+			<key name="subheading" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-location-cta-card-badges" translate="1">
+			<key name="badgesItems">
+				<key name="*">
+					<key name="imageAlt" />
+				</key>
+			</key>
+			<key name="badgesTextParagraphs">
+				<key name="*">
+					<key name="text" />
+				</key>
+			</key>
+			<key name="ctaButtonText" />
+			<key name="ctaButtonUrl" />
+			<key name="ctaDescription" />
+			<key name="ctaPhoneLabel" />
+			<key name="ctaPhoneText" />
+			<key name="ctaPhoneUrl" />
+			<key name="ctaTitle" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-location-heading-list-image" translate="1">
+			<key name="afterListParagraphs" />
+			<key name="beforeListParagraphs" />
+			<key name="contentTitle" />
+			<key name="footerParagraphs" />
+			<key name="heading" />
+			<key name="introParagraphs" />
+			<key name="listItems">
+				<key name="*">
+					<key name="description" />
+					<key name="label" />
+					<key name="title" />
+					<key name="url" />
+				</key>
+			</key>
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-location-intro" translate="1">
+			<key name="ctaButtonText" />
+			<key name="ctaButtonUrl" />
+			<key name="ctaDescription" />
+			<key name="ctaPhoneNumber" />
+			<key name="ctaTitle" />
+			<key name="introParagraph" />
+			<key name="sections">
+				<key name="*">
+					<key name="paragraph" />
+					<key name="stats">
+						<key name="*">
+							<key name="label" />
+							<key name="number" />
+						</key>
+					</key>
+					<key name="subtitle" />
+				</key>
+			</key>
+			<key name="subheaderTitle" />
+			<key name="title" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-location-office-location" translate="1">
+			<key name="locationsHeading" />
+			<key name="mapTitle" />
+			<key name="officeLocations">
+				<key name="*">
+					<key name="address" />
+					<key name="addressUrl" />
+					<key name="name" />
+					<key name="phoneNumber" />
+					<key name="phoneUrl" />
+				</key>
+			</key>
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-location-proudly-serving" translate="1">
+			<key name="servingColumns">
+				<key name="*">
+					<key name="links">
+						<key name="*">
+							<key name="label" />
+							<key name="url" />
+						</key>
+					</key>
+					<key name="title" />
+				</key>
+			</key>
+			<key name="servingTitle" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-location-text-image" translate="1">
+			<key name="rows">
+				<key name="*">
+					<key name="heading" />
+					<key name="listItems">
+						<key name="*">
+							<key name="description" />
+							<key name="label" />
+							<key name="title" />
+							<key name="url" />
+						</key>
+					</key>
+					<key name="paragraphs" />
+					<key name="paragraphsAfterList" />
+				</key>
+			</key>
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-practice-area-lists" translate="1">
+			<key name="categories">
+				<key name="*">
+					<key name="description" />
+					<key name="links">
+						<key name="*">
+							<key name="text" />
+							<key name="url" />
+						</key>
+					</key>
+					<key name="title" />
+				</key>
+			</key>
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-practice-areas" translate="1">
+			<key name="cards">
+				<key name="*">
+					<key name="description" />
+					<key name="heading" />
+				</key>
+			</key>
+			<key name="ctaButtonText" />
+			<key name="ctaButtonUrl" />
+			<key name="ctaDescription" />
+			<key name="ctaHeading" />
+			<key name="description" />
+			<key name="eyebrowText" />
+			<key name="mainHeading" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-testimonial-badges" translate="1">
+			<key name="badges">
+				<key name="*">
+					<key name="primaryText" />
+					<key name="secondaryText" />
+				</key>
+			</key>
+			<key name="testimonials">
+				<key name="*">
+					<key name="author" />
+					<key name="content" />
+					<key name="description" />
+				</key>
+			</key>
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-testimonials-card-grids" translate="1">
+			<key name="cards">
+				<key name="*">
+					<key name="author" />
+					<key name="headline" />
+					<key name="quote" />
+				</key>
+			</key>
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-testimonials-feedback-cta" translate="1">
+			<key name="body" />
+			<key name="googleButtonLabel" />
+			<key name="googleButtonUrl" />
+			<key name="note" />
+			<key name="title" />
+			<key name="yelpButtonLabel" />
+			<key name="yelpButtonUrl" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-text-image-split" translate="1">
+			<key name="heading" />
+			<key name="paragraph" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/section-video-bg-form" translate="1">
+			<key name="anchor" />
+			<key name="eyebrowText" />
+			<key name="mainHeading" />
+			<key name="subheadingText" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/two-column-text-and-image" translate="1">
+			<key name="eyebrowText" />
+			<key name="mainHeading" />
+			<key name="subheading" />
+		</gutenberg-block>
+		<gutenberg-block type="mbn-theme/video-center" translate="1">
+			<key name="videoCards">
+				<key name="*">
+					<key name="thumbnailAlt" />
+					<key name="title" />
+				</key>
+			</key>
+		</gutenberg-block>
+	</gutenberg-blocks>
+
+	<custom-types>
+		<!-- 1 = translatable. These were never registered with WPML, which is why
+		     the imported Spanish attorneys / practice areas are orphaned. -->
+		<custom-type translate="1">attorney</custom-type>
+		<!-- practice_area: translatable (translate="1"). This was set to "0" for a
+		     while to fix a 404 bug: marking it translatable makes WPML inner-join
+		     every practice_area query against icl_translations by current language,
+		     and 97 of 108 posts had never been registered with a language, so the
+		     inner join dropped them - every one 404'd despite existing and having
+		     content. Turning translation back off worked, but it also silently
+		     broke AI-translated content from ever appearing on the live page,
+		     since WPML's Gutenberg render-time string swap is gated on the post
+		     type being translatable - the string can be registered and "published"
+		     with translate="0" and still never actually display.
+		     THE REAL FIX (not a workaround): scripts/wpml-assign-language-to-orphans.php
+		     backfills a language record for all 97 previously-untracked posts. With
+		     every post correctly tagged, the inner join that caused the original 404
+		     now matches everything, so re-enabling this is safe. Do not flip this
+		     back to "0" without also reverting that backfill, or the 404 returns.
+		     language record. -->
+		<custom-type translate="1">practice_area</custom-type>
+		<custom-type translate="1">case_result</custom-type>
+		<custom-type translate="1">mbn_review_month</custom-type>
+		<custom-type translate="1">mbn_testimonial</custom-type>
+		<!-- Header/Footer block templates carry translatable copy (tagline,
+		     copyright, button labels). NOTE: this post type is also written by the
+		     theme's template sync tools - an "Import from Files" will overwrite
+		     translated templates. Coordinate the two before using sync in production. -->
+		<custom-type translate="1">mbn_block_template</custom-type>
+	</custom-types>
+
+	<taxonomies>
+		<taxonomy translate="1">case_result_category</taxonomy>
+	</taxonomies>
+
+	<custom-fields>
+		<!-- 2 = translate, 1 = copy from original, 0 = ignore -->
+		<custom-field action="translate">_case_result_case_title</custom-field>
+		<custom-field action="translate">_case_result_description</custom-field>
+		<custom-field action="translate">_case_result_amount</custom-field>
+		<custom-field action="translate">_practice_area_sidebar_title</custom-field>
+		<custom-field action="translate">_mbn_testimonial_role</custom-field>
+
+		<custom-field action="copy">_mbn_testimonial_rating</custom-field>
+		<custom-field action="copy">_mbn_review_image_ids</custom-field>
+		<custom-field action="copy">_theme_asset_file</custom-field>
+		<custom-field action="copy">_wp_page_template</custom-field>
+
+		<!-- Raw HTML injection per post: copy, never machine-translate. -->
+		<custom-field action="copy">_blgf_post_html_head</custom-field>
+		<custom-field action="copy">_blgf_post_html_before_body</custom-field>
+		<custom-field action="copy">_blgf_post_html_after_body</custom-field>
+		<custom-field action="copy">_blgf_post_html_footer</custom-field>
+	</custom-fields>
+
+</wpml-config>

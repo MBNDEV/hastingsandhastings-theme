@@ -20,6 +20,7 @@
   --pad-grey-50: #f8f9fa;
   --pad-text-heading: #13263e;
   --pad-text-body: #53585f;
+  --pad-text-link: #363b3f;
   --pad-white: #ffffff;
 
   --pad-font-primary: "Noto Serif", Georgia, serif;
@@ -64,6 +65,12 @@
   margin: 0;
 }
 
+.pad-section-subtitle a {
+  text-decoration: underline;
+  color: inherit;
+  text-underline-offset: 2px;
+}
+
 .pad-section-header {
   display: flex;
   flex-direction: column;
@@ -72,6 +79,32 @@
 .pad-section-header--center {
   text-align: center;
   align-items: center;
+}
+/* Split variant: centered on tablet/mobile, on desktop the heading is
+   left-aligned and the subtitle paragraphs sit in two columns. */
+.pad-section-header--split {
+  text-align: center;
+  align-items: center;
+}
+@media screen and (min-width: 1024px) {
+  .pad-section-header--split {
+    text-align: left;
+    align-items: stretch;
+    gap: 24px;
+  }
+  .pad-section-header--split .pad-section-heading {
+    margin-bottom: 0;
+  }
+  .pad-section-header--split .pad-section-subtitle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 80px;
+    row-gap: 16px;
+    align-items: start;
+  }
+  .pad-section-header--split .pad-section-subtitle > * {
+    margin: 0;
+  }
 }
 
 /* ----- Intro header band (heading + paragraphs, configurable background) ----- */
@@ -98,6 +131,12 @@
 .pad-attorneys a {
   color: var(--pad-text-body);
   text-decoration: underline;
+}
+.pad-after-accident a:hover,
+.pad-time-limit a:hover,
+.pad-liability a:hover,
+.pad-attorneys a:hover {
+  color: var(--pad-text-link);
 }
 
 /* ----- Split layout (two-column text + image) ----- */
@@ -129,7 +168,7 @@
 }
 .pad-split__image img {
   width: 100%;
-  height: 369px;
+  height: var(--pad-split-image-height, 370px);
   object-fit: cover;
   display: block;
 }
@@ -154,9 +193,79 @@
   text-decoration: underline;
   text-decoration-inset: 2px;
 }
+
+.pad-split__text p a:hover{
+  color: var(--pad-text-link);
+}
+
 .pad-split__text strong {
   color: var(--pad-text-heading);
   font-weight: 400;
+}
+
+/* ----- Split popup modal (triggered by <a href="#popup"> in the text) ----- */
+.pad-split__modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.pad-split__modal[hidden] {
+  display: none;
+}
+.pad-split__modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+}
+.pad-split__modal-panel {
+  position: relative;
+  background: var(--pad-white);
+  border-radius: 16px;
+  padding: 40px;
+  width: min(90vw, 620px);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+.pad-split__modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.pad-split__modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: var(--pad-font-secondary);
+  font-size: 14px;
+  line-height: 1.428;
+  color: #000000;
+}
+.pad-split__modal-body p,
+.pad-split__modal-body ul,
+.pad-split__modal-body ol {
+  margin: 0;
+}
+.pad-split__modal-body ul {
+  list-style: disc;
+  padding-left: 18px;
+}
+.pad-split__modal-body ol {
+  list-style: decimal;
+  padding-left: 15px;
 }
 
 /* ----- Button ----- */
@@ -191,6 +300,14 @@
 /* ============================================================
    CTA BAR (shared)
    ============================================================ */
+/* Optional section background wrapper around the CTA bar. */
+.pad-cta {
+  padding-block: clamp(40px, 4vw, 50px);
+}
+.pad-cta .pad-cta-bar {
+  margin-block: 0;
+}
+
 .pad-cta-bar {
   position: relative;
   overflow: hidden;
@@ -280,6 +397,15 @@
   margin: 0;
 }
 
+.pad-cta-bar__subtext a{
+  color: inherit;
+  text-decoration: underline;
+}
+
+.pad-cta-bar__subtext a:hover {
+  color: var(--pad-white);
+}
+
 .pad-cta-bar__actions {
   display: flex;
   flex-direction: column;
@@ -362,6 +488,10 @@
   text-decoration: underline;
   color: inherit;
   text-underline-offset: 2px;
+  display:inline;
+}
+.pad-why-hire__feature p a:hover {
+  color: var(--pad-text-link);
 }
 .pad-why-hire .pad-section-subtitle {
   max-width: 680px;
@@ -397,7 +527,9 @@
   position: relative;
   height: 520px;
   overflow: hidden;
-  margin-top: 56px;
+  margin-top: -100px;
+  margin-bottom: -100px;
+  z-index: -1;
 }
 .pad-why-hire__map img {
   width: 100%;
@@ -479,6 +611,18 @@
   align-items: start;
   margin-bottom: 48px;
 }
+.pad-case-result--align-center {
+  align-items: center;
+}
+.pad-case-result--align-end {
+  align-items: end;
+}
+.pad-case-result--align-stretch {
+  align-items: stretch;
+}
+.pad-case-result--align-baseline {
+  align-items: baseline;
+}
 
 .pad-case-result__photo {
   margin: 0;
@@ -521,14 +665,51 @@
   align-self: flex-start;
 }
 
+.pad-case-result__results {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.pad-case-result__results--single {
+  grid-template-columns: 1fr;
+}
+/* Bordered cards only when there are two or more amounts. */
+.pad-case-result__results:not(.pad-case-result__results--single)
+  .pad-case-result__result {
+  border: 1px solid var(--pad-blue-600);
+  border-radius: 16px;
+  padding: 24px;
+}
+.pad-case-result__results:not(.pad-case-result__results--single)
+  .pad-case-result__result--span-2 {
+  grid-column: span 2;
+}
+
 .pad-case-result__amount {
   font-family: var(--pad-font-primary);
   font-weight: 700;
-  font-size: clamp(60px, 8vw, 96px);
-  line-height: 1;
-  color: var(--pad-text-heading);
-  margin: 0;
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 1.05;
+  color: var(--pad-blue-600);
+  margin: 0 0 8px;
+  letter-spacing: -1px;
+}
+.pad-case-result__results--single .pad-case-result__amount {
+  font-size: clamp(48px, 7vw, 88px);
   letter-spacing: -2px;
+}
+.pad-case-result__result-desc {
+  font-family: var(--pad-font-secondary);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--pad-text-body);
+  margin: 0;
+}
+.pad-case-result__result-desc p {
+  margin: 0;
+}
+.pad-case-result__result-desc strong {
+  color: var(--pad-text-heading);
 }
 
 .pad-case-result__title {
@@ -547,6 +728,14 @@
   color: var(--pad-text-body);
   margin: 0;
 }
+.pad-case-result__desc a{
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  color: inherit;
+}
+.pad-case-result__desc a:hover{
+  color: var(--pad-text-link);
+}
 
 /* ============================================================
    SECTION 2 · After Accident
@@ -554,13 +743,35 @@
 .pad-after-accident {
   padding-block: var(--pad-section-pad-v);
 }
+.pad-after-accident__after {
+  margin-top: 48px;
+  text-align: center;
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--pad-text-body);
+  word-break: break-word;
+}
+.pad-after-accident__after p {
+  margin: 0 0 16px;
+}
+.pad-after-accident__after p:last-child {
+  margin-bottom: 0;
+}
+@media screen and (max-width: 767px) {
+  .pad-after-accident__after {
+    margin-top: 32px;
+  }
+  .pad-after-accident__after p {
+    font-size: 16px;
+  }
+}
 
 /* ============================================================
    SECTION 3 · Steps
    ============================================================ */
 .pad-steps {
   padding-block: var(--pad-section-pad-v);
-  background: var(--pad-grey-50);
 }
 
 .pad-steps__layout {
@@ -574,6 +785,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  max-width: 600px;
 }
 .pad-steps__intro p {
   font-family: var(--pad-font-secondary);
@@ -581,6 +793,42 @@
   line-height: 1.556;
   color: var(--pad-text-body);
   margin: 0;
+}
+.pad-steps__intro p a{
+  text-underline-offset: 2px;
+  text-decoration: underline;
+  color: inherit;
+}
+.pad-steps__intro p a:hover{
+  color: var(--pad-text-link);
+}
+.pad-steps__after {
+  margin-top: 48px;
+  text-align: center;
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--pad-text-body);
+  word-break: break-word;
+}
+.pad-steps__after p {
+  margin: 0 0 16px;
+}
+.pad-steps__after p:last-child {
+  margin-bottom: 0;
+}
+@media screen and (max-width: 1023px) {
+  .pad-steps__intro {
+    max-width: 100%;
+  }
+}
+@media screen and (max-width: 767px) {
+  .pad-steps__after {
+    margin-top: 32px;
+  }
+  .pad-steps__after p {
+    font-size: 16px;
+  }
 }
 
 /* Accordion */
@@ -651,12 +899,70 @@
   opacity: 0;
   padding-bottom: 0;
 }
-.pad-steps__answer p {
+.pad-steps__answer p,
+.pad-steps__answer ul li {
   font-family: var(--pad-font-secondary);
   font-size: 18px;
   line-height: 1.556;
   color: var(--pad-text-body);
   margin: 0;
+}
+.pad-steps__answer ul{
+  list-style: disc;
+  padding-left: 18px;
+}
+.pad-steps__answer ul li{
+  margin-bottom: 8px;
+}
+.pad-steps__answer a{
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.pad-steps__answer a:hover{
+  color: var(--pad-text-link);
+}
+
+/* Plain list variant (title only, no accordion) */
+.pad-steps__plain-list-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pad-steps__plain-list-text {
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.556;
+  color: var(--pad-text-body);
+  margin-left: 20%;
+}
+.pad-steps__plain-list-text p {
+  margin: 0 0 16px;
+}
+.pad-steps__plain-list-text p:last-child {
+  margin-bottom: 0;
+}
+.pad-steps__plain-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--pad-grey-300);
+  margin-left: 20%;
+}
+.pad-steps__plain-item {
+  border-top: 1px solid var(--pad-grey-300);
+  padding: 12px 0;
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.556;
+  color: var(--pad-text-body);
+}
+.pad-steps__plain-item a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 /* ============================================================
@@ -668,9 +974,15 @@
 .pad-time-limit .pad-section-header {
   margin-bottom: 48px;
 }
+.pad-time-limit .pad-section-subtitle {
+  max-width: 920px;
+}
 .pad-time-limit a {
-  color: var(--pad-blue-600);
+  color: var(--pad-text-body);
   text-decoration: underline;
+}
+.pad-time-limit a:hover {
+  color: var(--pad-text-link);
 }
 
 /* ============================================================
@@ -692,14 +1004,21 @@
   width: 100%;
   margin: 0 auto 48px;
 }
+@media screen and (min-width: 1024px) {
+  .pad-liability .pad-section-header--split {
+    max-width: none;
+  }
+}
 
-.pad-liability__intro {
+.pad-liability__intro,
+.pad-compensation__intro {
   display: flex;
   flex-direction: column;
   gap: 16px;
   margin-bottom: 48px;
 }
-.pad-liability__intro-heading {
+.pad-liability__intro-heading,
+.pad-compensation__intro-heading {
   font-family: var(--pad-font-primary);
   font-weight: 600;
   font-size: 28px;
@@ -707,12 +1026,14 @@
   color: #000000;
   margin: 0;
 }
-.pad-liability__intro-text {
+.pad-liability__intro-text,
+.pad-compensation__intro-text {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-.pad-liability__intro-text p {
+.pad-liability__intro-text p,
+.pad-compensation__intro-text p {
   font-family: var(--pad-font-secondary);
   font-size: 18px;
   line-height: 1.5;
@@ -750,17 +1071,25 @@
   flex-direction: column;
   gap: 24px;
 }
+/* Optional per-item background highlight. */
+.pad-liability__item--has-bg {
+  padding: 24px;
+  border-radius: 16px;
+}
+.pad-liability__item--has-bg .pad-liability__divider {
+  display: none;
+}
 
 .pad-liability__divider {
   width: 100%;
   border: none;
-  border-top: 1px solid var(--pad-grey-300);
+  border-top: 1px solid #000000;
   margin: 0;
 }
 
 .pad-liability__row {
   display: grid;
-  grid-template-columns: 370px 1fr;
+  grid-template-columns: clamp(320px, 35%, 470px) 1fr;
   gap: 64px;
   align-items: start;
 }
@@ -797,7 +1126,6 @@
    ============================================================ */
 .pad-compensation {
   padding-block: var(--pad-section-pad-v);
-  background: var(--pad-white);
 }
 .pad-compensation .pad-section-header {
   gap: 0;
@@ -810,6 +1138,18 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 64px;
+}
+/* Masonry variant: items pack down each column instead of aligning in rows.
+   Row spacing moves to item margins, compensated on the container. */
+.pad-compensation__grid--masonry {
+  display: block;
+  columns: 2;
+  column-gap: 64px;
+  margin-bottom: -64px;
+}
+.pad-compensation__grid--masonry .pad-compensation__item {
+  break-inside: avoid;
+  margin-bottom: 64px;
 }
 
 .pad-compensation__item {
@@ -842,7 +1182,11 @@
   text-underline-offset: 2px;
   color: inherit;
 }
-
+.pad-compensation__item ul{
+  list-style: disc;
+  padding-left: 18px;
+  margin: 0;
+}
 .pad-compensation__after {
   display: flex;
   flex-direction: column;
@@ -912,6 +1256,8 @@
   overflow: hidden;
   margin-left: auto;
   margin-right: -40px;
+  display: flex;
+  align-items: flex-end;
 }
 
 .pad-attorneys__attorney {
@@ -925,7 +1271,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: 600px;
+  max-width: 630px;
   z-index: 1;
 }
 .pad-attorneys__text-col p {
@@ -944,7 +1290,7 @@
    Lists of Accidents
    ============================================================ */
 .pad-accident-list {
-  padding-block: var(--pad-section-pad-v);
+  padding-bottom: var(--pad-section-pad-v);
 }
 .pad-accident-list__heading {
   font-family: var(--pad-font-secondary);
@@ -976,6 +1322,104 @@
 }
 a.pad-accident-list__link:hover {
   text-decoration: underline;
+}
+
+/* ============================================================
+   List Injuries
+   ============================================================ */
+.pad-list-injuries {
+  padding-block: var(--pad-section-pad-v);
+}
+.pad-list-injuries__header {
+  max-width: 871px;
+  margin-inline: auto;
+  margin-bottom: 40px;
+}
+.pad-list-injuries__list {
+  margin: 0;
+  padding: 0;
+  column-count: 2;
+  column-gap: 64px;
+}
+.pad-list-injuries__list li {
+  break-inside: avoid;
+  margin-bottom: 20px;
+  padding-left: 8px;
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.556;
+  color: var(--pad-text-body);
+}
+ul.pad-list-injuries__list {
+  list-style: disc;
+  list-style-position: inside;
+}
+ol.pad-list-injuries__list {
+  list-style: decimal;
+  list-style-position: inside;
+}
+.pad-list-injuries__list--none {
+  list-style: none;
+}
+.pad-list-injuries__list--none li {
+  padding-left: 0;
+}
+.pad-list-injuries__item a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.pad-list-injuries__item a:hover {
+  color: var(--pad-blue-600);
+}
+
+/* ============================================================
+   Areas We Serve
+   ============================================================ */
+.pad-areas-served {
+  padding-block: var(--pad-section-pad-v);
+}
+.pad-areas-served__header {
+  margin-bottom: 32px;
+}
+.pad-areas-served--center .pad-areas-served__header {
+  text-align: center;
+}
+.pad-areas-served--center .pad-areas-served__list {
+  justify-content: center;
+}
+.pad-areas-served__list {
+  list-style: none;
+  margin: 0 0 40px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+}
+.pad-areas-served__item {
+  font-family: var(--pad-font-primary);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--pad-blue-600);
+}
+.pad-areas-served__item a {
+  color: var(--pad-blue-600);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.pad-areas-served__item a:hover {
+  color: var(--pad-blue-800);
+}
+.pad-areas-served__map {
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.pad-areas-served__map img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 @media screen and (max-width: 1366px) {
@@ -1013,7 +1457,7 @@ a.pad-accident-list__link:hover {
   font-family: var(--pad-font-secondary);
   font-size: 14px;
   line-height: 1.5;
-  color: #363b3f;
+  color: var(--pad-text-link);
 }
 .pad-third-party__item img {
   width: 24px;
@@ -1021,8 +1465,11 @@ a.pad-accident-list__link:hover {
   flex-shrink: 0;
 }
 .pad-third-party__item a {
-  color: inherit;
+  color: var(--pad-text-body);
   text-decoration: underline;
+}
+.pad-third-party__item a:hover{
+  color: var(--pad-text-link);
 }
 
 /* ============================================================
@@ -1083,8 +1530,11 @@ a.pad-accident-list__link:hover {
   border-bottom: 1px solid #000000;
 }
 .pad-common-causes__list a {
-  color: inherit;
+  color: var(--pad-text-body);
   text-decoration: underline;
+}
+.pad-common-causes__list a:hover{
+  color: var(--pad-text-link);
 }
 
 /* ============================================================
@@ -1162,6 +1612,76 @@ a.pad-accident-list__link:hover {
 }
 
 /* ============================================================
+   SECTION 13 · Why You Need a Lawyer
+   ============================================================ */
+.pad-why-lawyer {
+  padding-block: var(--pad-section-pad-v);
+}
+.pad-why-lawyer__header {
+  max-width: 912px;
+  margin: 0 auto 80px;
+}
+.pad-why-lawyer__header .pad-section-heading {
+  margin-bottom: 0;
+}
+.pad-why-lawyer__rows {
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+.pad-why-lawyer__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+.pad-why-lawyer__row--image-left .pad-why-lawyer__image {
+  order: -1;
+}
+.pad-why-lawyer__text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.pad-why-lawyer__row-heading {
+  font-family: var(--pad-font-primary);
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1.5;
+  color: var(--pad-text-heading);
+  margin: 0;
+}
+.pad-why-lawyer__text p {
+  font-family: var(--pad-font-secondary);
+  font-size: 18px;
+  line-height: 1.556;
+  color: var(--pad-text-body);
+  margin: 0;
+}
+.pad-why-lawyer__image {
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.pad-why-lawyer__image img {
+  width: 100%;
+  height: 369px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ============================================================
+   Small Desktop: below 1200px
+   ============================================================ */
+@media screen and (max-width: 1199px) {
+  .pad-steps__plain-list,
+  .pad-steps__plain-list-text {
+    margin-left: 0;
+  }
+}
+
+/* ============================================================
    TABLET: 768px to 1023px
    ============================================================ */
 @media screen and (max-width: 1023px) {
@@ -1210,11 +1730,29 @@ a.pad-accident-list__link:hover {
     margin-inline: auto;
   }
 
+  /* Why You Need a Lawyer */
+  .pad-why-lawyer__header {
+    margin-bottom: 48px;
+  }
+  .pad-why-lawyer__rows {
+    gap: 48px;
+  }
+  .pad-why-lawyer__row {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .pad-why-lawyer__row--image-left .pad-why-lawyer__image {
+    order: 0;
+  }
+  .pad-why-lawyer__row-heading {
+    font-size: 32px;
+  }
+
   .pad-common-causes__list {
     margin-top: 0;
   }
   .pad-split__image img {
-    height: 280px;
+    height: var(--pad-split-image-height, 280px);
   }
 
   /* Why Hire */
@@ -1239,6 +1777,8 @@ a.pad-accident-list__link:hover {
   }
   .pad-why-hire__map {
     height: 360px;
+    margin-top: -50px;
+    margin-bottom: -50px;
   }
 
   /* Case result */
@@ -1256,9 +1796,6 @@ a.pad-accident-list__link:hover {
   }
   .pad-case-result__card {
     margin: 0;
-  }
-  .pad-case-result__amount {
-    font-size: 64px;
   }
   .pad-btn {
     white-space: normal;
@@ -1290,6 +1827,13 @@ a.pad-accident-list__link:hover {
   .pad-compensation__grid {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+  .pad-compensation__grid--masonry {
+    columns: 1;
+    margin-bottom: -40px;
+  }
+  .pad-compensation__grid--masonry .pad-compensation__item {
+    margin-bottom: 40px;
   }
   .pad-compensation__after {
     margin-top: 40px;
@@ -1354,12 +1898,28 @@ a.pad-accident-list__link:hover {
     font-size: 18px;
   }
 
+  /* Areas We Serve */
+  .pad-areas-served__list {
+    gap: 12px 20px;
+  }
+  .pad-areas-served__item {
+    font-size: 18px;
+  }
+
+  /* List Injuries */
+  .pad-list-injuries__list {
+    column-count: 1;
+  }
+  .pad-list-injuries__list li {
+    font-size: 16px;
+  }
+
   .pad-split {
     gap: 24px;
     margin-bottom: 40px;
   }
   .pad-split__image img {
-    height: 220px;
+    height: var(--pad-split-image-height, 220px);
   }
 
   /* Why Hire */
@@ -1382,8 +1942,12 @@ a.pad-accident-list__link:hover {
   }
 
   /* Case result */
-  .pad-case-result__amount {
-    font-size: 48px;
+  .pad-case-result__results {
+    grid-template-columns: 1fr;
+  }
+  .pad-case-result__results:not(.pad-case-result__results--single)
+    .pad-case-result__result--span-2 {
+    grid-column: span 1;
   }
   .pad-case-result__card {
     padding: 20px 24px;
@@ -1427,6 +1991,9 @@ a.pad-accident-list__link:hover {
   .pad-steps__answer p {
     font-size: 16px;
   }
+  .pad-steps__plain-item {
+    font-size: 16px;
+  }
 
   /* Liability */
   .pad-liability__term {
@@ -1435,13 +2002,16 @@ a.pad-accident-list__link:hover {
   .pad-liability__desc p {
     font-size: 16px;
   }
-  .pad-liability__intro {
+  .pad-liability__intro,
+  .pad-compensation__intro {
     margin-bottom: 32px;
   }
-  .pad-liability__intro-heading {
+  .pad-liability__intro-heading,
+  .pad-compensation__intro-heading {
     font-size: 22px;
   }
-  .pad-liability__intro-text p {
+  .pad-liability__intro-text p,
+  .pad-compensation__intro-text p {
     font-size: 16px;
   }
   .pad-liability__after {
@@ -1508,6 +2078,21 @@ a.pad-accident-list__link:hover {
   }
   .pad-testimonials__card blockquote p {
     font-size: 16px;
+  }
+
+  /* Why You Need a Lawyer */
+  .pad-why-lawyer__rows {
+    gap: 40px;
+  }
+  .pad-why-lawyer__row-heading {
+    font-size: 26px;
+    line-height: 1.3;
+  }
+  .pad-why-lawyer__text p {
+    font-size: 16px;
+  }
+  .pad-why-lawyer__image img {
+    height: 240px;
   }
 }
 

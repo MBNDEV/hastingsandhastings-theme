@@ -36,7 +36,7 @@
 .ldp-serving__columns {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 60px;
+  gap: 40px;
 }
 
 .ldp-serving__col {
@@ -82,6 +82,7 @@
 }
 .ldp-serving__links li a:hover {
   padding-left: 0.35rem;
+  text-decoration: underline;
 }
 .ldp-serving__links li a img {
   width: 24px;
@@ -93,7 +94,7 @@
 @media (max-width: 1199px) {
   .ldp-serving__columns {
     grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
+    gap: 28px;
   }
 }
 

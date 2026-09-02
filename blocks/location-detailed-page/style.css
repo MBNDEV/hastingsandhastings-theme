@@ -62,6 +62,9 @@
   color: var(--ldp-text-body);
   text-decoration: underline;
 }
+.ldp-why-choose__intro a:hover {
+  color: var(--ldp-text-link);
+}
 
 .ldp-why-choose__track-record {
   display: grid;
@@ -95,6 +98,9 @@
 .ldp-why-choose__track-record-text p a{
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+.ldp-why-choose__track-record-text p a:hover{
+  color: var(--ldp-text-link);
 }
 
 .ldp-why-choose__stats {
@@ -165,6 +171,10 @@
 .ldp-why-choose__fee-text a {
   color: var(--ldp-text-body);
   text-decoration: underline;
+}
+
+.ldp-why-choose__fee-text a:hover {
+  color: var(--ldp-text-link);
 }
 
 .ldp-why-choose__attorneys {
@@ -548,6 +558,10 @@
   color: var(--ldp-text-body);
   text-decoration: underline;
 }
+.ldp-how-we-help__text a:hover {
+  color: var(--ldp-text-link);      
+}
+
 
 .ldp-how-we-help__img {
   margin: 0;
@@ -700,7 +714,9 @@
   color: var(--ldp-text-body);
   text-decoration: underline;
 }
-
+.ldp-cases-handle__closing a:hover {
+  color: var(--ldp-text-link);
+}
 /* =============================================
    SECTION 6: DETERMINING FAULT
    ============================================= */
@@ -778,6 +794,9 @@
 .ldp-fault__comparative-col a {
   color: var(--ldp-text-body);
   text-decoration: underline;
+}
+.ldp-fault__comparative-col a:hover {
+  color: var(--ldp-text-link);
 }
 .ldp-fault__comparative .ldp-section-title{
   margin-bottom: 16px;
@@ -892,6 +911,9 @@
 .ldp-fault__time-limit-text a {
   color: var(--ldp-text-body);
   text-decoration: underline;
+}
+.ldp-fault__time-limit-text a:hover {
+  color: var(--ldp-text-link);
 }
 
 .ldp-fault__time-limit-img {
@@ -1061,6 +1083,14 @@
   align-items: center;
 }
 
+.ldp-faq__badges--no-text {
+  grid-template-columns: 1fr;
+}
+
+.ldp-faq__badges--no-text .ldp-faq__badges-row {
+  justify-content: center;
+}
+
 .ldp-faq__badges-text {
   font-size: 18px;
   line-height: 1.556;
@@ -1082,7 +1112,8 @@
 .ldp-faq__badge {
   margin: 0;
   flex-shrink: 0;
-  width: 300px;
+  max-width: 300px;
+  width: 100%;
 }
 
 .ldp-faq__badge img {
@@ -1153,6 +1184,11 @@
   color: var(--ldp-text-link);
   text-decoration: none;
   white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.ldp-serving__links li a:hover {
+  padding-left: 0.35rem;
+  text-decoration: underline;
 }
 
 .ldp-serving__links li a img {
@@ -1163,6 +1199,18 @@
 
 .ldp-serving__links li a:hover {
   text-decoration: underline;
+}
+
+/* =============================================
+   === Laptop: 1024px to 1366px ===
+   ============================================= */
+@media screen and (max-width: 1366px) and (min-width: 1024px) {
+  .ldp-why-choose__attorneys {
+    grid-template-columns: 2fr 480px;
+  }
+  .ldp-faq__badge {
+    max-width: 230px;
+  }
 }
 
 
@@ -1285,7 +1333,7 @@
   }
 
   .ldp-faq__badge {
-    width: 200px;
+    max-width: 200px;
   }
 
   /* CTA card */
@@ -1316,7 +1364,7 @@
 
 
 /* =============================================
-   === MOBILE: below 768px ===
+   === SEMI-MOBILE: below 768px ===
    ============================================= */
 @media screen and (max-width: 767px) {
 
@@ -1531,6 +1579,20 @@
     gap: 24px;
   }
 }
+
+  /* =============================================
+   === MOBILE: below 639px ===
+   ============================================= */
+@media screen and (max-width: 639px) {
+  .ldp-why-choose__stat {
+    justify-content: center;
+    max-width: 360px;
+  }
+  .ldp-why-choose__stats {
+    align-items: center;
+  }
+}
+
 @media screen and (max-width: 479px) {
   .ldp-serving__columns {
     grid-template-columns: 1fr;

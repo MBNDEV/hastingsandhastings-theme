@@ -1,7 +1,6 @@
 /* Stacking Cards Container */
 .cards-container {
   position: relative;
-  min-height: 100vh;
 }
 
 /* Testimonial Card Stacking */
@@ -123,7 +122,7 @@
 }
 
 /* Desktop: Keep stacking animation */
-@media (min-width: 1024px) {
+@media (min-width: 1024px) and (max-width: 1920px) {
   .cards-container {
     min-height: 100vh;
   }

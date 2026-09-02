@@ -22,7 +22,7 @@ $show_cta_bar           = $attributes['showCtaBar'] ?? true;
 $hero_button_text       = $attributes['heroButtonText'] ?? 'START YOUR FREE CONSULTATION NOW!';
 $hero_button_url        = $attributes['heroButtonUrl'] ?? '#contact';
 $cta_button_text        = $attributes['ctaButtonText'] ?? 'REQUEST A FREE CONSULTATION';
-$cta_button_url         = $attributes['ctaButtonUrl'] ?? '#contact';
+$cta_button_url         = $attributes['ctaButtonUrl'] ?? '/contact-us/';
 $phone_number           = $attributes['phoneNumber'] ?? '(480) 480-2929';
 $phone_number_url       = $attributes['phoneNumberUrl'] ?? 'tel:4804802929';
 $settlement_fees_number = $attributes['settlementFeesNumber'] ?? '29';
@@ -71,11 +71,11 @@ $wrapper_attributes = get_block_wrapper_attributes(
               ?>
 				poster="<?php echo esc_url( $poster_image_url ); ?>"<?php endif; ?>
 		>
-			<?php if ( $video_mp4_url ) : ?>
-				<source src="<?php echo esc_url( $video_mp4_url ); ?>" type="video/mp4">
-			<?php endif; ?>
 			<?php if ( $video_webm_url ) : ?>
-				<source src="<?php echo esc_url( $video_webm_url ); ?>" type="video/webm">
+				<source src="<?php echo esc_url( $video_webm_url ); ?>" type="video/webm" media="(min-width: 769px)">
+			<?php endif; ?>
+			<?php if ( $video_mp4_url ) : ?>
+				<source src="<?php echo esc_url( $video_mp4_url ); ?>" type="video/mp4" media="(min-width: 769px)">
 			<?php endif; ?>
 			<?php esc_html_e( 'Your browser does not support the video tag.', 'mbn-theme' ); ?>
 		</video>
@@ -160,7 +160,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
 				<!-- CTA Bar -->
 				<?php if ( $show_cta_bar ) : ?>
-					<div class="cta-bar border border-accent-blue w-full mt-8 rounded-3xl px-6 py-6 xl:px-12">
+					<div class="cta-bar border border-accent-blue w-full mt-8 rounded-3xl px-4 md:px-6 py-6 xl:px-12">
 						<div class="flex flex-col lg:flex-row items-center justify-between gap-6">
 							
 							<!-- Left Side: Value Propositions -->
@@ -219,11 +219,14 @@ $wrapper_attributes = get_block_wrapper_attributes(
 								<a href="<?php echo esc_url( $cta_button_url ); ?>" class="btn-cta">
 									<?php echo esc_html( $cta_button_text ); ?>
 								</a>
-								<a href="<?php echo esc_url( $phone_number_url ); ?>" class="font-body font-bold text-base xl:text-lg text-primary hover:text-accent-gold transition-colors">
-									<span class="text-white no-underline"><?php esc_html_e( 'CALL TODAY', 'mbn-theme' ); ?></span> 
-									<span class="text-primary underline"><?php echo esc_html( $phone_number ); ?></span>
-								</a>
-								
+								<div class="flex items-center gap-2 text-white">
+									<span class="font-body font-semibold text-base xl:text-lg">
+										<?php esc_html_e( 'CALL TODAY', 'mbn-theme' ); ?>
+									</span>
+									<a href="<?php echo esc_url( $phone_number_url ); ?>" class="font-body font-bold text-base xl:text-lg text-primary underline hover:text-accent-gold transition-colors">
+										<?php echo esc_html( $phone_number ); ?>
+									</a>
+								</div>
 							</div>
 
 						</div>

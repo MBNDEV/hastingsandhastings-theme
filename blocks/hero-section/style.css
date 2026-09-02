@@ -2,7 +2,7 @@
 .hero-video-container {
   position: relative;
   width: 100%;
-  min-height: 85vh;
+  min-height: 55vh;
   overflow: hidden;
 }
 
@@ -52,7 +52,7 @@
 .hero-content {
   position: relative;
   z-index: 3;
-  min-height: 85vh;
+  min-height: 55vh;
 }
 
 /* CTA Button - Custom Gradient */
@@ -114,13 +114,19 @@
 }
 
 /* Responsive adjustments */
+@media (min-width: 1024px) and (max-width: 1280px) {
+  .btn-cta {
+    padding: 14px 16px;
+  }
+}
+
 @media (max-width: 768px) {
   .hero-video-container {
-    min-height: 85svh;
+    min-height: 55svh;
   }
   
   .hero-content {
-    min-height: 85svh;
+    min-height: 55svh;
   }
   
   .btn-cta {

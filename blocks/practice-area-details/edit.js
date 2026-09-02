@@ -29,41 +29,59 @@ const SECTION_TYPES = {
   commonCauses: { label: 'Common Causes' },
   testimonials: { label: 'Testimonials' },
   accidentList: { label: 'Lists of Accidents' },
+  whyLawyer: { label: 'Why You Need a Lawyer' },
+  listInjuries: { label: 'List Injuries' },
+  areasServed: { label: 'Areas We Serve' },
 };
 
 // Empty data payload for a newly added section of the given type.
 function emptyData(type) {
   switch (type) {
     case 'whyHire':
-      return { heading: '', subtitle: '', features: [], photoUrl: '', photoId: 0, badge90YearsUrl: '', badge90YearsId: 0, mapBackgroundUrl: '', mapBackgroundId: 0, badgeNoFeeUrl: '', badgeNoFeeId: 0, freeEvaluationsTitle: '', freeEvaluationsDescription: '', millionsRecoveredTitle: '', millionsRecoveredDescription: '' };
+      return { backgroundColor: '', heading: '', subtitle: '', features: [], photoUrl: '', photoId: 0, photoHidden: false, badge90YearsUrl: '', badge90YearsId: 0, badge90YearsHidden: false, mapBackgroundUrl: '', mapBackgroundId: 0, mapBackgroundHidden: false, badgeNoFeeUrl: '', badgeNoFeeId: 0, badgeNoFeeHidden: false, freeEvaluationsTitle: '', freeEvaluationsDescription: '', millionsRecoveredTitle: '', millionsRecoveredDescription: '' };
     case 'caseResult':
-      return { tag: '', amount: '', title: '', description: '', photoUrl: '', photoId: 0 };
+      return { backgroundColor: '', tag: '', results: [], title: '', description: '', photoUrl: '', photoId: 0, alignItems: 'start' };
     case 'cta':
-      return { logoUrl: '', logoId: 0, textureUrl: '', textureId: 0, heading: '', subtext: '', buttonText: '', buttonUrl: '', phoneLabel: '', phoneNumber: '' };
+      return { backgroundColor: '', logoUrl: '', logoId: 0, textureUrl: '', textureId: 0, heading: '', subtext: '', buttonText: '', buttonUrl: '', phoneLabel: '', phoneNumber: '' };
     case 'afterAccident':
-      return { heading: '', splits: [] };
+      return { backgroundColor: '', heading: '', splits: [], afterText: '' };
     case 'steps':
-      return { heading: '', introText: '', chevronIconUrl: '', chevronIconId: 0, listType: 'ol', accordion: [] };
+      return { backgroundColor: '', heading: '', introText: '', chevronIconUrl: '', chevronIconId: 0, listType: 'ol', plainListText: '', accordion: [], afterText: '' };
     case 'timeLimit':
-      return { heading: '', subtitle: '', text: '', photoUrl: '', photoId: 0 };
+      return { backgroundColor: '', heading: '', subtitle: '', text: '', photoUrl: '', photoId: 0, imageHeight: '', modalContent: '' };
     case 'insurance':
-      return { heading: '', text: '', photoUrl: '', photoId: 0 };
+      return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0, imageHeight: '', modalContent: '' };
     case 'liability':
-      return { heading: '', subtitle: '', introHeading: '', introText: '', backgroundColor: 'bg-white', paddingTop: '', paddingBottom: '', afterText: '', items: [] };
+      return { heading: '', subtitle: '', subtitleTwoCol: false, introHeading: '', introText: '', backgroundColor: 'bg-white', paddingTop: '', paddingBottom: '', afterText: '', items: [] };
     case 'compensation':
-      return { heading: '', subtitle: '', afterText: '', items: [] };
+      return { backgroundColor: '', heading: '', subtitle: '', introHeading: '', introText: '', afterText: '', masonry: false, items: [] };
     case 'documentation':
-      return { heading: '', text: '', photoUrl: '', photoId: 0 };
+      return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0, imageHeight: '', modalContent: '' };
     case 'attorneys':
-      return { heading: '', text: '', photoUrl: '', photoId: 0, badgeCards: [] };
+      return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0, badgeCards: [] };
     case 'thirdParty':
-      return { text: '', items: [], chevronIconUrl: '', chevronIconId: 0, photoUrl: '', photoId: 0 };
+      return { backgroundColor: '', text: '', items: [], chevronIconUrl: '', chevronIconId: 0, photoUrl: '', photoId: 0, imageHeight: '', modalContent: '' };
     case 'commonCauses':
-      return { heading: '', text: '', photoUrl: '', photoId: 0, items: [] };
+      return { backgroundColor: '', heading: '', text: '', photoUrl: '', photoId: 0, items: [] };
     case 'testimonials':
-      return { eyebrow: '', heading: '', subtitle: '', starsIconUrl: '', starsIconId: 0, items: [] };
+      return { backgroundColor: '', eyebrow: '', heading: '', subtitle: '', starsIconUrl: '', starsIconId: 0, items: [] };
     case 'accidentList':
-      return { heading: '', backgroundColor: 'bg-light-blue', items: [] };
+      return { heading: '', backgroundColor: 'bg-light-blue', items: [], afterText: '' };
+    case 'whyLawyer':
+      return {
+        backgroundColor: '',
+        heading: __('<span class="pad-text-blue">Why You Need a Lawyer</span> For a<br>Burn Injury Case', 'mbn-theme'),
+        subtitle: __('Burn injury cases can be complex and require an experienced attorney to navigate the legal landscape. Here’s why it’s so important to work with one if you’ve experienced a burn injury:', 'mbn-theme'),
+        rows: [
+          { id: 'whyLawyerRow1', layout: 'text-left', heading: __('<span class="pad-text-blue">Burn Injury Cases</span> Are Complex', 'mbn-theme'), text: __('<p>Burn injuries can be complex, with long-term effects that may require extensive medical treatment. A lawyer can help assess and quantify these impacts, ensuring that all current and future medical needs are addressed in your claim.</p>', 'mbn-theme'), imageUrl: '', imageId: 0 },
+          { id: 'whyLawyerRow2', layout: 'image-left', heading: __('<span class="pad-text-blue">Determining</span> Liability', 'mbn-theme'), text: __('<p>Establishing liability in burn injury cases can be challenging. A lawyer with experience in such cases can investigate the incident, identify responsible parties, and demonstrate their negligence to help you pursue compensation.</p>', 'mbn-theme'), imageUrl: '', imageId: 0 },
+          { id: 'whyLawyerRow3', layout: 'text-left', heading: __('<span class="pad-text-blue">Negotiating</span> With Insurance Companies', 'mbn-theme'), text: __('<p>Insurance companies aim to settle claims for the lowest possible amount. A lawyer can negotiate effectively on your behalf to ensure you receive fair compensation that reflects the severity of your injury and covers your necessary treatment and losses.</p>', 'mbn-theme'), imageUrl: '', imageId: 0 },
+        ],
+      };
+    case 'listInjuries':
+      return { title: '', description: '', listType: 'ul', backgroundColor: '', items: [] };
+    case 'areasServed':
+      return { backgroundColor: '', align: 'left', title: '', description: '', imageUrl: '', imageId: 0, areas: [] };
     default:
       return {};
   }
@@ -96,8 +114,9 @@ function makeArrayField(data, setData, key) {
   };
 }
 
-// Reusable image picker with Select / Replace / Remove.
-function ImageField({ label, url, id, onSelect, onRemove, maxWidth = '100%' }) {
+// Reusable image picker with Select / Replace / Remove, and an optional
+// "Hide image" toggle (rendered only when onToggleHide is provided).
+function ImageField({ label, url, id, onSelect, onRemove, maxWidth = '100%', hidden, onToggleHide }) {
   return (
     <MediaUpload
       onSelect={onSelect}
@@ -113,10 +132,45 @@ function ImageField({ label, url, id, onSelect, onRemove, maxWidth = '100%' }) {
               {__('Remove', 'mbn-theme')}
             </Button>
           )}
-          {url && <img src={url} alt="" style={{ display: 'block', marginTop: '10px', maxWidth, height: 'auto', borderRadius: '4px' }} />}
+          {url && <img src={url} alt="" style={{ display: 'block', marginTop: '10px', maxWidth, height: 'auto', borderRadius: '4px', opacity: hidden ? 0.4 : 1 }} />}
+          {onToggleHide && (
+            <ToggleControl
+              label={__('Hide image', 'mbn-theme')}
+              help={hidden ? __('Image is hidden on the front end.', 'mbn-theme') : __('Image is shown on the front end.', 'mbn-theme')}
+              checked={!!hidden}
+              onChange={onToggleHide}
+            />
+          )}
         </div>
       )}
     />
+  );
+}
+
+// Height control for a pad-split__image: fixed px (default 370, theme
+// auto-shrinks on tablet/mobile) or "auto" to use the image's natural ratio.
+function ImageHeightControl({ value, onChange }) {
+  const isAuto = value === 'auto';
+  return (
+    <Fragment>
+      <ToggleControl
+        label={__('Auto height', 'mbn-theme')}
+        help={__('Use the image’s natural aspect ratio instead of a fixed crop height.', 'mbn-theme')}
+        checked={isAuto}
+        onChange={(checked) => onChange(checked ? 'auto' : '')}
+      />
+      {!isAuto && (
+        <RangeControl
+          label={__('Image Height (px)', 'mbn-theme')}
+          value={value === '' || value === undefined ? undefined : Number(value)}
+          onChange={(v) => onChange(v === undefined ? '' : v)}
+          min={100}
+          max={800}
+          allowReset
+          help={__('Reset to use the theme default (370px desktop, scales down on tablet/mobile).', 'mbn-theme')}
+        />
+      )}
+    </Fragment>
   );
 }
 
@@ -170,6 +224,13 @@ function SortableStep({ item, index, updateItem, removeItem, duplicateItem }) {
       <ItemHeader attributes={attributes} listeners={listeners} label={__('Step', 'mbn-theme')} index={index} onDuplicate={() => duplicateItem(index)} onRemove={() => removeItem(index)} />
       <TextControl label={__('Question', 'mbn-theme')} value={item.question} onChange={(v) => updateItem(index, { question: v })} />
       <TextareaControl label={__('Answer (HTML allowed)', 'mbn-theme')} value={item.answer} onChange={(v) => updateItem(index, { answer: v })} rows={5} style={{ marginTop: '10px' }} />
+      <TextControl
+        label={__('Link URL (optional)', 'mbn-theme')}
+        value={item.linkUrl || ''}
+        onChange={(v) => updateItem(index, { linkUrl: v })}
+        help={__('Only used when List Type is "Title only — no accordion." Turns the title into a link.', 'mbn-theme')}
+        style={{ marginTop: '10px' }}
+      />
     </div>
   );
 }
@@ -196,6 +257,14 @@ function SortableSplit({ item, index, updateItem, removeItem, duplicateItem }) {
         onSelect={(m) => updateItem(index, { imageUrl: m.url, imageId: m.id })}
         onRemove={() => updateItem(index, { imageUrl: '', imageId: 0 })}
       />
+      <ImageHeightControl value={item.imageHeight} onChange={(v) => updateItem(index, { imageHeight: v })} />
+      <TextareaControl
+        label={__('Popup Content (HTML, optional)', 'mbn-theme')}
+        value={item.modalContent || ''}
+        onChange={(v) => updateItem(index, { modalContent: v })}
+        rows={5}
+        help={__('Shown in a popup when an <a href="#popup"> link in the Text field above is clicked. Lists (<ol>/<ul>) are supported. Leave empty to disable.', 'mbn-theme')}
+      />
     </div>
   );
 }
@@ -207,6 +276,7 @@ function SortableLiability({ item, index, updateItem, removeItem, duplicateItem 
       <ItemHeader attributes={attributes} listeners={listeners} label={__('Liability', 'mbn-theme')} index={index} onDuplicate={() => duplicateItem(index)} onRemove={() => removeItem(index)} />
       <TextControl label={__('Term', 'mbn-theme')} value={item.term} onChange={(v) => updateItem(index, { term: v })} />
       <TextareaControl label={__('Description (HTML allowed)', 'mbn-theme')} value={item.description} onChange={(v) => updateItem(index, { description: v })} rows={5} style={{ marginTop: '10px' }} />
+      <BackgroundColorControl compact value={item.backgroundColor || ''} onChange={(v) => updateItem(index, { backgroundColor: v })} defaultValue="" label={__('Item Background', 'mbn-theme')} />
     </div>
   );
 }
@@ -267,6 +337,49 @@ function SortableAccident({ item, index, updateItem, removeItem, duplicateItem }
   );
 }
 
+function SortableCaseAmount({ item, index, updateItem, removeItem, duplicateItem }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
+  return (
+    <div ref={setNodeRef} style={itemStyle(transform, transition, isDragging)}>
+      <ItemHeader attributes={attributes} listeners={listeners} label={__('Amount', 'mbn-theme')} index={index} onDuplicate={() => duplicateItem(index)} onRemove={() => removeItem(index)} />
+      <SelectControl
+        label={__('Width', 'mbn-theme')}
+        value={item.span || '1'}
+        options={[
+          { label: __('Half Width (1 column)', 'mbn-theme'), value: '1' },
+          { label: __('Full Width (2 columns)', 'mbn-theme'), value: '2' },
+        ]}
+        onChange={(v) => updateItem(index, { span: v })}
+      />
+      <TextareaControl label={__('Amount (HTML allowed)', 'mbn-theme')} value={item.amount} onChange={(v) => updateItem(index, { amount: v })} rows={2} />
+      <TextareaControl label={__('Description (HTML allowed)', 'mbn-theme')} value={item.description} onChange={(v) => updateItem(index, { description: v })} rows={3} style={{ marginTop: '10px' }} />
+    </div>
+  );
+}
+
+function SortableInjury({ item, index, updateItem, removeItem, duplicateItem }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
+  return (
+    <div ref={setNodeRef} style={itemStyle(transform, transition, isDragging)}>
+      <ItemHeader attributes={attributes} listeners={listeners} label={__('Injury', 'mbn-theme')} index={index} onDuplicate={() => duplicateItem(index)} onRemove={() => removeItem(index)} />
+      <TextControl label={__('Label', 'mbn-theme')} value={item.label} onChange={(v) => updateItem(index, { label: v })} />
+      <TextControl label={__('URL (optional)', 'mbn-theme')} value={item.url} onChange={(v) => updateItem(index, { url: v })} help={__('Leave empty to render as plain text (no link).', 'mbn-theme')} />
+    </div>
+  );
+}
+
+function SortableArea({ item, index, updateItem, removeItem, duplicateItem }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
+  return (
+    <div ref={setNodeRef} style={itemStyle(transform, transition, isDragging)}>
+      <ItemHeader attributes={attributes} listeners={listeners} label={__('Area', 'mbn-theme')} index={index} onDuplicate={() => duplicateItem(index)} onRemove={() => removeItem(index)} />
+      <TextControl label={__('Area Name', 'mbn-theme')} value={item.name} onChange={(v) => updateItem(index, { name: v })} />
+      <TextControl label={__('URL', 'mbn-theme')} value={item.url} onChange={(v) => updateItem(index, { url: v })} help={__('Leave empty to render as plain text (no link).', 'mbn-theme')} />
+      <ToggleControl label={__('Open in new tab', 'mbn-theme')} checked={!!item.newTab} onChange={(v) => updateItem(index, { newTab: v })} />
+    </div>
+  );
+}
+
 function SortableTestimonial({ item, index, updateItem, removeItem, duplicateItem }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
   return (
@@ -275,6 +388,33 @@ function SortableTestimonial({ item, index, updateItem, removeItem, duplicateIte
       <TextareaControl label={__('Quote', 'mbn-theme')} value={item.quote} onChange={(v) => updateItem(index, { quote: v })} rows={3} />
       <TextControl label={__('Name', 'mbn-theme')} value={item.name} onChange={(v) => updateItem(index, { name: v })} />
       <TextControl label={__('Role (optional)', 'mbn-theme')} value={item.role} onChange={(v) => updateItem(index, { role: v })} />
+    </div>
+  );
+}
+
+function SortableWhyLawyerRow({ item, index, updateItem, removeItem, duplicateItem }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
+  return (
+    <div ref={setNodeRef} style={itemStyle(transform, transition, isDragging)}>
+      <ItemHeader attributes={attributes} listeners={listeners} label={__('Row', 'mbn-theme')} index={index} onDuplicate={() => duplicateItem(index)} onRemove={() => removeItem(index)} />
+      <SelectControl
+        label={__('Layout', 'mbn-theme')}
+        value={item.layout}
+        options={[
+          { label: __('Text Left, Image Right', 'mbn-theme'), value: 'text-left' },
+          { label: __('Image Left, Text Right', 'mbn-theme'), value: 'image-left' },
+        ]}
+        onChange={(v) => updateItem(index, { layout: v })}
+      />
+      <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={item.heading} onChange={(v) => updateItem(index, { heading: v })} rows={2} help={__('Wrap text in <span class="pad-text-blue">…</span> to highlight it blue.', 'mbn-theme')} />
+      <TextareaControl label={__('Text (HTML)', 'mbn-theme')} value={item.text} onChange={(v) => updateItem(index, { text: v })} rows={5} style={{ marginTop: '10px' }} />
+      <ImageField
+        label={__('Image', 'mbn-theme')}
+        url={item.imageUrl}
+        id={item.imageId}
+        onSelect={(m) => updateItem(index, { imageUrl: m.url, imageId: m.id })}
+        onRemove={() => updateItem(index, { imageUrl: '', imageId: 0 })}
+      />
     </div>
   );
 }
@@ -340,15 +480,15 @@ function WhyHireEditor({ data, setData, sensors }) {
   return (
     <Fragment>
       <TextControl label={__('Heading', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} />
-      <TextareaControl label={__('Subtitle', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={3} />
+      <TextareaControl label={__('Subtitle (HTML)', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={3} />
       <h4 style={{ marginTop: '20px' }}>{__('Features', 'mbn-theme')}</h4>
       <Repeater field={features} sensors={sensors} ItemComponent={SortableFeature} addLabel={__('+ Add Feature', 'mbn-theme')} newItem={{ title: '', description: '' }} />
       <hr style={{ margin: '20px 0' }} />
       <h4>{__('Images', 'mbn-theme')}</h4>
-      <ImageField label={__('Attorney Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} />
-      <ImageField label={__('90+ Years Badge', 'mbn-theme')} url={data.badge90YearsUrl} id={data.badge90YearsId} onSelect={(m) => setData({ badge90YearsUrl: m.url, badge90YearsId: m.id })} onRemove={() => setData({ badge90YearsUrl: '', badge90YearsId: 0 })} maxWidth="150px" />
-      <ImageField label={__('Map Background', 'mbn-theme')} url={data.mapBackgroundUrl} id={data.mapBackgroundId} onSelect={(m) => setData({ mapBackgroundUrl: m.url, mapBackgroundId: m.id })} onRemove={() => setData({ mapBackgroundUrl: '', mapBackgroundId: 0 })} />
-      <ImageField label={__('No Fee Badge', 'mbn-theme')} url={data.badgeNoFeeUrl} id={data.badgeNoFeeId} onSelect={(m) => setData({ badgeNoFeeUrl: m.url, badgeNoFeeId: m.id })} onRemove={() => setData({ badgeNoFeeUrl: '', badgeNoFeeId: 0 })} maxWidth="150px" />
+      <ImageField label={__('Attorney Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} hidden={data.photoHidden} onToggleHide={(v) => setData({ photoHidden: v })} />
+      <ImageField label={__('90+ Years Badge', 'mbn-theme')} url={data.badge90YearsUrl} id={data.badge90YearsId} onSelect={(m) => setData({ badge90YearsUrl: m.url, badge90YearsId: m.id })} onRemove={() => setData({ badge90YearsUrl: '', badge90YearsId: 0 })} maxWidth="150px" hidden={data.badge90YearsHidden} onToggleHide={(v) => setData({ badge90YearsHidden: v })} />
+      <ImageField label={__('Map Background', 'mbn-theme')} url={data.mapBackgroundUrl} id={data.mapBackgroundId} onSelect={(m) => setData({ mapBackgroundUrl: m.url, mapBackgroundId: m.id })} onRemove={() => setData({ mapBackgroundUrl: '', mapBackgroundId: 0 })} hidden={data.mapBackgroundHidden} onToggleHide={(v) => setData({ mapBackgroundHidden: v })} />
+      <ImageField label={__('No Fee Badge', 'mbn-theme')} url={data.badgeNoFeeUrl} id={data.badgeNoFeeId} onSelect={(m) => setData({ badgeNoFeeUrl: m.url, badgeNoFeeId: m.id })} onRemove={() => setData({ badgeNoFeeUrl: '', badgeNoFeeId: 0 })} maxWidth="150px" hidden={data.badgeNoFeeHidden} onToggleHide={(v) => setData({ badgeNoFeeHidden: v })} />
       <hr style={{ margin: '20px 0' }} />
       <h4>{__('Free Evaluations', 'mbn-theme')}</h4>
       <TextControl label={__('Title', 'mbn-theme')} value={data.freeEvaluationsTitle || ''} onChange={(v) => setData({ freeEvaluationsTitle: v })} />
@@ -360,11 +500,28 @@ function WhyHireEditor({ data, setData, sensors }) {
   );
 }
 
-function CaseResultEditor({ data, setData }) {
+function CaseResultEditor({ data, setData, sensors }) {
+  const results = makeArrayField(data, setData, 'results');
   return (
     <Fragment>
+      <SelectControl
+        label={__('Vertical Alignment', 'mbn-theme')}
+        value={data.alignItems || 'start'}
+        options={[
+          { label: __('Top', 'mbn-theme'), value: 'start' },
+          { label: __('Center', 'mbn-theme'), value: 'center' },
+          { label: __('Bottom', 'mbn-theme'), value: 'end' },
+          { label: __('Stretch', 'mbn-theme'), value: 'stretch' },
+          { label: __('Baseline', 'mbn-theme'), value: 'baseline' },
+        ]}
+        onChange={(v) => setData({ alignItems: v })}
+        help={__('Aligns the photo and card columns within the section.', 'mbn-theme')}
+      />
       <TextControl label={__('Tag', 'mbn-theme')} value={data.tag || ''} onChange={(v) => setData({ tag: v })} />
-      <TextControl label={__('Amount', 'mbn-theme')} value={data.amount || ''} onChange={(v) => setData({ amount: v })} />
+      <h4 style={{ marginTop: '20px' }}>{__('Amounts', 'mbn-theme')}</h4>
+      <p style={{ margin: '0 0 8px', fontSize: '12px', color: '#666' }}>{__('One amount fills the row. Two or more display as bordered cards, two per row. Set Width to Full to span both columns.', 'mbn-theme')}</p>
+      <Repeater field={results} sensors={sensors} ItemComponent={SortableCaseAmount} addLabel={__('+ Add Amount', 'mbn-theme')} newItem={{ amount: '', description: '', span: '1' }} />
+      <hr style={{ margin: '20px 0' }} />
       <TextControl label={__('Title', 'mbn-theme')} value={data.title || ''} onChange={(v) => setData({ title: v })} />
       <TextareaControl label={__('Description (HTML)', 'mbn-theme')} value={data.description || ''} onChange={(v) => setData({ description: v })} rows={3} />
       <ImageField label={__('Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} />
@@ -372,11 +529,57 @@ function CaseResultEditor({ data, setData }) {
   );
 }
 
+function ListInjuriesEditor({ data, setData, sensors }) {
+  const items = makeArrayField(data, setData, 'items');
+  return (
+    <Fragment>
+      <TextareaControl label={__('Title (HTML)', 'mbn-theme')} value={data.title || ''} onChange={(v) => setData({ title: v })} rows={2} help={__('Wrap text in <span class="pad-text-blue">…</span> to highlight it blue.', 'mbn-theme')} />
+      <TextareaControl label={__('Description (HTML)', 'mbn-theme')} value={data.description || ''} onChange={(v) => setData({ description: v })} rows={3} />
+      <SelectControl
+        label={__('List Marker', 'mbn-theme')}
+        value={data.listType || 'ul'}
+        options={[
+          { label: __('Bulleted (ul)', 'mbn-theme'), value: 'ul' },
+          { label: __('Numbered (ol)', 'mbn-theme'), value: 'ol' },
+          { label: __('No marker', 'mbn-theme'), value: 'none' },
+        ]}
+        onChange={(v) => setData({ listType: v })}
+      />
+      <h4 style={{ marginTop: '20px' }}>{__('Injuries', 'mbn-theme')}</h4>
+      <Repeater field={items} sensors={sensors} ItemComponent={SortableInjury} addLabel={__('+ Add Injury', 'mbn-theme')} newItem={{ label: '', url: '' }} />
+    </Fragment>
+  );
+}
+
+function AreasServedEditor({ data, setData, sensors }) {
+  const areas = makeArrayField(data, setData, 'areas');
+  return (
+    <Fragment>
+      <SelectControl
+        label={__('Text Alignment', 'mbn-theme')}
+        value={data.align || 'left'}
+        options={[
+          { label: __('Align Left', 'mbn-theme'), value: 'left' },
+          { label: __('Align Center', 'mbn-theme'), value: 'center' },
+        ]}
+        onChange={(v) => setData({ align: v })}
+        help={__('Applies to the title and description.', 'mbn-theme')}
+      />
+      <TextareaControl label={__('Title (HTML)', 'mbn-theme')} value={data.title || ''} onChange={(v) => setData({ title: v })} rows={2} help={__('Wrap text in <span class="pad-text-blue">…</span> to highlight it blue.', 'mbn-theme')} />
+      <TextareaControl label={__('Description (HTML)', 'mbn-theme')} value={data.description || ''} onChange={(v) => setData({ description: v })} rows={3} />
+      <h4 style={{ marginTop: '20px' }}>{__('Areas', 'mbn-theme')}</h4>
+      <Repeater field={areas} sensors={sensors} ItemComponent={SortableArea} addLabel={__('+ Add Area', 'mbn-theme')} newItem={{ name: '', url: '', newTab: false }} />
+      <hr style={{ margin: '20px 0' }} />
+      <ImageField label={__('Map Image', 'mbn-theme')} url={data.imageUrl} id={data.imageId} onSelect={(m) => setData({ imageUrl: m.url, imageId: m.id })} onRemove={() => setData({ imageUrl: '', imageId: 0 })} />
+    </Fragment>
+  );
+}
+
 function CtaEditor({ data, setData }) {
   return (
     <Fragment>
-      <TextControl label={__('Heading', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} />
-      <TextareaControl label={__('Subtext', 'mbn-theme')} value={data.subtext || ''} onChange={(v) => setData({ subtext: v })} rows={2} />
+      <TextControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} />
+      <TextareaControl label={__('Subtext (HTML)', 'mbn-theme')} value={data.subtext || ''} onChange={(v) => setData({ subtext: v })} rows={2} />
       <TextControl label={__('Button Text', 'mbn-theme')} value={data.buttonText || ''} onChange={(v) => setData({ buttonText: v })} />
       <TextControl label={__('Button URL', 'mbn-theme')} value={data.buttonUrl || ''} onChange={(v) => setData({ buttonUrl: v })} />
       <TextControl label={__('Phone Label', 'mbn-theme')} value={data.phoneLabel || ''} onChange={(v) => setData({ phoneLabel: v })} />
@@ -393,7 +596,8 @@ function AfterAccidentEditor({ data, setData, sensors }) {
     <Fragment>
       <TextControl label={__('Heading', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} />
       <h4 style={{ marginTop: '20px' }}>{__('Split Sections', 'mbn-theme')}</h4>
-      <Repeater field={splits} sensors={sensors} ItemComponent={SortableSplit} addLabel={__('+ Add Split Section', 'mbn-theme')} newItem={{ text: '', imageUrl: '', imageId: 0, layout: 'text-left' }} />
+      <Repeater field={splits} sensors={sensors} ItemComponent={SortableSplit} addLabel={__('+ Add Split Section', 'mbn-theme')} newItem={{ text: '', imageUrl: '', imageId: 0, layout: 'text-left', imageHeight: '', modalContent: '' }} />
+      <TextareaControl label={__('Text After Sections (HTML)', 'mbn-theme')} value={data.afterText || ''} onChange={(v) => setData({ afterText: v })} rows={4} help={__('Optional centered paragraph(s) shown below the split sections. Leave empty to hide.', 'mbn-theme')} style={{ marginTop: '20px' }} />
     </Fragment>
   );
 }
@@ -405,9 +609,23 @@ function StepsEditor({ data, setData, sensors }) {
       <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} />
       <TextareaControl label={__('Intro Text (HTML)', 'mbn-theme')} value={data.introText || ''} onChange={(v) => setData({ introText: v })} rows={3} />
       <ImageField label={__('Chevron Icon', 'mbn-theme')} url={data.chevronIconUrl} id={data.chevronIconId} onSelect={(m) => setData({ chevronIconUrl: m.url, chevronIconId: m.id })} onRemove={() => setData({ chevronIconUrl: '', chevronIconId: 0 })} maxWidth="50px" />
-      <ToggleControl label={__('Use ordered list (numbered)', 'mbn-theme')} help={(data.listType || 'ol') === 'ol' ? __('Steps are numbered (ol).', 'mbn-theme') : __('Steps have no marker (ul).', 'mbn-theme')} checked={(data.listType || 'ol') === 'ol'} onChange={(v) => setData({ listType: v ? 'ol' : 'ul' })} />
+      <SelectControl
+        label={__('List Type', 'mbn-theme')}
+        value={data.listType || 'ol'}
+        options={[
+          { label: __('Accordion — numbered (ol)', 'mbn-theme'), value: 'ol' },
+          { label: __('Accordion — no marker (ul)', 'mbn-theme'), value: 'ul' },
+          { label: __('Title only — no accordion', 'mbn-theme'), value: 'plain' },
+        ]}
+        onChange={(v) => setData({ listType: v })}
+        help={(data.listType || 'ol') === 'plain' ? __('Only each step’s title is shown as a simple divider list. Answers and the chevron icon are ignored.', 'mbn-theme') : undefined}
+      />
+      {(data.listType || 'ol') === 'plain' && (
+        <TextareaControl label={__('Text Before List (HTML)', 'mbn-theme')} value={data.plainListText || ''} onChange={(v) => setData({ plainListText: v })} rows={3} help={__('Optional text shown above the title-only list. Leave empty to hide.', 'mbn-theme')} />
+      )}
       <h4 style={{ marginTop: '20px' }}>{__('Steps', 'mbn-theme')}</h4>
-      <Repeater field={steps} sensors={sensors} ItemComponent={SortableStep} addLabel={__('+ Add Step', 'mbn-theme')} newItem={{ question: '', answer: '' }} />
+      <Repeater field={steps} sensors={sensors} ItemComponent={SortableStep} addLabel={__('+ Add Step', 'mbn-theme')} newItem={{ question: '', answer: '', linkUrl: '' }} />
+      <TextareaControl label={__('Text After Steps (HTML)', 'mbn-theme')} value={data.afterText || ''} onChange={(v) => setData({ afterText: v })} rows={4} help={__('Optional centered paragraph(s) shown below the steps. Leave empty to hide.', 'mbn-theme')} style={{ marginTop: '20px' }} />
     </Fragment>
   );
 }
@@ -419,6 +637,14 @@ function TimeLimitEditor({ data, setData }) {
       <TextareaControl label={__('Subtitle (HTML)', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={3} />
       <TextareaControl label={__('Text (HTML)', 'mbn-theme')} value={data.text || ''} onChange={(v) => setData({ text: v })} rows={5} />
       <ImageField label={__('Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} />
+      <ImageHeightControl value={data.imageHeight} onChange={(v) => setData({ imageHeight: v })} />
+      <TextareaControl
+        label={__('Popup Content (HTML, optional)', 'mbn-theme')}
+        value={data.modalContent || ''}
+        onChange={(v) => setData({ modalContent: v })}
+        rows={5}
+        help={__('Shown in a popup when an <a href="#popup"> link in the Text field above is clicked. Lists (<ol>/<ul>) are supported. Leave empty to disable.', 'mbn-theme')}
+      />
     </Fragment>
   );
 }
@@ -429,6 +655,14 @@ function InsuranceEditor({ data, setData }) {
       <TextControl label={__('Heading', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} />
       <TextareaControl label={__('Text (HTML)', 'mbn-theme')} value={data.text || ''} onChange={(v) => setData({ text: v })} rows={5} />
       <ImageField label={__('Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} />
+      <ImageHeightControl value={data.imageHeight} onChange={(v) => setData({ imageHeight: v })} />
+      <TextareaControl
+        label={__('Popup Content (HTML, optional)', 'mbn-theme')}
+        value={data.modalContent || ''}
+        onChange={(v) => setData({ modalContent: v })}
+        rows={5}
+        help={__('Shown in a popup when an <a href="#popup"> link in the Text field above is clicked. Lists (<ol>/<ul>) are supported. Leave empty to disable.', 'mbn-theme')}
+      />
     </Fragment>
   );
 }
@@ -437,7 +671,6 @@ function LiabilityEditor({ data, setData, sensors }) {
   const items = makeArrayField(data, setData, 'items');
   return (
     <Fragment>
-      <BackgroundColorControl value={data.backgroundColor || 'bg-white'} onChange={(v) => setData({ backgroundColor: v })} defaultValue="bg-white" label={__('Section Background', 'mbn-theme')} />
       <RangeControl
         label={__('Top Padding (px)', 'mbn-theme')}
         value={data.paddingTop === '' || data.paddingTop === undefined ? undefined : Number(data.paddingTop)}
@@ -457,12 +690,13 @@ function LiabilityEditor({ data, setData, sensors }) {
         help={__('Reset to use the theme default (80px desktop / 56px tablet / 40px mobile).', 'mbn-theme')}
       />
       <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} />
-      <TextareaControl label={__('Subtitle', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={2} />
+      <TextareaControl label={__('Subtitle (HTML)', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={2} />
+      <ToggleControl label={__('Two-column subtitle', 'mbn-theme')} checked={!!data.subtitleTwoCol} onChange={(v) => setData({ subtitleTwoCol: v })} help={__('On desktop, left-align the heading and place the subtitle paragraphs in two columns (write two <p> paragraphs, one per column). Tablet and mobile stay centered.', 'mbn-theme')} />
       <h4 style={{ marginTop: '20px' }}>{__('Intro (optional)', 'mbn-theme')}</h4>
       <TextControl label={__('Intro Heading', 'mbn-theme')} value={data.introHeading || ''} onChange={(v) => setData({ introHeading: v })} help={__('Leave empty to hide the intro block.', 'mbn-theme')} />
       <TextareaControl label={__('Intro Text (HTML)', 'mbn-theme')} value={data.introText || ''} onChange={(v) => setData({ introText: v })} rows={3} />
       <h4 style={{ marginTop: '20px' }}>{__('Liability Items', 'mbn-theme')}</h4>
-      <Repeater field={items} sensors={sensors} ItemComponent={SortableLiability} addLabel={__('+ Add Liability Item', 'mbn-theme')} newItem={{ term: '', description: '' }} />
+      <Repeater field={items} sensors={sensors} ItemComponent={SortableLiability} addLabel={__('+ Add Liability Item', 'mbn-theme')} newItem={{ term: '', description: '', backgroundColor: '' }} />
       <TextareaControl label={__('Text After List (HTML)', 'mbn-theme')} value={data.afterText || ''} onChange={(v) => setData({ afterText: v })} rows={4} help={__('Optional paragraph(s) shown below the liability list. Leave empty to hide.', 'mbn-theme')} style={{ marginTop: '20px' }} />
     </Fragment>
   );
@@ -473,8 +707,12 @@ function CompensationEditor({ data, setData, sensors }) {
   return (
     <Fragment>
       <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} />
-      <TextareaControl label={__('Subtitle', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={2} />
+      <TextareaControl label={__('Subtitle (HTML)', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={3} />
+      <h4 style={{ marginTop: '20px' }}>{__('Intro (optional)', 'mbn-theme')}</h4>
+      <TextControl label={__('Intro Heading', 'mbn-theme')} value={data.introHeading || ''} onChange={(v) => setData({ introHeading: v })} help={__('Leave empty to hide the intro block.', 'mbn-theme')} />
+      <TextareaControl label={__('Intro Text (HTML)', 'mbn-theme')} value={data.introText || ''} onChange={(v) => setData({ introText: v })} rows={3} />
       <h4 style={{ marginTop: '20px' }}>{__('Compensation Items', 'mbn-theme')}</h4>
+      <ToggleControl label={__('Masonry layout (2 columns)', 'mbn-theme')} checked={!!data.masonry} onChange={(v) => setData({ masonry: v })} help={__('Pack items into two balanced columns instead of aligned rows.', 'mbn-theme')} />
       <Repeater field={items} sensors={sensors} ItemComponent={SortableCompensation} addLabel={__('+ Add Compensation Item', 'mbn-theme')} newItem={{ title: '', description: '', featured: false }} />
       <TextareaControl label={__('Text After Grid (HTML)', 'mbn-theme')} value={data.afterText || ''} onChange={(v) => setData({ afterText: v })} rows={4} help={__('Optional paragraph(s) shown below the compensation grid. Leave empty to hide.', 'mbn-theme')} style={{ marginTop: '20px' }} />
     </Fragment>
@@ -487,6 +725,14 @@ function DocumentationEditor({ data, setData }) {
       <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} />
       <TextareaControl label={__('Text (HTML)', 'mbn-theme')} value={data.text || ''} onChange={(v) => setData({ text: v })} rows={5} />
       <ImageField label={__('Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} />
+      <ImageHeightControl value={data.imageHeight} onChange={(v) => setData({ imageHeight: v })} />
+      <TextareaControl
+        label={__('Popup Content (HTML, optional)', 'mbn-theme')}
+        value={data.modalContent || ''}
+        onChange={(v) => setData({ modalContent: v })}
+        rows={5}
+        help={__('Shown in a popup when an <a href="#popup"> link in the Text field above is clicked. Lists (<ol>/<ul>) are supported. Leave empty to disable.', 'mbn-theme')}
+      />
     </Fragment>
   );
 }
@@ -516,6 +762,14 @@ function ThirdPartyEditor({ data, setData, sensors }) {
       <hr style={{ margin: '20px 0' }} />
       <ImageField label={__('Chevron Icon', 'mbn-theme')} url={data.chevronIconUrl} id={data.chevronIconId} onSelect={(m) => setData({ chevronIconUrl: m.url, chevronIconId: m.id })} onRemove={() => setData({ chevronIconUrl: '', chevronIconId: 0 })} maxWidth="50px" />
       <ImageField label={__('Photo', 'mbn-theme')} url={data.photoUrl} id={data.photoId} onSelect={(m) => setData({ photoUrl: m.url, photoId: m.id })} onRemove={() => setData({ photoUrl: '', photoId: 0 })} />
+      <ImageHeightControl value={data.imageHeight} onChange={(v) => setData({ imageHeight: v })} />
+      <TextareaControl
+        label={__('Popup Content (HTML, optional)', 'mbn-theme')}
+        value={data.modalContent || ''}
+        onChange={(v) => setData({ modalContent: v })}
+        rows={5}
+        help={__('Shown in a popup when an <a href="#popup"> link in the Text field above is clicked. Lists (<ol>/<ul>) are supported. Leave empty to disable.', 'mbn-theme')}
+      />
     </Fragment>
   );
 }
@@ -539,7 +793,7 @@ function TestimonialsEditor({ data, setData, sensors }) {
     <Fragment>
       <TextControl label={__('Eyebrow', 'mbn-theme')} value={data.eyebrow || ''} onChange={(v) => setData({ eyebrow: v })} />
       <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} />
-      <TextareaControl label={__('Subtitle', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={3} />
+      <TextareaControl label={__('Subtitle (HTML)', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={3} />
       <ImageField label={__('Stars Icon', 'mbn-theme')} url={data.starsIconUrl} id={data.starsIconId} onSelect={(m) => setData({ starsIconUrl: m.url, starsIconId: m.id })} onRemove={() => setData({ starsIconUrl: '', starsIconId: 0 })} maxWidth="150px" />
       <h4 style={{ marginTop: '20px' }}>{__('Testimonials', 'mbn-theme')}</h4>
       <Repeater field={items} sensors={sensors} ItemComponent={SortableTestimonial} addLabel={__('+ Add Testimonial', 'mbn-theme')} newItem={{ quote: '', name: '', role: '' }} />
@@ -551,10 +805,22 @@ function AccidentListEditor({ data, setData, sensors }) {
   const items = makeArrayField(data, setData, 'items');
   return (
     <Fragment>
-      <BackgroundColorControl value={data.backgroundColor || 'bg-light-blue'} onChange={(v) => setData({ backgroundColor: v })} defaultValue="bg-light-blue" label={__('Section Background', 'mbn-theme')} />
       <TextControl label={__('List Heading', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} help={__('Shown above the list, e.g. “Examples of personal injury in Arizona include:”', 'mbn-theme')} />
       <h4 style={{ marginTop: '20px' }}>{__('Accidents', 'mbn-theme')}</h4>
       <Repeater field={items} sensors={sensors} ItemComponent={SortableAccident} addLabel={__('+ Add Accident', 'mbn-theme')} newItem={{ label: '', url: '' }} />
+      <TextareaControl label={__('Text After List (HTML)', 'mbn-theme')} value={data.afterText || ''} onChange={(v) => setData({ afterText: v })} rows={4} help={__('Optional centered paragraph(s) shown below the list. Leave empty to hide.', 'mbn-theme')} style={{ marginTop: '20px' }} />
+    </Fragment>
+  );
+}
+
+function WhyLawyerEditor({ data, setData, sensors }) {
+  const rows = makeArrayField(data, setData, 'rows');
+  return (
+    <Fragment>
+      <TextareaControl label={__('Heading (HTML)', 'mbn-theme')} value={data.heading || ''} onChange={(v) => setData({ heading: v })} rows={2} help={__('Wrap text in <span class="pad-text-blue">…</span> to highlight it blue.', 'mbn-theme')} />
+      <TextareaControl label={__('Subtitle (HTML)', 'mbn-theme')} value={data.subtitle || ''} onChange={(v) => setData({ subtitle: v })} rows={3} />
+      <h4 style={{ marginTop: '20px' }}>{__('Rows', 'mbn-theme')}</h4>
+      <Repeater field={rows} sensors={sensors} ItemComponent={SortableWhyLawyerRow} addLabel={__('+ Add Row', 'mbn-theme')} newItem={{ layout: 'text-left', heading: '', text: '', imageUrl: '', imageId: 0 }} />
     </Fragment>
   );
 }
@@ -565,7 +831,7 @@ function SectionEditor({ type, data, setData, sensors }) {
     case 'whyHire':
       return <WhyHireEditor data={data} setData={setData} sensors={sensors} />;
     case 'caseResult':
-      return <CaseResultEditor data={data} setData={setData} />;
+      return <CaseResultEditor data={data} setData={setData} sensors={sensors} />;
     case 'cta':
       return <CtaEditor data={data} setData={setData} />;
     case 'afterAccident':
@@ -592,6 +858,12 @@ function SectionEditor({ type, data, setData, sensors }) {
       return <TestimonialsEditor data={data} setData={setData} sensors={sensors} />;
     case 'accidentList':
       return <AccidentListEditor data={data} setData={setData} sensors={sensors} />;
+    case 'whyLawyer':
+      return <WhyLawyerEditor data={data} setData={setData} sensors={sensors} />;
+    case 'listInjuries':
+      return <ListInjuriesEditor data={data} setData={setData} sensors={sensors} />;
+    case 'areasServed':
+      return <AreasServedEditor data={data} setData={setData} sensors={sensors} />;
     default:
       return null;
   }
@@ -626,6 +898,13 @@ function SortableSection({ section, expanded, onToggle, onDuplicate, onRemove, u
       {expanded && (
         <div style={{ padding: '12px' }}>
           <SectionTitleControls data={section.title || {}} onChange={(updates) => updateTitle(section.id, updates)} />
+          <BackgroundColorControl
+            value={(section.data || {}).backgroundColor || ''}
+            onChange={(v) => updateData(section.id, { backgroundColor: v })}
+            defaultValue={section.type === 'liability' ? 'bg-white' : (section.type === 'accidentList' ? 'bg-light-blue' : '')}
+            label={__('Section Background', 'mbn-theme')}
+            help={__('Select a preset or custom color for this section’s background. Deselect to use the section default.', 'mbn-theme')}
+          />
           <SectionEditor type={section.type} data={section.data || {}} setData={(updates) => updateData(section.id, updates)} sensors={sensors} />
         </div>
       )}

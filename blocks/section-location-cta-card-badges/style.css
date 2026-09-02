@@ -71,8 +71,12 @@
 .ldp-cta-card__desc a{
   text-decoration: underline;
   text-underline-offset: 2px;
+  transition: color 0.2s ease;
 }
 
+.ldp-cta-card__desc a:hover{
+  color: var(--ldp-white);
+}
 .ldp-btn {
   display: inline-block;
   padding: 1rem 2rem;
@@ -119,6 +123,13 @@
 .ldp-faq__badges-text:last-child {
   margin-bottom: 0;
 }
+.ldp-faq__badges-text a{
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ldp-faq__badges-text a:hover{
+  color: var(--ldp-text-link);
+}
 
 .ldp-faq__badge {
   margin: 0;
@@ -137,6 +148,14 @@
   grid-template-columns: 410px auto;
   gap: 32px;
   align-items: center;
+}
+
+.ldp-faq__badges--no-text {
+  grid-template-columns: 1fr;
+}
+
+.ldp-faq__badges--no-text .ldp-faq__badges-row {
+  justify-content: center;
 }
 
 .ldp-faq__badges-text {

@@ -506,13 +506,21 @@
 
 /* Chevron for mobile menu */
 .mobile-chevron {
+  box-sizing: content-box; /* keep the 13x8 icon exact; the reset's border-box would let padding eat the content box down to 0 */
   width: 13px;
   height: 8px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='8' viewBox='0 0 13 8' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M6.69506 6.96028C6.47539 7.17996 6.11929 7.17996 5.89961 6.96028L0.164751 1.22541C-0.0549169 1.00573 -0.0549169 0.649631 0.164751 0.429956L0.429921 0.164756C0.649588 -0.0549187 1.00574 -0.0549187 1.22542 0.164756L6.29734 5.23671L11.3693 0.164756C11.589 -0.0549187 11.9451 -0.0549187 12.1647 0.164756L12.4299 0.429956C12.6496 0.649631 12.6496 1.00573 12.4299 1.22541L6.69506 6.96028Z' fill='%2313263E'/%3E%3C/svg%3E");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  background-origin: content-box;
   transition: transform 0.3s ease;
+  /* Padding + matching negative margin grows the tap target to something
+     reasonable on touch screens without shifting layout or changing the
+     icon's visual size — the chevron is now the only way to open a
+     top-level item's submenu, so its hit area has to carry that on its own. */
+  padding: 14px;
+  margin: -14px;
 }
 
 .mobile-menu-item.active .mobile-chevron {
@@ -520,19 +528,29 @@
 }
 
 /* MOBILE SUBMENU */
+/* grid-template-rows 0fr/1fr animates the row track's height instead of
+   max-height, so it's driven by the compositor instead of layout - no jank
+   from repeatedly reflowing an arbitrary max-height. The inner div is the
+   grid's one item; `overflow: hidden` on it is what lets the item ignore its
+   own content size and actually shrink to 0 as the row collapses (a grid
+   item's automatic minimum size is 0 once its overflow isn't visible). */
 .mobile-submenu {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
   background: rgba(255, 255, 255, 0.5);
 }
 
 .mobile-submenu.active {
-  max-height: 2000px;
+  grid-template-rows: 1fr;
+}
+
+.mobile-submenu-inner {
+  overflow: hidden;
 }
 
 /* For simple dropdowns without categories */
-.mobile-submenu > a {
+.mobile-submenu-inner > a {
   display: block;
   padding: 12px 24px 12px 48px;
   font-size: 15px;
@@ -541,7 +559,7 @@
   transition: all 0.2s ease;
 }
 
-.mobile-submenu > a:hover {
+.mobile-submenu-inner > a:hover {
   color: #3480C3;
   padding-left: 52px;
 }
@@ -583,14 +601,19 @@
 }
 
 /* MOBILE SUBMENU CONTENT (Second-level accordion content) */
+/* Same grid-template-rows technique as .mobile-submenu above. */
 .mobile-submenu-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
 }
 
 .mobile-submenu-content.active {
-  max-height: 1000px;
+  grid-template-rows: 1fr;
+}
+
+.mobile-submenu-content-inner {
+  overflow: hidden;
 }
 
 .mobile-submenu-content a {
@@ -620,6 +643,12 @@
 }
 
 /* RESPONSIVE */
+@media (min-width: 1024px) and (max-width: 1280px) {
+  .btn-cta {
+    padding: 14px 16px;
+  }
+}
+
 @media (max-width: 1279px) {
   .logo-full {
     display: none;

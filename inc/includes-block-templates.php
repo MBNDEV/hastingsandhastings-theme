@@ -332,12 +332,35 @@ function custom_theme_maybe_seed_default_block_templates( bool $force = false ):
 add_action( 'init', 'custom_theme_maybe_seed_default_block_templates', 20 );
 
 /**
+ * Resolve the Block Template post ID for a base slug, preferring a
+ * "{slug}-es" variant when the current request serves Spanish content —
+ * the Spanish posts archive page or a single Spanish Post (see
+ * custom_theme_is_spanish_context() in includes-spanish-post-cpt.php).
+ * Falls back to the base slug when no
+ * Spanish variant has been published yet, so nothing breaks until an editor
+ * creates one.
+ *
+ * @param string $base_slug Base Block Template slug (e.g. 'header-template').
+ * @return int Post ID or 0.
+ */
+function custom_theme_resolve_block_template_id( string $base_slug ): int {
+  if ( function_exists( 'custom_theme_is_spanish_context' ) && custom_theme_is_spanish_context() ) {
+    $es_post_id = custom_theme_get_block_template_id_by_slug( $base_slug . '-es' );
+    if ( $es_post_id > 0 ) {
+      return $es_post_id;
+    }
+  }
+
+  return custom_theme_get_block_template_id_by_slug( $base_slug );
+}
+
+/**
  * Global site header HTML from the Header Template Block Template post (block editor content).
  *
  * @return string HTML fragment for inside theme header (run through the_content filters).
  */
 function custom_theme_get_global_header_template_output_html(): string {
-  $post_id = custom_theme_get_block_template_id_by_slug( custom_theme_header_template_slug() );
+  $post_id = custom_theme_resolve_block_template_id( custom_theme_header_template_slug() );
 
   if ( $post_id <= 0 ) {
     // Debug: Template not found
@@ -383,7 +406,7 @@ function custom_theme_get_global_header_template_output_html(): string {
  * @return string HTML fragment for inside theme footer (run through the_content filters).
  */
 function custom_theme_get_global_footer_template_output_html(): string {
-  $post_id = custom_theme_get_block_template_id_by_slug( custom_theme_footer_template_slug() );
+  $post_id = custom_theme_resolve_block_template_id( custom_theme_footer_template_slug() );
 
   if ( $post_id <= 0 ) {
     // Debug: Template not found

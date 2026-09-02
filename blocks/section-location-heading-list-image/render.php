@@ -14,6 +14,8 @@ $list_style             = $attributes['listStyle'] ?? 'single';
 $list_items             = $attributes['listItems'] ?? array();
 $image_url              = $attributes['imageUrl'] ?? '';
 $image_id               = $attributes['imageId'] ?? 0;
+$image_position         = $attributes['imagePosition'] ?? 'right';
+$content_title          = $attributes['contentTitle'] ?? '';
 $before_list_paragraphs = $attributes['beforeListParagraphs'] ?? array();
 $after_list_paragraphs  = $attributes['afterListParagraphs'] ?? array();
 $footer_paragraphs      = $attributes['footerParagraphs'] ?? array();
@@ -36,6 +38,11 @@ if ( ! empty( $image_id ) ) {
 $list_class = 'two-column' === $list_style
   ? 'loc-hlimg__list loc-hlimg__list--two-col'
   : 'loc-hlimg__list';
+
+// Body class based on image position
+$body_class = 'left' === $image_position
+  ? 'loc-hlimg__body loc-hlimg__body--image-left'
+  : 'loc-hlimg__body';
 
 // Handle background color
 $is_custom_color = strpos( $background_color, '#' ) === 0;
@@ -75,9 +82,16 @@ $wrapper_attributes = get_block_wrapper_attributes(
     <?php endif; ?>
 
     <!-- ── Body: list + image ─────────────────────────────── -->
-    <?php if ( ! empty( $list_items ) || ! empty( $final_image_url ) || ! empty( $before_list_paragraphs ) || ! empty( $after_list_paragraphs ) ) : ?>
-      <div class="loc-hlimg__body">
+    <?php if ( ! empty( $list_items ) || ! empty( $final_image_url ) || ! empty( $content_title ) || ! empty( $before_list_paragraphs ) || ! empty( $after_list_paragraphs ) ) : ?>
+      <div class="<?php echo esc_attr( $body_class ); ?>">
         <div class="loc-hlimg__content">
+          <!-- Content Title -->
+          <?php if ( ! empty( $content_title ) ) : ?>
+            <h4 class="loc-hlimg__content-title">
+              <?php echo esc_html( $content_title ); ?>
+            </h4>
+          <?php endif; ?>
+
           <!-- Before List Paragraphs -->
           <?php if ( ! empty( $before_list_paragraphs ) && is_array( $before_list_paragraphs ) ) : ?>
             <div class="loc-hlimg__before-list">
@@ -124,6 +138,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
                   <?php
                   $item_title       = $item['title'] ?? '';
                   $item_description = $item['description'] ?? '';
+                  $item_url         = $item['url'] ?? '';
                   ?>
                   <?php if ( ! empty( $item_title ) || ! empty( $item_description ) ) : ?>
                     <li class="loc-hlimg__list-item">
@@ -137,7 +152,15 @@ $wrapper_attributes = get_block_wrapper_attributes(
                       >
                       <div class="loc-hlimg__item-text">
                         <?php if ( ! empty( $item_title ) ) : ?>
-                          <strong class="loc-hlimg__item-title"><?php echo wp_kses_post( $item_title ); ?></strong>
+                          <strong class="loc-hlimg__item-title">
+                            <?php if ( ! empty( $item_url ) ) : ?>
+                              <a class="loc-hlimg__item-title-link" href="<?php echo esc_url( $item_url ); ?>">
+                                <?php echo esc_html( $item_title ); ?>
+                              </a>
+                            <?php else : ?>
+                              <?php echo esc_html( $item_title ); ?>
+                            <?php endif; ?>
+                          </strong>
                         <?php endif; ?>
                         <?php if ( ! empty( $item_description ) ) : ?>
                           <span class="loc-hlimg__item-desc"><?php echo wp_kses_post( $item_description ); ?></span>

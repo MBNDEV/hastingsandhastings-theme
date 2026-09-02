@@ -108,11 +108,12 @@
     menuDrawer.addEventListener('click', function(e) {
       // Check if clicked element is a mobile-menu-link or inside one
       const link = e.target.closest('.mobile-menu-link');
-      
+
       if (link) {
         const submenuId = link.getAttribute('data-submenu');
-        
-        if (submenuId) {
+        const chevron = e.target.closest('.mobile-chevron');
+
+        if (submenuId && chevron) {
           e.preventDefault();
           
           const parentItem = link.parentElement;
@@ -146,14 +147,28 @@
       
       if (categoryHeader) {
         e.stopPropagation();
-        
+
         const categoryContent = categoryHeader.nextElementSibling;
         const isActive = categoryHeader.classList.contains('active');
-        
-        // Toggle current category
-        categoryHeader.classList.toggle('active');
-        if (categoryContent && categoryContent.classList.contains('mobile-submenu-content')) {
-          categoryContent.classList.toggle('active');
+        const group = categoryHeader.closest('.mobile-submenu-inner');
+
+        // Close every category in this top-level item's group first
+        if (group) {
+          group.querySelectorAll('.mobile-submenu-header').forEach(function(header) {
+            header.classList.remove('active');
+            const content = header.nextElementSibling;
+            if (content && content.classList.contains('mobile-submenu-content')) {
+              content.classList.remove('active');
+            }
+          });
+        }
+
+        // If it wasn't active, open it
+        if (!isActive) {
+          categoryHeader.classList.add('active');
+          if (categoryContent && categoryContent.classList.contains('mobile-submenu-content')) {
+            categoryContent.classList.add('active');
+          }
         }
       }
     });

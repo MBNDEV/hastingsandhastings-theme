@@ -31,6 +31,9 @@ require_once get_theme_file_path( 'template-parts/button.php' );
  * Theme setup
  */
 function mbn_theme_setup() {
+	// Let WordPress manage the document <title> (required for Yoast SEO titles).
+	add_theme_support( 'title-tag' );
+
 	// Add support for block styles.
 	add_theme_support( 'wp-block-styles' );
 
@@ -78,6 +81,7 @@ require_once get_theme_file_path( 'tailwind-loader.php' );
 require_once get_theme_file_path( 'optimize.php' );
 
 // Load integrated inc/ files.
+require_once get_theme_file_path( 'inc/includes-kses-helpers.php' );           // Shared kses helpers for block HTML fields.
 require_once get_theme_file_path( 'inc/includes-theme-options.php' );          // Native theme options page.
 require_once get_theme_file_path( 'inc/includes-post-meta.php' );              // Native post meta boxes.
 require_once get_theme_file_path( 'inc/includes-theme-preset-options-render.php' ); // Font presets & CSS variables.
@@ -96,7 +100,13 @@ require_once get_theme_file_path( 'inc/includes-attorney-cpt.php' );            
 require_once get_theme_file_path( 'inc/includes-attorney-fields.php' );         // Attorney ACF field groups.
 require_once get_theme_file_path( 'inc/includes-case-results.php' );            // Case Results custom post type and fields.
 require_once get_theme_file_path( 'inc/includes-handwritten-reviews.php' );     // Handwritten Reviews CPT, meta box, and REST endpoint.
-
+require_once get_theme_file_path( 'inc/includes-practice-area-cpt.php' );       // Practice Area custom post type.
+require_once get_theme_file_path( 'inc/includes-practice-area-fields.php' );    // Practice Area ACF field groups.
+require_once get_theme_file_path( 'inc/includes-spanish-post-cpt.php' );        // Spanish Post custom post type and taxonomy.
+require_once get_theme_file_path( 'inc/includes-lp-template.php' );             // Landing Page (LP) template assets and lead form.
+require_once get_theme_file_path( 'inc/includes-auto-collision-template.php' ); // Auto Collision lander assets and multi-step form.
+require_once get_theme_file_path( 'inc/includes-post-bulk-actions.php' );      // "Set category" bulk action for the Posts list screen.
+require_once get_theme_file_path( 'inc/includes-spanish-post-bulk-actions.php' ); // "Move to Blog" bulk action for the Spanish Posts list screen.
 /**
  * Enqueue scroll animation assets (frontend only).
  */
@@ -152,6 +162,20 @@ function hastingsandhastings_enqueue_scroll_animations() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'hastingsandhastings_enqueue_scroll_animations' );
+
+/**
+ * Reposition the third-party UserWay accessibility widget on mobile so it
+ * clears the header's hamburger button and the sticky mobile Call/Contact bar.
+ */
+function hastingsandhastings_enqueue_userway_position_fix() {
+	wp_enqueue_style(
+      'hastingsandhastings-userway-position-fix',
+      get_theme_file_uri( 'assets/css/userway-position-fix.css' ),
+      array(),
+      filemtime( get_theme_file_path( 'assets/css/userway-position-fix.css' ) )
+	);
+}
+add_action( 'wp_enqueue_scripts', 'hastingsandhastings_enqueue_userway_position_fix' );
 
 PucFactory::buildUpdateChecker(
   'https://github.com/MBNDEV/mbn-theme',
@@ -263,7 +287,8 @@ if ( ! function_exists( 'hastingsandhastings_get_recent_article_image_url' ) ) {
  * @return void
  */
 function hastingsandhastings_enqueue_single_blog_assets() {
-  if ( ! is_single() || 'post' !== get_post_type() ) {
+  // Spanish Posts reuse the blog single design (single-spanish_post.php).
+  if ( ! is_singular( array( 'post', 'spanish_post' ) ) ) {
     return;
   }
 
@@ -307,3 +332,33 @@ function hastingsandhastings_enqueue_single_attorney_assets() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'hastingsandhastings_enqueue_single_attorney_assets', 20 );
+
+/**
+ * Enqueue dedicated assets for the Practice Area template.
+ *
+ * @return void
+ */
+function hastingsandhastings_enqueue_practice_area_assets() {
+  if ( ! is_page_template( 'page-templates/template-practice-area.php' ) ) {
+    return;
+  }
+
+  $practice_area_style_path = get_theme_file_path( 'assets/css/single-practice-area.css' );
+  $single_blog_script_path  = get_theme_file_path( 'assets/js/single-blog-theme.js' );
+
+  wp_enqueue_style(
+    'hastingsandhastings-single-practice-area',
+    get_theme_file_uri( 'assets/css/single-practice-area.css' ),
+    array(),
+    file_exists( $practice_area_style_path ) ? (string) filemtime( $practice_area_style_path ) : null
+  );
+
+  wp_enqueue_script(
+    'hastingsandhastings-single-blog-theme',
+    get_theme_file_uri( 'assets/js/single-blog-theme.js' ),
+    array(),
+    file_exists( $single_blog_script_path ) ? (string) filemtime( $single_blog_script_path ) : null,
+    false
+  );
+}
+add_action( 'wp_enqueue_scripts', 'hastingsandhastings_enqueue_practice_area_assets', 20 );
