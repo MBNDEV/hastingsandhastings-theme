@@ -34,7 +34,7 @@ get_header();
       $categories = array_values( $categories );
 
       $share_links = array(
-		  'x'        => 'https://twitter.com/intent/tweet?text=' . rawurlencode( $post_title ) . '&url=' . rawurlencode( $post_url ),
+		  'x'        => 'https://x.com/intent/post?text=' . rawurlencode( $post_title ) . '&url=' . rawurlencode( $post_url ),
 		  'facebook' => 'https://www.facebook.com/sharer/sharer.php?u=' . rawurlencode( $post_url ),
 		  'linkedin' => 'https://www.linkedin.com/sharing/share-offsite/?url=' . rawurlencode( $post_url ),
 		  'email'    => 'mailto:?subject=' . rawurlencode( $post_title ) . '&body=' . rawurlencode( $post_url ),
