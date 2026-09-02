@@ -113,7 +113,26 @@ function custom_theme_practice_area_permalink( string $post_link, WP_Post $post 
     return $post_link;
   }
 
-  return home_url( user_trailingslashit( $post->post_name ) );
+  $flat_link = home_url( user_trailingslashit( $post->post_name ) );
+
+  // WPML also hooks post_type_link (at a higher priority than this filter) to
+  // inject the language segment into $post_link, but we discard that link
+  // above and rebuild a flat one from scratch. Re-apply WPML's own permalink
+  // conversion for this post's language so the language segment survives.
+  $language_code = apply_filters(
+    'wpml_element_language_code',
+    null,
+    array(
+        'element_id'   => $post->ID,
+        'element_type' => 'practice_area',
+    )
+  );
+
+  if ( $language_code ) {
+    $flat_link = apply_filters( 'wpml_permalink', $flat_link, $language_code );
+  }
+
+  return $flat_link;
 }
 add_filter( 'post_type_link', 'custom_theme_practice_area_permalink', 10, 2 );
 
