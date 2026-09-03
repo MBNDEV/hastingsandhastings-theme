@@ -230,8 +230,11 @@ output is kept. The script exits non-zero if a required runtime file is missing,
 so a broken build never reaches a server.
 
 CI installs Composer dependencies with `--no-dev` before bundling. On the server
-the archive is unzipped beside the live directory and swapped into place, so a
-half-extracted upload is never served and stale files do not accumulate.
+the archive is unzipped beside the live directory, then swapped into place —
+a **full replacement, not a merge**, so the previous theme is deleted and files
+dropped from the bundle never linger. Because the swap is a rename, a
+half-extracted upload is never served. The deploy refuses any `GIT_THEME_DIR`
+that is not an absolute path ending in `wp-content/themes/<theme>`.
 
 ### Required environment secrets
 
@@ -243,7 +246,7 @@ Set these per environment in **Settings → Environments → Production / Stagin
 | `GIT_HOST` | Server hostname or IP |
 | `GIT_PORT` | SSH port |
 | `GIT_USER` | SSH username |
-| `GIT_THEME_DIR` | Absolute path to the theme directory on the server |
+| `GIT_THEME_DIR` | Absolute path to the theme directory itself, e.g. `/home/u207-xxxx/www/newsite-staging.example.com/public_html/wp-content/themes/mbn-theme` |
 
 ## Security
 

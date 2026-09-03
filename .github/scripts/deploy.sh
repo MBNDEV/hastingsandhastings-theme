@@ -2,6 +2,8 @@
 #
 # Ships dist/mbn-theme.zip to GIT_THEME_DIR on the target host. Shared by
 # live.yml and staging.yml; both supply the GIT_* environment secrets.
+#
+# GIT_THEME_DIR is the theme directory itself, e.g.
 set -euo pipefail
 
 for var in GIT_SSH_KEY GIT_HOST GIT_PORT GIT_USER GIT_THEME_DIR; do
@@ -31,6 +33,18 @@ ssh "${SSH_OPTS[@]}" -p "$GIT_PORT" "$GIT_USER@$GIT_HOST" \
 set -euo pipefail
 THEME_DIR="${1%/}"
 ARCHIVE="$2"
+
+# The deploy deletes whatever sits at THEME_DIR, so refuse anything that does
+# not look like a theme directory rather than trusting a mistyped secret.
+case "$THEME_DIR" in
+  /*/wp-content/themes/?*) ;;
+  *)
+    echo "❌ GIT_THEME_DIR must be an absolute path ending in wp-content/themes/<theme>" >&2
+    echo "   got: $THEME_DIR" >&2
+    exit 1
+    ;;
+esac
+
 STAGE="$THEME_DIR.incoming"
 UNPACK="$THEME_DIR.unpack"
 PREVIOUS="$THEME_DIR.previous"
@@ -50,6 +64,8 @@ for f in style.css functions.php index.php assets/build/tailwind.css vendor/auto
   [ -e "$STAGE/$f" ] || { echo "❌ Uploaded bundle is missing $f" >&2; exit 1; }
 done
 
+# Full replacement, not a merge: the old theme is moved aside and deleted, so
+# files dropped from the bundle do not linger on the server.
 mkdir -p "$(dirname "$THEME_DIR")"
 if [ -d "$THEME_DIR" ]; then
   mv "$THEME_DIR" "$PREVIOUS"
@@ -57,6 +73,7 @@ fi
 mv "$STAGE" "$THEME_DIR"
 rm -rf "$PREVIOUS"
 
-command -v wp >/dev/null 2>&1 && wp --path="$THEME_DIR/../../.." cache flush 2>/dev/null || true
-echo "✅ Deployed to $THEME_DIR"
+WP_ROOT="${THEME_DIR%/wp-content/themes/*}"
+command -v wp >/dev/null 2>&1 && wp --path="$WP_ROOT" cache flush 2>/dev/null || true
+echo "✅ Replaced $THEME_DIR"
 REMOTE
