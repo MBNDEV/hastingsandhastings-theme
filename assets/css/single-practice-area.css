@@ -375,12 +375,14 @@ html {
     transition: color 0.3s ease;
 }
 
+.practice-area-content__body ol a,
 .practice-area-content__body ul a {
     color: var(--colors-link);
     text-decoration: underline;
     transition: color 0.2s ease;
 }
 
+.practice-area-content__body ol a:hover,
 .practice-area-content__body ul a:hover {
     color: var(--colors-link-hover);
 }
