@@ -133,12 +133,10 @@ git tag -a v1.1.0 -m "Release v1.1.0"
 git push origin main --tags
 ```
 
-The GitHub Actions workflow will automatically create a release with built assets.
+Pushing the tag triggers the live deployment — see [Deployment](#deployment).
 
 ### Documentation
 
-- **[Versioning Guide](docs/VERSIONING.md)** - Complete guide for creating and using releases
-- **[Release Checklist](docs/RELEASE-CHECKLIST.md)** - Step-by-step release checklist
 - **[CHANGELOG.md](CHANGELOG.md)** - Version history and release notes
 
 ## Linting
@@ -202,47 +200,50 @@ The sync tools provide bi-directional sync between:
 
 ## Deployment
 
-This theme uses **GitHub Actions** for automated deployment to Staging and Production environments.
+Deployments are driven by **tags**, not branches. Pushing a tag builds the theme
+bundle in GitHub Actions and ships it over SSH into the target theme directory.
 
-### Quick Start
+| Tag format | Workflow | GitHub environment |
+|------------|----------|--------------------|
+| `v1.2.3` | `.github/workflows/live.yml` | `Production` |
+| `staging1.2.3` | `.github/workflows/staging.yml` | `Staging` |
 
 ```bash
-# Deploy to Staging
-git push origin develop
+# Release to live
+git tag -a v1.2.0 -m "Release v1.2.0" && git push origin v1.2.0
 
-# Deploy to Production
-git push origin master
+# Release to staging
+git tag -a staging1.2.0 -m "Staging 1.2.0" && git push origin staging1.2.0
 ```
 
-### What Gets Deployed
+### Building the bundle
 
-Each deployment automatically:
-- ✅ Builds Gutenberg blocks (`npm run build`)
-- ✅ Compiles Tailwind CSS
-- ✅ Installs production dependencies
-- ✅ Syncs files via rsync
-- ✅ Excludes dev files and dependencies
+```bash
+npm run bundle
+```
 
-### Documentation
+This runs `npm run build`, then `scripts/bundle.mjs` stages the runtime theme in
+`dist/mbn-theme/` and packs `dist/mbn-theme.zip`. Only what WordPress reads is
+included — block and CSS sources, tooling configs, lockfiles, `.github/` and
+`node_modules/` are excluded, while the compiled `build/` and `assets/build/`
+output is kept. The script exits non-zero if a required runtime file is missing,
+so a broken build never reaches a server.
 
-- **Setup Guide**: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
-- **Setup Checklist**: [docs/DEPLOYMENT_CHECKLIST.md](docs/DEPLOYMENT_CHECKLIST.md)
-- **Workflow File**: [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
+CI installs Composer dependencies with `--no-dev` before bundling. On the server
+the archive is unzipped beside the live directory and swapped into place, so a
+half-extracted upload is never served and stale files do not accumulate.
 
-### Required Secrets
+### Required environment secrets
 
-Configure in **Repository → Settings → Secrets**:
+Set these per environment in **Settings → Environments → Production / Staging**:
 
 | Secret | Description |
 |--------|-------------|
-| `DO_HOST` | Server hostname or IP |
-| `DO_SSH_USER` | SSH username |
-| `DO_SSH_KEY` | SSH private key |
-| `DO_SSH_PORT` | SSH port (default: 22) |
-| `WP_STG_THEME_DIR` | Staging theme path |
-| `WP_PROD_THEME_DIR` | Production theme path |
-
-See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for detailed setup instructions.
+| `GIT_SSH_KEY` | SSH private key for the deploy user |
+| `GIT_HOST` | Server hostname or IP |
+| `GIT_PORT` | SSH port |
+| `GIT_USER` | SSH username |
+| `GIT_THEME_DIR` | Absolute path to the theme directory on the server |
 
 ## Security
 

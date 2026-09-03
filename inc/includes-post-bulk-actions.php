@@ -33,32 +33,32 @@ add_filter( 'bulk_actions-edit-post', 'custom_bulk_set_category_register_action'
  * @param string $which     'top' or 'bottom'.
  */
 function custom_bulk_set_category_render_picker( $post_type, $which ) {
-	if ( 'post' !== $post_type || 'top' !== $which ) {
-		return;
-	}
-	?>
+  if ( 'post' !== $post_type || 'top' !== $which ) {
+      return;
+  }
+  ?>
 	<label for="custom-bulk-category-picker" class="screen-reader-text"><?php esc_html_e( 'Category to set', 'mbn-theme' ); ?></label>
 	<?php
 	wp_dropdown_categories(
-		array(
-			'id'               => 'custom-bulk-category-picker',
-			'name'             => 'custom_bulk_category_picker',
-			'show_option_none' => __( 'Choose category', 'mbn-theme' ),
-			'hide_empty'       => false,
-			'hierarchical'     => true,
-		)
+      array(
+		  'id'               => 'custom-bulk-category-picker',
+		  'name'             => 'custom_bulk_category_picker',
+		  'show_option_none' => __( 'Choose category', 'mbn-theme' ),
+		  'hide_empty'       => false,
+		  'hierarchical'     => true,
+	  )
 	);
 	?>
 	<label for="custom-bulk-category-remove-picker" class="screen-reader-text"><?php esc_html_e( 'Category to remove', 'mbn-theme' ); ?></label>
 	<?php
 	wp_dropdown_categories(
-		array(
-			'id'               => 'custom-bulk-category-remove-picker',
-			'name'             => 'custom_bulk_category_remove_picker',
-			'show_option_none' => __( 'Choose category', 'mbn-theme' ),
-			'hide_empty'       => false,
-			'hierarchical'     => true,
-		)
+      array(
+		  'id'               => 'custom-bulk-category-remove-picker',
+		  'name'             => 'custom_bulk_category_remove_picker',
+		  'show_option_none' => __( 'Choose category', 'mbn-theme' ),
+		  'hide_empty'       => false,
+		  'hierarchical'     => true,
+	  )
 	);
 }
 add_action( 'restrict_manage_posts', 'custom_bulk_set_category_render_picker', 10, 2 );
@@ -70,10 +70,10 @@ add_action( 'restrict_manage_posts', 'custom_bulk_set_category_render_picker', 1
 function custom_bulk_set_category_render_script() {
 	global $typenow;
 
-	if ( 'post' !== $typenow ) {
-		return;
-	}
-	?>
+  if ( 'post' !== $typenow ) {
+      return;
+  }
+  ?>
 	<script>
 	( function() {
 		var pickers = {
@@ -154,36 +154,36 @@ add_action( 'admin_footer-edit.php', 'custom_bulk_set_category_render_script' );
  * @return string
  */
 function custom_bulk_set_category_handle( $redirect_to, $doaction, $post_ids ) {
-	if ( 'custom_set_category' !== $doaction ) {
-		return $redirect_to;
-	}
+  if ( 'custom_set_category' !== $doaction ) {
+      return $redirect_to;
+  }
 
 	$term_id = isset( $_REQUEST['custom_bulk_category_id'] ) ? absint( $_REQUEST['custom_bulk_category_id'] ) : 0;
 
-	if ( ! $term_id || ! get_term( $term_id, 'category' ) ) {
-		return $redirect_to;
-	}
+  if ( ! $term_id || ! get_term( $term_id, 'category' ) ) {
+      return $redirect_to;
+  }
 
 	$uncategorized_id = get_option( 'default_category' );
 	$updated          = 0;
 
-	foreach ( $post_ids as $post_id ) {
-		if ( ! current_user_can( 'edit_post', $post_id ) ) {
-			continue;
-		}
+  foreach ( $post_ids as $post_id ) {
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        continue;
+    }
 
-		$result = wp_set_object_terms( $post_id, $term_id, 'category', true );
+      $result = wp_set_object_terms( $post_id, $term_id, 'category', true );
 
-		if ( is_wp_error( $result ) ) {
-			continue;
-		}
+    if ( is_wp_error( $result ) ) {
+        continue;
+    }
 
-		++$updated;
+      ++$updated;
 
-		if ( $uncategorized_id && has_term( $uncategorized_id, 'category', $post_id ) ) {
-			wp_remove_object_terms( $post_id, $uncategorized_id, 'category' );
-		}
-	}
+    if ( $uncategorized_id && has_term( $uncategorized_id, 'category', $post_id ) ) {
+        wp_remove_object_terms( $post_id, $uncategorized_id, 'category' );
+    }
+  }
 
 	return add_query_arg( 'custom_bulk_category_updated', $updated, $redirect_to );
 }
@@ -199,35 +199,35 @@ add_filter( 'handle_bulk_actions-edit-post', 'custom_bulk_set_category_handle', 
  * @return string
  */
 function custom_bulk_remove_category_handle( $redirect_to, $doaction, $post_ids ) {
-	if ( 'custom_remove_category' !== $doaction ) {
-		return $redirect_to;
-	}
+  if ( 'custom_remove_category' !== $doaction ) {
+      return $redirect_to;
+  }
 
 	$term_id = isset( $_REQUEST['custom_bulk_category_remove_id'] ) ? absint( $_REQUEST['custom_bulk_category_remove_id'] ) : 0;
 
-	if ( ! $term_id || ! get_term( $term_id, 'category' ) ) {
-		return $redirect_to;
-	}
+  if ( ! $term_id || ! get_term( $term_id, 'category' ) ) {
+      return $redirect_to;
+  }
 
 	$updated = 0;
 
-	foreach ( $post_ids as $post_id ) {
-		if ( ! current_user_can( 'edit_post', $post_id ) ) {
-			continue;
-		}
+  foreach ( $post_ids as $post_id ) {
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        continue;
+    }
 
-		if ( ! has_term( $term_id, 'category', $post_id ) ) {
-			continue;
-		}
+    if ( ! has_term( $term_id, 'category', $post_id ) ) {
+        continue;
+    }
 
-		$result = wp_remove_object_terms( $post_id, $term_id, 'category' );
+      $result = wp_remove_object_terms( $post_id, $term_id, 'category' );
 
-		if ( is_wp_error( $result ) ) {
-			continue;
-		}
+    if ( is_wp_error( $result ) ) {
+        continue;
+    }
 
-		++$updated;
-	}
+      ++$updated;
+  }
 
 	return add_query_arg( 'custom_bulk_category_updated', $updated, $redirect_to );
 }
@@ -237,19 +237,19 @@ add_filter( 'handle_bulk_actions-edit-post', 'custom_bulk_remove_category_handle
  * Show an admin notice reporting how many posts were updated.
  */
 function custom_bulk_set_category_admin_notice() {
-	if ( empty( $_REQUEST['custom_bulk_category_updated'] ) ) {
-		return;
-	}
+  if ( empty( $_REQUEST['custom_bulk_category_updated'] ) ) {
+      return;
+  }
 
 	$updated = absint( $_REQUEST['custom_bulk_category_updated'] );
-	?>
+  ?>
 	<div class="notice notice-success is-dismissible">
 		<p>
 			<?php
 			printf(
 				/* translators: %d: number of posts updated. */
-				esc_html( _n( '%d post updated.', '%d posts updated.', $updated, 'mbn-theme' ) ),
-				$updated
+              esc_html( _n( '%d post updated.', '%d posts updated.', $updated, 'mbn-theme' ) ),
+              $updated
 			);
 			?>
 		</p>

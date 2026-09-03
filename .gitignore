@@ -17,3 +17,4 @@ blocks/handwritten-reviews/.env.staging
 infra-llm/sessions/*
 infra-llm/
 .infra-llm.env
+dist/

@@ -136,13 +136,13 @@ $mbn_ac_legal_links = (array) apply_filters(
 				<?php
 				$mbn_ac_link_markup = array();
 
-              foreach ( $mbn_ac_legal_links as $mbn_ac_label => $mbn_ac_url ) {
+                foreach ( $mbn_ac_legal_links as $mbn_ac_label => $mbn_ac_url ) {
                   $mbn_ac_link_markup[] = sprintf(
                     '<a href="%s">%s</a>',
                     esc_url( $mbn_ac_url ),
                     esc_html( $mbn_ac_label )
                   );
-              }
+                }
 
 				echo wp_kses(
                   implode( ' | ', $mbn_ac_link_markup ),
