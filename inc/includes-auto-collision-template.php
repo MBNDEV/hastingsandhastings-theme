@@ -137,19 +137,29 @@ if ( ! function_exists( 'mbn_ac_form_id' ) ) {
 	/**
 	 * Resolve which Gravity Form the lander should render.
 	 *
-	 * One form serves every Auto Collision lander, so this is a constant with a
-	 * filter rather than a per-page setting.
+	 * Uses the page's "Landing Page Form" field when set, otherwise MBN_AC_FORM_ID.
 	 *
 	 * @return int
 	 */
   function mbn_ac_form_id() {
+      $page_id = (int) get_the_ID();
+      $form_id = MBN_AC_FORM_ID;
+
+    if ( $page_id > 0 && defined( 'MBN_LP_FORM_META_KEY' ) ) {
+        $per_page = (int) get_post_meta( $page_id, MBN_LP_FORM_META_KEY, true );
+
+      if ( $per_page > 0 ) {
+          $form_id = $per_page;
+      }
+    }
+
       /**
        * Filters the Gravity Forms form ID used by the Auto Collision lander.
        *
-       * @param int $form_id Default MBN_AC_FORM_ID.
+       * @param int $form_id Page override, or MBN_AC_FORM_ID when unset.
        * @param int $page_id Current page ID.
        */
-      return (int) apply_filters( 'mbn_ac_form_id', MBN_AC_FORM_ID, get_the_ID() );
+      return (int) apply_filters( 'mbn_ac_form_id', $form_id, $page_id );
   }
 }
 
