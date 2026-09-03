@@ -87,6 +87,18 @@ if ( copyPatterns.length > 0 ) {
 module.exports = {
   ...defaultConfig,
   entry: blockEntries,
+  // Keep the inotify watcher count down in dev; node_modules and static block
+  // assets never change while watching.
+  watchOptions: {
+    ...( defaultConfig.watchOptions || {} ),
+    ignored: [ '**/node_modules/**', '**/build/**', '**/blocks/*/assets/**' ],
+    aggregateTimeout: 300,
+    // Poll instead of using inotify. The system watcher limit is shared with
+    // other tooling (editors especially) and runs out on large trees, which
+    // surfaces as "ENOSPC: System limit for number of file watchers reached".
+    // Set WATCH_POLL=0 to go back to filesystem events.
+    poll: process.env.WATCH_POLL === '0' ? false : 1000,
+  },
   output: {
     ...defaultConfig.output,
     filename: '[name].js',
