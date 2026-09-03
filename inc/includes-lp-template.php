@@ -287,16 +287,24 @@ add_action( 'add_meta_boxes', 'mbn_lp_register_form_meta_box' );
 function mbn_lp_render_form_meta_box( $post ) {
 	$template = get_page_template_slug( $post->ID );
 	$is_lp    = in_array( $template, array( MBN_LP_TEMPLATE, MBN_LP_TEMPLATE_ES, 'page-templates/template-hastings-lp.php' ), true );
+	$is_ac    = defined( 'MBN_AC_TEMPLATE' ) && MBN_AC_TEMPLATE === $template;
 	$value    = (int) get_post_meta( $post->ID, MBN_LP_FORM_META_KEY, true );
 	$map      = mbn_lp_form_map();
-	$fallback = isset( $map[ $post->ID ] ) ? (int) $map[ $post->ID ] : ( MBN_LP_TEMPLATE_ES === $template ? 7 : 5 );
+
+  if ( $is_ac ) {
+      $fallback = defined( 'MBN_AC_FORM_ID' ) ? (int) MBN_AC_FORM_ID : 8;
+  } elseif ( isset( $map[ $post->ID ] ) ) {
+      $fallback = (int) $map[ $post->ID ];
+  } else {
+      $fallback = MBN_LP_TEMPLATE_ES === $template ? 7 : 5;
+  }
 
 	wp_nonce_field( 'mbn_lp_form_metabox', 'mbn_lp_form_nonce' );
 
-  if ( ! $is_lp ) {
+  if ( ! $is_lp && ! $is_ac ) {
     ?>
 		<p class="description">
-          <?php esc_html_e( 'Applies when this page uses a Landing Page (LP) template.', 'mbn-theme' ); ?>
+          <?php esc_html_e( 'Applies when this page uses a Landing Page (LP) or Auto Collision template.', 'mbn-theme' ); ?>
 		</p>
 		<?php
   }
