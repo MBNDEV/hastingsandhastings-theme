@@ -5,6 +5,7 @@
     "scripts": {
         "build": "npm run build:css && npm run build:blocks",
         "build:css": "node node_modules/tailwindcss/lib/cli.js -i ./resources/css/app.css -o ./assets/build/tailwind.css --minify",
+        "bundle": "npm run build && node scripts/bundle.mjs",
         "build:blocks": "node node_modules/webpack/bin/webpack.js --config webpack.config.js --mode production",
         "start": "npm-run-all --parallel watch:*",
         "watch:css": "node node_modules/tailwindcss/lib/cli.js -i ./resources/css/app.css -o ./assets/build/tailwind.css --watch --poll",
