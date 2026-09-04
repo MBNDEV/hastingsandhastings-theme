@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-09-04
+
+### Changed
+- Deploys no longer keep a copy of the outgoing theme on the server. The two
+  most recent `.mbn-backup-<slug>-<stamp>` generations used to be retained for
+  rollback; they were ~278 MB each. Revert by pushing an earlier release tag.
+- The outgoing theme is still moved aside for the length of the swap, so the
+  theme directory is absent for milliseconds and a failed rename is still undone
+  — but that copy is deleted as soon as the new tree is in place.
+
+### Fixed
+- A deploy killed mid-swap left its scratch copy behind because it never reached
+  its cleanup trap. Each deploy now clears stale copies before staging, so the
+  themes directory holds nothing but the theme.
+
 ## [1.2.0] - 2026-09-04
 
 ### Added
