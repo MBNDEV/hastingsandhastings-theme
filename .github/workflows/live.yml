@@ -48,6 +48,8 @@ jobs:
       - name: Deploy over SSH
         env:
           GIT_SSH_KEY: ${{ secrets.GIT_SSH_KEY }}
+          # Optional: only needed when GIT_SSH_KEY is an encrypted key.
+          GIT_PASSPHRASE: ${{ secrets.GIT_PASSPHRASE }}
           GIT_HOST: ${{ secrets.GIT_HOST }}
           GIT_PORT: ${{ secrets.GIT_PORT }}
           GIT_USER: ${{ secrets.GIT_USER }}

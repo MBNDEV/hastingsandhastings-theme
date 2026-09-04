@@ -6,6 +6,8 @@
 # runner produced, so what passed on staging is literally what goes live.
 #
 # Shared by live.yml and staging.yml; both supply the GIT_* environment secrets.
+# GIT_PASSPHRASE is the one optional secret: set it only when GIT_SSH_KEY is an
+# encrypted key.
 # GIT_THEME_DIR keeps its name for compatibility with the configured secrets, but
 # it is now just the theme directory itself, no longer a checkout, e.g.
 # /home/user/site/public_html/wp-content/themes/mbn-theme
@@ -33,10 +35,41 @@ fi
 THEME_DIR="${GIT_THEME_DIR%/}"
 
 KEY_DIR="$(mktemp -d)"
-trap 'rm -rf "$KEY_DIR"' EXIT
+AGENT_STARTED=0
+cleanup_local() {
+  [ "$AGENT_STARTED" = 1 ] && ssh-agent -k >/dev/null 2>&1
+  rm -rf "$KEY_DIR"
+}
+trap cleanup_local EXIT
 KEY="$KEY_DIR/id_deploy"
 printf '%s\n' "$GIT_SSH_KEY" > "$KEY"
 chmod 600 "$KEY"
+
+# ssh cannot decrypt a key on its own without a terminal, so an encrypted
+# GIT_SSH_KEY is unlocked once here and served to scp/ssh by an agent. The
+# passphrase reaches ssh-add through the environment rather than the askpass
+# script's body, which would otherwise leave it on disk.
+if [ -n "${GIT_PASSPHRASE:-}" ]; then
+  ASKPASS="$KEY_DIR/askpass"
+  # ssh-add re-invokes askpass indefinitely when the passphrase is rejected, so
+  # answering exactly once turns a wrong GIT_PASSPHRASE into a failed step
+  # instead of a job that hangs until the runner times out.
+  printf '%s\n' \
+    '#!/usr/bin/env bash' \
+    '[ -e "$0.used" ] && exit 1' \
+    ': > "$0.used"' \
+    'printf %s "$GIT_PASSPHRASE"' > "$ASKPASS"
+  chmod 700 "$ASKPASS"
+  eval "$( ssh-agent -s )" >/dev/null
+  AGENT_STARTED=1
+  if ! GIT_PASSPHRASE="$GIT_PASSPHRASE" DISPLAY="${DISPLAY:-none}" \
+       SSH_ASKPASS="$ASKPASS" SSH_ASKPASS_REQUIRE=force \
+       ssh-add "$KEY" >/dev/null 2>&1; then
+    echo "❌ ssh-add could not unlock the deploy key — check GIT_SSH_KEY and GIT_PASSPHRASE." >&2
+    exit 1
+  fi
+fi
+
 ssh-keyscan -p "$GIT_PORT" -H "$GIT_HOST" > "$KEY_DIR/known_hosts" 2>/dev/null
 
 SSH_OPTS=( -i "$KEY" -o "UserKnownHostsFile=$KEY_DIR/known_hosts" -o BatchMode=yes )

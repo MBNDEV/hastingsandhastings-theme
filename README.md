@@ -266,6 +266,7 @@ Set these per environment in **Settings → Environments → Production / Stagin
 | `GIT_PORT` | SSH port |
 | `GIT_USER` | SSH username |
 | `GIT_THEME_DIR` | Absolute path to the theme directory itself, e.g. `/home/u207-xxxx/www/newsite-staging.example.com/public_html/wp-content/themes/mbn-theme`. No longer needs to be a git checkout; the name is kept so existing secrets keep working. |
+| `GIT_PASSPHRASE` | *Optional.* The passphrase protecting `GIT_SSH_KEY`. Leave it unset for an unencrypted key; when set, the deploy unlocks the key into an `ssh-agent` for the run. |
 
 ## Security
 
