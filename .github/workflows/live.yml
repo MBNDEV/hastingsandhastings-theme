@@ -19,13 +19,37 @@ jobs:
     environment: Production
 
     steps:
-      # Only to get .github/scripts/deploy.sh — the server pulls the tag and
-      # builds it itself, so nothing is compiled or shipped from here.
       - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      # phpcs and friends are require-dev; the shipped tree needs none of them.
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+          coverage: none
+
+      - name: Install PHP dependencies
+        run: composer install --no-dev --optimize-autoloader --no-progress --no-interaction --prefer-dist
+
+      - name: Install Node dependencies
+        run: npm ci --no-audit --no-fund
+
+      # `bundle` runs the build first, then stages dist/mbn-theme.zip. The zip is
+      # the only thing that reaches the server, so live and staging get an
+      # artifact built exactly once, from one toolchain.
+      - name: Build and bundle
+        run: npm run bundle
 
       - name: Deploy over SSH
         env:
           GIT_SSH_KEY: ${{ secrets.GIT_SSH_KEY }}
+          # Optional: only needed when GIT_SSH_KEY is an encrypted key.
+          GIT_PASSPHRASE: ${{ secrets.GIT_PASSPHRASE }}
           GIT_HOST: ${{ secrets.GIT_HOST }}
           GIT_PORT: ${{ secrets.GIT_PORT }}
           GIT_USER: ${{ secrets.GIT_USER }}
