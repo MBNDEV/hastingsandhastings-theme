@@ -24,7 +24,6 @@ const EXCLUDE_ANYWHERE = new Set( [
   '.git',
   '.claude',
   '.cursor',
-  '.husky',
   '.vscode',
   '.idea',
 ] );

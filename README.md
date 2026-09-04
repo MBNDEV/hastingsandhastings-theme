@@ -200,8 +200,8 @@ The sync tools provide bi-directional sync between:
 
 ## Deployment
 
-Deployments are driven by **tags**, not branches. Pushing a tag tells the target
-server over SSH to pull that tag into its own checkout and build it there.
+Deployments are driven by **tags**, not branches. Pushing a tag builds the theme
+on the GitHub runner and ships the resulting archive to the target server.
 
 | Tag format | Workflow | GitHub environment |
 |------------|----------|--------------------|
@@ -218,26 +218,31 @@ git tag -a staging1.2.0 -m "Staging 1.2.0" && git push origin staging1.2.0
 
 ### What the deploy does
 
-GitHub Actions only checks out `.github/scripts/deploy.sh` and runs it; nothing
-is compiled on the runner. The script SSHes to the host and, inside
-`GIT_THEME_DIR`, fetches the tag, checks it out, installs dependencies and runs
-`npm run build` — so the server compiles the same assets `npm run dev` produces
-locally, from the same sources, instead of trusting an uploaded archive.
+The runner installs dependencies, runs `npm run bundle` and hands
+`.github/scripts/deploy.sh` the resulting `dist/mbn-theme.zip`. The script uploads
+that archive and swaps it into `GIT_THEME_DIR`. Staging and live therefore install
+a byte-identical artifact, so what you verified on staging is exactly what ships.
 
-The checkout is followed by a cleanup of untracked files, so files an earlier tag
-left behind are dropped and this stays a **replacement, not a merge**. Ignored
-paths are left alone, so `node_modules/`, `vendor/` and the build output survive
-between deploys.
+The swap is two renames within the themes directory — the current theme moves to
+`.mbn-backup-<slug>-<stamp>`, the unpacked one takes its place — so the theme is
+absent for milliseconds rather than for the length of an unpack. The archive is
+validated *before* the swap, so an incomplete build never reaches the live path,
+and a failed swap puts the previous copy straight back.
 
-If any step fails the script checks the previous commit back out and rebuilds
-it, so a broken release does not leave the site on half-built assets. It also
-refuses any `GIT_THEME_DIR` that is not an absolute path ending in
-`wp-content/themes/<theme>`, or that is not the root of a git checkout.
+This is a **wholesale replacement**: anything in the theme directory that is not
+in the bundle is gone. That is the intent, but it also means edits made directly
+on the server are lost. The two most recent backups are kept beside the theme, so
+a bad release can be reverted by renaming one back.
 
-**One-time server setup:** clone this repo into `GIT_THEME_DIR` (the theme
-directory *is* the checkout), and make sure `git`, `node`, `npm` and `composer`
-are on the deploy user's `PATH`. The script fails with a clear message if any
-of that is missing.
+Once the files are in place the script activates the theme, flushes the object
+cache, and clears the mbn-resolver caches when that plugin's WP-CLI command is
+available. All three are best-effort: the files are already live, so a failure
+warns rather than reverting a good deploy.
+
+**One-time server setup:** make sure `unzip` is on the deploy user's `PATH` and
+that the user can write to the themes directory. `wp-cli` is optional, but without
+it nothing is activated or cache-cleared and the script says so. The server no
+longer needs `git`, `node`, `npm` or `composer`.
 
 ### Building a bundle by hand
 
@@ -245,8 +250,8 @@ of that is missing.
 npm run bundle
 ```
 
-Not used by deployment — this is for hand-installing the theme somewhere without
-a checkout. It runs `npm run build`, then `scripts/bundle.mjs` stages the runtime
+This is what the deploy workflows run, and it also works for hand-installing the
+theme somewhere. It runs `npm run build`, then `scripts/bundle.mjs` stages the runtime
 theme in `dist/mbn-theme/` and packs `dist/mbn-theme.zip`, keeping only what
 WordPress reads. It exits non-zero if a required runtime file is missing.
 
@@ -260,7 +265,7 @@ Set these per environment in **Settings → Environments → Production / Stagin
 | `GIT_HOST` | Server hostname or IP |
 | `GIT_PORT` | SSH port |
 | `GIT_USER` | SSH username |
-| `GIT_THEME_DIR` | Absolute path to the theme directory itself, which must be a git checkout of this repo, e.g. `/home/u207-xxxx/www/newsite-staging.example.com/public_html/wp-content/themes/mbn-theme` |
+| `GIT_THEME_DIR` | Absolute path to the theme directory itself, e.g. `/home/u207-xxxx/www/newsite-staging.example.com/public_html/wp-content/themes/mbn-theme`. No longer needs to be a git checkout; the name is kept so existing secrets keep working. |
 
 ## Security
 
