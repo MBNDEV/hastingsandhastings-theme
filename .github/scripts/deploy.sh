@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 #
-# Deploys by pulling the release tag into GIT_THEME_DIR on the target host and
-# building it there, so the server produces exactly what `npm run build`
-# produces locally. Shared by live.yml and staging.yml; both supply the GIT_*
-# environment secrets.
+# Ships the archive the workflow already built: uploads dist/mbn-theme.zip to the
+# target host and swaps it into GIT_THEME_DIR. The server needs no toolchain and
+# no git checkout — staging and live receive the byte-identical artifact the
+# runner produced, so what passed on staging is literally what goes live.
 #
-# GIT_THEME_DIR must be a git checkout of this repo whose toplevel is the theme
-# directory itself, e.g. /home/user/site/public_html/wp-content/themes/mbn-theme
+# Shared by live.yml and staging.yml; both supply the GIT_* environment secrets.
+# GIT_THEME_DIR keeps its name for compatibility with the configured secrets, but
+# it is now just the theme directory itself, no longer a checkout, e.g.
+# /home/user/site/public_html/wp-content/themes/mbn-theme
 set -euo pipefail
 
 for var in GIT_SSH_KEY GIT_HOST GIT_PORT GIT_USER GIT_THEME_DIR; do
@@ -16,11 +18,19 @@ for var in GIT_SSH_KEY GIT_HOST GIT_PORT GIT_USER GIT_THEME_DIR; do
   fi
 done
 
+ARCHIVE="dist/mbn-theme.zip"
+if [ ! -f "$ARCHIVE" ]; then
+  echo "❌ $ARCHIVE not found — the build step must run 'npm run bundle' first." >&2
+  exit 1
+fi
+
 RELEASE_REF="${GITHUB_REF_NAME:-}"
 if [ -z "$RELEASE_REF" ]; then
   echo "❌ No release tag: GITHUB_REF_NAME is empty. These workflows run on tag pushes." >&2
   exit 1
 fi
+
+THEME_DIR="${GIT_THEME_DIR%/}"
 
 KEY_DIR="$(mktemp -d)"
 trap 'rm -rf "$KEY_DIR"' EXIT
@@ -29,16 +39,25 @@ printf '%s\n' "$GIT_SSH_KEY" > "$KEY"
 chmod 600 "$KEY"
 ssh-keyscan -p "$GIT_PORT" -H "$GIT_HOST" > "$KEY_DIR/known_hosts" 2>/dev/null
 
-echo "🚀 Deploying $RELEASE_REF to $GIT_HOST:$GIT_THEME_DIR"
+SSH_OPTS=( -i "$KEY" -o "UserKnownHostsFile=$KEY_DIR/known_hosts" -o BatchMode=yes )
+STAMP="$( date -u +%Y%m%d%H%M%S )-${GITHUB_RUN_ID:-manual}"
+# Staged beside the theme rather than in /tmp so the final swap is a rename
+# within one filesystem instead of a copy across two.
+REMOTE_ZIP="$( dirname "$THEME_DIR" )/.mbn-deploy-$STAMP.zip"
 
-ssh -i "$KEY" -o "UserKnownHostsFile=$KEY_DIR/known_hosts" -o BatchMode=yes \
-  -p "$GIT_PORT" "$GIT_USER@$GIT_HOST" \
-  bash -s -- "$GIT_THEME_DIR" "$RELEASE_REF" <<'REMOTE'
+echo "🚀 Deploying $RELEASE_REF ($( du -h "$ARCHIVE" | cut -f1 )) to $GIT_HOST:$THEME_DIR"
+
+scp "${SSH_OPTS[@]}" -P "$GIT_PORT" "$ARCHIVE" "$GIT_USER@$GIT_HOST:$REMOTE_ZIP"
+
+ssh "${SSH_OPTS[@]}" -p "$GIT_PORT" "$GIT_USER@$GIT_HOST" \
+  bash -s -- "$THEME_DIR" "$RELEASE_REF" "$REMOTE_ZIP" "$STAMP" <<'REMOTE'
 set -euo pipefail
 THEME_DIR="${1%/}"
 RELEASE_REF="$2"
+REMOTE_ZIP="$3"
+STAMP="$4"
 
-# This checks out over the live theme, so refuse anything that does not look
+# This replaces the live theme wholesale, so refuse anything that does not look
 # like a theme directory rather than trusting a mistyped secret.
 case "$THEME_DIR" in
   /*/wp-content/themes/?*) ;;
@@ -49,54 +68,75 @@ case "$THEME_DIR" in
     ;;
 esac
 
-for cmd in git node npm composer; do
-  command -v "$cmd" >/dev/null 2>&1 || { echo "❌ $cmd is not installed on the server" >&2; exit 1; }
+command -v unzip >/dev/null 2>&1 || { echo "❌ unzip is not installed on the server" >&2; exit 1; }
+
+THEMES_DIR="$( dirname "$THEME_DIR" )"
+SLUG="$( basename "$THEME_DIR" )"
+STAGE="$THEMES_DIR/.mbn-deploy-$STAMP"
+BACKUP="$THEMES_DIR/.mbn-backup-$SLUG-$STAMP"
+
+# The upload and the unpacked staging tree are scratch either way; the backup is
+# deliberately left behind for rollback.
+cleanup() { rm -rf "$STAGE" "$REMOTE_ZIP"; }
+trap cleanup EXIT
+
+rm -rf "$STAGE"
+mkdir -p "$STAGE"
+unzip -q "$REMOTE_ZIP" -d "$STAGE"
+
+# bundle.mjs always stages the tree under mbn-theme/, but the live directory may
+# be named something else and WordPress identifies a theme by that name.
+NEW="$STAGE/mbn-theme"
+[ -d "$NEW" ] || { echo "❌ Archive did not contain mbn-theme/" >&2; exit 1; }
+
+for f in style.css functions.php index.php tailwind-loader.php assets/build/tailwind.css build/blocks vendor/autoload.php; do
+  [ -e "$NEW/$f" ] || { echo "❌ Archive is missing $f" >&2; exit 1; }
 done
 
-cd "$THEME_DIR"
-
-# A checkout rooted anywhere but here would rewrite files outside the theme.
-TOPLEVEL="$(git rev-parse --show-toplevel 2>/dev/null || true)"
-if [ "$TOPLEVEL" != "$THEME_DIR" ]; then
-  echo "❌ $THEME_DIR is not the root of a git checkout (toplevel: ${TOPLEVEL:-none})" >&2
-  echo "   Clone this repo into that path once before the first deploy." >&2
+# Two renames on one filesystem, so the theme directory is absent for
+# milliseconds rather than for the length of an unpack.
+if [ -e "$THEME_DIR" ] && ! mv "$THEME_DIR" "$BACKUP"; then
+  echo "❌ Could not move the current theme aside; nothing was changed." >&2
   exit 1
 fi
 
-git fetch --prune --tags --force origin
-git rev-parse -q --verify "refs/tags/$RELEASE_REF^{commit}" >/dev/null \
-  || { echo "❌ Tag $RELEASE_REF not found on origin" >&2; exit 1; }
-
-PREVIOUS="$(git rev-parse HEAD)"
-
-# The compiled tree is served straight out of this directory, so a failed build
-# would leave the site on half-built assets. Put the old commit back and rebuild
-# it instead — the equivalent of the atomic swap the archive deploy used to do.
-rollback() {
-  echo "↩️  Deploy failed — restoring $PREVIOUS" >&2
-  git checkout --force --detach "$PREVIOUS" >/dev/null 2>&1 || return
-  npm run build >/dev/null 2>&1 || echo "⚠️  Rollback rebuild also failed; the theme needs manual repair." >&2
-}
-trap rollback ERR
-
-git checkout --force --detach "refs/tags/$RELEASE_REF"
-# Drops files a previous tag left behind so this stays a replacement, not a
-# merge. No -x, so gitignored node_modules, vendor and build output survive.
-git clean -fd
-
-composer install --no-dev --optimize-autoloader --no-progress --no-interaction --prefer-dist
-# HUSKY=0 because the deploy checkout has no use for commit hooks.
-HUSKY=0 npm ci --no-audit --no-fund
-npm run build
-
-for f in style.css functions.php index.php tailwind-loader.php assets/build/tailwind.css build/blocks vendor/autoload.php; do
-  [ -e "$f" ] || { echo "❌ Build did not produce $f" >&2; exit 1; }
-done
-
-trap - ERR
+if ! mv "$NEW" "$THEME_DIR"; then
+  echo "↩️  Swap failed — restoring the previous theme" >&2
+  [ -e "$BACKUP" ] && mv "$BACKUP" "$THEME_DIR"
+  exit 1
+fi
 
 WP_ROOT="${THEME_DIR%/wp-content/themes/*}"
-command -v wp >/dev/null 2>&1 && wp --path="$WP_ROOT" cache flush 2>/dev/null || true
-BLOCKS="$(find build/blocks -maxdepth 1 -mindepth 1 -type d | wc -l)"
-echo "✅ $THEME_DIR now at $RELEASE_REF ($(git rev-parse --short HEAD)), $BLOCKS blocks built"
+if command -v wp >/dev/null 2>&1; then
+  # The files are already live at this point, so a failed activation is worth
+  # shouting about but not worth reverting a good deploy over.
+  wp --path="$WP_ROOT" theme activate "$SLUG" >/dev/null 2>&1 \
+    || echo "⚠️  Deployed, but 'wp theme activate $SLUG' failed — activate it in wp-admin." >&2
+  wp --path="$WP_ROOT" cache flush >/dev/null 2>&1 || true
+  # mbn-resolver owns the page and edge layers (SiteGround, NitroPack) that
+  # `wp cache flush` does not reach. has-command keeps this a no-op wherever the
+  # plugin is absent or inactive.
+  if wp --path="$WP_ROOT" cli has-command 'mbn-resolver cache clear' >/dev/null 2>&1; then
+    wp --path="$WP_ROOT" mbn-resolver cache clear >/dev/null 2>&1 \
+      || echo "⚠️  'wp mbn-resolver cache clear' failed — clear the cache manually." >&2
+  fi
+else
+  echo "⚠️  wp-cli not found: theme not activated and caches not flushed." >&2
+fi
+
+# Keep two generations. That is enough to step back from a bad release without
+# letting ~278 MB copies pile up. The stamp is a UTC timestamp, so the glob's
+# lexical order is chronological.
+shopt -s nullglob
+BACKUPS=( "$THEMES_DIR/.mbn-backup-$SLUG-"* )
+shopt -u nullglob
+if [ "${#BACKUPS[@]}" -gt 2 ]; then
+  for old in "${BACKUPS[@]:0:${#BACKUPS[@]}-2}"; do
+    rm -rf "$old"
+  done
+  BACKUPS=( "${BACKUPS[@]: -2}" )
+fi
+
+BLOCKS="$( find "$THEME_DIR/build/blocks" -maxdepth 1 -mindepth 1 -type d | wc -l )"
+echo "✅ $THEME_DIR now at $RELEASE_REF, $BLOCKS blocks, ${#BACKUPS[@]} backup(s) retained"
 REMOTE

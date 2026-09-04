@@ -12,7 +12,6 @@
         "watch:blocks": "npm run copy:assets && node node_modules/webpack/bin/webpack.js --config webpack.config.js --mode development --watch",
         "watch:browser": "node node_modules/browser-sync/dist/bin.js start --config bs-config.js",
         "dev": "npm-run-all --parallel watch:css watch:blocks",
-        "prepare": "husky",
         "lint:php": "composer run lint",
         "lint:php:fix": "composer run lint:fix",
         "copy:assets": "node scripts/copy-block-assets.mjs"
@@ -35,7 +34,6 @@
         "browser-sync": "^3.0.2",
         "copy-webpack-plugin": "^14.0.0",
         "glob": "^13.0.6",
-        "husky": "^9.0.11",
         "npm-run-all": "^4.1.5",
         "postcss": "^8.4.49",
         "postcss-import": "^16.1.0",
