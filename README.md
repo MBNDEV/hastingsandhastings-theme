@@ -223,16 +223,16 @@ The runner installs dependencies, runs `npm run bundle` and hands
 that archive and swaps it into `GIT_THEME_DIR`. Staging and live therefore install
 a byte-identical artifact, so what you verified on staging is exactly what ships.
 
-The swap is two renames within the themes directory — the current theme moves to
-`.mbn-backup-<slug>-<stamp>`, the unpacked one takes its place — so the theme is
-absent for milliseconds rather than for the length of an unpack. The archive is
-validated *before* the swap, so an incomplete build never reaches the live path,
-and a failed swap puts the previous copy straight back.
+The swap is two renames within the themes directory — the current theme moves
+aside, the unpacked one takes its place — so the theme is absent for milliseconds
+rather than for the length of an unpack. The archive is validated *before* the
+swap, so an incomplete build never reaches the live path, and a failed swap puts
+the previous copy straight back.
 
 This is a **wholesale replacement**: anything in the theme directory that is not
 in the bundle is gone. That is the intent, but it also means edits made directly
-on the server are lost. The two most recent backups are kept beside the theme, so
-a bad release can be reverted by renaming one back.
+on the server are lost. Nothing is kept on the server — the copy moved aside is
+deleted once the swap succeeds, so revert by pushing an earlier release tag.
 
 Once the files are in place the script activates the theme, flushes the object
 cache, and clears the mbn-resolver caches when that plugin's WP-CLI command is
