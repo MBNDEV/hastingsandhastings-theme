@@ -106,12 +106,20 @@ command -v unzip >/dev/null 2>&1 || { echo "❌ unzip is not installed on the se
 THEMES_DIR="$( dirname "$THEME_DIR" )"
 SLUG="$( basename "$THEME_DIR" )"
 STAGE="$THEMES_DIR/.mbn-deploy-$STAMP"
-BACKUP="$THEMES_DIR/.mbn-backup-$SLUG-$STAMP"
+# The outgoing theme is held only for the length of the swap so a failed rename
+# can be undone; it is deleted once the new tree is in place.
+PREVIOUS="$THEMES_DIR/.mbn-previous-$SLUG-$STAMP"
 
-# The upload and the unpacked staging tree are scratch either way; the backup is
-# deliberately left behind for rollback.
-cleanup() { rm -rf "$STAGE" "$REMOTE_ZIP"; }
+cleanup() { rm -rf "$STAGE" "$PREVIOUS" "$REMOTE_ZIP"; }
 trap cleanup EXIT
+
+# A run killed mid-swap cannot reach its own trap, so clear anything an earlier
+# deploy left beside the theme before adding to it.
+shopt -s nullglob
+for stale in "$THEMES_DIR/.mbn-previous-$SLUG-"*; do
+  rm -rf "$stale"
+done
+shopt -u nullglob
 
 rm -rf "$STAGE"
 mkdir -p "$STAGE"
@@ -128,16 +136,24 @@ done
 
 # Two renames on one filesystem, so the theme directory is absent for
 # milliseconds rather than for the length of an unpack.
-if [ -e "$THEME_DIR" ] && ! mv "$THEME_DIR" "$BACKUP"; then
+if [ -e "$THEME_DIR" ] && ! mv "$THEME_DIR" "$PREVIOUS"; then
   echo "❌ Could not move the current theme aside; nothing was changed." >&2
   exit 1
 fi
 
 if ! mv "$NEW" "$THEME_DIR"; then
   echo "↩️  Swap failed — restoring the previous theme" >&2
-  [ -e "$BACKUP" ] && mv "$BACKUP" "$THEME_DIR"
+  if [ -e "$PREVIOUS" ] && ! mv "$PREVIOUS" "$THEME_DIR"; then
+    # Dropping it here would leave no theme at all, so keep it for a human.
+    trap - EXIT
+    rm -rf "$STAGE" "$REMOTE_ZIP"
+    echo "❌ Restore failed too — the previous theme is at $PREVIOUS" >&2
+  fi
   exit 1
 fi
+
+# The themes directory holds nothing but the theme from here on.
+rm -rf "$PREVIOUS"
 
 WP_ROOT="${THEME_DIR%/wp-content/themes/*}"
 if command -v wp >/dev/null 2>&1; then
@@ -157,19 +173,6 @@ else
   echo "⚠️  wp-cli not found: theme not activated and caches not flushed." >&2
 fi
 
-# Keep two generations. That is enough to step back from a bad release without
-# letting ~278 MB copies pile up. The stamp is a UTC timestamp, so the glob's
-# lexical order is chronological.
-shopt -s nullglob
-BACKUPS=( "$THEMES_DIR/.mbn-backup-$SLUG-"* )
-shopt -u nullglob
-if [ "${#BACKUPS[@]}" -gt 2 ]; then
-  for old in "${BACKUPS[@]:0:${#BACKUPS[@]}-2}"; do
-    rm -rf "$old"
-  done
-  BACKUPS=( "${BACKUPS[@]: -2}" )
-fi
-
 BLOCKS="$( find "$THEME_DIR/build/blocks" -maxdepth 1 -mindepth 1 -type d | wc -l )"
-echo "✅ $THEME_DIR now at $RELEASE_REF, $BLOCKS blocks, ${#BACKUPS[@]} backup(s) retained"
+echo "✅ $THEME_DIR now at $RELEASE_REF, $BLOCKS blocks"
 REMOTE
