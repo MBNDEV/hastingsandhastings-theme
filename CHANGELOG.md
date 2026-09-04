@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-09-04
+
+### Added
+- Optional `GIT_PASSPHRASE` deployment secret, so `GIT_SSH_KEY` may be an
+  encrypted SSH key. When it is set, the deploy unlocks the key into an
+  `ssh-agent` for the run through a temporary `SSH_ASKPASS` helper; when it is
+  unset, deployment is unchanged and no agent is started.
+- The askpass helper answers exactly once, so a wrong passphrase fails the
+  deploy step immediately instead of leaving `ssh-add` re-prompting until the
+  runner times out.
+
 ## [1.1.0] - 2026-05-19
 
 ### Added
@@ -107,6 +118,7 @@ When creating a new release:
 
 ## Links
 
-[Unreleased]: https://github.com/MBNDEV/mbn-theme/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/MBNDEV/mbn-theme/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/MBNDEV/mbn-theme/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/MBNDEV/mbn-theme/compare/v1.0.2...v1.1.0
 [1.0.2]: https://github.com/MBNDEV/mbn-theme/releases/tag/v1.0.2
