@@ -1,4 +1,5 @@
 const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
+const os = require( 'os' );
 const path = require( 'path' );
 const glob = require( 'glob' );
 const CopyPlugin = require( 'copy-webpack-plugin' );
@@ -65,6 +66,23 @@ blockDirs.forEach( ( dir ) => {
   );
 } );
 
+// @wordpress/scripts ships TerserPlugin with `parallel: true`, which spawns one
+// worker per core minus one — 23 processes on a 24-core machine. Each is a full
+// V8 isolate, so a production build peaked at 2.7 GB and aborted with "Failed to
+// reserve virtual memory for CodeRange" whenever the machine was already busy.
+// Four workers hold the peak near 0.6 GB for roughly two extra seconds of wall
+// time. Override with BUILD_PARALLEL.
+const minifyParallel =
+  Number( process.env.BUILD_PARALLEL ) ||
+  Math.min( 4, Math.max( 1, os.cpus().length - 1 ) );
+
+const minimizer = ( defaultConfig.optimization?.minimizer || [] ).map( ( plugin ) => {
+  if ( plugin.options && 'parallel' in plugin.options ) {
+    plugin.options.parallel = minifyParallel;
+  }
+  return plugin;
+} );
+
 // blocks/*/assets and assets/icons are mirrored by scripts/copy-block-assets.mjs
 // instead — see that file for why they stay out of the compilation.
 
@@ -97,6 +115,10 @@ module.exports = {
     clean: blockFilter ? false : { keep: ( asset ) => /(^|[\\/])assets[\\/]/.test( asset ) },
   },
   performance: { hints: false },
+  optimization: {
+    ...defaultConfig.optimization,
+    ...( minimizer.length ? { minimizer } : {} ),
+  },
   plugins: [
     ...( defaultConfig.plugins || [] ),
     ...( copyPatterns.length ? [ new CopyPlugin( { patterns: copyPatterns } ) ] : [] ),
