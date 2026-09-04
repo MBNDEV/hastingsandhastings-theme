@@ -7,22 +7,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.1.0] - 2026-05-19
+## [1.1.0] - 2026-09-04
+
+First production release. Tagging `v*.*.*` deploys to Live; `staging*.*.*`
+deploys to Staging.
 
 ### Added
-- Version releasing system with semantic versioning support
-- Automated GitHub Actions workflow for creating releases
-- Version bump script (`scripts/bump-version.php`) for managing version updates
-- Comprehensive versioning documentation:
-  - `docs/VERSIONING.md` - Complete guide for creating and using releases
-  - `docs/RELEASE-CHECKLIST.md` - Step-by-step release checklist
-  - `docs/VERSION-RELEASING-SYSTEM.md` - System overview and implementation details
-  - `docs/QUICK-START-VERSIONING.md` - Quick reference guide
-- Version field in `package.json` for NPM compatibility
+- Practice Area custom post type with ACF field groups and a dedicated template.
+- Landing page system and location pages.
+- Spanish content support: a Spanish Post custom post type, a localized blog
+  listing filter, pagination rewrite rules, Spanish footer headings, and a
+  "Move to Blog" bulk action on the Spanish Posts screen.
+- WPML language segments in Practice Area permalinks.
+- Gravity Forms integration with per-page form ID resolution.
+- Live and Staging deployment workflows, both triggered by tag prefix.
+- Optional `GIT_PASSPHRASE` deploy secret, so `GIT_SSH_KEY` may be an encrypted
+  SSH key. When unset, deployment is unchanged.
+- Version bump script (`scripts/bump-version.php`) and PHP security scan
+  (`scripts/security-scan.php`).
 
 ### Changed
-- Updated README.md with version releasing instructions and workflow
-- Enhanced CHANGELOG.md with proper semantic versioning structure
+- Deploys move the outgoing theme aside only for the length of the swap and no
+  longer retain server-side backup generations, which were ~278 MB each. Roll
+  back by pushing an earlier release tag.
+- Webpack build tuned via TerserPlugin parallelization; `@wordpress/scripts`
+  updated to v32.2.0.
+- PHPCS/WPCS configuration refactored; the lint workflow runs PHP lint and the
+  security scan on `master` and `develop`.
+- README documents the versioning and release workflow.
+
+### Fixed
+- Spanish blog page URLs are generated from the `home` option rather than
+  `home_url()`.
+- Share links use the current X.com URL format.
+- Mobile submenu animation and chevron interaction, and UserWay accessibility
+  widget repositioning on mobile.
+- Assorted responsive layout and spacing fixes across practice area, case
+  result, and section blocks.
+
+### Security
+- Shared `kses` sanitization helpers for block rich-text fields.
+- `esc_html` escaping for CTA subtext, item titles, and content titles.
+- `_wp_page_template` meta values are sanitized and normalized.
 
 ## [1.0.2] - 2026-05-19
 
@@ -107,6 +133,5 @@ When creating a new release:
 
 ## Links
 
-[Unreleased]: https://github.com/MBNDEV/mbn-theme/compare/v1.1.0...HEAD
-[1.1.0]: https://github.com/MBNDEV/mbn-theme/compare/v1.0.2...v1.1.0
-[1.0.2]: https://github.com/MBNDEV/mbn-theme/releases/tag/v1.0.2
+[Unreleased]: https://github.com/MBNDEV/hastingsandhastings-theme/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/MBNDEV/hastingsandhastings-theme/releases/tag/v1.1.0
