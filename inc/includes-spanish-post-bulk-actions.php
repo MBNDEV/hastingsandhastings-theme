@@ -30,10 +30,10 @@ add_filter( 'bulk_actions-edit-spanish_post', 'custom_spanish_post_move_to_blog_
 function custom_spanish_post_move_to_blog_render_script() {
 	global $typenow;
 
-	if ( 'spanish_post' !== $typenow ) {
-		return;
-	}
-	?>
+  if ( 'spanish_post' !== $typenow ) {
+      return;
+  }
+  ?>
 	<script>
 	( function() {
 		var form = document.getElementById( 'posts-filter' );
@@ -72,35 +72,35 @@ add_action( 'admin_footer-edit.php', 'custom_spanish_post_move_to_blog_render_sc
  * @return string
  */
 function custom_spanish_post_move_to_blog_handle( $redirect_to, $doaction, $post_ids ) {
-	if ( 'custom_move_to_blog' !== $doaction ) {
-		return $redirect_to;
-	}
+  if ( 'custom_move_to_blog' !== $doaction ) {
+      return $redirect_to;
+  }
 
 	$moved_ids = array();
 
-	foreach ( $post_ids as $post_id ) {
-		if ( ! current_user_can( 'edit_post', $post_id ) ) {
-			continue;
-		}
+  foreach ( $post_ids as $post_id ) {
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        continue;
+    }
 
-		if ( 'spanish_post' !== get_post_type( $post_id ) ) {
-			continue;
-		}
+    if ( 'spanish_post' !== get_post_type( $post_id ) ) {
+        continue;
+    }
 
-		set_post_type( $post_id, 'post' );
+      set_post_type( $post_id, 'post' );
 
-		$moved_ids[] = $post_id;
-	}
+      $moved_ids[] = $post_id;
+  }
 
-	if ( $moved_ids ) {
-		custom_spanish_post_move_to_blog_sync_wpml();
-	}
+  if ( $moved_ids ) {
+      custom_spanish_post_move_to_blog_sync_wpml();
+  }
 
 	$redirect_to = add_query_arg( 'custom_moved_to_blog', count( $moved_ids ), $redirect_to );
 
-	if ( $moved_ids ) {
-		$redirect_to = add_query_arg( 'custom_moved_to_blog_ids', implode( ',', $moved_ids ), $redirect_to );
-	}
+  if ( $moved_ids ) {
+      $redirect_to = add_query_arg( 'custom_moved_to_blog_ids', implode( ',', $moved_ids ), $redirect_to );
+  }
 
 	return $redirect_to;
 }
@@ -110,7 +110,7 @@ add_filter( 'handle_bulk_actions-edit-spanish_post', 'custom_spanish_post_move_t
  * Resync WPML's translation-type records after set_post_type() changes a
  * post's type directly in the database.
  *
- * set_post_type() updates wp_posts.post_type without firing any hooks, so
+ * The set_post_type() call updates wp_posts.post_type without firing any hooks, so
  * WPML's own wp_icl_translations table keeps recording the post under its
  * old type (e.g. "post_spanish_post"). Every WPML-aware query joins against
  * that table and requires the type to match, so a stale row makes the moved
@@ -123,9 +123,9 @@ add_filter( 'handle_bulk_actions-edit-spanish_post', 'custom_spanish_post_move_t
 function custom_spanish_post_move_to_blog_sync_wpml() {
 	global $sitepress;
 
-	if ( ! $sitepress || ! class_exists( 'WPML_Fix_Type_Assignments' ) ) {
-		return;
-	}
+  if ( ! $sitepress || ! class_exists( 'WPML_Fix_Type_Assignments' ) ) {
+      return;
+  }
 
 	( new WPML_Fix_Type_Assignments( $sitepress ) )->run();
 }
@@ -136,31 +136,35 @@ function custom_spanish_post_move_to_blog_sync_wpml() {
  * resolve.
  */
 function custom_spanish_post_move_to_blog_admin_notice() {
-	if ( empty( $_REQUEST['custom_moved_to_blog'] ) ) {
-		return;
-	}
+	// Reads only the values this file added to its own redirect URL; nothing is
+	// written, so a nonce would add no protection.
+	// phpcs:disable WordPress.Security.NonceVerification.Recommended
+  if ( empty( $_REQUEST['custom_moved_to_blog'] ) ) {
+      return;
+  }
 
 	$updated  = absint( $_REQUEST['custom_moved_to_blog'] );
 	$post_ids = array();
 
-	if ( ! empty( $_REQUEST['custom_moved_to_blog_ids'] ) ) {
-		$post_ids = array_filter( array_map( 'absint', explode( ',', sanitize_text_field( wp_unslash( $_REQUEST['custom_moved_to_blog_ids'] ) ) ) ) );
-	}
-	?>
+  if ( ! empty( $_REQUEST['custom_moved_to_blog_ids'] ) ) {
+      $post_ids = array_filter( array_map( 'absint', explode( ',', sanitize_text_field( wp_unslash( $_REQUEST['custom_moved_to_blog_ids'] ) ) ) ) );
+  }
+	// phpcs:enable WordPress.Security.NonceVerification.Recommended
+  ?>
 	<div class="notice notice-success is-dismissible">
 		<p>
 			<?php
 			printf(
-				/* translators: %d: number of posts moved. */
-				esc_html(
-					_n(
-						'%d post moved to the Blog. Its old Spanish Posts URL no longer works.',
-						'%d posts moved to the Blog. Their old Spanish Posts URLs no longer work.',
-						$updated,
-						'mbn-theme'
-					)
-				),
-				$updated
+              esc_html(
+                /* translators: %d: number of posts moved. */
+                _n(
+                  '%d post moved to the Blog. Its old Spanish Posts URL no longer works.',
+                  '%d posts moved to the Blog. Their old Spanish Posts URLs no longer work.',
+                  $updated,
+                  'mbn-theme'
+                )
+              ),
+              (int) $updated
 			);
 			?>
 		</p>

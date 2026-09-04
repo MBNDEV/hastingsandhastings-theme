@@ -2,7 +2,6 @@
 .hero-video-container {
   position: relative;
   width: 100%;
-  min-height: 55vh;
   overflow: hidden;
 }
 
@@ -52,7 +51,7 @@
 .hero-content {
   position: relative;
   z-index: 3;
-  min-height: 55vh;
+  min-height: 600px;
 }
 
 /* CTA Button - Custom Gradient */
@@ -121,12 +120,9 @@
 }
 
 @media (max-width: 768px) {
-  .hero-video-container {
-    min-height: 55svh;
-  }
   
   .hero-content {
-    min-height: 55svh;
+    min-height: 500px;
   }
   
   .btn-cta {

@@ -72,10 +72,10 @@ $wrapper_attributes = get_block_wrapper_attributes(
 				poster="<?php echo esc_url( $poster_image_url ); ?>"<?php endif; ?>
 		>
 			<?php if ( $video_webm_url ) : ?>
-				<source src="<?php echo esc_url( $video_webm_url ); ?>" type="video/webm" media="(min-width: 769px)">
+				<source src="<?php echo esc_url( $video_webm_url ); ?>" type="video/webm">
 			<?php endif; ?>
 			<?php if ( $video_mp4_url ) : ?>
-				<source src="<?php echo esc_url( $video_mp4_url ); ?>" type="video/mp4" media="(min-width: 769px)">
+				<source src="<?php echo esc_url( $video_mp4_url ); ?>" type="video/mp4">
 			<?php endif; ?>
 			<?php esc_html_e( 'Your browser does not support the video tag.', 'mbn-theme' ); ?>
 		</video>

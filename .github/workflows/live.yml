@@ -1,0 +1,33 @@
+name: Deploy Live
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-live
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to Live
+    runs-on: ubuntu-latest
+    environment: Production
+
+    steps:
+      # Only to get .github/scripts/deploy.sh — the server pulls the tag and
+      # builds it itself, so nothing is compiled or shipped from here.
+      - uses: actions/checkout@v4
+
+      - name: Deploy over SSH
+        env:
+          GIT_SSH_KEY: ${{ secrets.GIT_SSH_KEY }}
+          GIT_HOST: ${{ secrets.GIT_HOST }}
+          GIT_PORT: ${{ secrets.GIT_PORT }}
+          GIT_USER: ${{ secrets.GIT_USER }}
+          GIT_THEME_DIR: ${{ secrets.GIT_THEME_DIR }}
+        run: ./.github/scripts/deploy.sh

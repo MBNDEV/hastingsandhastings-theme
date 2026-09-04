@@ -133,12 +133,10 @@ git tag -a v1.1.0 -m "Release v1.1.0"
 git push origin main --tags
 ```
 
-The GitHub Actions workflow will automatically create a release with built assets.
+Pushing the tag triggers the live deployment — see [Deployment](#deployment).
 
 ### Documentation
 
-- **[Versioning Guide](docs/VERSIONING.md)** - Complete guide for creating and using releases
-- **[Release Checklist](docs/RELEASE-CHECKLIST.md)** - Step-by-step release checklist
 - **[CHANGELOG.md](CHANGELOG.md)** - Version history and release notes
 
 ## Linting
@@ -202,47 +200,67 @@ The sync tools provide bi-directional sync between:
 
 ## Deployment
 
-This theme uses **GitHub Actions** for automated deployment to Staging and Production environments.
+Deployments are driven by **tags**, not branches. Pushing a tag tells the target
+server over SSH to pull that tag into its own checkout and build it there.
 
-### Quick Start
+| Tag format | Workflow | GitHub environment |
+|------------|----------|--------------------|
+| `v1.2.3` | `.github/workflows/live.yml` | `Production` |
+| `staging1.2.3` | `.github/workflows/staging.yml` | `Staging` |
 
 ```bash
-# Deploy to Staging
-git push origin develop
+# Release to live
+git tag -a v1.2.0 -m "Release v1.2.0" && git push origin v1.2.0
 
-# Deploy to Production
-git push origin master
+# Release to staging
+git tag -a staging1.2.0 -m "Staging 1.2.0" && git push origin staging1.2.0
 ```
 
-### What Gets Deployed
+### What the deploy does
 
-Each deployment automatically:
-- ✅ Builds Gutenberg blocks (`npm run build`)
-- ✅ Compiles Tailwind CSS
-- ✅ Installs production dependencies
-- ✅ Syncs files via rsync
-- ✅ Excludes dev files and dependencies
+GitHub Actions only checks out `.github/scripts/deploy.sh` and runs it; nothing
+is compiled on the runner. The script SSHes to the host and, inside
+`GIT_THEME_DIR`, fetches the tag, checks it out, installs dependencies and runs
+`npm run build` — so the server compiles the same assets `npm run dev` produces
+locally, from the same sources, instead of trusting an uploaded archive.
 
-### Documentation
+The checkout is followed by a cleanup of untracked files, so files an earlier tag
+left behind are dropped and this stays a **replacement, not a merge**. Ignored
+paths are left alone, so `node_modules/`, `vendor/` and the build output survive
+between deploys.
 
-- **Setup Guide**: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
-- **Setup Checklist**: [docs/DEPLOYMENT_CHECKLIST.md](docs/DEPLOYMENT_CHECKLIST.md)
-- **Workflow File**: [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
+If any step fails the script checks the previous commit back out and rebuilds
+it, so a broken release does not leave the site on half-built assets. It also
+refuses any `GIT_THEME_DIR` that is not an absolute path ending in
+`wp-content/themes/<theme>`, or that is not the root of a git checkout.
 
-### Required Secrets
+**One-time server setup:** clone this repo into `GIT_THEME_DIR` (the theme
+directory *is* the checkout), and make sure `git`, `node`, `npm` and `composer`
+are on the deploy user's `PATH`. The script fails with a clear message if any
+of that is missing.
 
-Configure in **Repository → Settings → Secrets**:
+### Building a bundle by hand
+
+```bash
+npm run bundle
+```
+
+Not used by deployment — this is for hand-installing the theme somewhere without
+a checkout. It runs `npm run build`, then `scripts/bundle.mjs` stages the runtime
+theme in `dist/mbn-theme/` and packs `dist/mbn-theme.zip`, keeping only what
+WordPress reads. It exits non-zero if a required runtime file is missing.
+
+### Required environment secrets
+
+Set these per environment in **Settings → Environments → Production / Staging**:
 
 | Secret | Description |
 |--------|-------------|
-| `DO_HOST` | Server hostname or IP |
-| `DO_SSH_USER` | SSH username |
-| `DO_SSH_KEY` | SSH private key |
-| `DO_SSH_PORT` | SSH port (default: 22) |
-| `WP_STG_THEME_DIR` | Staging theme path |
-| `WP_PROD_THEME_DIR` | Production theme path |
-
-See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for detailed setup instructions.
+| `GIT_SSH_KEY` | SSH private key for the deploy user |
+| `GIT_HOST` | Server hostname or IP |
+| `GIT_PORT` | SSH port |
+| `GIT_USER` | SSH username |
+| `GIT_THEME_DIR` | Absolute path to the theme directory itself, which must be a git checkout of this repo, e.g. `/home/u207-xxxx/www/newsite-staging.example.com/public_html/wp-content/themes/mbn-theme` |
 
 ## Security
 

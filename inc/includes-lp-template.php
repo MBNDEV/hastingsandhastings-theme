@@ -179,9 +179,9 @@ if ( ! function_exists( 'mbn_lp_set_testimonials' ) ) {
 	/**
 	 * Hand the slider its quotes.
 	 *
-	 * lp-custom.js rebuilds #testimonials_lp on load, so whatever is in the
-	 * markup would otherwise be replaced by the English set baked into the
-	 * script. content-es.php calls this with the Spanish quotes while it
+	 * The lp-custom.js script rebuilds #testimonials_lp on load, so whatever is
+	 * in the markup would otherwise be replaced by the English set baked into
+	 * the script. content-es.php calls this with the Spanish quotes while it
 	 * renders; calling it with nothing leaves the script's own set in place.
 	 *
 	 * @param array<int, array<string, string>> $testimonials Each with 'intro' and 'text'.
