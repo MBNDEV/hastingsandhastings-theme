@@ -76,7 +76,7 @@ function custom_theme_practice_area_default_related_information_groups(): array 
 			custom_theme_practice_area_default_link( 'Bicycle Accidents', '/practice-areas/bicycle-accidents/' ),
 			custom_theme_practice_area_default_link( 'Bus Accidents', '/phoenix-bus-accident-attorney/' ),
 			custom_theme_practice_area_default_link( 'Delivery Driver Accidents' ),
-			custom_theme_practice_area_default_link( 'Distracted Driving Accidents', '/phoenix-distracted-driving-lawyer/' ),
+			custom_theme_practice_area_default_link( 'Distracted Driving Accidents', '/practice-areas/phoenix-distracted-driving-lawyer/' ),
 			custom_theme_practice_area_default_link( 'Drunk Driving Accidents', '/phoenix-dui-accident-attorney/' ),
 			custom_theme_practice_area_default_link( 'Head-On Collisions' ),
 			custom_theme_practice_area_default_link( 'Motorcycle Accidents', '/practice-areas/motorcycle-accidents/' ),

@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-09-04
+
+### Changed
+- Deploys no longer keep a copy of the outgoing theme on the server. The two
+  most recent `.mbn-backup-<slug>-<stamp>` generations used to be retained for
+  rollback; they were ~278 MB each. Revert by pushing an earlier release tag.
+- The outgoing theme is still moved aside for the length of the swap, so the
+  theme directory is absent for milliseconds and a failed rename is still undone
+  — but that copy is deleted as soon as the new tree is in place.
+
+### Fixed
+- A deploy killed mid-swap left its scratch copy behind because it never reached
+  its cleanup trap. Each deploy now clears stale copies before staging, so the
+  themes directory holds nothing but the theme.
+
+## [1.2.0] - 2026-09-04
+
+### Added
+- Optional `GIT_PASSPHRASE` deployment secret, so `GIT_SSH_KEY` may be an
+  encrypted SSH key. When it is set, the deploy unlocks the key into an
+  `ssh-agent` for the run through a temporary `SSH_ASKPASS` helper; when it is
+  unset, deployment is unchanged and no agent is started.
+- The askpass helper answers exactly once, so a wrong passphrase fails the
+  deploy step immediately instead of leaving `ssh-add` re-prompting until the
+  runner times out.
+
 ## [1.1.0] - 2026-05-19
 
 ### Added
@@ -107,6 +133,7 @@ When creating a new release:
 
 ## Links
 
-[Unreleased]: https://github.com/MBNDEV/mbn-theme/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/MBNDEV/mbn-theme/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/MBNDEV/mbn-theme/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/MBNDEV/mbn-theme/compare/v1.0.2...v1.1.0
 [1.0.2]: https://github.com/MBNDEV/mbn-theme/releases/tag/v1.0.2
