@@ -61,23 +61,12 @@ blockDirs.forEach( ( dir ) => {
       from: path.resolve( dir, 'script.js' ),
       to: path.resolve( __dirname, `build/blocks/${ blockName }/script.js` ),
       noErrorOnMissing: true,
-    },
-    {
-      from: path.resolve( dir, 'assets' ),
-      to: path.resolve( __dirname, `build/blocks/${ blockName }/assets` ),
-      noErrorOnMissing: true,
     }
   );
 } );
 
-// Copy assets/icons directory to build
-copyPatterns.push(
-  {
-    from: path.resolve( __dirname, 'assets/icons' ),
-    to: path.resolve( __dirname, 'build/assets/icons' ),
-    noErrorOnMissing: true,
-  }
-);
+// blocks/*/assets and assets/icons are mirrored by scripts/copy-block-assets.mjs
+// instead — see that file for why they stay out of the compilation.
 
 // Debug: Log copy patterns
 if ( copyPatterns.length > 0 ) {
@@ -103,8 +92,11 @@ module.exports = {
     ...defaultConfig.output,
     filename: '[name].js',
     path: path.resolve( __dirname, 'build' ),
-    clean: ! blockFilter,
+    // Static block media is mirrored in outside the compilation, so webpack
+    // must not treat it as a stale artifact and delete it on every rebuild.
+    clean: blockFilter ? false : { keep: ( asset ) => /(^|[\\/])assets[\\/]/.test( asset ) },
   },
+  performance: { hints: false },
   plugins: [
     ...( defaultConfig.plugins || [] ),
     ...( copyPatterns.length ? [ new CopyPlugin( { patterns: copyPatterns } ) ] : [] ),

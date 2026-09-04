@@ -158,6 +158,9 @@ function custom_bulk_set_category_handle( $redirect_to, $doaction, $post_ids ) {
       return $redirect_to;
   }
 
+	// wp-admin/edit.php runs check_admin_referer( 'bulk-posts' ) before
+	// handle_bulk_actions-edit-post fires, so this request is already verified.
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$term_id = isset( $_REQUEST['custom_bulk_category_id'] ) ? absint( $_REQUEST['custom_bulk_category_id'] ) : 0;
 
   if ( ! $term_id || ! get_term( $term_id, 'category' ) ) {
@@ -203,6 +206,9 @@ function custom_bulk_remove_category_handle( $redirect_to, $doaction, $post_ids 
       return $redirect_to;
   }
 
+	// wp-admin/edit.php runs check_admin_referer( 'bulk-posts' ) before
+	// handle_bulk_actions-edit-post fires, so this request is already verified.
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$term_id = isset( $_REQUEST['custom_bulk_category_remove_id'] ) ? absint( $_REQUEST['custom_bulk_category_remove_id'] ) : 0;
 
   if ( ! $term_id || ! get_term( $term_id, 'category' ) ) {
@@ -237,11 +243,15 @@ add_filter( 'handle_bulk_actions-edit-post', 'custom_bulk_remove_category_handle
  * Show an admin notice reporting how many posts were updated.
  */
 function custom_bulk_set_category_admin_notice() {
+	// Reads only the counter this file added to its own redirect URL; nothing is
+	// written, so a nonce would add no protection.
+	// phpcs:disable WordPress.Security.NonceVerification.Recommended
   if ( empty( $_REQUEST['custom_bulk_category_updated'] ) ) {
       return;
   }
 
 	$updated = absint( $_REQUEST['custom_bulk_category_updated'] );
+	// phpcs:enable WordPress.Security.NonceVerification.Recommended
   ?>
 	<div class="notice notice-success is-dismissible">
 		<p>
@@ -249,7 +259,7 @@ function custom_bulk_set_category_admin_notice() {
 			printf(
 				/* translators: %d: number of posts updated. */
               esc_html( _n( '%d post updated.', '%d posts updated.', $updated, 'mbn-theme' ) ),
-              $updated
+              (int) $updated
 			);
 			?>
 		</p>

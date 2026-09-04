@@ -82,10 +82,19 @@
         </properties>
     </rule>
 
+    <!-- page-templates/lp/page.php is a verbatim capture of the live landing page.
+         Its NitroPack vendor bundles and third-party tags (CallRail, GTM, HubSpot,
+         Facebook, the Google origin-trial meta) have to keep the exact order and
+         attributes they were captured with, so they cannot go through wp_enqueue_*. -->
+    <rule ref="WordPress.WP.EnqueuedResources">
+        <exclude-pattern>*/page-templates/lp/page.php</exclude-pattern>
+    </rule>
+
     <!-- Nested paths: plain vendor/* does not exclude vendor/pkg/file.php -->
     <exclude-pattern>*/vendor/*</exclude-pattern>
     <exclude-pattern>*/node_modules/*</exclude-pattern>
     <exclude-pattern>*/build/*</exclude-pattern>
+    <exclude-pattern>*/dist/*</exclude-pattern>
     <exclude-pattern>*/scripts/*</exclude-pattern>
 
     <!-- CLI -->

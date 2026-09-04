@@ -110,7 +110,7 @@ add_filter( 'handle_bulk_actions-edit-spanish_post', 'custom_spanish_post_move_t
  * Resync WPML's translation-type records after set_post_type() changes a
  * post's type directly in the database.
  *
- * set_post_type() updates wp_posts.post_type without firing any hooks, so
+ * The set_post_type() call updates wp_posts.post_type without firing any hooks, so
  * WPML's own wp_icl_translations table keeps recording the post under its
  * old type (e.g. "post_spanish_post"). Every WPML-aware query joins against
  * that table and requires the type to match, so a stale row makes the moved
@@ -136,6 +136,9 @@ function custom_spanish_post_move_to_blog_sync_wpml() {
  * resolve.
  */
 function custom_spanish_post_move_to_blog_admin_notice() {
+	// Reads only the values this file added to its own redirect URL; nothing is
+	// written, so a nonce would add no protection.
+	// phpcs:disable WordPress.Security.NonceVerification.Recommended
   if ( empty( $_REQUEST['custom_moved_to_blog'] ) ) {
       return;
   }
@@ -146,13 +149,14 @@ function custom_spanish_post_move_to_blog_admin_notice() {
   if ( ! empty( $_REQUEST['custom_moved_to_blog_ids'] ) ) {
       $post_ids = array_filter( array_map( 'absint', explode( ',', sanitize_text_field( wp_unslash( $_REQUEST['custom_moved_to_blog_ids'] ) ) ) ) );
   }
+	// phpcs:enable WordPress.Security.NonceVerification.Recommended
   ?>
 	<div class="notice notice-success is-dismissible">
 		<p>
 			<?php
 			printf(
-				/* translators: %d: number of posts moved. */
               esc_html(
+                /* translators: %d: number of posts moved. */
                 _n(
                   '%d post moved to the Blog. Its old Spanish Posts URL no longer works.',
                   '%d posts moved to the Blog. Their old Spanish Posts URLs no longer work.',
@@ -160,7 +164,7 @@ function custom_spanish_post_move_to_blog_admin_notice() {
                   'mbn-theme'
                 )
               ),
-              $updated
+              (int) $updated
 			);
 			?>
 		</p>
